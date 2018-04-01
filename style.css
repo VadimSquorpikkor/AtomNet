@@ -1,0 +1,96 @@
+img {
+
+	display: block;
+	margin: 20px auto;
+	/*width: 600px;*/
+
+}
+img.small {
+
+	width : 50px;
+	float:left;
+	/*margin-left: 10px*/
+} 
+
+div{
+	padding-left:50px; 
+	padding-right:50px; 
+	text-align:justify;
+	text-indent:40px;
+	font-size:20px;
+	font-family:sans-serif;
+	background-color:white;
+}
+
+.yellow_back{
+	font-size: 14px;
+	background-color: khaki;
+	padding: 5px 30px;
+	margin: 30px 100px;
+	width: 40%;
+}
+
+.yellow_back_right{
+	font-size: 14px;
+	background-color: khaki;
+	padding: 10px;
+	margin-left: 100px;
+	width: 400px;
+	align-self: center;
+	text-align: right;
+}
+
+.attention{
+	color:#ff3333;
+}
+
+.mark_green{
+	background-color: greenyellow;
+}
+
+.big_one{
+	font-size:36px;
+	font-family:sans-serif;
+	text-align:center
+	
+}
+
+
+
+h1{
+	padding:50px;
+	text-align:justify;
+	text-indent:40px;
+	font-size:24px;
+	font-family:sans-serif
+		
+}
+
+/**Для ссылок**/
+a{
+	color:orange;
+	font-size:20px;
+	font-family:sans-serif
+}
+
+.white_font{
+	color:white;
+	text-decoration: none;
+}
+
+div.header_div{
+	background-color:orange;
+	height:50px;
+	font-family:sans-serif;
+	color: white;
+	padding-top: 10px;
+}
+
+.right_align{
+	text-align:right
+}
+
+li{
+	text-indent:10px;
+	font-size:18px;
+}

@@ -1,0 +1,52 @@
+﻿ <!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Прошивка МРП</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="index.html">Содержание </a>
+    / Прошивка МРП
+</div>
+
+<div>
+
+<h1>Прошивка МРП</h1>
+ <ul>
+        <li>Вставить перемычку</li>
+        <li>Подключить плату к компьютеру через USB адаптер </li>
+        <li>Подключить питание.
+        <a class="attention">Желтый и зеленый провод подключаются нестандартно (наоборот) </a></li>
+        <img>
+        <li>Шить через <b>Flip</b></li>
+        <li><a class="attention">Если не шьется: проверить ток потребления &mdash; должно быть не более 50mA</a></b></li>
+        <li><img src="" >Выбрать AT89C51ED2</li>
+        <li>RS232 &rArr; Выбрать порт &rArr; 115200 &rArr; Connect</li>
+        
+        <li>Выбрать прошивку. Прошивка &mdash; <b>_MP_AT920.hex</b>.
+        <li>Выбрать Erase и Programm</li>
+        <li>Run</li>
+        <li>После завершения процесса прошивки выбрать Level2 и снять BLJB</li>
+        <li>Disconnect</li>
+        <li>Отключить питание, снять перемычку</li>
+        <li>Поставить на плате метку о прошивке</li>
+    </ul>
+    </p>
+
+    <p>
+   Проверить поршивку:
+    </p>
+    <ul>
+        <li>Подключить плату через DB9 к компьютеру</li>
+        <li>Подключить какой-нибудь БД (БДКГ11 например)</li>
+        <li>Запустить SARKtech</li>
+        <li>Если блок подключился, значит прошивка работает</li>
+    </ul>    
+</div>
+
+</body>
+</html>
