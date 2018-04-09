@@ -78,6 +78,16 @@ a{
 	text-decoration: none;
 }
 
+.white_on_white{
+	color:white;
+    background-color: black;
+}
+.brown{
+    color: saddlebrown;
+}
+
+.
+
 div.header_div{
 	background-color:orange;
 	height:50px;

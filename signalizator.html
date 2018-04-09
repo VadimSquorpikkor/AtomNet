@@ -1,8 +1,8 @@
-﻿ <!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <META charset="utf8">
-    <title>Прошивка сигнализатора</title>
+    <title>Сигнализатор</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -15,45 +15,67 @@
 
 <div>
 
-<h1>Прошивка сигнализатора</h1>
-	<img src="imgs/sign/sign01.jpg" width="600">
- <ul>
-        <li>Подключить комплект плат к компьютеру через USB адаптер. </li>
-	<img src="imgs/sign/sign02.jpg" width="600">
+    <h1>Прошивка сигнализатора</h1>
+    <img src="imgs/sign/sign01.jpg" width="600">
+    <ul>
+        <li>Подключить комплект плат к компьютеру через USB адаптер.</li>
+        <img src="imgs/sign/sign02.jpg" width="600">
         <a class="attention">Желтый и зеленый провод подключаются нестандартно (наоборот) </a></li>
-	<img src="imgs/sign/sign03.jpg" width="600">        
-	<li>При подключении замкнуть два контакта на нижней плате</li>
+        <img src="imgs/sign/sign03.jpg" width="600">
+        <li>При подключении замкнуть два контакта на нижней плате</li>
         <img src="imgs/sign/sign04.jpg" width="600">
-        <li >Шить через <b>Flip</b></li>
-</ul>
-<ul>
-        <li> 
+        <li>Шить через <b>Flip</b></li>
+    </ul>
+    <ul>
+        <li>
 
-	<img class="small" src="imgs/sign/flip_1.png">
-	Выбрать AT89C51ED2
+            <img class="small" src="imgs/sign/flip_1.png">
+            Выбрать AT89C51ED2
 
 
-	</li>
+        </li>
         <li><img class="small" src="imgs/sign/flip_2.png">
-	RS232 &rAarr; Выбрать порт</li>
-        
+            RS232 &rAarr; Выбрать порт
+        </li>
+
         <li><img class="small" src="imgs/sign/flip_3.png">
-	</p><p>Выбрать прошивку. Прошивка &mdash; <b>1121 Signalizator</b>.
-        <a class="attention">Есть две версии &mdash; sig1121_RAZOMKNUTYE.hex(06.12.2013) и sig1121_ZAMKNUTYE.hex(04.09.2015), если версия не задана конкретно, то шьется 13-я (Razomknutie)</a></li>
+            </p><p>Выбрать прошивку. Прошивка &mdash; <b>1121 Signalizator</b>.
+                <a class="attention">Есть две версии &mdash; sig1121_RAZOMKNUTYE.hex(06.12.2013) и
+                    sig1121_ZAMKNUTYE.hex(04.09.2015), если версия не задана конкретно, то шьется 13-я (Razomknutie)</a>
+        </li>
         <li>Выбрать Erase и Programm</li>
-	<img src="imgs/sign/flip.png" width="500">
+        <img src="imgs/sign/flip.png" width="500">
         <li>Run</li>
         <li>После завершения процесса прошивки выбрать Level2 и снять BLJB</li>
         <li>Disconnect</li>
         <li>Поставить на плате метку о прошивке</li>
-	<img src="imgs/sign/sign05.jpg" width="600">
+        <img src="imgs/sign/sign05.jpg" width="600">
     </ul>
     </p>
 
     <p>
-   	<a class="attention">Сигнализатор в паре с 25-и метровым кабелем работает <i>только при подключенном блоке питания</i> к 1123 (либо с полностью заряженным)</a>
+        <a class="attention">Сигнализатор в паре с 25-и метровым кабелем работает <i>только при подключенном блоке
+            питания</i> к 1123 (либо с полностью заряженным)</a>
+        <a class="attention">25-и метровый кабель уже заменен на кабель с большим сечением, при заказе кабеля иметь это в виду</a>
     </p>
-
+    <h3>Проверка работы</h3>
+    <ul>
+        <li>Подключить кабель: <span class="white_on_white">Белый</span>,
+        <span class="brown">Белый</span>,
+        <span class="green">Белый</span>,
+        <span class="yellow">Белый</span>,
+        <span class="white_on_white">Белый</span>,
+        <span class="gray">Белый</span>:</li>
+        <img src="imgs/sign/prov2.jpg" width="600"/>
+        <li>Подключить 1123. <span class="attention">Зарядку не подключать. Лучше проверять на не полностью заряженных приборах. </span> Включить. На сигнализаторе должен загореться зеленый индикатор.
+            Поднести к 1123 источник &mdash; должен загореться красный индикатор и включиться звуковая сигнализация</li>
+            <span class="attention">Если используется 25-и метровый кабель:</span>
+        <img src="imgs/sign/prov1.jpg" width="600"/>
+        <li></li>
+        <img src="imgs/sign/prov3.jpg" width="600"/>
+        <li></li>
+        <img src="imgs/sign/prov4.jpg" width="600"/>
+    </ul>
 </div>
 
 </body>
