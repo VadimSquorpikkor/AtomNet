@@ -90,9 +90,23 @@ a{
 	color:white;
     background-color: black;
 }
+
 .brown{
     color: saddlebrown;
 }
+
+.green{
+	color: green;
+}
+
+.yellow{
+	color: yellow;
+}
+
+.gray{
+	color: gray;
+}
+
 
 .right_align{
     text-align:right;
