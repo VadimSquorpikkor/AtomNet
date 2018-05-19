@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>БДКГ-22. Прошивка</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../index.html">Содержание / </a>
+    <a class="white_font" href="bdkg22.html">БДКГ-22 </a>
+    / БДКГ-22. Прошивка
+</div>
+
+<div>
+
+    <h1>БДКГ-22. Прошивка</h1>
+    <p>
+
+    <ul>
+        <li>БДКГ-22 и 23 прошиваются специальным кабелем DB9&xrarr;Fisher с двумя линиями A/B и разъемом питания для 12В
+            (<a href="bdkg22pr_scheme.html">схемы кабеля</a>)
+        </li>
+        <li>Подключается к компьютеру через адаптер USB-COMi-SI-M <span
+                class="attention">с нестандартными настройками</span>:
+        </li>
+        <img src="../imgs/bdkg22/prosh/5.jpg" width="800"/>
+
+    Есть три версии прошивки:
+    <ul>
+        <li>bdkg22.hex &mdash; для БДКГ-22. Измерение в зивертах.</li>
+        <li>bdkg23.hex &mdash; для БДКГ-23. Измерение в греях.</li>
+        <li>bdkg23а.hex &mdash; для БДКГ-23/1 (изначально назывался БДКГ-23А). Измерение в зивертах.</li>
+    </ul>
+
+    <li>Шить через Flip:</li>
+           <ul>
+               <img src="../imgs/bdkg22/prosh1.png" width="838"/>
+               <li>Выбрать тип контроллера &mdash; AT89C51ED2</li>
+                <li>Подключение. Выбрать порт. Скорость &mdash; 115500</li>
+                <li>Выбрать прошивку</li>
+                <li>Нажать Run</li>
+               После окончания процесса прошивки:
+               <img src="../imgs/bdkg22/prosh2.png" width="844"/>
+               <li>Снять BLJB</li>
+                <li>Поставить Level 2</li>
+           </ul>
+        <li>Наклеить наклейку с версией прошивки</li>
+
+
+    <img src="../imgs/bdkg22/prosh/3.jpg" width="800"/></ul>
+
+
+</div>
+
+</body>
+</html>
