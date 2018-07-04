@@ -131,3 +131,23 @@ li{
 	text-indent:10px;
 	font-size:18px;
 }
+
+table{
+	font-size:14px;
+	/*margin: 20px;*/
+	border-collapse: collapse;
+	width: 100%;
+	/*border: 1px solid black;*/
+
+}
+
+table, th, td{
+	border: 1px solid black;
+
+}
+
+th {
+	background-color: #4CAF50;
+	color: white;
+}
+
