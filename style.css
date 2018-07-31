@@ -134,7 +134,7 @@ li{
 
 table{
 	font-size:14px;
-	/*margin: 20px;*/
+	/*margin: 20px;0*/
 	border-collapse: collapse;
 	width: 100%;
 	/*border: 1px solid black;*/
@@ -157,4 +157,8 @@ th {
 
 .right_side{
 	float: right;
+}
+
+.down_side{
+	float: end;
 }
