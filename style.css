@@ -151,3 +151,10 @@ th {
 	color: white;
 }
 
+.left_side{
+	float: left;
+}
+
+.right_side{
+	float: right;
+}
