@@ -57,10 +57,11 @@ div{
 }
 
 .big_one{
+	color: orangered;
 	font-size:36px;
 	font-family:sans-serif;
-	text-align:center
-	
+	text-align: center;
+	margin: 30px;
 }
 
 
@@ -125,7 +126,9 @@ a:hover {
     text-align:right;
 }
 
-
+.left_align{
+	text-align:left;
+}
 
 li{
 	text-indent:10px;
