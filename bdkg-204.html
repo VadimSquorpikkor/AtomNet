@@ -1,68 +1,70 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<META charset="utf8">
-	<title>БДКГ-204</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+    <META charset="utf8">
+    <title>БДКГ-204</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
 
 <div class="header_div">
-	<a class="white_font" href="index.html">Содержание </a>
-	/ Прошивка БДКГ-204
+    <a class="white_font" href="index.html">Содержание </a>
+    / Прошивка БДКГ-204
 </div>
 
 <div>
 
-<h1>Прошивка БДКГ-204</h1>
+    <h1>Прошивка БДКГ-204</h1>
 
-	<p>
-	
-	<ul>
-		<li>Подключить питание </li>
-		<li>Подключть программатор</li>
-	</ul>
+    <p>
 
-	<img src="imgs/204/204_6.jpg" width="800">
+    <ul>
+        <li>Подключить питание</li>
+        <li>Подключть программатор</li>
+    </ul>
 
-	<p>
-	<ul>
-		<li>Запустить STM32-LINK</li>	
-	<img src="imgs/204/204_4.png">	
-		<li>Target &rArr; Connect</li>
-		<li>Target &rArr; Program & Verify</li>
-	<img src="imgs/204/204_2.png">
-		<li>Выбрать прошивку</li>
-		<li>Start</li>
-	</ul>
+    <img src="imgs/204/204_6.jpg" width="800">
 
-
-	<p>
-	Если появляется такое окно с ошибкой: 
-	<img src="imgs/204/204_3.png">
-	</p>
-
-	<p>
-	Это значит, что устройство уже прошито, и прочитать или перезаписать прошивку нельзя. Чтобы убрать защиту, необходимосделать следующее 
-	
-	<a class="attention">(Внимание! Существующая прошивка будет стёрта!)
-	
-	</a>:
-	<ul>
-		<li>Target &rArr; Option Bytes</li>
-	<img src="imgs/204/204_1.png">
-		<li>Readout Protection &rArr; Disabled</li>
-		<li>Flash Section Protection &rArr; Unselect All</li>
-		<li>Apply</li>
-		<li>Защита снята, прошивка стерта</li>
-	</ul>
+    <p>
+    <ul>
+        <li>Запустить STM32-LINK</li>
+        <img src="imgs/204/204_4.png">
+        <li>Target &rArr; Connect</li>
+        <li>Target &rArr; Program & Verify</li>
+        <img src="imgs/204/204_2.png">
+        <li>Выбрать прошивку</li>
+        <li>Start</li>
+    </ul>
 
 
-	<p>
-	Проверить корректность прошивки можно подключив устройство к SARKtech, тип устройства &mdash; БДКГ-02 (перед подключением <a class="attention">обязательно</a> отсоединить, подключить ODU разъёьм):
-	
-	</p>
+    <p>
+        Если появляется такое окно с ошибкой:
+        <img src="imgs/204/204_3.png">
+    </p>
+
+    <p>
+        Это значит, что устройство уже прошито, и прочитать или перезаписать прошивку нельзя. Чтобы убрать защиту,
+        необходимосделать следующее
+
+        <a class="attention">(Внимание! Существующая прошивка будет стёрта!)
+
+        </a>:
+    <ul>
+        <li>Target &rArr; Option Bytes</li>
+        <img src="imgs/204/204_1.png">
+        <li>Readout Protection &rArr; Disabled</li>
+        <li>Flash Section Protection &rArr; Unselect All</li>
+        <li>Apply</li>
+        <li>Защита снята, прошивка стерта</li>
+    </ul>
+
+
+    <p>
+        Проверить корректность прошивки можно подключив устройство к SARKtech, тип устройства &mdash; БДКГ-02 (перед
+        подключением <a class="attention">обязательно</a> отсоединить, подключить ODU разъёьм):
+
+    </p>
 
 </div>
 

@@ -14,7 +14,7 @@ img.small {
 
 div{
 	padding-left:50px; 
-	padding-right:50px; 
+	padding-right:50px;
 	text-align:justify;
 	text-indent:40px;
 	font-size:20px;
@@ -59,9 +59,7 @@ div{
 .big_one{
 	color: orangered;
 	font-size:36px;
-	font-family:sans-serif;
-	text-align: center;
-	margin: 30px;
+    padding: 100px;
 }
 
 
@@ -121,6 +119,10 @@ a:hover {
 	color: gray;
 }
 
+.orange{
+    color: orange;
+}
+
 
 .right_align{
     text-align:right;
@@ -130,7 +132,7 @@ a:hover {
 	text-align:left;
 }
 
-li{
+ul{
 	text-indent:10px;
 	font-size:18px;
 }
@@ -162,6 +164,29 @@ th {
 	float: right;
 }
 
+/*
 .down_side{
 	float: end;
+}*/
+
+h1 {
+    font-family: "Times New Roman", monospace;
+	/*padding-right: 10px;*/
+	color: #bd7400;
+	font-size: 1.5em;
+    font-style: oblique;
+    text-align: center;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+h3 {
+    font-family: "Times New Roman", monospace;
+    /*padding-right: 10px;*/
+    color: #bd7400;
+    font-size: 1.5em;
+    font-style: oblique;
+    text-align: center;
+    padding-bottom: 0;
+    padding-top: 0;
 }
