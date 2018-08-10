@@ -35,7 +35,7 @@ div{
 	background-color: khaki;
 	padding: 5px 30px;
 	margin: 30px 100px;
-	width: 40%;
+	width: 90%;
 }
 
 .yellow_back_right{
@@ -46,6 +46,16 @@ div{
 	width: 400px;
 	align-self: center;
 	text-align: right;
+}
+
+.yellow_back{
+	font-size: 14px;
+	background-color: khaki;
+	padding: 10px;
+	margin-left: 10px;
+	width: 700px;
+	align-self: center;
+	text-align: center;
 }
 
 .attention{
