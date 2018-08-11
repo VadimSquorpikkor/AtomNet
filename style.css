@@ -33,9 +33,10 @@ div{
 .yellow_back{
 	font-size: 14px;
 	background-color: khaki;
-	padding: 5px 30px;
-	margin: 30px 100px;
-	width: 90%;
+	padding: 5px 10px;
+	/*text-indent: 0;*/
+	margin: 10px 10px;
+	/*width: 700px;*/
 }
 
 .yellow_back_right{
@@ -52,8 +53,8 @@ div{
 	font-size: 14px;
 	background-color: khaki;
 	padding: 10px;
-	margin-left: 10px;
-	width: 700px;
+	/*margin-left: 10px;*/
+	width: 90%;
 	align-self: center;
 	text-align: center;
 }

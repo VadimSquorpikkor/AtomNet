@@ -5,7 +5,8 @@ function get_act() {
     //let today = new Date.now();
     //today.now();
 
-    let days_left = ((today.getTime() - pov_date.getTime()) / (1000*60*60*24));
+    let days_left = (today.getTime() - pov_date.getTime()) / (1000*60*60*24);
+    // let days_left = Math.floor((today.getTime() - pov_date.getTime()) / (1000*60*60*24));
 
     let t_pol = 365.25 * 30.17; //Период полураспада цезия 137 в днях
     let a0_516 = 91.3;
@@ -22,6 +23,14 @@ function get_act() {
     let a_520 = a0_520 * Math.exp(-0.693/t_pol * days_left);
     let a_521 = a0_521 * Math.exp(-0.693/t_pol * days_left);
 
+
+    document.getElementById('516').value = a_516;
+    document.getElementById('517').value = a_517;
+    document.getElementById('518').value = a_518;
+    document.getElementById('519').value = a_519;
+    document.getElementById('520').value = a_520;
+    document.getElementById('521').value = a_521;
+
     /*let today2 = new Date();
     let dd = today2.getDate();
     let mm = today2.getMonth()+1; //January is 0!
@@ -37,10 +46,5 @@ function get_act() {
 
     today2 = mm + '/' + dd + '/' + yyyy;*/
 
-    document.getElementById('516').value = a_516;
-    document.getElementById('517').value = a_517;
-    document.getElementById('518').value = a_518;
-    document.getElementById('519').value = a_519;
-    document.getElementById('520').value = a_520;
-    document.getElementById('521').value = a_521;
+    // document.getElementById('today_data').value = "Сегодня";
 }
