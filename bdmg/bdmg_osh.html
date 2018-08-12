@@ -4,9 +4,10 @@
     <META charset="utf8">
     <title>БДМГ-АТ2343. "Ошейник"</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../activity.js"></script>
 </head>
 
-<body>
+<body onload="get_all_activities()">
 
 <div class="header_div">
     <a class="white_font" href="../index.html">Содержание/ </a>
@@ -22,7 +23,8 @@
     <ul>
         <li>Заказать ошейник.</li>
 
-        <li>Саша Кийко принесет ошейник только с 3-мя источниками, остальные 3 (516-й, 517-й, 520-й) поставить самому
+        <li>Саша Кийко принесет ошейник только с 3-мя источниками, остальные 3 (516-й, 517-й, 520-й) поставить
+            самому
         </li>
         <img src="../imgs/bdmg/bdmg02.jpg" width="700">
 
@@ -44,7 +46,15 @@
 
     </ul>
 
+</div>
 
+<div>
+    <form class="yellow_back">
+        Сумарная мощность источников на сегодняшний день:
+        <input id="sum_activity" type="text" value="00" title="k1" size="5">
+        кБк
+        <!--<input type="button" value="Расчитать" onclick="get_all_activities()">-->
+    </form>
 </div>
 
 </body>
