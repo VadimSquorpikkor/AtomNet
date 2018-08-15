@@ -2,7 +2,7 @@
 <html>
 <head>
     <META charset="utf8">
-    <title>БДКГ-204</title>
+    <title>БДКГ-25</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -10,12 +10,12 @@
 
 <div class="header_div">
     <a class="white_font" href="index.html">Содержание </a>
-    / Прошивка БДКГ-204
+    / БДКГ-25
 </div>
 
 <div>
 
-    <h1>Прошивка БДКГ-204</h1>
+    <h1>Прошивка БДКГ-25</h1>
 
     <p>
 
@@ -24,23 +24,23 @@
         <li>Подключть программатор</li>
     </ul>
 
-    <img src="imgs/204/204_6.jpg" width="800">
+    <img src="imgs/bdkg25/13.jpg" width="1000">
 
     <p>
     <ul>
         <li>Запустить STM32-LINK</li>
-        <img src="imgs/204/204_4.png">
+        <img src="imgs/bdkg25/4.png">
         <li>Target &rArr; Connect</li>
         <li>Target &rArr; Program & Verify</li>
-        <img src="imgs/204/204_2.png">
+        <img src="imgs/bdkg25/5.png">
         <li>Выбрать прошивку</li>
         <li>Start</li>
     </ul>
-
+    <img src="imgs/bdkg25/6.png">
 
     <p>
         Если появляется такое окно с ошибкой:
-        <img src="imgs/204/204_3.png">
+        <img src="imgs/bdkg25/1.png">
     </p>
 
     <p>
@@ -52,7 +52,7 @@
         </a>:
     <ul>
         <li>Target &rArr; Option Bytes</li>
-        <img src="imgs/204/204_1.png">
+        <img src="imgs/bdkg25/3.png">
         <li>Readout Protection &rArr; Disabled</li>
         <li>Flash Section Protection &rArr; Unselect All</li>
         <li>Apply</li>
@@ -61,11 +61,15 @@
 
 
     <p>
-        Проверить корректность прошивки можно подключив устройство к SARKtech, тип устройства &mdash; БДКГ-02 (перед
-        подключением <a class="attention">обязательно</a> отсоединить, подключить ODU разъёьм):
+        Проверить корректность прошивки можно подключив устройство к BDKG25_Tools (перед
+        подключением <a class="attention">обязательно</a> отсоединить/подключить ODU разъёьм):
 
+    <img src="imgs/bdkg25/7.png" width="800">
+    Для включения "расширенного" режима в любом поле набрать время с ":" ("15:53" например):
+    <img src="imgs/bdkg25/8.png" width="900">
+    Год вводится, как 18 (а не 2018)
+    <img src="imgs/bdkg25/9.png" >
     </p>
-
 </div>
 
 </body>
