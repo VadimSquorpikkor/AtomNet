@@ -1,7 +1,7 @@
 //Общий метод для активности любого радиоактивного вещества
 //Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
 function activity(a0, days_left, t_pol) {
-    return a0 * Math.exp(-0.693/t_pol * days_left);
+    return a0 * Math.exp(-0.693147/t_pol * days_left);
 }
 
 //Частный случай для активности цезия 137-го
@@ -18,6 +18,13 @@ function days_left() {
     return (today.getTime() - pov_date.getTime()) / (1000*60*60*24);
 }
 
+function days_left_2() {
+    let pov_date = new Date(2016, 4, 17);
+    let today = new Date();
+    //Math.floor((today.getTime() - pov_date.getTime()) / (1000*60*60*24));
+    return (today.getTime() - pov_date.getTime()) / (1000*60*60*24);
+}
+
 //Активность источников в день поверки
 const a0_516 = 91.3;
 const a0_517 = 88.8;
@@ -25,6 +32,7 @@ const a0_518 = 94.6;
 const a0_519 = 88.2;
 const a0_520 = 91.3;
 const a0_521 = 93.5;
+const a0_2910 = 67.7;
 
 //Вывод активностей для каждого из источников на сегодняшний день
 function get_act() {
@@ -34,6 +42,7 @@ function get_act() {
     document.getElementById('519').value = activity_of_cs137(a0_519, days_left());
     document.getElementById('520').value = activity_of_cs137(a0_520, days_left());
     document.getElementById('521').value = activity_of_cs137(a0_521, days_left());
+    document.getElementById('2910').value = activity_of_cs137(a0_2910, days_left_2());
 }
 
 //Сумарная активность всех источников
