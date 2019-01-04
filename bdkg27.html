@@ -4,6 +4,7 @@
     <META charset="utf8">
     <title>БДКГ-27. Как рассчитать протокол поверки</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="poverka27.js"></script>
 </head>
 
 <body>
@@ -19,6 +20,60 @@
 
     <a href="docs/bdkg27/bdkg-27.ods">Открыть расчет в excel</a>
     <a href="docs/sertificate/27_pov_rus.doc">Протокол поверки</a>
+
+    <ul>
+        <li>Собрать по схеме</li>
+        <li>Подключиться к блоку обмена БДКГ-27 с помощью SARKtech</li>
+        <li>Выставить сопротивление 10<sup>9</sup> Ом</li>
+        <li>На блоке питания выставить такое напряжение, при котором показания будут равны 7 Зв/ч (примерно 4В)</li>
+    </ul>
+
+    <ul>
+        <li></li>
+        <li></li>
+    </ul>
+
+
+</div>
+
+<div>
+    <form>
+        <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+        <input id="u_7sv" type="text" value="0" title="" onchange="calc_bdkg27()">
+
+        <input id="u_10" type="text" value="0" title="">
+        <input id="u_70" type="text" value="0" title="">
+        <input id="u_700" type="text" value="0" title="">
+        <input id="u_3000" type="text" value="0" title="">
+        <input id="percent1" type="text" value="0" title=""><br>
+        <input id="percent2" type="text" value="0" title=""><br>
+        <input id="percent3" type="text" value="0" title=""><br>
+        <input id="percent4" type="text" value="0" title=""><br>
+
+<!--        <input id="a1" type="text" value="0" title="">-->
+        <input id="a2" type="text" value="0" title="">
+        <input id="a3" type="text" value="0" title="">
+        <input id="b1" type="text" value="0" title="">
+        <input id="b2" type="text" value="0" title="">
+        <input id="b3" type="text" value="0" title="">
+        <input id="c1" type="text" value="0" title="">
+        <input id="c2" type="text" value="0" title="">
+        <input id="c3" type="text" value="0" title="">
+        <input id="d1" type="text" value="0" title="">
+        <input id="d2" type="text" value="0" title="">
+        <input id="d3" type="text" value="0" title="">
+    </form>
+
+    <table>
+        <tr>
+            <td><input id="a1" type="text" value="0" title=""></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
 
 
 </div>
