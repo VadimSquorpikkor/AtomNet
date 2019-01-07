@@ -24,50 +24,27 @@ let percent2;
 let percent3;
 let percent4;
 
-function operation() {
 /*
-    var td1 = document.getElementById('table1').getElementsByTagName('td');
-    var tr2 = document.getElementById('table1').getElementsByTagName('tr');
-
-    var td2 = tr2.getElementsByTagName('td');
-    var value = parseFloat(td2.innerHTML) / parseFloat(td1.innerHTML)
-    td2.innerHTML = value;
-
-    percent1 = 23;
-*/
-
-    var tr2 = document.getElementById('table1').getElementsByTagName('tr');
-
-    var td2 = tr2.getElementsByTagName('td');
-    var value = 100 / 5;
-    td2.innerHTML = value;
-
-    document.getElementById('percent1').value = "working!!!";
-    // set_all_textview();
-}
-
-function settable() {
+function settable_old() {
     var t = document.getElementById("table1");
     var trs = t.getElementsByTagName("tr");
     var tds = null;
 
-    for (var i=0; i<trs.length; i++)
-    {
+    for (var i = 0; i < trs.length; i++) {
         tds = trs[i].getElementsByTagName("td");
-        for (var n=0; n<trs.length;n++)
-        {
+        for (var n = 0; n < trs.length; n++) {
             tds[n].innerHTML = "<div>Hi!</div>"
         }
     }
 }
-
-
+*/
+/*
 function set_all_textview() {
     document.getElementById('percent1').value = percent1;
     document.getElementById('percent2').value = percent2;
     document.getElementById('percent3').value = percent3;
     document.getElementById('percent4').value = percent4;
-}
+}*/
 
 function set_all_var() {
     u_7sv = parseFloat(document.getElementById('u_7sv').value);
@@ -114,6 +91,44 @@ function calc_bdkg27() {
     percent3 = (700 - h_3) / 700 * 100;
     percent4 = (3000 - h_4) / 3000 * 100;
 
-    set_all_textview();
+    //set_all_textview();
+
+    document.getElementById('u_10').value = u_10.toFixed(2);
+    document.getElementById('u_70').value = u_70.toFixed(2);
+    document.getElementById('u_700').value = u_700.toFixed(2);
+    document.getElementById('u_3000').value = u_3000.toFixed(2);
+
+    settable();
+
+}
+
+function settable() {
+    let t = document.getElementById("table1");
+    let trs = t.getElementsByTagName("tr");
+
+    let tds = trs[0].getElementsByTagName("td");
+    {
+        tds[2].innerHTML = u_10.toFixed(2);
+        tds[3].innerHTML = h_1.toFixed(2);
+        tds[4].innerHTML = percent1.toFixed(2);
+    }
+    tds = trs[1].getElementsByTagName("td");
+    {
+        tds[2].innerHTML = u_70.toFixed(2);
+        tds[3].innerHTML = h_2.toFixed(2);
+        tds[4].innerHTML = percent2.toFixed(2);
+    }
+    tds = trs[2].getElementsByTagName("td");
+    {
+        tds[2].innerHTML = u_700.toFixed(2);
+        tds[3].innerHTML = h_3.toFixed(2);
+        tds[4].innerHTML = percent3.toFixed(2);
+    }
+    tds = trs[3].getElementsByTagName("td");
+    {
+        tds[2].innerHTML = u_3000.toFixed(2);
+        tds[3].innerHTML = h_4.toFixed(2);
+        tds[4].innerHTML = percent4.toFixed(2);
+    }
 
 }

@@ -49,6 +49,17 @@ div{
 	text-align: right;
 }
 
+.yellow_back_center{
+	font-size: 14px;
+	background-color: khaki;
+	padding: 10px;
+	margin-left: 10px;
+	width: 200px;
+	align-self: center;
+	text-align: center;
+	align-items: center;
+}
+
 .yellow_back{
 	font-size: 14px;
 	background-color: khaki;
