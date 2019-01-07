@@ -53,11 +53,10 @@ div{
 	font-size: 14px;
 	background-color: khaki;
 	padding: 10px;
-	margin-left: 10px;
+	margin-left: 50px;
 	width: 200px;
-	align-self: center;
-	text-align: center;
-	align-items: center;
+	alignment: center;
+	text-indent: 0px;
 }
 
 .yellow_back{
@@ -227,4 +226,17 @@ h3 {
     text-align: center;
     padding-bottom: 0;
     padding-top: 0;
+}
+
+.float_left{
+	float: left;
+	width: 500px;
+}
+
+.float_right{
+	float:right;
+}
+
+.float_clear {
+	clear:left;
 }
