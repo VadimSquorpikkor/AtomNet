@@ -24,6 +24,44 @@ let percent2;
 let percent3;
 let percent4;
 
+function operation() {
+/*
+    var td1 = document.getElementById('table1').getElementsByTagName('td');
+    var tr2 = document.getElementById('table1').getElementsByTagName('tr');
+
+    var td2 = tr2.getElementsByTagName('td');
+    var value = parseFloat(td2.innerHTML) / parseFloat(td1.innerHTML)
+    td2.innerHTML = value;
+
+    percent1 = 23;
+*/
+
+    var tr2 = document.getElementById('table1').getElementsByTagName('tr');
+
+    var td2 = tr2.getElementsByTagName('td');
+    var value = 100 / 5;
+    td2.innerHTML = value;
+
+    document.getElementById('percent1').value = "working!!!";
+    // set_all_textview();
+}
+
+function settable() {
+    var t = document.getElementById("table1");
+    var trs = t.getElementsByTagName("tr");
+    var tds = null;
+
+    for (var i=0; i<trs.length; i++)
+    {
+        tds = trs[i].getElementsByTagName("td");
+        for (var n=0; n<trs.length;n++)
+        {
+            tds[n].innerHTML = "<div>Hi!</div>"
+        }
+    }
+}
+
+
 function set_all_textview() {
     document.getElementById('percent1').value = percent1;
     document.getElementById('percent2').value = percent2;

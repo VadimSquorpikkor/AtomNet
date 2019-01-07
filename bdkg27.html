@@ -18,14 +18,21 @@
 
     <h1>БДКГ-27. Как рассчитать протокол поверки</h1>
 
-    <a href="docs/bdkg27/bdkg-27.ods">Открыть расчет в excel</a>
+    <a href="docs/bdkg27/bdkg-27.ods">Открыть расчет в excel</a><br>
     <a href="docs/sertificate/27_pov_rus.doc">Протокол поверки</a>
 
     <ul>
         <li>Собрать по схеме</li>
+
+        <img src="imgs/bdkg27/01.jpg" width="400">
+        <img src="imgs/bdkg27/02.jpg" width="700">
+
         <li>Подключиться к блоку обмена БДКГ-27 с помощью SARKtech</li>
         <li>Выставить сопротивление 10<sup>9</sup> Ом</li>
+        <img src="imgs/bdkg27/r1.jpg" width="400">
         <li>На блоке питания выставить такое напряжение, при котором показания будут равны 7 Зв/ч (примерно 4В)</li>
+        <img src="imgs/bdkg27/r2.jpg" width="400">
+        <img src="imgs/bdkg27/r3.jpg" width="400">
     </ul>
 
     <ul>
@@ -39,6 +46,7 @@
 <div>
     <form>
         <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+        <input type="button" value="РасчитатьTable" onclick="settable()">
         <input id="u_7sv" type="text" value="0" title="" onchange="calc_bdkg27()">
 
         <input id="u_10" type="text" value="0" title="">
@@ -64,9 +72,27 @@
         <input id="d3" type="text" value="0" title="">
     </form>
 
-    <table>
+    <table id="table1">
         <tr>
-            <td><input id="a1" type="text" value="0" title=""></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr><tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr><tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr><tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
