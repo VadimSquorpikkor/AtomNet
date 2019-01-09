@@ -106,25 +106,25 @@ function settable() {
     let t = document.getElementById("table1");
     let trs = t.getElementsByTagName("tr");
 
-    let tds = trs[0].getElementsByTagName("td");
+    let tds = trs[1].getElementsByTagName("td");
     {
         tds[2].innerHTML = u_10.toFixed(2);
         tds[3].innerHTML = h_1.toFixed(2);
         tds[4].innerHTML = percent1.toFixed(2);
     }
-    tds = trs[1].getElementsByTagName("td");
+    tds = trs[2].getElementsByTagName("td");
     {
         tds[2].innerHTML = u_70.toFixed(2);
         tds[3].innerHTML = h_2.toFixed(2);
         tds[4].innerHTML = percent2.toFixed(2);
     }
-    tds = trs[2].getElementsByTagName("td");
+    tds = trs[3].getElementsByTagName("td");
     {
         tds[2].innerHTML = u_700.toFixed(2);
         tds[3].innerHTML = h_3.toFixed(2);
         tds[4].innerHTML = percent3.toFixed(2);
     }
-    tds = trs[3].getElementsByTagName("td");
+    tds = trs[4].getElementsByTagName("td");
     {
         tds[2].innerHTML = u_3000.toFixed(2);
         tds[3].innerHTML = h_4.toFixed(2);
