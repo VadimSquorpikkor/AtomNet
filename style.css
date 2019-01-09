@@ -241,6 +241,12 @@ h3 {
 	clear:left;
 }
 
+.float_left_300{
+    float: left;
+    width: 300px;
+    text-indent: 0;
+}
+
 ol {
 	padding-left: 100px;
 	text-indent: 10px;
