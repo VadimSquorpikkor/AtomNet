@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DialogMRP" dlg:left="59" dlg:top="20" dlg:width="119" dlg:height="169" dlg:closeable="true" dlg:moveable="true" dlg:title="МРП-АТ920">
+ <dlg:bulletinboard>
+  <dlg:textfield dlg:id="TextField1" dlg:tab-index="0" dlg:left="20" dlg:top="89" dlg:width="20" dlg:height="12" dlg:align="center" dlg:value="325"/>
+  <dlg:textfield dlg:id="TextField2" dlg:tab-index="1" dlg:left="20" dlg:top="99" dlg:width="20" dlg:height="12" dlg:align="center" dlg:value="326"/>
+  <dlg:textfield dlg:id="TextField3" dlg:tab-index="2" dlg:left="20" dlg:top="111" dlg:width="20" dlg:height="12" dlg:align="center" dlg:value="327"/>
+  <dlg:textfield dlg:id="TextField4" dlg:tab-index="3" dlg:left="20" dlg:top="121" dlg:width="20" dlg:height="12" dlg:align="center" dlg:value="328"/>
+  <dlg:textfield dlg:id="TextField5" dlg:tab-index="4" dlg:left="20" dlg:top="131" dlg:width="20" dlg:height="12" dlg:align="center" dlg:value="329"/>
+  <dlg:textfield dlg:id="TextField6" dlg:tab-index="5" dlg:left="69" dlg:top="89" dlg:width="30" dlg:height="12" dlg:align="center" dlg:value="10283"/>
+  <dlg:textfield dlg:id="TextField7" dlg:tab-index="6" dlg:left="69" dlg:top="99" dlg:width="30" dlg:height="12" dlg:align="center" dlg:value="10283"/>
+  <dlg:textfield dlg:id="TextField8" dlg:tab-index="7" dlg:left="69" dlg:top="111" dlg:width="30" dlg:height="12" dlg:align="center" dlg:value="10283"/>
+  <dlg:textfield dlg:id="TextField9" dlg:tab-index="8" dlg:left="69" dlg:top="121" dlg:width="30" dlg:height="12" dlg:align="center" dlg:value="10283"/>
+  <dlg:textfield dlg:id="TextField10" dlg:tab-index="9" dlg:left="69" dlg:top="131" dlg:width="30" dlg:height="12" dlg:align="center" dlg:value="10283"/>
+  <dlg:text dlg:id="Label1" dlg:tab-index="10" dlg:left="11" dlg:top="73" dlg:width="37" dlg:height="16" dlg:value="Скорость счета фона" dlg:align="center" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="11" dlg:left="69" dlg:top="45" dlg:width="33" dlg:height="10" dlg:value="Активность"/>
+  <dlg:button dlg:id="CommandButton1" dlg:tab-index="12" dlg:left="30" dlg:top="148" dlg:width="55" dlg:height="14" dlg:value="Протокол поверки">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.Module2.calculate?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="13" dlg:left="70" dlg:top="55" dlg:width="28" dlg:height="12" dlg:value="90.8"/>
+  <dlg:textfield dlg:id="TextField11" dlg:tab-index="14" dlg:left="20" dlg:top="11" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.000"/>
+  <dlg:textfield dlg:id="TextField12" dlg:tab-index="15" dlg:left="20" dlg:top="21" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.001"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="16" dlg:left="52" dlg:top="13" dlg:width="48" dlg:height="8" dlg:value="Номер СРК"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="17" dlg:left="52" dlg:top="23" dlg:width="48" dlg:height="10" dlg:value="Номер МРП"/>
+  <dlg:textfield dlg:id="TextField13" dlg:tab-index="18" dlg:left="20" dlg:top="31" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.002"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="19" dlg:left="52" dlg:top="33" dlg:width="48" dlg:height="10" dlg:value="Номер БДКГ-11"/>
+  <dlg:textfield dlg:id="TextField14" dlg:tab-index="20" dlg:left="17" dlg:top="55" dlg:width="26" dlg:height="10" dlg:align="center" dlg:value="№516"/>
+  <dlg:text dlg:id="Label7" dlg:tab-index="21" dlg:left="10" dlg:top="45" dlg:width="39" dlg:height="10" dlg:value="№ источника"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="22" dlg:left="60" dlg:top="73" dlg:width="48" dlg:height="16" dlg:value="Скорость счета от источника" dlg:align="center" dlg:multiline="true"/>
+ </dlg:bulletinboard>
+</dlg:window>

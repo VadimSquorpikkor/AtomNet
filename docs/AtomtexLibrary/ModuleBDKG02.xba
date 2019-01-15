@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleBDKG02" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub Main
+
+End Sub
+
+REM declare dialog object &quot;globally&quot;
+dim oDialogBDKG02 as object
+&apos;-----------------------------------------
+Sub bdkg02_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialogBDKG02 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogBDKG02 )
+   oDialogBDKG02.Execute()
+End Sub
+&apos;-----------------------------------------
+Dim bground as Double
+Dim point_1 as Double
+Dim point_2 as Double
+Dim point_3 as Double
+Dim point_4 as Double
+Dim point_5 as Double
+Dim point_6 as Double
+Dim point_7 as Double
+Dim point_8 as Double
+
+Dim otn_pog_1 as Double
+Dim otn_pog_2 as Double
+Dim otn_pog_3 as Double
+Dim otn_pog_4 as Double
+Dim otn_pog_5 as Double
+Dim otn_pog_6 as Double
+Dim otn_pog_7 as Double
+Dim otn_pog_8 as Double
+
+&apos;sub calculate
+&apos;	msgbox sqr(16)
+&apos;end sub
+&apos;-----------------------------------------
+Sub getAllText_bdkg02
+    bground = oDialogBDKG02.Model.getByName(&quot;NumericField9&quot;).Value
+    point_1 = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value
+    point_2 = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value
+    point_3 = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value
+    point_4 = oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value
+    point_5 = oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value
+    point_6 = oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value
+    point_7 = oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value
+    point_8 = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value
+    
+End Sub
+&apos;-----------------------------------------
+sub calculate
+    getAllText_bdkg02()
+    
+    OpenTemplate(&quot;file:///d:\template_bdkg02.odt&quot;)
+    findAndRename(&quot;$tab_11$&quot;, bground)
+	&apos;сделать приведение к экспаненциальной
+	findAndRename(&quot;$tab_21$&quot;, point_1*1000+100)
+	findAndRename(&quot;$tab_22$&quot;, point_2*1000+100)
+	findAndRename(&quot;$tab_23$&quot;, point_3*1000+100)
+	findAndRename(&quot;$tab_24$&quot;, point_4*1000000)
+	findAndRename(&quot;$tab_25$&quot;, point_5*1000000)
+	findAndRename(&quot;$tab_26$&quot;, point_6*1000000)
+	findAndRename(&quot;$tab_27$&quot;, point_7*1000000000)
+	findAndRename(&quot;$tab_28$&quot;, point_8*1000000000)
+	&apos;сделать приведение к экспаненциальной
+	findAndRename(&quot;$tab_31$&quot;, point_1*1000+100-bground)
+	findAndRename(&quot;$tab_32$&quot;, point_2*1000+100-bground)
+	findAndRename(&quot;$tab_33$&quot;, point_3*1000+100-bground)
+	&apos;-------------
+	&apos;=((G1658-N1658)-C1658)/C1658*100
+	otn_pog_1 = (point_1*1000+100-bground-700)/700*100&apos;msgbox otn_pog_1
+	otn_pog_2 = (point_2*1000+100-bground-7000)/7000*100
+	otn_pog_3 = (point_3*1000+100-bground-70000)/70000*100
+	otn_pog_4 = (point_4*1000000-700000)/700000*100
+	otn_pog_5 = (point_5*1000000-7000000)/7000000*100
+	otn_pog_6 = (point_6*1000000-70000000)/70000000*100
+	otn_pog_7 = (point_7*1000000000-700000000)/700000000*100
+	otn_pog_8 = (point_8*1000000000-7000000000)/7000000000*100
+	&apos;сделать приведение к экспаненциальной
+	findAndRename(&quot;$tab_41$&quot;, myRoundOne(otn_pog_1))
+	findAndRename(&quot;$tab_42$&quot;, myRoundOne(otn_pog_2))
+	findAndRename(&quot;$tab_43$&quot;, myRoundOne(otn_pog_3))
+	findAndRename(&quot;$tab_44$&quot;, myRoundOne(otn_pog_4))
+	findAndRename(&quot;$tab_45$&quot;, myRoundOne(otn_pog_5))
+	findAndRename(&quot;$tab_46$&quot;, myRoundOne(otn_pog_6))
+	findAndRename(&quot;$tab_47$&quot;, myRoundOne(otn_pog_7))
+	findAndRename(&quot;$tab_48$&quot;, myRoundOne(otn_pog_8))
+	&apos;сделать приведение к экспаненциальной
+	&apos;=1,1+SQRT(O1658^2+I1658^2)
+	findAndRename(&quot;$tab_51$&quot;, myRoundOne(1.1+sqr(25+otn_pog_1*otn_pog_1)))
+	findAndRename(&quot;$tab_52$&quot;, myRoundOne(1.1+sqr(25+otn_pog_2*otn_pog_2)))
+	findAndRename(&quot;$tab_53$&quot;, myRoundOne(1.1+sqr(16+otn_pog_3*otn_pog_3)))
+	findAndRename(&quot;$tab_54$&quot;, myRoundOne(1.1+sqr(16+otn_pog_4*otn_pog_4)))
+	findAndRename(&quot;$tab_55$&quot;, myRoundOne(1.1+sqr(16+otn_pog_5*otn_pog_5)))
+	findAndRename(&quot;$tab_56$&quot;, myRoundOne(1.1+sqr(16+otn_pog_6*otn_pog_6)))
+	findAndRename(&quot;$tab_57$&quot;, myRoundOne(1.1+sqr(16+otn_pog_7*otn_pog_7)))
+	findAndRename(&quot;$tab_58$&quot;, myRoundOne(1.1+sqr(16+otn_pog_8*otn_pog_8)))
+end sub
+&apos;------------------------------------------------------------------
+function myRoundOne(num as Double)
+	dim int_num as long
+	int_num = num*10
+	myRoundOne = int_num*0.1
+end function
+</script:module>
