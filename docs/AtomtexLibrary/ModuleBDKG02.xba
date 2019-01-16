@@ -34,9 +34,7 @@ Dim otn_pog_6 as Double
 Dim otn_pog_7 as Double
 Dim otn_pog_8 as Double
 
-&apos;sub calculate
-&apos;	msgbox sqr(16)
-&apos;end sub
+
 &apos;-----------------------------------------
 Sub getAllText_bdkg02
     bground = oDialogBDKG02.Model.getByName(&quot;NumericField9&quot;).Value
@@ -51,27 +49,23 @@ Sub getAllText_bdkg02
     
 End Sub
 &apos;-----------------------------------------
-sub calculate
-    getAllText_bdkg02()
-    
-    OpenTemplate(&quot;file:///d:\template_bdkg02.odt&quot;)
-    findAndRename(&quot;$tab_11$&quot;, bground)
-	&apos;сделать приведение к экспаненциальной
-	findAndRename(&quot;$tab_21$&quot;, point_1*1000+100)
-	findAndRename(&quot;$tab_22$&quot;, point_2*1000+100)
-	findAndRename(&quot;$tab_23$&quot;, point_3*1000+100)
-	findAndRename(&quot;$tab_24$&quot;, point_4*1000000)
-	findAndRename(&quot;$tab_25$&quot;, point_5*1000000)
-	findAndRename(&quot;$tab_26$&quot;, point_6*1000000)
-	findAndRename(&quot;$tab_27$&quot;, point_7*1000000000)
-	findAndRename(&quot;$tab_28$&quot;, point_8*1000000000)
-	&apos;сделать приведение к экспаненциальной
-	findAndRename(&quot;$tab_31$&quot;, point_1*1000+100-bground)
-	findAndRename(&quot;$tab_32$&quot;, point_2*1000+100-bground)
-	findAndRename(&quot;$tab_33$&quot;, point_3*1000+100-bground)
-	&apos;-------------
-	&apos;=((G1658-N1658)-C1658)/C1658*100
-	otn_pog_1 = (point_1*1000+100-bground-700)/700*100&apos;msgbox otn_pog_1
+sub drawTable
+    findAndRename(&quot;$tab_11$&quot;, exponentialView(bground))
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_21$&quot;, exponentialView(point_1*1000+100))
+	findAndRename(&quot;$tab_22$&quot;, exponentialView(point_2*1000+100))
+	findAndRename(&quot;$tab_23$&quot;, exponentialView(point_3*1000+100))
+	findAndRename(&quot;$tab_24$&quot;, exponentialView(point_4*1000000))
+	findAndRename(&quot;$tab_25$&quot;, exponentialView(point_5*1000000))
+	findAndRename(&quot;$tab_26$&quot;, exponentialView(point_6*1000000))
+	findAndRename(&quot;$tab_27$&quot;, exponentialView(point_7*1000000000))
+	findAndRename(&quot;$tab_28$&quot;, exponentialView(point_8*1000000000))
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_31$&quot;, exponentialView(point_1*1000+100-bground))
+	findAndRename(&quot;$tab_32$&quot;, exponentialView(point_2*1000+100-bground))
+	findAndRename(&quot;$tab_33$&quot;, exponentialView(point_3*1000+100-bground))
+	&apos;-----------------------------------------------
+	otn_pog_1 = (point_1*1000+100-bground-700)/700*100
 	otn_pog_2 = (point_2*1000+100-bground-7000)/7000*100
 	otn_pog_3 = (point_3*1000+100-bground-70000)/70000*100
 	otn_pog_4 = (point_4*1000000-700000)/700000*100
@@ -79,7 +73,7 @@ sub calculate
 	otn_pog_6 = (point_6*1000000-70000000)/70000000*100
 	otn_pog_7 = (point_7*1000000000-700000000)/700000000*100
 	otn_pog_8 = (point_8*1000000000-7000000000)/7000000000*100
-	&apos;сделать приведение к экспаненциальной
+	&apos;-----------------------------------------------
 	findAndRename(&quot;$tab_41$&quot;, myRoundOne(otn_pog_1))
 	findAndRename(&quot;$tab_42$&quot;, myRoundOne(otn_pog_2))
 	findAndRename(&quot;$tab_43$&quot;, myRoundOne(otn_pog_3))
@@ -88,8 +82,7 @@ sub calculate
 	findAndRename(&quot;$tab_46$&quot;, myRoundOne(otn_pog_6))
 	findAndRename(&quot;$tab_47$&quot;, myRoundOne(otn_pog_7))
 	findAndRename(&quot;$tab_48$&quot;, myRoundOne(otn_pog_8))
-	&apos;сделать приведение к экспаненциальной
-	&apos;=1,1+SQRT(O1658^2+I1658^2)
+	&apos;-----------------------------------------------
 	findAndRename(&quot;$tab_51$&quot;, myRoundOne(1.1+sqr(25+otn_pog_1*otn_pog_1)))
 	findAndRename(&quot;$tab_52$&quot;, myRoundOne(1.1+sqr(25+otn_pog_2*otn_pog_2)))
 	findAndRename(&quot;$tab_53$&quot;, myRoundOne(1.1+sqr(16+otn_pog_3*otn_pog_3)))
@@ -98,11 +91,54 @@ sub calculate
 	findAndRename(&quot;$tab_56$&quot;, myRoundOne(1.1+sqr(16+otn_pog_6*otn_pog_6)))
 	findAndRename(&quot;$tab_57$&quot;, myRoundOne(1.1+sqr(16+otn_pog_7*otn_pog_7)))
 	findAndRename(&quot;$tab_58$&quot;, myRoundOne(1.1+sqr(16+otn_pog_8*otn_pog_8)))
+
+end sub
+
+sub calculate
+    getAllText_bdkg02()
+    
+    OpenTemplate(&quot;file:///d:\template_bdkg02.odt&quot;)
+    &apos;-----------------------------------------------
+	drawTable()
+	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField2&quot;).Text)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField3&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)	
+	
 end sub
 &apos;------------------------------------------------------------------
+rem Возможно есть смысл сделать через Format, чтобы было &quot;7,0&quot;, а не &quot;7&quot;
 function myRoundOne(num as Double)
 	dim int_num as long
 	int_num = num*10
 	myRoundOne = int_num*0.1
 end function
+&apos;------------------------------------------------------------------
+function exponentialView(num as double)
+	MyFormat = &quot;0.00&quot;
+	if num&lt;100 then
+		exponentialView = Format(num/10, MyFormat) &amp; &quot;E+01&quot;
+	elseif	num&lt;1000 then
+		exponentialView = Format(num/100, MyFormat) &amp; &quot;E+02&quot;
+	elseif	num&lt;10000 then
+		exponentialView =Format(num/1000, MyFormat) &amp; &quot;E+03&quot;
+	elseif	num&lt;100000 then
+		exponentialView = Format(num/10000, MyFormat) &amp; &quot;E+04&quot;
+	elseif	num&lt;1000000 then
+		exponentialView = Format(num/100000, MyFormat) &amp; &quot;E+05&quot;
+	elseif	num&lt;10000000 then
+		exponentialView = Format(num/1000000, MyFormat) &amp; &quot;E+06&quot;
+	elseif	num&lt;100000000 then
+		exponentialView = Format(num/10000000, MyFormat) &amp; &quot;E+07&quot;
+	elseif	num&lt;1000000000 then
+		exponentialView = Format(num/100000000, MyFormat) &amp; &quot;E+08&quot;
+	elseif	num&lt;10000000000 then
+		exponentialView = Format(num/1000000000, MyFormat) &amp; &quot;E+09&quot;
+	end if
+end function
+&apos;-----------------------------------------------------------
+
+
+
 </script:module>

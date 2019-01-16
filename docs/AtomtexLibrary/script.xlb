@@ -4,4 +4,6 @@
  <library:element library:name="Module1"/>
  <library:element library:name="Module2"/>
  <library:element library:name="ModuleBDKG02"/>
+ <library:element library:name="Module3"/>
+ <library:element library:name="ModuleBDKG204"/>
 </library:library>

@@ -117,4 +117,5 @@ function myRound(num as Double)
 	int_num = num*100
 	myRound = int_num*0.01
 end function
+
 </script:module>

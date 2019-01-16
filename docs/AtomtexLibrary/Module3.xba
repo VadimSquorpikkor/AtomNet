@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module3" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub Main
+
+End Sub
+
+function get_activity(a0 as double, days_left as integer)
+	
+end function
+
+sub exp_button
+	msgbox exp(1)
+end sub
+
+Sub exp_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialog1 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.Dialog1 )
+   oDialog1.Execute()
+End Sub
+</script:module>
