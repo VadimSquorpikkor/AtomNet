@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Прошивка ДКР-АТ1103М</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../index.html">Содержание </a>
+    <a class="white_font" href="1103.html">/ ДКР-АТ1103М </a>
+    / Прошивка ДКР-АТ1103М
+</div>
+
+<div>
+
+    <h1>Прошивка ДКР-АТ1103М</h1>
+
+    <ul>
+        <li>Подключить дозиметр к USB адаптеру (адаптер к USB пока не подключать)</li>
+        <li>Замкнуть на контроллере землю (22-й вывод, например) и PSEN (32-й вывод).
+            <span class="mark_green"> А лучше зажать кнопку звука</span></li>
+        <li>Подключить адаптер к USB, при этом будет слышен звуковой сигнал. Кнопку можно отпустить</li>
+        <li>Запустить Flip</li>
+        <ul>
+            <li>Выбрать тип контроллера[1]</li>
+            <li>нажать[2], выбрать порт, нажать "Connect"</li>
+            <li>Выбрать прошивку[3] &mdash; <span class="attention">1103v1.hex</span></li>
+            <li>Нажать "Run"</li>
+            <img src="../imgs/1103/1.png" width="700">
+            <li>После окончания прошивки <span class="attention">снять флаг BLJB</span> (если стоял)
+                и <span class="attention">поставить Level2</span></li>
+            <img src="../imgs/1103/2.png" width="500">
+            <li>Если выскочила такая ошибка:</li>
+            <img src="../imgs/1103/3.png" width="492">
+            <li>ХЗ, что такое, единственно найденное 100% решение &mdash; перезагрузить комп и перепрошить,
+                после перезагрузки ошибка больше не появляется
+            </li>
+        </ul>
+
+
+    </ul>
+
+</div>
+
+</body>
+</html>
