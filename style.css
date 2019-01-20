@@ -3,6 +3,7 @@ img {
 	display: block;
 	margin: 20px auto;
 	/*width: 600px;*/
+	/*box-shadow: 3px 3px 4px #333333;*/
 
 }
 img.small {
@@ -22,22 +23,44 @@ div{
 	background-color:white;
 }
 
-.header_div{
+.footer_div{
 	background-color:orange;
-	height:50px;
+	height:35px;
 	font-family:sans-serif;
 	color: white;
+	border-radius: 20px;
+	/*position: fixed;*/
+	/*position: relative;*/
+	/*margin: 0;*/
+	bottom: 0;
+	width: 90%;
+	/*text-align: center;*/
 	padding-top: 10px;
 }
 
-.yellow_back{
+.header_div{
+	/*position: fixed;*/
+	background-color:orange;
+	height:35px;
+	font-family:sans-serif;
+	color: white;
+	padding-top: 10px;
+	border-radius: 20px;
+}
+
+.like_a_button {
+	border-style: double;
+
+}
+
+/*.yellow_back{
 	font-size: 14px;
 	background-color: khaki;
 	padding: 5px 10px;
-	/*text-indent: 0;*/
+	!*text-indent: 0;*!
 	margin: 10px 10px;
-	/*width: 700px;*/
-}
+	!*width: 700px;*!
+}*/
 
 .yellow_back_right{
 	font-size: 14px;
@@ -60,13 +83,19 @@ div{
 }
 
 .yellow_back{
+
+	margin-top: 5px;
 	font-size: 14px;
 	background-color: khaki;
 	padding: 10px;
 	/*margin-left: 10px;*/
-	width: 90%;
+	/*width: 90%;*/
 	align-self: center;
 	text-align: center;
+
+	text-indent: 0;
+	border-radius: 20px;
+
 }
 
 .attention{
@@ -104,9 +133,24 @@ h1{
 a{
 	color: orange;
 	//color:#bd7400;
-	font-size:20px;
-	font-family:sans-serif
+	font-size:18px;
+	font-family:sans-serif;
+	text-decoration: none;
+	padding: 0 5px;
+
 }
+
+/*a{
+	color: white;
+	background-color: orange;
+	//color:#bd7400;
+	font-size:18px;
+	font-family:sans-serif;
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 0px 25px;
+
+}*/
 
 .dark_link {
 	color: orangered;
@@ -123,14 +167,28 @@ a{
 }*/
 
 a:hover {
-    color:orangered;
-    font-size:20px;
+    /*color:orangered;*/
+    font-size:18px;
     font-family:sans-serif;
+
+	color: white;
+	background-color: orange;
+	/*color:#bd7400;*/
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 0 5px 1px 5px; /*t r b l*/
+
 
 }
 
+/*USELESS: нужно будет добавить в div'ы color:white и можно будет удалять  */
 .white_font{
 	color:white;
+	text-decoration: none;
+}
+
+a:hover.white_font {
+	color:red;
 	text-decoration: none;
 }
 
@@ -166,6 +224,11 @@ a:hover {
 
 .left_align{
 	text-align:left;
+	font-size: smaller;
+	background-color: lemonchiffon;
+	text-indent: 0;
+	padding: 10px 20px;
+	border-radius: 25px;
 }
 
 ul{
