@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Предварительная калибровка по Ba-133</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="script_r.js"></script>
+
+</head>
+
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../index.html">Содержание </a>/
+    <a class="white_font" href="1103.html"> ДКР-АТ1103М </a>
+    / Предварительная калибровка по Ba<sup>133</sup>
+</div>
+
+<div>
+
+    <h1>1103M. Предварительная калибровка по Ba<sup>133</sup></h1>
+
+    <ul>
+        <li>Подключите прибор к ПЭВМ с помощь кабеля БД через модуль адаптера USB-БД (рис. 8)</li>
+        <img src="../imgs/1103/4.jpg" width="450">
+        <li>Переведите прибор в <a href="1103_spectr.html">спектрометрический режим F5</a></li>
+        <li>Запустите программу ATAS tech. Нажмите режим «инициализировать соединение». Программа должна обнаружить
+            прибор и вывести на экран спектр, считываемый с прибора. <span class="mark_green">То же (и проще) можно сделать
+                    с помощью BackgroundCalibration: запустить BG, выбрать дозиметр, нажать спектр. Режим F5 включится
+                    автоматически<i></i>:
+        </li>
+
+        <img src="../imgs/1103/5.png" width="700">
+
+        <li>При помощи подборочного резистора R13 грубо и потенциометра R16 платы преобразователя «ФОН» (рис. 10)
+            точно
+            установите второй пик спектра Ba133 в 109±1 канал. При этом первый пик Ba133 должен находится примерно в
+            42
+            канале (рис. 11)
+        <img src="../imgs/1103/ba1.jpg" width="700">
+        <img src="../imgs/1103/8.png" width="700">
+        </li>
+    </ul>
+
+
+
+    <div class="yellow_back">
+        <form>
+            № канала <input id="a" type="text" value="100" title="channel">
+            <input type="button" value="Расчитать" onclick="get_r()">
+            Номинал (кОм): <input id="result" type="text" title="res">
+        </form>
+    </div>
+<br>
+</div>
+
+<div class="footer_div">
+    <a class="white_font" href="../index.html">Содержание </a>/
+    <a class="white_font" href="1103.html"> ДКР-АТ1103М </a>
+    / Предварительная калибровка по Ba<sup>133</sup>
+</div>
+
+
+</body>
+</html>
