@@ -18,9 +18,13 @@ div{
 	padding-right:50px;
 	text-align:justify;
 	text-indent:40px;
-	font-size:20px;
+	font-size:18px;
 	font-family:sans-serif;
 	background-color:white;
+}
+
+p {
+
 }
 
 .footer_div{
