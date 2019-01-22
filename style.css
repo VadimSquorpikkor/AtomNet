@@ -10,6 +10,13 @@ img {
 
 }
 
+.butt_in_text {
+    /*position: absolute;*/
+    /*display: compact;*/
+    /*margin: 0;*/
+    float: left;
+}
+
 .img_link {
     width: 150px;
     height: 150px;
