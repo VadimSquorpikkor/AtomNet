@@ -77,14 +77,15 @@
         <li>Выставить <a href="1103_smesch.html">смещение -3…-5мВ</a>
             <span class="mark_yellow">Данные записать в паспорт ("Смещ.")</span>
         </li>
-        <div class="yellow_back">
-            <form>
+
+        <!--<div class="yellow_back">-->
+            <form class="yellow_back">
                 <i>Мало статистики, поэтому форма пока считает примерно</i><br><br>
                 U(mV) <input id="b" type="text" value="2.68" title="channel">
                 <input type="button" value="Расчитать" onclick="get_sm()">
                 Номинал (MОм): <input id="res_sm" type="text" title="res">
             </form>
-        </div>
+        <!--</div>-->
         <br>
 
         <li>Выставить уровень опорного сигнала (сигнал светодиода пройденного через блок ФЭУ) на выводе 7 D4.2 (рис.5) в
