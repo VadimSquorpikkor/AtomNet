@@ -4,6 +4,8 @@
     <META charset="utf8">
     <title>ДКР-АТ1103М. Смещение -3В...-5В</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="script_r.js"></script>
+
 </head>
 
 <body>
@@ -24,7 +26,8 @@
     <ul>
         <li>На место [А] запаять резистор на 3.6 МОм</li>
         <li>Если напряжение больше необходимого, поменять на резистор меньшего номинала</li>
-        <li>Если напряжение меньше необходимого, поменять на резистор большего номинала</li>
+        <li>Если напряжение меньше необходимого, поменять на резистор большего номинала
+            <span class="mark_yellow">Данные записать в паспорт ("Смещ.")</span></li>
     </ul>
 
     <img src="../imgs/1103/s2.jpg" width="800">
@@ -72,6 +75,16 @@
     </table>
     <br>
 </div>
+<p>Можно также воспользоваться формой:
+<div class="yellow_back">
+    <form>
+        <i>Мало статистики, поэтому форма пока считает примерно</i><br><br>
+        U(mV) <input id="b" type="text" value="2.68" title="channel">
+        <input type="button" value="Расчитать" onclick="get_sm()">
+        Номинал (MОм): <input id="res_sm" type="text" title="res">
+    </form>
+</div>
+<br>
 
 <div class="footer_div">
     <a class="white_font" href="../index.html">Содержание </a>/

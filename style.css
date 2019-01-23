@@ -32,8 +32,8 @@ img.small {
 } 
 
 div{
-	padding-left:50px; 
-	padding-right:50px;
+	padding-left:30px;
+	padding-right:30px;
 	text-align:justify;
 	text-indent:40px;
 	font-size:18px;
@@ -42,7 +42,7 @@ div{
 }
 
 p {
-
+    text-indent:40px;
 }
 
 .footer_div{
@@ -126,6 +126,10 @@ p {
 
 .mark_green{
 	background-color: greenyellow;
+}
+
+.mark_yellow{
+    background-color: yellow;
 }
 
 .big_one{
@@ -259,9 +263,15 @@ ul{
 }
 
 ol{
+    /*padding-left: 40px;*/
     text-indent:10px;
     font-size:18px;
 }
+
+/*li {
+    text-indent:20px;
+
+}*/
 
 table{
 	font-size:14px;
