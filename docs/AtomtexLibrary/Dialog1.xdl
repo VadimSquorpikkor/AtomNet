@@ -20,7 +20,7 @@
   <dlg:text dlg:id="Label2" dlg:tab-index="5" dlg:left="66" dlg:top="25" dlg:width="31" dlg:height="8" dlg:value="Источник"/>
   <dlg:text dlg:id="Label3" dlg:tab-index="6" dlg:left="67" dlg:top="47" dlg:width="37" dlg:height="8" dlg:value="Дата поверки"/>
   <dlg:button dlg:id="CommandButton1" dlg:tab-index="7" dlg:left="28" dlg:top="69" dlg:width="44" dlg:height="12" dlg:value="Считать">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.Module3.exp_button?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.Module3.get_activity_516?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>

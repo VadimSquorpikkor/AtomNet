@@ -37,6 +37,7 @@ const a0_2910 = 67.7;
 
 //Вывод активностей для каждого из источников на сегодняшний день
 function get_act() {
+    // document.getElementById('516').value = days_left();
     document.getElementById('516').value = activity_of_cs137(a0_516, days_left());
     document.getElementById('517').value = activity_of_cs137(a0_517, days_left());
     document.getElementById('518').value = activity_of_cs137(a0_518, days_left());

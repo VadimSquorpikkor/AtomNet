@@ -2,16 +2,60 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module3" script:language="StarBasic">REM  *****  BASIC  *****
 
+&apos;&apos;&apos;&apos;&apos;&apos;GET ACTIVITY&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;
+
 Sub Main
 
 End Sub
 
-function get_activity(a0 as double, days_left as integer)
+&apos;function get_activity(a0 as double, days_left as integer, t_pol)
+&apos;	get_activity = a0 * exp(-0.693147/t_pol * days_left)
+&apos;end function
+
+const act516 as double = 91.3
+
+function get_activity_516()
+	dim mydate as date
+	dim nowdate as date
+	mydate = &quot;17.4.2016&quot;
 	
+	dim ret as integer  
+	ret = nowdate(now) - mydate
+	
+	dim act as double
+	act = act516 * exp(-0.693147/(365.25 * 30.17) * 834.0)   &apos;834
+	
+	print ret
 end function
 
+Sub DateTimeField
+oField = ThisComponent.createInstance(&quot;com.sun.star.text.TextField.DateTime&quot;)
+oField.IsDate = True
+oField.NumberFormat = 8037 &apos;8051=MM/DD/YYYY HH:MM:SS, 8040=HH:MM, 8037=MM/DD/YY
+oText = ThisComponent.getText()
+oVC = ThisComponent.CurrentController.ViewCursor
+oText.insertTextContent( oVC.End, oField, False )
+oField.IsFixed = True
+With oField.DateTimeValue
+   .Year = Year(Now())
+   .Month = Month(Now())
+   .Day = Day(Now())
+   .Hours = Hour(Now())
+   .Minutes
+end With
+End Sub
+
+&apos;Dim psh as double
+&apos;a0_516 = 91.3
+&apos;dim a0_517 as double = 88.8
+&apos;dim a0_518 as double = 94.6
+&apos;dim a0_519 as double = 88.2
+&apos;dim a0_520 as double = 91.3
+&apos;dim a0_521 as double = 93.5
+&apos;dim a0_2910 as double = 67.7
+
 sub exp_button
-	msgbox exp(1)
+	print get_activity_516()
 end sub
 
 Sub exp_Dialog_Show
