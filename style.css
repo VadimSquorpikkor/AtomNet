@@ -17,11 +17,42 @@ img {
     float: left;
 }
 
-.img_link {
-    width: 150px;
-    height: 150px;
-    float: left;
-    margin: 5px;
+
+/*******************************************************************/
+div.item {
+	vertical-align: top;
+	display: inline-block;
+	text-align: center;
+	width: 200px;
+	height: 200px;
+	background-color: #e9e9e9;
+	color: dimgray;
+	/*padding: 20px;*/
+	text-indent: 0;
+	border-radius: 20px;
+	margin: 10px 0 0 10px;
+	float: left;
+}
+.item a:hover {
+	/*all: unset;*/
+	background-color: green;
+	color: red;
+	border-radius: 0;
+	padding: 0;
+}
+.item a {
+	/*all: unset;*/
+
+	border-radius: 0;
+	padding: 0;
+}
+img.item {
+	width: 200px;
+	height: 120px;
+	background-color: grey;
+}
+.caption {
+	display: block;
 }
 
 img.small {
@@ -29,7 +60,14 @@ img.small {
 	width : 50px;
 	float:left;
 	/*margin-left: 10px*/
-} 
+}
+/*img.item:hover {
+	width: 200px;
+	height: 140px;
+	background-color: grey;
+}*/
+/*******************************************************************/
+
 
 div{
 	padding-left:30px;
