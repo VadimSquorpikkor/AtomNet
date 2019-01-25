@@ -14,18 +14,18 @@ End Sub
 
 const act516 as double = 91.3
 
+&apos;  IsoDate = CDateToIso(Date)
+&apos;  oTextField.setDate(IsoDate)
+
 function get_activity_516()
 	dim mydate as date
-	dim nowdate as date
-	mydate = &quot;17.4.2016&quot;
-	
-	dim ret as integer  
-	ret = nowdate(now) - mydate
-	
 	dim act as double
-	act = act516 * exp(-0.693147/(365.25 * 30.17) * 834.0)   &apos;834
-	
-	print ret
+	act = act516 * exp(-0.693147/(365.25 * 30.17) * days_left)   &apos;834
+	print act
+end function
+
+function days_left()
+	days_left = Now - DateSerial(2016, 10, 12)	
 end function
 
 Sub DateTimeField

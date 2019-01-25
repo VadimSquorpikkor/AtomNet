@@ -328,6 +328,12 @@ table{
 
 }
 
+.small_table{
+    font-size:14px;
+    border-collapse: collapse;
+    width: 300px;
+}
+
 table, th, td{
 	border: 1px solid black;
 	text-align: center;

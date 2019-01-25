@@ -11,6 +11,7 @@ function activity_of_cs137(a0, days_left) {
     return activity(a0, days_left, t_pol);
 }
 
+//2016.10.12
 //Сколько дней прошло со дня поверки источников
 function days_left() {
     let pov_date = new Date(2016, 9, 12);
