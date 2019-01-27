@@ -12,8 +12,72 @@ dim oDialogBDKG02 as object
 Sub bdkg02_Dialog_Show
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogBDKG02 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogBDKG02 )
+   
+   
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  
+  oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;TimeField1&quot;)
+  oDateFieldModel.Date = DateSerial(2016, 10, 12)
+  
+  &apos;oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
+  &apos;oNumericFieldModel.value = get_activity_516()
+   
+  Dim nCount As Integer
+  Dim sItems As Variant
+  REM get control
+  oComboBox = oDialogBDKG02.getControl(&quot;ComboBox1&quot;)
+  REM first remove all old items from the list
+  nCount = oComboBox.getItemCount()
+  oComboBox.removeItems( 0, nCount )
+  REM add new items to the list
+  sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+  oComboBox.addItems( sItems, 0 )
+   
    oDialogBDKG02.Execute()
+   
 End Sub
+	
+  Function GetSelectedItem( oComboBoxModel As Object ) As String
+      GetSelectedItem = oComboBoxModel.Text
+  End Function	
+	
+sub comboChanged
+	oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
+	dim num as string
+	oComboBox = oDialogBDKG02.getControl(&quot;ComboBox1&quot;)
+	num = oComboBox.text
+	select case num
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity(act2910)
+	end select	
+end sub
 &apos;-----------------------------------------
 Dim bground as Double
 Dim point_1 as Double
@@ -92,6 +156,12 @@ sub drawTable
 	findAndRename(&quot;$tab_57$&quot;, myRoundOne(1.1+sqr(16+otn_pog_7*otn_pog_7)))
 	findAndRename(&quot;$tab_58$&quot;, myRoundOne(1.1+sqr(16+otn_pog_8*otn_pog_8)))
 
+end sub
+
+sub set_field
+  oNumericFieldModel = oDialog.Model.NumericField1
+  oNumericFieldModel.Value = 25.40
+  oNumericFieldModel.DecimalAccuracy = 2
 end sub
 
 sub calculate
