@@ -31,11 +31,8 @@ Sub bdkg02_Dialog_Show
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;)
   oNumericFieldModel.valuestep = 0.1
   
-  oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;TimeField1&quot;)
-  oDateFieldModel.Date = DateSerial(2016, 10, 12)
-  
-  &apos;oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
-  &apos;oNumericFieldModel.value = get_activity_516()
+  oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
+  oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
    
   Dim nCount As Integer
   Dim sItems As Variant

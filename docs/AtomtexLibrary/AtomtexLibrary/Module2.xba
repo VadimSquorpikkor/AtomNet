@@ -90,7 +90,7 @@ sub calculate
     absolut_pogresh = 110.1 - rasch_znach_chuvstv
     &apos;msgBox absolut_pogresh
     
-    OpenTemplate(&quot;file:///d:\template.odt&quot;)
+    OpenTemplate(&quot;file:///c:\template_bdkg02.odt&quot;)
     findAndRename(&quot;$activity$&quot;, activity)
     findAndRename(&quot;$bg1$&quot;, bg_1)
     findAndRename(&quot;$bg2$&quot;, bg_2)
