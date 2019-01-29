@@ -32,6 +32,7 @@ Sub bdkg02_Dialog_Show
   oNumericFieldModel.valuestep = 0.1
   
   oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
+  oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
   oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
    
   Dim nCount As Integer
@@ -170,9 +171,23 @@ sub calculate
 	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField2&quot;).Text)
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
 	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
-	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField3&quot;).Text)
-	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)	
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDateFieldModel.Value)	
 	
+end sub
+&apos;---------------------------------------------------
+sub makeSertRU
+	getAllText_bdkg02()
+    
+    OpenTemplate(&quot;file:///d:\template_bdkg02_ser_RU.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
+	print oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text 	
+	findAndRename(&quot;$date$&quot;, oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text)	
+
+    
 end sub
 &apos;------------------------------------------------------------------
 rem Возможно есть смысл сделать через Format, чтобы было &quot;7,0&quot;, а не &quot;7&quot;
