@@ -32,6 +32,13 @@ function get_activity(src as double)
 	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left)
 end function
 
+
+function get_activity_OLD(src as double)
+	MyFormat = &quot;0.00&quot;
+	print Format((src * exp(-0.693147/(365.25 * 30.17) * days_left)), MyFormat)
+	get_activity = Format((src * exp(-0.693147/(365.25 * 30.17) * days_left)), MyFormat)
+end function
+
 function days_left()
 	days_left = Now - DateSerial(2016, 10, 12)	
 end function
