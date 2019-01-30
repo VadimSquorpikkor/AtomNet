@@ -28,15 +28,17 @@ rem так не нужны будут ифы и свитч кейсы
 &apos;  IsoDate = CDateToIso(Date)
 &apos;  oTextField.setDate(IsoDate)
 
-function get_activity(src as double)
+function get_activity_OLD(src as double)
 	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left)
 end function
 
 
-function get_activity_OLD(src as double)
+function get_activity(src as double)
 	MyFormat = &quot;0.00&quot;
-	print Format((src * exp(-0.693147/(365.25 * 30.17) * days_left)), MyFormat)
-	get_activity = Format((src * exp(-0.693147/(365.25 * 30.17) * days_left)), MyFormat)
+	&apos;print Format((src * exp(-0.693147/(365.25 * 30.17) * days_left)), MyFormat)
+	dim act as double
+	act = src * exp(-0.693147/(365.25 * 30.17) * days_left)
+	get_activity = Format(act, MyFormat)
 end function
 
 function days_left()

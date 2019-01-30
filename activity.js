@@ -27,6 +27,13 @@ function days_left_2() {
     return (today.getTime() - pov_date.getTime()) / (1000*60*60*24);
 }
 
+function days_left_cd() {
+    let pov_date = new Date(2019, 0, 30);
+    let today = new Date();
+    //Math.floor((today.getTime() - pov_date.getTime()) / (1000*60*60*24));
+    return (today.getTime() - pov_date.getTime()) / (1000*60*60*24);
+}
+
 //Активность источников в день поверки
 const a0_516 = 91.3;
 const a0_517 = 88.8;
@@ -46,6 +53,11 @@ function get_act() {
     document.getElementById('520').value = activity_of_cs137(a0_520, days_left());
     document.getElementById('521').value = activity_of_cs137(a0_521, days_left());
     document.getElementById('2910').value = activity_of_cs137(a0_2910, days_left_2());
+}
+
+function get_cd_1123() {
+    // document.getElementById('516').value = days_left();
+    document.getElementById('cd').value = activity(81, days_left_cd(), 461.4);
 }
 
 //Сумарная активность всех источников

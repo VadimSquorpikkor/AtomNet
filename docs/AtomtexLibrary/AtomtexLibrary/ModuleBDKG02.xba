@@ -46,13 +46,39 @@ Sub bdkg02_Dialog_Show
   sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
   oComboBox.addItems( sItems, 0 )
    
+     oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
+     oNumericFieldModel.DECIMALACCURACY = 2
+   
    oDialogBDKG02.Execute()
    
 End Sub
-	
+&apos;--------------------------------------------------------------------	
   Function GetSelectedItem( oComboBoxModel As Object ) As String
       GetSelectedItem = oComboBoxModel.Text
   End Function	
+&apos;--------------------------------------------------------------------	
+
+&apos;d = CDate(38541.173) 
+&apos;    oLocale.Language = &quot;de&quot;
+&apos;msgbox oNumberFormatter.convertNumberToPreviewString (&quot;DD MMMM YYYY, HH:MM.SS&quot;, d, oLocale, true)
+
+&apos;--------------------------
+&apos;Sub Main
+
+&apos;d = CDate(38541.173)
+
+&apos;oNumberFormatter = createUnoService(&quot;com.sun.star.util.NumberFormatter&quot;)
+&apos;oNumberFormatter.attachNumberFormatsSupplier(ThisComponent)
+
+&apos;oLocale  = createUnoStruct( &quot;com.sun.star.lang.Locale&quot; )
+&apos;oLocale.Language = &quot;en&quot;
+
+&apos;msgbox oNumberFormatter.convertNumberToPreviewString ( &quot;DD:MM:YYYY&quot;, d, oLocale, true )
+&apos;msgbox oNumberFormatter.convertNumberToPreviewString ( &quot;DD MMM YY&quot;, d, oLocale, true )
+&apos;msgbox oNumberFormatter.convertNumberToPreviewString ( &quot;DD MMM YYYY, HH:MM.SS&quot;, d, oLocale, true )
+
+&apos;end sub
+&apos;------------------------
 	
 sub comboChanged
 	oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
@@ -172,8 +198,7 @@ sub calculate
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
 	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
-	findAndRename(&quot;$grad$&quot;, oDateFieldModel.Value)	
-	
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)	
 end sub
 &apos;---------------------------------------------------
 sub makeSertRU
@@ -185,7 +210,8 @@ sub makeSertRU
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
 	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
 	print oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text 	
-	findAndRename(&quot;$date$&quot;, oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text)	
+	&apos;findAndRename(&quot;$date$&quot;, oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text)	
+	&apos;findAndRename(&quot;$date$&quot;, oDateFieldModel.Value)
 
     
 end sub

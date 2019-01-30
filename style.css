@@ -76,6 +76,15 @@ img.small {
 }*/
 /*******************************************************************/
 
+.orange_link {
+    background-color: darkorange;
+    color: white;
+    border-radius: 10px;
+}
+
+.orange_link:hover {
+    background-color: green;
+}
 
 div{
 	padding-left:30px;
