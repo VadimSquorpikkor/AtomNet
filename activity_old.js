@@ -63,11 +63,11 @@ function get_cd_1123() {
 //Сумарная активность всех источников
 function get_all_activities() {
     document.getElementById('sum_activity').value =
-        activity_of_cs137(a0_516, days_left())+
-        activity_of_cs137(a0_517, days_left())+
-        activity_of_cs137(a0_518, days_left())+
-        activity_of_cs137(a0_519, days_left())+
-        activity_of_cs137(a0_520, days_left())+
-        activity_of_cs137(a0_521, days_left());
+        activity_of_cs137(a0_516, days_left())*1+
+        activity_of_cs137(a0_517, days_left())*1+
+        activity_of_cs137(a0_518, days_left())*1+
+        activity_of_cs137(a0_519, days_left())*1+
+        activity_of_cs137(a0_520, days_left())*1+
+        activity_of_cs137(a0_521, days_left())*1;
 }
 

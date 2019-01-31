@@ -16,20 +16,28 @@ Sub bdkg02_Dialog_Show
    
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;)
   oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;)
   oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7.0
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;)
   oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;)
   oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;)
   oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;)
   oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;)
   oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.7
   oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;)
   oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7
   
   oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
   oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
@@ -88,6 +96,7 @@ sub comboChanged
 	select case num
 		case &quot;№516&quot;
 		oNumericFieldModel.value = get_activity(act516)
+		&apos;print get_activity(act516)
 		case &quot;№517&quot;
 		oNumericFieldModel.value = get_activity(act517)
 		case &quot;№518&quot;
@@ -122,7 +131,7 @@ Dim otn_pog_6 as Double
 Dim otn_pog_7 as Double
 Dim otn_pog_8 as Double
 
-
+Dim activity as Double  
 &apos;-----------------------------------------
 Sub getAllText_bdkg02
     bground = oDialogBDKG02.Model.getByName(&quot;NumericField9&quot;).Value
@@ -138,6 +147,7 @@ Sub getAllText_bdkg02
 End Sub
 &apos;-----------------------------------------
 sub drawTable
+	MyFormat = &quot;0.0&quot;
     findAndRename(&quot;$tab_11$&quot;, exponentialView(bground))
 	&apos;-----------------------------------------------
 	findAndRename(&quot;$tab_21$&quot;, exponentialView(point_1*1000+100))
@@ -162,23 +172,23 @@ sub drawTable
 	otn_pog_7 = (point_7*1000000000-700000000)/700000000*100
 	otn_pog_8 = (point_8*1000000000-7000000000)/7000000000*100
 	&apos;-----------------------------------------------
-	findAndRename(&quot;$tab_41$&quot;, myRoundOne(otn_pog_1))
-	findAndRename(&quot;$tab_42$&quot;, myRoundOne(otn_pog_2))
-	findAndRename(&quot;$tab_43$&quot;, myRoundOne(otn_pog_3))
-	findAndRename(&quot;$tab_44$&quot;, myRoundOne(otn_pog_4))
-	findAndRename(&quot;$tab_45$&quot;, myRoundOne(otn_pog_5))
-	findAndRename(&quot;$tab_46$&quot;, myRoundOne(otn_pog_6))
-	findAndRename(&quot;$tab_47$&quot;, myRoundOne(otn_pog_7))
-	findAndRename(&quot;$tab_48$&quot;, myRoundOne(otn_pog_8))
+	findAndRename(&quot;$tab_41$&quot;, Format(otn_pog_1, MyFormat)
+	findAndRename(&quot;$tab_42$&quot;, Format(otn_pog_2, MyFormat)
+	findAndRename(&quot;$tab_43$&quot;, Format(otn_pog_3, MyFormat)
+	findAndRename(&quot;$tab_44$&quot;, Format(otn_pog_4, MyFormat)
+	findAndRename(&quot;$tab_45$&quot;, Format(otn_pog_5, MyFormat)
+	findAndRename(&quot;$tab_46$&quot;, Format(otn_pog_6, MyFormat)
+	findAndRename(&quot;$tab_47$&quot;, Format(otn_pog_7, MyFormat)
+	findAndRename(&quot;$tab_48$&quot;, Format(otn_pog_8, MyFormat)
 	&apos;-----------------------------------------------
-	findAndRename(&quot;$tab_51$&quot;, myRoundOne(1.1+sqr(25+otn_pog_1*otn_pog_1)))
-	findAndRename(&quot;$tab_52$&quot;, myRoundOne(1.1+sqr(25+otn_pog_2*otn_pog_2)))
-	findAndRename(&quot;$tab_53$&quot;, myRoundOne(1.1+sqr(16+otn_pog_3*otn_pog_3)))
-	findAndRename(&quot;$tab_54$&quot;, myRoundOne(1.1+sqr(16+otn_pog_4*otn_pog_4)))
-	findAndRename(&quot;$tab_55$&quot;, myRoundOne(1.1+sqr(16+otn_pog_5*otn_pog_5)))
-	findAndRename(&quot;$tab_56$&quot;, myRoundOne(1.1+sqr(16+otn_pog_6*otn_pog_6)))
-	findAndRename(&quot;$tab_57$&quot;, myRoundOne(1.1+sqr(16+otn_pog_7*otn_pog_7)))
-	findAndRename(&quot;$tab_58$&quot;, myRoundOne(1.1+sqr(16+otn_pog_8*otn_pog_8)))
+	findAndRename(&quot;$tab_51$&quot;, Format(1.1+sqr(25+otn_pog_1*otn_pog_1), MyFormat)
+	findAndRename(&quot;$tab_52$&quot;, Format(1.1+sqr(25+otn_pog_2*otn_pog_2), MyFormat)
+	findAndRename(&quot;$tab_53$&quot;, Format(1.1+sqr(16+otn_pog_3*otn_pog_3), MyFormat)
+	findAndRename(&quot;$tab_54$&quot;, Format(1.1+sqr(16+otn_pog_4*otn_pog_4), MyFormat)
+	findAndRename(&quot;$tab_55$&quot;, Format(1.1+sqr(16+otn_pog_5*otn_pog_5), MyFormat)
+	findAndRename(&quot;$tab_56$&quot;, Format(1.1+sqr(16+otn_pog_6*otn_pog_6), MyFormat)
+	findAndRename(&quot;$tab_57$&quot;, Format(1.1+sqr(16+otn_pog_7*otn_pog_7), MyFormat)
+	findAndRename(&quot;$tab_58$&quot;, Format(1.1+sqr(16+otn_pog_8*otn_pog_8), MyFormat)
 
 end sub
 
@@ -189,6 +199,7 @@ sub set_field
 end sub
 
 sub calculate
+	MyFormat = &quot;0.00&quot;
     getAllText_bdkg02()
     
     OpenTemplate(&quot;file:///d:\template_bdkg02.odt&quot;)
@@ -196,7 +207,9 @@ sub calculate
 	drawTable()
 	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField2&quot;).Text)
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
-	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
+	&apos;findAndRename(&quot;$activity$&quot;, activity)
+	&apos;findAndRename(&quot;$activity$&quot;, Format(get_activity(act516), MyFormat)
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
 	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)	
 end sub

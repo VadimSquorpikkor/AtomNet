@@ -4,10 +4,11 @@
     <META charset="utf8">
     <title>Содержание</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="text/javascript" src="activity.js"></script>
+    <script type="text/javascript" src="activity2.js"></script>
+
 </head>
 
-<body onload="get_act()">
+<body onload="get_all()">
 
 <div class="header_div">
     <a class="white_font">Содержание </a>
@@ -27,7 +28,18 @@
     №2910: <input id="2910" type="text" value="0" title="k1" size="5">
     <!--</form>-->
 </div>
-
+<div>
+    <form class="yellow_back">
+        Сумарная мощность источников на сегодняшний день:
+        <input id="sum_activity" type="text" value="00" title="k1" size="15">
+        кБк
+        <!--<input type="button" value="Расчитать" onclick="get_all_activities()">-->
+    </form>
+</div>
+<div class="yellow_back">
+    Значение мощности дозы для Cd-109: <input id="cd" type="text" value="0" title="k1" size="5">
+    <!--Значение мощности дозы для Cd-109: <p id="cd" >-->
+</div>
 <div>
 
     <div class="item">
