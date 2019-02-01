@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../index.html">Содержание </a>/
+    <a class="white_font" href="bdkg22.html">БДКГ-22/23 </a>/
+    <a class="white_font" href="bdkg22.html">Прошивка </a>
+    / Если Flip не видит БД
+</div>
+
+<div>
+
+    <h1>Если Flip не видит БД</h1>
+
+<p>Бывает, БД не подключается к Flip'у без видимых причин через прошивочный кабель (не возможно перепрошить),
+    при этом нормально подключается стандартным кабелем к BDKG Utility <...>
+    <ul>
+        <li>Подключиться (запаять провода) к контроллеру с помощью кабеля для прошивки 942-го адаптера</li>
+        <img src="../imgs/bdkg22/cant01.png" width="400">
+        <img src="../imgs/bdkg22/cant02.jpg" width="800">
+        <img src="../imgs/bdkg22/cant03.jpg" width="800">
+        <li>Вставить перемычку (на прошивку контроллера)</li>
+        <li>Подключить кабель прошивки 942-го адаптера через адаптер USB к компьютеру</li>
+        <li>Подать питание на БД (удобно через прошивочный кабель &mdash; потом не надо будет подключать)</li>
+        <li>Запустить Flip &mdash; он должен будет подключиться</li>
+        <li>(Стереть прошивку?)</li>
+        <li>В Flip'е <span class="attention">поставить "Level 0" и ПОСТАВИТЬ-СНЯТЬ-ПОСТАВИТЬ BLJB</span></li>
+        <li>Выключить Flip</li>
+        <li>Отключить адаптер USB</li>
+        <li>Подключить USB-COM адаптер с подключенным прошивочным кабелем</li>
+        <li>(Включить-выключить питание)</li>
+        <li>Запустить Flip, теперь он должен подключиться</li>
+        <li>Прошивать стандартным способом</li>
+    </ul>
+
+</div>
+
+</body>
+</html>

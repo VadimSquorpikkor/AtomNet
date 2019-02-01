@@ -9,6 +9,6 @@ function get_k() {
         if (isNaN(b)==true) b=0;
     */
 
-
-    document.getElementById('result').value = (a - b / (2.6 * c)) * 100;
+    let res = (a - b / (2.6 * c)) * 100;
+    document.getElementById('result').value = res.toFixed(2);
 }

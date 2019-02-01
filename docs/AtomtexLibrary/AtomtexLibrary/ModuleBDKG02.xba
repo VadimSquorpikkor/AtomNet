@@ -108,7 +108,7 @@ sub comboChanged
 		case &quot;№521&quot;
 		oNumericFieldModel.value = get_activity(act521)
 		case &quot;№2910&quot;
-		oNumericFieldModel.value = get_activity(act2910)
+		oNumericFieldModel.value = get_activity2910()
 	end select	
 end sub
 &apos;-----------------------------------------
@@ -216,16 +216,50 @@ end sub
 &apos;---------------------------------------------------
 sub makeSertRU
 	getAllText_bdkg02()
-    
+    MyFormat = &quot;0.00&quot;
     OpenTemplate(&quot;file:///d:\template_bdkg02_ser_RU.odt&quot;)
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
-	findAndRename(&quot;$activity$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
 	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
-	print oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text 	
+	
+	&apos;print oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text 	
 	&apos;findAndRename(&quot;$date$&quot;, oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text)	
 	&apos;findAndRename(&quot;$date$&quot;, oDateFieldModel.Value)
 
+	findAndRename(&quot;$p_1$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value
+    findAndRename(&quot;$p_2$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value
+    findAndRename(&quot;$p_3$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value
+    findAndRename(&quot;$p_4$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value
+    findAndRename(&quot;$p_5$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value
+    findAndRename(&quot;$p_6$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value
+    findAndRename(&quot;$p_7$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value
+    findAndRename(&quot;$p_8$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value
+    
+end sub
+&apos;---------------------------------------------------
+&apos;Объединить методы, различаются только адресом
+sub makeSertENG
+	getAllText_bdkg02()
+    MyFormat = &quot;0.00&quot;
+    OpenTemplate(&quot;file:///d:\template_bdkg02_ser_ENG.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
+	
+	&apos;print oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text 	
+	&apos;findAndRename(&quot;$date$&quot;, oDialogBDKG02.Model.getByName(&quot;DateField1&quot;).text)	
+	&apos;findAndRename(&quot;$date$&quot;, oDateFieldModel.Value)
+
+	findAndRename(&quot;$p_1$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value
+    findAndRename(&quot;$p_2$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value
+    findAndRename(&quot;$p_3$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value
+    findAndRename(&quot;$p_4$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value
+    findAndRename(&quot;$p_5$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value
+    findAndRename(&quot;$p_6$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value
+    findAndRename(&quot;$p_7$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value
+    findAndRename(&quot;$p_8$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value
     
 end sub
 &apos;------------------------------------------------------------------

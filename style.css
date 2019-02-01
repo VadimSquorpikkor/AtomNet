@@ -220,32 +220,19 @@ a{
 	padding: 0 5px;
 
 }
-
-/*a{
-	color: white;
-	background-color: orange;
-	//color:#bd7400;
+summary {
+	color: darkorange;
 	font-size:18px;
 	font-family:sans-serif;
-	border-radius: 10px;
 	text-decoration: none;
-	padding: 0px 25px;
+	padding: 0 5px;
 
-}*/
-
+}
 .dark_link {
 	color: orangered;
 	font-size:20px;
 	font-family:sans-serif
 }
-
-/*a:hover {
-	color:white;
-	font-size:20px;
-	font-family:sans-serif;
-    background-color: orangered;
-
-}*/
 
 a:hover {
     /*color:orangered;*/
@@ -258,8 +245,18 @@ a:hover {
 	border-radius: 10px;
 	text-decoration: none;
 	padding: 0 5px 1px 5px; /*t r b l*/
-
-
+}
+summary:hover {
+	font-size:18px;
+	font-family:sans-serif;
+	color: white;
+	background-color: darkorange;
+	border-radius: 10px;
+	text-decoration: none;
+	padding: 0 5px 1px 5px; /*t r b l*/
+}
+details p {
+	padding-left: 30px;
 }
 
 /*USELESS: нужно будет добавить в div'ы color:white и можно будет удалять  */
