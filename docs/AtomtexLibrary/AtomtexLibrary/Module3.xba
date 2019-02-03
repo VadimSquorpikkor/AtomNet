@@ -28,25 +28,43 @@ rem так не нужны будут ифы и свитч кейсы
 &apos;  IsoDate = CDateToIso(Date)
 &apos;  oTextField.setDate(IsoDate)
 
-function get_activity(src as double)
+function get_activity_old(src as double)
 	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left)
 end function
 
-function get_activity2910()
+function get_activity2910_old()
 	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910)
 end function
 
-function days_left()
+function days_left_old()
 	days_left = Now - DateSerial(2016, 10, 12)	
 end function
 
-function days_left_2910()
+function days_left_2910_old()
 	days_left_2910 = Now - DateSerial(2016, 5, 17)	
 end function
+&apos;-------------------------------------------------------------
+function days_left_2910(date)
+	days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17)	
+end function
 
-Sub exp_Dialog_Show
-   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
-   oDialog1 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.Dialog1 )
-   oDialog1.Execute()
-End Sub
+function days_left(date)
+	days_left = cDate(getDate(date)) - DateSerial(2016, 10, 12)	
+end function
+
+function get_activity(src as double, date)
+	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left(date))
+end function
+
+function get_activity2910(date)
+	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910(date))
+end function
+
+
+
+&apos;Sub exp_Dialog_Show
+&apos;   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+&apos;   oDialog1 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.Dialog1 )
+&apos;   oDialog1.Execute()
+&apos;End Sub
 </script:module>

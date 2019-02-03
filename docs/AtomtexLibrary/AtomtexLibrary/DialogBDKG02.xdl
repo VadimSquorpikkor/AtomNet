@@ -45,7 +45,9 @@
    </dlg:menupopup>
    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleBDKG02.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:combobox>
-  <dlg:datefield dlg:id="DateField1" dlg:tab-index="30" dlg:left="85" dlg:top="9" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="30" dlg:left="85" dlg:top="9" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true">
+   <script:event script:event-name="on-textchange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleBDKG02.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:datefield>
   <dlg:button dlg:id="CommandButton2" dlg:tab-index="31" dlg:left="63" dlg:top="108" dlg:width="83" dlg:height="14" dlg:value="Калибровочный сертификат">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleBDKG02.makeSertRU?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
