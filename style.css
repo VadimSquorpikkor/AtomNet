@@ -221,13 +221,72 @@ a{
 
 }
 summary {
+	cursor: pointer;
+/*	font-size: 14px;
 	color: darkorange;
-	font-size:18px;
-	font-family:sans-serif;
-	text-decoration: none;
-	padding: 0 5px;
-
+	cursor: pointer;*/
 }
+/*//////////////////////////////////////////////////////*/
+/*details {
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	padding: .5em .5em 0;
+}
+
+summary {
+	font-weight: bold;
+	margin: -.5em -.5em 0;
+	padding: .5em;
+}
+
+details[open] {
+	padding: .5em;
+}
+
+details[open] summary {
+	border-bottom: 1px solid #aaa;
+	margin-bottom: .5em;
+}*/
+/*//////////////////////////////////////////////////////*/
+/*details {
+	font: 16px "Open Sans", "Arial", sans-serif;
+	width: 620px;
+}
+
+details > summary {
+	padding: 2px 6px;
+	width: 15em;
+	background-color: #ddd;
+	border: none;
+	box-shadow: 3px 3px 4px black;
+	list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+	display: none;
+}
+
+details > p {
+	border-radius: 0 0 10px 10px;
+	background-color: #ddd;
+	padding: 2px 6px;
+	margin: 0;
+	box-shadow: 3px 3px 4px black;
+}*/
+/*//////////////////////////////////////////////////////*/
+
+/*summary:hover {  КРУТОЙ СТИЛЬ С ПОДСВЕТКОЙ ШРИФТА
+	color: #ff3200;
+	!*display: inline;*!
+	text-shadow: 0 0 15px #ff7900, 0 0 15px #ff7900, 0 0 15px #ff7900;
+}*/
+details {
+	/*display: inline;*/
+	box-shadow: gray;
+}
+
+
+
 .dark_link {
 	color: orangered;
 	font-size:20px;
@@ -246,18 +305,6 @@ a:hover {
 	text-decoration: none;
 	padding: 0 5px 1px 5px; /*t r b l*/
 }
-summary:hover {
-	font-size:18px;
-	font-family:sans-serif;
-	color: white;
-	background-color: darkorange;
-	border-radius: 10px;
-	text-decoration: none;
-	padding: 0 5px 1px 5px; /*t r b l*/
-}
-details p {
-	padding-left: 30px;
-}
 
 /*USELESS: нужно будет добавить в div'ы color:white и можно будет удалять  */
 .white_font{
@@ -268,6 +315,7 @@ details p {
 a:hover.white_font {
 	color:red;
 	text-decoration: none;
+	background-color: orange;
 }
 
 .white_on_white{
