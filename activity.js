@@ -1,6 +1,5 @@
 //Общий метод для активности любого радиоактивного вещества
 //Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
-
 function activity(a0, pov_date, t_pol) {
     let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
@@ -9,7 +8,8 @@ function activity(a0, pov_date, t_pol) {
 
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
-const pov_date_cd = new Date(2019,0,30);
+const pov_date_cd1123 = new Date(2019,0,30);
+const pov_date_cd1121 = new Date(2019,0,30);
 const t_pol_cs = 365.25*30.17;              //Период полураспада цезия 137 в днях
 const t_pol_cd = 461.4;
 
@@ -56,7 +56,11 @@ function get_all_activities() {
 }
 
 function get_cd_1123() {
-    document.getElementById('cd').value = activity(81, pov_date_cd, t_pol_cd);
+    document.getElementById('cd').value = activity(81, pov_date_cd1123, t_pol_cd);
+}
+
+function get_cd_1121() {
+    document.getElementById('cd').value = activity(81, pov_date_cd1121, t_pol_cd);
 }
 
 function get_all() {
