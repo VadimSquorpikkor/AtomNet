@@ -128,6 +128,7 @@ p {
 .like_a_button {
 	border-style: double;
 	font-size: 15px;
+    background-color: white;
 }
 
 /*.yellow_back{
@@ -285,7 +286,20 @@ details {
 	box-shadow: gray;
 }
 
+details details p{
+    box-shadow: 3px 3px 4px gray;
+    padding: 15px;
+    background-color: bisque;
+    border-radius: 4px;
+}
 
+details div {
+    /*box-shadow: 3px 3px 4px gray;*/
+    box-shadow: 4px 1px 21px 1px rgba(0,0,0,0.53);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 10px 40px 10px;
+}
 
 .dark_link {
 	color: orangered;

@@ -8,8 +8,8 @@ function activity(a0, pov_date, t_pol) {
 
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
-const pov_date_cd1123 = new Date(2019,0,30);
-const pov_date_cd1121 = new Date(2019,0,30);
+const pov_date_1123 = new Date(2019,0,30);
+const pov_date_1121 = new Date(2019,0,30);
 const t_pol_cs = 365.25*30.17;              //Период полураспада цезия 137 в днях
 const t_pol_cd = 461.4;
 
@@ -56,11 +56,17 @@ function get_all_activities() {
 }
 
 function get_cd_1123() {
-    document.getElementById('cd').value = activity(81, pov_date_cd1123, t_pol_cd);
+    document.getElementById('cd').value = activity(81, pov_date_1123, t_pol_cd);
+    document.getElementById('cs_1123_2910').value = activity(33, pov_date_1123, t_pol_cs);
+    document.getElementById('cs_1123_516').value = activity(45, pov_date_1123, t_pol_cs);
+
 }
 
 function get_cd_1121() {
-    document.getElementById('cd').value = activity(81, pov_date_cd1121, t_pol_cd);
+    document.getElementById('cd').value = activity(61, pov_date_1123, t_pol_cd);
+    document.getElementById('cs_1121_2910').value = activity(23, pov_date_1123, t_pol_cs);
+    document.getElementById('cs_1121_516').value = activity(32, pov_date_1123, t_pol_cs);
+
 }
 
 function get_all() {
