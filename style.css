@@ -1,33 +1,19 @@
 img {
 
 	display: block;
-	margin: 20px auto;
-    /*margin-bottom: 20px;
-    margin-top: 20px;
-    alignment: center;*/
-	/*width: 600px;*/
-	/*box-shadow: 3px 3px 4px #333333;*/
-
+	margin: 5px auto;
+	max-width: 100%;
 }
 
 .butt_in_text {
-    /*position: absolute;*/
-    /*display: compact;*/
-    /*margin: 0;*/
     float: left;
 }
 
-
-/*******************************************************************/
 div.item {
-	/*vertical-align: top;*/
-	/*display: inline-block;*/
 	text-align: center;
-	/*width: 180px;*/
 	height: 160px;
 	background-color: #d9d9d9d9;
 	color: dimgray;
-	/*padding: 20px;*/
 	text-indent: 0;
 	border-radius: 20px;
 	margin: 10px 0 0 10px;
@@ -38,18 +24,15 @@ div.item:hover {
 	background-color: #b9b9b9b9;
 }
 .item a:hover {
-	/*all: unset;*/
 	color: red;
 	border-radius: 0;
 	padding: 0;
 }
 .item a {
-	/*all: unset;*/
 	border-radius: 0;
 	padding: 0;
 }
 img.item {
-
 	width: 160px;
 	height: 120px;
 	background-color: grey;
@@ -58,7 +41,6 @@ img.item {
 }
 .caption {
 	display: block;
-	/*color: green;*/
 	margin: 0;
 	padding: 0;
 }
@@ -67,14 +49,7 @@ img.small {
 
 	width : 50px;
 	float:left;
-	/*margin-left: 10px*/
 }
-/*img.item:hover {
-	width: 200px;
-	height: 140px;
-	background-color: grey;
-}*/
-/*******************************************************************/
 
 .orange_link {
     background-color: darkorange;
@@ -87,8 +62,8 @@ img.small {
 }
 
 div{
-	padding-left:30px;
-	padding-right:30px;
+	padding-left:20px;
+	padding-right:20px;
 	text-align:justify;
 	text-indent:40px;
 	font-size:18px;
@@ -130,15 +105,6 @@ p {
 	font-size: 15px;
     background-color: white;
 }
-
-/*.yellow_back{
-	font-size: 14px;
-	background-color: khaki;
-	padding: 5px 10px;
-	!*text-indent: 0;*!
-	margin: 10px 10px;
-	!*width: 700px;*!
-}*/
 
 .yellow_back_right{
 	font-size: 14px;
@@ -205,13 +171,6 @@ h1{
 		
 }
 
-/**Для ссылок**/
-/*a{
-	color:orange;
-	font-size:20px;
-	font-family:sans-serif
-}*/
-
 a{
 	color: darkorange;
 	//color:#bd7400;
@@ -223,68 +182,21 @@ a{
 }
 summary {
 	cursor: pointer;
-/*	font-size: 14px;
+}
+
+.red_light{
+	font-size: 16px;
 	color: darkorange;
-	cursor: pointer;*/
-}
-/*//////////////////////////////////////////////////////*/
-/*details {
-	border: 1px solid #aaa;
-	border-radius: 4px;
-	padding: .5em .5em 0;
 }
 
-summary {
-	font-weight: bold;
-	margin: -.5em -.5em 0;
-	padding: .5em;
-}
-
-details[open] {
-	padding: .5em;
-}
-
-details[open] summary {
-	border-bottom: 1px solid #aaa;
-	margin-bottom: .5em;
-}*/
-/*//////////////////////////////////////////////////////*/
-/*details {
-	font: 16px "Open Sans", "Arial", sans-serif;
-	width: 620px;
-}
-
-details > summary {
-	padding: 2px 6px;
-	width: 15em;
-	background-color: #ddd;
-	border: none;
-	box-shadow: 3px 3px 4px black;
-	list-style: none;
-}
-
-details > summary::-webkit-details-marker {
-	display: none;
-}
-
-details > p {
-	border-radius: 0 0 10px 10px;
-	background-color: #ddd;
-	padding: 2px 6px;
-	margin: 0;
-	box-shadow: 3px 3px 4px black;
-}*/
-/*//////////////////////////////////////////////////////*/
-
-/*summary:hover {  КРУТОЙ СТИЛЬ С ПОДСВЕТКОЙ ШРИФТА
+.red_light:hover{
 	color: #ff3200;
-	!*display: inline;*!
 	text-shadow: 0 0 15px #ff7900, 0 0 15px #ff7900, 0 0 15px #ff7900;
-}*/
-details {
-	/*display: inline;*/
-	box-shadow: gray;
 }
+/*details {
+	!*display: inline;*!
+	box-shadow: gray;
+}*/
 
 details details p{
     box-shadow: 3px 3px 4px gray;
@@ -296,9 +208,8 @@ details details p{
 details div {
     /*box-shadow: 3px 3px 4px gray;*/
     box-shadow: 4px 1px 21px 1px rgba(0,0,0,0.53);
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: 10px 40px 10px;
+	padding: 20px 15px 20px;
+    margin: 10px 20px 10px;
 }
 
 .dark_link {
@@ -382,18 +293,11 @@ ol{
     font-size:18px;
 }
 
-/*li {
-    text-indent:20px;
-
-}*/
 
 table{
 	font-size:14px;
-	/*margin: 20px;0*/
 	border-collapse: collapse;
 	width: 100%;
-	/*border: 1px solid black;*/
-
 }
 
 .small_table{
@@ -421,10 +325,6 @@ th {
 	float: right;
 }
 
-/*
-.down_side{
-	float: end;
-}*/
 
 h1 {
     font-family: "Times New Roman", monospace;
@@ -466,9 +366,3 @@ h3 {
     width: 300px;
     text-indent: 0;
 }
-
-/*
-ol {
-	padding-left: 100px;
-	text-indent: 10px;
-}*/
