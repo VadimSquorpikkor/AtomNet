@@ -69,6 +69,12 @@ function get_cd_1121() {
 
 }
 
+function get_cs_1121() {
+        let res = parseFloat(document.getElementById('cs_1121').value);
+        let ans = (res-12)*9/7;
+        document.getElementById('res_cs_1121').value = ans.toFixed(2);
+}
+
 function get_all() {
     get_act();
     get_all_activities();

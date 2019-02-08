@@ -160,8 +160,6 @@ p {
     padding: 100px;
 }
 
-
-
 h1{
 	padding:50px;
 	text-align:justify;
@@ -186,7 +184,8 @@ summary {
 
 .red_light{
 	font-size: 16px;
-	color: darkorange;
+	color: red;
+	/*font-weight: bold;*/
 }
 
 .red_light:hover{
@@ -210,6 +209,12 @@ details div {
     box-shadow: 4px 1px 21px 1px rgba(0,0,0,0.53);
 	padding: 20px 15px 20px;
     margin: 10px 20px 10px;
+}
+
+summary div ul {
+	text-indent: 0;
+	padding-left: 0;
+
 }
 
 .dark_link {
