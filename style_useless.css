@@ -1,3 +1,71 @@
+/*------------------INDEX 3---------------------*/
+hr {
+    color: white;
+    clear: left;
+    margin-top: 100px;
+}
+.menu_block {
+    box-shadow: 2px 3px 5px 0 rgba(0,0,0,0.75);
+    text-align: center;
+    height: 190px;
+    width: 160px;
+    text-indent: 0;
+    margin: 10px 0 0 10px;
+    padding: 0;
+    float: left;
+    line-height: 0.9;
+}
+.menu_block:hover {	box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.75);}
+.menu_block_top_red { background-color: #f33;}
+.menu_block_top_green {	background-color: green;}
+.menu_block_top_blue { background-color: #33f;}
+.menu_block_top_orange { background-color: darkorange;}
+
+.menu_block_top_green, .menu_block_top_red, .menu_block_top_blue, .menu_block_top_orange {
+    font-size: 16px;
+    height: 25px;
+    color: white;
+}
+.menu_block div span {
+    vertical-align: middle;
+    padding-top: 5px;
+    /*color: #4CAF50;*/
+}
+.menu_block_footer {
+    background-color: #ccc ;
+    height: 55px;
+    color: #555;
+    font-size: 14px;
+}
+.menu_block img {
+    margin: 0;
+    height: 110px;
+    width: 160px;
+}
+.menu_block div {
+    /*color: white;*/
+    /*padding: 5px 0;*/
+    text-indent: 0;
+    margin: 0;
+    text-align: center;
+}
+.menu_block a {
+
+    border-radius: 0;
+    padding: 0;
+}
+.menu_block a:hover {
+    border-radius: 0;
+    padding: 0;
+    color: white;
+}
+
+/*---------------------------------------*/
+
+
+
+
+
 /*img.item:hover {
 	width: 200px;
 	height: 140px;

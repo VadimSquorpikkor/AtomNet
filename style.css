@@ -8,7 +8,73 @@ img {
 .butt_in_text {
     float: left;
 }
+/*------------------INDEX 3---------------------*/
+.padding_0 {
+	padding-left: 5px;
+}
+hr {
+	color: white;
+	clear: left;
+	margin-top: 100px;
+}
+.menu_block {
+	box-shadow: 2px 3px 5px 0 rgba(0,0,0,0.75);
+	text-align: center;
+	height: 171px;
+	width: 144px;
+	text-indent: 0;
+	margin: 9px 0 0 9px;
+	padding: 0;
+	float: left;
+	line-height: 0.9;
+}
+.menu_block:hover {	box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.75);}
+.menu_block_top_red { background-color: #f33;}
+.menu_block_top_green {	background-color: green;}
+.menu_block_top_blue { background-color: #33f;}
+.menu_block_top_orange { background-color: darkorange;}
 
+.menu_block_top_green, .menu_block_top_red, .menu_block_top_blue, .menu_block_top_orange {
+	font-size: 13px;
+	height: 23px;
+	color: white;
+}
+.menu_block div span {
+	vertical-align: middle;
+	padding-top: 5px;
+	/*color: #4CAF50;*/
+}
+.menu_block_footer {
+	background-color: #ccc ;
+	height: 50px;
+	color: #555;
+	font-size: 13px;
+}
+.menu_block img {
+	margin: 0;
+	height: 98px;
+	width: 144px;
+}
+.menu_block div {
+	/*color: white;*/
+	/*padding: 5px 0;*/
+	text-indent: 0;
+	margin: 0;
+	text-align: center;
+}
+.menu_block a {
+
+	border-radius: 0;
+	padding: 0;
+}
+.menu_block a:hover {
+	border-radius: 0;
+	padding: 0;
+	color: white;
+}
+
+/*---------------------------------------*/
+/*------------------INDEX 2---------------------*/
 div.item {
 	text-align: center;
 	height: 160px;
@@ -44,6 +110,7 @@ img.item {
 	margin: 0;
 	padding: 0;
 }
+/*---------------------------------------*/
 
 img.small {
 
