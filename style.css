@@ -422,7 +422,9 @@ h3 {
 
 .float_left{
 	float: left;
-	width: 500px;
+	width: 380px;
+    margin: 0;
+    padding-left: 15px;
 }
 
 .float_right{
