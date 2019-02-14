@@ -29,6 +29,7 @@ hr {
 	line-height: 0.9;
 }
 .menu_block:hover {	box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.75);}
+
 .menu_block_top_red { background-color: #f33;}
 .menu_block_top_green {	background-color: green;}
 .menu_block_top_blue { background-color: #33f;}
@@ -38,6 +39,7 @@ hr {
 	font-size: 13px;
 	height: 23px;
 	color: white;
+    box-shadow: none;
 }
 .menu_block div span {
 	vertical-align: middle;
@@ -45,7 +47,8 @@ hr {
 	/*color: #4CAF50;*/
 }
 .menu_block_footer {
-	background-color: #ccc ;
+    box-shadow: none;
+    background-color: #ccc ;
 	height: 50px;
 	color: #555;
 	font-size: 13px;
@@ -56,8 +59,8 @@ hr {
 	width: 144px;
 }
 .menu_block div {
-	/*color: white;*/
-	/*padding: 5px 0;*/
+	padding-top: 0;
+	padding-bottom: 0;
 	text-indent: 0;
 	margin: 0;
 	text-align: center;
@@ -74,43 +77,16 @@ hr {
 }
 
 /*---------------------------------------*/
-/*------------------INDEX 2---------------------*/
-div.item {
-	text-align: center;
-	height: 160px;
-	background-color: #d9d9d9d9;
-	color: dimgray;
-	text-indent: 0;
-	border-radius: 20px;
-	margin: 10px 0 0 10px;
-	padding: 10px;
-	float: left;
+
+
+body {
+	background-color: antiquewhite;
 }
-div.item:hover {
-	background-color: #b9b9b9b9;
+body div {
+	box-shadow: 4px 1px 21px 1px rgba(0,0,0,0.53);
+	padding: 20px 15px 20px;
+	margin: 10px 20px 20px;
 }
-.item a:hover {
-	color: red;
-	border-radius: 0;
-	padding: 0;
-}
-.item a {
-	border-radius: 0;
-	padding: 0;
-}
-img.item {
-	width: 160px;
-	height: 120px;
-	background-color: grey;
-	margin: 10px;
-	alignment: center;
-}
-.caption {
-	display: block;
-	margin: 0;
-	padding: 0;
-}
-/*---------------------------------------*/
 
 img.small {
 
@@ -163,7 +139,8 @@ p {
 	height:35px;
 	font-family:sans-serif;
 	color: white;
-	padding-top: 10px;
+	padding: 10px 0 0;
+	margin: 0 0;
 	border-radius: 20px;
 }
 
@@ -194,8 +171,8 @@ p {
 }
 
 .yellow_back{
-
-	margin-top: 5px;
+    box-shadow: none;
+	margin: 5px 0 5px;
 	font-size: 14px;
 	background-color: khaki;
 	padding: 10px;
@@ -346,6 +323,7 @@ a:hover.white_font {
 }
 
 .left_align{
+    box-shadow: none;
 	text-align:left;
 	font-size: smaller;
 	background-color: lemonchiffon;
