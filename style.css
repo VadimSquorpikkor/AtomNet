@@ -20,7 +20,7 @@ hr {
 .menu_block {
 	box-shadow: 2px 3px 5px 0 rgba(0,0,0,0.75);
 	text-align: center;
-	height: 171px;
+	height: 156px;/*171*/
 	width: 144px;
 	text-indent: 0;
 	margin: 9px 0 0 9px;
@@ -49,7 +49,7 @@ hr {
 .menu_block_footer {
     box-shadow: none;
     background-color: #ccc ;
-	height: 50px;
+	height: 35px;
 	color: #555;
 	font-size: 13px;
 }
@@ -82,7 +82,7 @@ hr {
 body {
 	background-color: antiquewhite;
 }
-body div {
+body>div {
 	box-shadow: 4px 1px 21px 1px rgba(0,0,0,0.53);
 	padding: 20px 15px 20px;
 	margin: 10px 20px 20px;
@@ -171,7 +171,7 @@ p {
 }
 
 .yellow_back{
-    box-shadow: none;
+    /*box-shadow: none;*/
 	margin: 5px 0 5px;
 	font-size: 14px;
 	background-color: khaki;
@@ -227,14 +227,20 @@ summary {
 }
 
 .red_light{
-	font-size: 16px;
-	color: red;
-	/*font-weight: bold;*/
+    font-size:16px;
+    color: white;
+    background-color: coral;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 0 5px 1px 0px; /*t r b l*/
 }
 
+
+
 .red_light:hover{
-	color: #ff3200;
-	text-shadow: 0 0 15px #ff7900, 0 0 15px #ff7900, 0 0 15px #ff7900;
+    background-color: #4CAF50;
+/*	color: #ff3200;
+	text-shadow: 0 0 15px #ff7900, 0 0 15px #ff7900, 0 0 15px #ff7900;*/
 }
 /*details {
 	!*display: inline;*!
@@ -267,7 +273,7 @@ summary div ul {
 	font-family:sans-serif
 }
 
-a:hover {
+a:hover{
     /*color:orangered;*/
     font-size:18px;
     font-family:sans-serif;
@@ -291,32 +297,6 @@ a:hover.white_font {
 	text-decoration: none;
 	background-color: orange;
 }
-
-.white_on_white{
-	color:white;
-    background-color: black;
-}
-
-.brown{
-    color: saddlebrown;
-}
-
-.green{
-	color: green;
-}
-
-.yellow{
-	color: yellow;
-}
-
-.gray{
-	color: gray;
-}
-
-.orange{
-    color: orange;
-}
-
 
 .right_align{
     text-align:right;
