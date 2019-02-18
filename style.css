@@ -8,10 +8,48 @@ img {
 .butt_in_text {
     float: left;
 }
-/*------------------INDEX 3---------------------*/
-.padding_0 {
-	padding-left: 5px;
+
+
+/*------------------DROPDOWN---------------------*/
+.dropdown {
+	width: 100px;
+	background-color: green;
 }
+.dropdown_content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	padding: 0 0 20px;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
+	max-width: 80%;
+}
+.dropdown ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	/*background-color: #333;*/
+}
+.dropdown>ul>li {
+	/*float: left;*/
+	/*padding-left: 20px;*/
+	padding-right: 20px;
+}
+/*.dropdown li.dropdown {
+	display: inline-block;
+}*/
+.dropdown>ul>li:hover .dropdown_content {
+	display: block;
+
+}
+.dropdown>ul>li:hover {
+	display: block;
+	background-color: #f9f9f9;
+
+}
+/*------------------INDEX 3---------------------*/
+
 hr {
 	color: white;
 	clear: left;
