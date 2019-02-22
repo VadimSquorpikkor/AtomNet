@@ -299,11 +299,11 @@ p {
 	margin: 5px 0 5px;
 	font-size: 14px;
 	background-color: khaki;
-	padding: 10px;
+	padding: 30px;
 	/*margin-left: 10px;*/
 	/*width: 90%;*/
 	align-self: center;
-	text-align: center;
+	/*text-align: center;*/
 
 	text-indent: 0;
 	border-radius: 20px;
