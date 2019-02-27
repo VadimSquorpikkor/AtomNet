@@ -9,11 +9,30 @@ img {
     float: left;
 }
 
+#main_menu {
+    display: none;
+    position: fixed;
+    margin-top: 5px;
+    transition:all .5s ease;
+    transition-delay:5s;
+}
+.header_div:hover #main_menu, #main_menu:hover{
+    transition:all .5s ease;
+    display: block;
+}
+
 /*--------------------NEW DROP DOWN-----------------------*/
 .dropdown{
-    padding: 0;
+    background-color: #333;
+    /*background-color: antiquewhite;*/
+    border-radius: 20px;
+    padding: 0 20px;
     margin: 0;
     box-shadow: 2px 3px 7px 2px rgba(0, 0, 0, 0.75);
+
+    transition-property: background-color, color;
+    transition-duration: 300ms;
+    transition-timing-function: ease-out;
 }
 .dropdown > ul {
     list-style-type: none;
@@ -21,6 +40,8 @@ img {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    /*background-color: antiquewhite;*/
+
 }
 
 .dropdown > ul > li > a, .dropbtn {
@@ -34,6 +55,7 @@ img {
 
 /*.dropdown li>a:hover,*/
 .dropdown > ul > li:hover .dropbtn {
+    /*background-color: #333;*/
     background-color: antiquewhite;
     color: #555555;
     display: block;
@@ -42,6 +64,8 @@ img {
     width: 150px;
     margin: 0;
 
+    transition-property: background-color, color;
+    transition-duration: 300ms;
 }
 
 .dropdown-content > a:hover {
@@ -55,6 +79,8 @@ img {
     width: 350px;
     margin: 0;
 
+    transition-property: background-color, color;
+    transition-duration: 300ms;
 }
 
 .dropdown-content a {
@@ -68,6 +94,7 @@ img {
     width: 350px;
 
     background-color: antiquewhite;
+    /*background-color: #333;*/
 }
 .dropdown {
     position: relative;
@@ -86,15 +113,21 @@ img {
     height: 100%;
 
     background-color: antiquewhite;
+    /*background: none;*/
+    /*box-shadow: 10px 0px 17px -7px rgba(255,255,255,1);*/
+    /*background-color: #333;*/
     min-width: 160px;
     /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
     text-indent: 0;
 
     padding: 0;
     margin: 0;
+
+    transition-property: background-color, color;
+    transition-duration: 300ms;
 }
 
-.inside_shadow { /*Сделано только для эффекта внутренней тени*/
+.inside_shadow {
     box-shadow: inset 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
     border-radius: 5px;
     padding: 5px;
@@ -103,39 +136,6 @@ img {
 
 }
 
-/*
-
-.inside_shadow ul {
-    list-style: none;
-}
-
-!*.inside_shadow a {
-}*!
-.inside_shadow > div > ul > li > a { !*Главный список*!
-    color: gray;
-    background-color: #cccccc;
-    display: block;
-    !*
-    width: 200px;
-    height: 50px;
-    *!
-    !*text-align: center;*!
-}
-
-li > div > ul > li > a { !*Список в списке*!
-    color: green;
-    background-color: orange;
-    display: none;
-    position: absolute;
-    z-index: 1;
-}
-
-.inside_shadow > div > ul > li > a:hover li > div > ul > li > a {
-    position: relative;
-    display: block;
-    color: #3333ff;
-}
-*/
 
 /*-----------------VERTICAL MENU---------------*/
 .vertical {
@@ -418,14 +418,17 @@ p {
 }
 
 .header_div {
-    /*position: fixed;*/
+    position: fixed;
     background-color: orange;
-    height: 35px;
+    /*height: 35px;*/
     font-family: sans-serif;
     color: white;
-    padding: 10px 0 0;
+    /*padding: 10px 0 0;*/
+    padding: 5px 20px;
     margin: 0 0;
     border-radius: 20px;
+
+    text-indent: 0;
 }
 
 .like_a_button {
@@ -456,7 +459,7 @@ p {
 .yellow_back_centered {
     margin: 5px 0 5px;
     font-size: 14px;
-    background-color: khaki;
+    background-color: antiquewhite;
     /*padding: 30px;*/
     align-self: center;
     text-align: center;
