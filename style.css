@@ -347,6 +347,9 @@ p {
 .yellow_back p {
     margin: 10px;
 }
+.yellow_back ul {
+    font-size: 14px;
+}
 .attention {
     color: #ff3333;
 }
