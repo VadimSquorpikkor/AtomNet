@@ -51,6 +51,7 @@ img {
 
 }
 
+/*todo а эти два селектора не одно и тоже?*/
 .dropdown > ul > li > a, .dropbtn {
     display: block;
     color: white;
@@ -62,7 +63,7 @@ img {
 
 /*.dropdown li>a:hover,*/
 
-.dropdown > ul > li:hover .dropbtn {
+.dropdown > ul > li:hover>.dropbtn {
     /*background-color: #333;*/
     background-color: antiquewhite;
     color: #555555;
@@ -76,7 +77,28 @@ img {
     transition-duration: 300ms;
 }
 
-.dropdown-content > a:hover {
+/*.dropdown-content .dropbtn {------------------------
+    background-color: antiquewhite;
+    color: #555555;
+    display: block;
+    border-radius: 0;
+    padding: 0px 0px;
+    width: 150px;
+    margin: 0;
+
+    transition-property: background-color, color;
+    transition-duration: 300ms;
+}*/
+.dropdown-content .dropbtn {
+    text-indent: 0;
+}
+.dropdown-content ul, .dropdown-content li {
+    padding-left: 0;
+    list-style-type: none;
+
+}
+
+.dropdown-content > a:hover{
     font-size: 14px;
     background-color: orange;
     /*background-color: antiquewhite;*/
@@ -90,8 +112,12 @@ img {
     transition-property: background-color, color;
     transition-duration: 300ms;
 }
-
-.dropdown-content a {
+.dropdown-content >  ul > li:hover .dropbtn {
+    background-color: orange;
+    border-radius: 0;
+}
+/*+меню в меню*/
+.dropdown-content a, .dropdown-content>ul>li>a, .dropdown-content .dropbtn{
     font-size: 14px;
     color: black;
     padding: 5px 16px;
@@ -108,12 +134,37 @@ img {
     position: relative;
 }
 
-.dropdown-content {
+/*+меню в меню*/
+.dropdown-content, .dropdown-content>ul>li>.dropdown-content {
     display: none;
 }
 
+.dropdown-content>ul>li>.dropdown-content {
+    box-shadow: -3px 3px 5px 0 rgba(0,0,0,0.75);
 
-.dropdown > ul > li:hover .dropdown-content {
+}
+
+/*todo объединить со следующим селектором*/
+.dropdown-content>ul>li:hover > .dropdown-content {
+    position: absolute;
+    top: 0;
+    left: 280px;
+    display: block;
+    height: 100%;
+    background-color: antiquewhite;
+    min-width: 160px;
+    text-indent: 0;
+    padding: 0;
+    margin: 0;
+
+    transition-property: background-color, color;
+    transition-duration: 300ms;
+}
+
+
+/*+меню в меню*/
+/*.dropdown > ul > li:hover > .dropdown-content, .dropdown-content>ul>li:hover > .dropdown-content{*/
+.dropdown > ul > li:hover > .dropdown-content{
     position: absolute;
     top: 0;
     left: 180px;
