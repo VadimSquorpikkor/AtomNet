@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>БДКГ-25</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+</head>
+
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../menu/index.html">Содержание </a>
+    / БДКГ-25
+
+    <div w3-include-html="../menu/menu.html" class="dropdown"  id="main_menu"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div>
+
+    <h1>Прошивка БДКГ-25</h1>
+
+    <p>
+
+    <ul>
+        <li>Подключить питание</li>
+        <li>Подключть программатор</li>
+    </ul>
+
+    <img src="../imgs/bdkg25/13.jpg" width="1000">
+
+    <p>
+    <ul>
+        <li>Запустить STM32-LINK</li>
+        <img src="../imgs/bdkg25/4.png">
+        <li>Target &rArr; Connect</li>
+        <li>Target &rArr; Program & Verify</li>
+        <img src="../imgs/bdkg25/5.png">
+        <li>Выбрать прошивку</li>
+        <li>Start</li>
+    </ul>
+    <img src="../imgs/bdkg25/6.png">
+
+    <p>
+        Если появляется такое окно с ошибкой:
+        <img src="../imgs/bdkg25/1.png">
+    </p>
+
+    <p>
+        Это значит, что устройство уже прошито, и прочитать или перезаписать прошивку нельзя. Чтобы убрать защиту,
+        необходимосделать следующее
+
+        <a class="attention">(Внимание! Существующая прошивка будет стёрта!)
+
+        </a>:
+    <ul>
+        <li>Target &rArr; Option Bytes</li>
+        <img src="../imgs/bdkg25/3.png">
+        <li>Readout Protection &rArr; Disabled</li>
+        <li>Flash Section Protection &rArr; Unselect All</li>
+        <li>Apply</li>
+        <li>Защита снята, прошивка стерта</li>
+    </ul>
+
+
+    <p>
+        Проверить корректность прошивки можно подключив устройство к BDKG25_Tools (перед
+        подключением <a class="attention">обязательно</a> отсоединить/подключить ODU разъёьм):
+
+    <img src="../imgs/bdkg25/7.png" width="800">
+    Для включения "расширенного" режима в любом поле набрать время с ":" ("15:53" например):
+    <img src="../imgs/bdkg25/8.png" width="900">
+    Год вводится, как 18 (а не 2018)
+    <img src="../imgs/bdkg25/9.png" >
+    </p>
+</div>
+
+</body>
+</html>

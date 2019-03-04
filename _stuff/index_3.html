@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Содержание</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../activity.js"></script>
+
+</head>
+
+<body onload="get_all()">
+
+<!--<div class="header_div">
+    <a class="white_font">Содержание </a>
+
+</div>-->
+<div class="yellow_back">
+    №516: <input id="516" type="text" value="0" title="k1" size="5">
+    №517: <input id="517" type="text" value="0" title="k1" size="5">
+    №518: <input id="518" type="text" value="0" title="k1" size="5">
+    №519: <input id="519" type="text" value="0" title="k1" size="5">
+    №520: <input id="520" type="text" value="0" title="k1" size="5">
+    №521: <input id="521" type="text" value="0" title="k1" size="5">
+    №2910: <input id="2910" type="text" value="0" title="k1" size="5">
+</div>
+
+<div>
+
+    <div class="dropdown">
+        <ul>
+            <li>
+                <a href="">СРК</a>
+                <div class="dropdown_content">
+                    <ul>
+                        <li><a href="../srk2327/2327.html">СРК (2327)</a></li>
+                        <li><a href="../srk2327/mrp.html">МРП</a></li>
+                        <li><a href="../srk2327/941adapter.html">941-й адаптер</a></li>
+                        <li><a href="../srk2327/942.html">942-й адаптер</a></li>
+                        <li><a href="../srk2327/943.html">943-й адаптер</a></li>
+                        <li><a href="../srk2327/BR.html">Блок регистрации</a></li>
+                        <li><a href="../srk2327/p900.html">ПУ АТ-900</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="">БДКГ</a>
+                <div class="dropdown_content">
+
+                    <ul>
+                        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a></li>
+                        <li><a href="../bdkg02/bdkg02.html">БДКГ-02</a></li>
+                        <li><a href="../bdkg22/bdkg22.html">БДКГ-22/23</a></li>
+                        <li><a href="../bdkg/bdkg-25.html">БДКГ-25</a></li>
+                        <li><a href="../bdkg/bdkg27.html">БДКГ-27. Как рассчитать протокол поверки</a></li>
+                        <li><a href="../bdkg/bdkg35.html">БДКГ-35. Прошивка</a></li>
+                        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>
+                        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>
+
+                    </ul>
+                </div>
+            </li>
+            <li><a href="">Разное</a>
+                <div class="dropdown_content">
+
+                    <ul>
+                        <li><a href="../other/signalizator.html">Сигнализатор</a></li>
+                        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343. Ремонт</a></li>
+                        <li><a href="../other/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошивка</a></li>
+                        <li><a href="../other/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>
+                        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>
+                        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>
+                        <li><a href="../1123/1123_umnoz.html">Проверка умножителя 1123</a></li>
+                        <li><a href="../other/delitel.html">Проверка делителя</a></li>
+                        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>
+                        <li><a href="../other/6130.html">АТ6130</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="">11ХХ</a>
+                <div class="dropdown_content">
+
+                    <ul>
+                        <li><a href="../1103/1103.html">ДКР-АТ1103М</a></li>
+                        <li><a href="../1123/1121.html">ДКС-АТ1121</a></li>
+                        <li><a href="../1123/1123.html">ДКС-АТ1123</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="">Файлы</a>
+                <div class="dropdown_content">
+
+                    <ul>
+                        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>
+                        <li><a href="../sertif_prosh/sertificate.html">Калибровочные сертификаты и протоколы поверки</a></li>
+                        <li><a href="index_3.html">INDEX 3</a></li>
+                        <li><a href="../docs/GMS%20for%20Corel">GMS for Corel</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--    <div class="dropdown">
+            <ul>
+                <li>
+                    <span>СРК</span>
+                    <div class="dropdown_content">
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/main_menu/2327.jpg"/>
+                                <div class="menu_block_top_red"><span>СРК</span></div>
+                                <div class="menu_block_footer"><span>Инструкции, схемы.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/main_menu/mrp.jpg"/>
+                                <div class="menu_block_top_red"><span>МРП</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, проверка.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/main_menu/br.jpg"/>
+                                <div class="menu_block_top_red"><span>БР</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/main_menu/pu900.jpg"/>
+                                <div class="menu_block_top_red"><span>ПУ АТ-900</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, настройка.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/2327/1.jpg"/>
+                                <div class="menu_block_top_red"><span>АИ-941</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/2327/1.jpg"/>
+                                <div class="menu_block_top_red"><span>АИ-942</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+                            </a>
+                        </div>
+
+                        <div class="menu_block">
+                            <a href="2327.html">
+                                <img src="imgs/2327/1.jpg"/>
+                                <div class="menu_block_top_red"><span>АИ-943</span></div>
+                                <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+                            </a>
+                        </div>
+
+
+                        <ul>
+                            &lt;!&ndash;             <li><a href="2327.html">СРК (2327)</a></li>
+                                         <li><a href="mrp.html">МРП</a></li>
+                                         <li><a href="941adapter.html">941-й адаптер</a></li>
+                                         <li><a href="942.html">942-й адаптер</a></li>
+                                         <li><a href="943.html">943-й адаптер</a></li>
+                                         <li><a href="BR.html">Блок регистрации</a></li>
+                                         <li><a href="p900.html">ПУ АТ-900</a></li>
+                 &ndash;&gt;
+
+                        </ul>
+                    </div>
+                </li>
+                <li>БДКГ
+                    <div class="dropdown_content">
+                        <ul>
+                            <li><a href="bdkg01.html">БДКГ-01</a></li>
+                            <li><a href="bdkg02/bdkg02.html">БДКГ-02</a></li>
+                            <li><a href="bdkg22/bdkg22.html">БДКГ-22/23</a></li>
+                            <li><a href="bdkg-25.html">БДКГ-25</a></li>
+                            <li><a href="bdkg27.html">БДКГ-27. Как рассчитать протокол поверки</a></li>
+                            <li><a href="bdkg35.html">БДКГ-35. Прошивка</a></li>
+                            <li><a href="bdkg-204.html">БДКГ-204</a></li>
+                            <li><a href="bdkg-224.html">БДКГ-224</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li>Разное
+                    <div class="dropdown_content">
+                        <ul>
+                            <li><a href="signalizator.html">Сигнализатор</a></li>
+                            <li><a href="bdmg/bdmg_rem.html">БДМГ-АТ2343. Ремонт</a></li>
+                            <li><a href="bdkn_02.html">БДКН-02. Установить коэффициенты. Прошивка</a></li>
+                            <li><a href="boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>
+                            <li><a href="adapter.html">Адаптер USB-БД</a></li>
+                            <li><a href="beta.html">Проверка БЕТА счетчиков</a></li>
+                            <li><a href="1123_umnoz.html">Проверка умножителя 1123</a></li>
+                            <li><a href="delitel.html">Проверка делителя</a></li>
+                            <li><a href="bdpb-01.html">БДПБ-01</a></li>
+                            <li><a href="6130.html">АТ6130</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>11ХХ
+                    <div class="dropdown_content">
+                        <ul>
+                            <li><a href="1103/1103.html">ДКР-АТ1103М</a></li>
+                            <li><a href="1123/1121.html">ДКС-АТ1121</a></li>
+                            <li><a href="1123/1123_umnoz.html">ДКС-АТ1123</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>Файлы
+                    <div class="dropdown_content">
+                        <ul>
+                            <li><a href="prosh.html">Список актуальных прошивок</a></li>
+                            <li><a href="sertificate.html">Калибровочные сертификаты и протоколы поверки</a></li>
+                            <li><a href="index_3.html">INDEX 3</a></li>
+                            <li><a href="docs/GMS%20for%20Corel/">GMS for Corel</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>-->
+
+    <div class="menu_block">
+        <a href="../srk2327/2327.html">
+            <img src="../imgs/main_menu/2327.jpg"/>
+            <div class="menu_block_top_red"><span>СРК</span></div>
+            <div class="menu_block_footer"><span>Инструкции, схемы.</span></div>
+        </a>
+    </div>
+
+    <!-- <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/main_menu/mrp.jpg"/>
+             <div class="menu_block_top_red"><span>МРП</span></div>
+             <div class="menu_block_footer"><span>Прошивка, проверка.</span></div>
+         </a>
+     </div>
+
+     <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/main_menu/br.jpg"/>
+             <div class="menu_block_top_red"><span>БР</span></div>
+             <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+         </a>
+     </div>
+
+     <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/main_menu/pu900.jpg"/>
+             <div class="menu_block_top_red"><span>ПУ АТ-900</span></div>
+             <div class="menu_block_footer"><span>Прошивка, настройка.</span></div>
+         </a>
+     </div>
+
+     <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/2327/1.jpg"/>
+             <div class="menu_block_top_red"><span>АИ-941</span></div>
+             <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+         </a>
+     </div>
+
+     <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/2327/1.jpg"/>
+             <div class="menu_block_top_red"><span>АИ-942</span></div>
+             <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+         </a>
+     </div>
+
+     <div class="menu_block">
+         <a href="2327.html">
+             <img src="imgs/2327/1.jpg"/>
+             <div class="menu_block_top_red"><span>АИ-943</span></div>
+             <div class="menu_block_footer"><span>Прошивка, подключение.</span></div>
+         </a>
+     </div>
+ -->
+    <hr>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg01.html">
+            <img src="../imgs/bdkg01/1.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-01</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg02/bdkg02.html">
+            <img src="../imgs/bdkg02/cond.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-02</span></div>
+            <div class="menu_block_footer"><span>Настройка новых. Ремонт.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg22/bdkg22.html">
+            <img src="../imgs/main_menu/bdkg222.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-22/23</span></div>
+            <div class="menu_block_footer"><span>Прошивка и настройка.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg-25.html">
+            <img src="../imgs/bdkg25/13.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-25</span></div>
+            <div class="menu_block_footer"><span>Прошивка и настройка.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg27.html">
+            <img src="../imgs/bdkg27/02.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-27</span></div>
+            <div class="menu_block_footer"><span>Протокол поверки.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg35.html">
+            <img src="../imgs/bdkg35/3.png"/>
+            <div class="menu_block_top_green"><span>БДКГ-35</span></div>
+            <div class="menu_block_footer"><span>Прошивка.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg-204.html">
+            <img src="../imgs/204/204-8.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-204</span></div>
+            <div class="menu_block_footer"><span>Прошивка.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdkg/bdkg-224.html">
+            <img src="../imgs/bdkg224/1.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-224</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="menu_block">
+        <a href="../1103/1103.html">
+            <img src="../imgs/main_menu/1103.png"/>
+            <div class="menu_block_top_blue"><span>ДКР-1103</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../1123/1121.html">
+            <img src="../imgs/main_menu/1121.png"/>
+            <div class="menu_block_top_blue"><span>ДКС-1121</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../1123/1123.html">
+            <img src="../imgs/main_menu/1121.png"/>
+            <div class="menu_block_top_blue"><span>ДКС-1123</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <hr>
+
+    <div class="menu_block">
+        <a href="../other/signalizator.html">
+            <img src="../imgs/main_menu/sign.jpg"/>
+            <div class="menu_block_top_orange"><span>Сигнализатор</span></div>
+            <div class="menu_block_footer"><span>Прошивка.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../bdmg/bdmg_rem.html">
+            <img src="../imgs/main_menu/bdmg.jpg"/>
+            <div class="menu_block_top_orange"><span>БДМГ-АТ2343</span></div>
+            <div class="menu_block_footer"><span>Ремонт.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/bdkn_02.html">
+            <img src="../imgs/main_menu/bdkn02.jpg"/>
+            <div class="menu_block_top_orange"><span>БДКН-02</span></div>
+            <div class="menu_block_footer"><span>Коэффициенты. Прошивка</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/boi.html">
+            <img src="../imgs/main_menu/boi.png"/>
+            <div class="menu_block_top_orange"><span>БОИ, БОИ-2</span></div>
+            <div class="menu_block_footer"><span>Преобразователь напряжения.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/adapter.html">
+            <img src="../imgs/main_menu/usb.jpg"/>
+            <div class="menu_block_top_orange"><span>Адаптер USB-БД</span></div>
+            <div class="menu_block_footer"><span>Прошивка</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/bdpb-01.html">
+            <img src="../imgs/main_menu/bdpb01.png"/>
+            <div class="menu_block_top_orange"><span>БДПБ-01</span></div>
+            <div class="menu_block_footer"><span></span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/6130.html">
+            <img src="../imgs/main_menu/61302.png"/>
+            <div class="menu_block_top_orange"><span>АТ6130</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/beta.html">
+            <img src="../imgs/main_menu/beta.jpg"/>
+            <div class="menu_block_top_orange"><span></span></div>
+            <div class="menu_block_footer"><span>Проверка БЕТА счетчиков.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../1123/1123_umnoz.html">
+            <img src="../imgs/main_menu/umn.jpg"/>
+            <div class="menu_block_top_orange"><span>1123</span></div>
+            <div class="menu_block_footer"><span>Проверка умножителя.</span></div>
+        </a>
+    </div>
+
+    <div class="menu_block">
+        <a href="../other/delitel.html">
+            <img src="../imgs/main_menu/del.jpg"/>
+            <div class="menu_block_top_orange"><span></span></div>
+            <div class="menu_block_footer"><span>Проверка делителя</span></div>
+        </a>
+    </div>
+
+    <hr>
+    <ul>
+        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>
+        <li><a href="../sertif_prosh/sertificate.html">Калибровочные сертификаты и протоколы поверки</a></li>
+        <li><a href="../docs/GMS%20for%20Corel">GMS for Corel</a></li>
+    </ul>
+    <!--    <div class="header_div">
+            <a class="white_font">Содержание</a>
+
+        </div>-->
+
+    <!--
+        МРП
+
+
+        Список актуальных прошивок
+        Калибровочные сертификаты и протоколы поверки
+        GMS for Corel-->
+
+</div>
+
+</body>
+</html>

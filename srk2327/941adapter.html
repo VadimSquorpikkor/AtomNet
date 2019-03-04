@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Адаптер 941</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+</head>
+<body>
+
+<div class="header_div">
+    <a class="white_font" href="../menu/index.html">Содержание /</a>
+    <a class="white_font" href="2327.html">СРК </a>
+    / Адаптер 941
+
+    <div w3-include-html="../menu/menu.html" class="dropdown"  id="main_menu"></div>
+    <script>
+        includeHTML();
+    </script>
+
+
+</div>
+<div>
+    <p>
+
+    <h1>Адаптер 941.</h1>
+    <p>
+    <ul>
+        <li><span class="mark_green">Сейчас контроллеры для 941-го адаптера ПРОШИВАЮТСЯ ДО УСТАНОВКИ НА ПЛАТУ, поэтому прошивать АИ уже ненужно</span></li>
+        <img src="../imgs/941/5.jpg" width="1000"/>
+        <li>Поставить перемычку</li>
+        <li>Подключить питание и USB-адаптер</li>
+        <li><span class="mark_green">Можно немного проще. Потом напишу как</span></li>
+        <li>Запустить Flip</li>
+        <img src="../imgs/941/5.png" width="800"/>
+        <li>Выбрать микросхему [1] &mdash; AT89C51ED2</li>
+        <li>Выбрать порт с подключенным USB-адаптером [2]. Нажать Connect</li>
+        <li>Выбрать прошивку [3]</li>
+        <img src="../imgs/941/6.png" width="1000"/>
+        <li>Оставить флажки "Erase" и "Program"</li>
+        <li>Нажать "Run"</li>
+        <li>После окончания процесса прошивки снять флаг "BLJB" и поставить уровень "Level 2"</li>
+        <img src="../imgs/941/7.png" width="600"/>
+        <li><span class="attention">Достать перемычку!</span></li>
+        <li><span class="mark_green">Если не шьется &mdash; проверить ток (в разрыв 12V питания), должно быть не более 50mA</span>
+        </li>
+    </ul>
+    Чтобы прописать или поменять адрес 941-го адаптера
+    <img src="../imgs/941/4.jpg" width="700"/>
+    <ul>
+        <li>Подключить питание и USB-COM адаптер</li>
+        <li>Запустить SARKtech</li>
+        <li>Выбрать порт с подключенным USB-COM адаптером</li>
+        <li>Нажать "Запись адреса" и ввести необходимый номер адреса.
+            <span class="attention">ОБЯЗАТЕЛЬНО ЗАДАВАТЬ ДАЖЕ 1-ЫЙ АДРЕС!! 1-й адрес задан по-умолчанию, но если его не задать самому, пульт его НЕ УВИДИТ (хоть он вроде как и первый)</span> </li>
+        <img src="../imgs/941/8.png" width="600"/>
+        <li>Для проверки: выбрать номер записанного адреса и нажать "Установить связь". Адаптер должен сразу же
+            подключиться
+        </li>
+        <li>После прошивки и проверки работоспособности адаптера, на контроллер наклеить наклейку
+            с версией прошивки и номером адреса или сделать соответствующую надпись маркером
+        </li>
+        <img src="../imgs/941/6.jpg" width="700"/>
+
+
+        <img src="../imgs/941/7.jpg" width="1100"/>
+    </ul>
+</div>
+</body>
+</html>
