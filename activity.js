@@ -61,6 +61,12 @@ function get_cd_1123() {
 
 }
 
+function get_cs_bdkg04() {
+    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cd_1079, t_pol_cs);
+    document.getElementById('cs_1123_516').value = activity(45, pov_date_cd_1079, t_pol_cs);
+
+}
+
 function get_cd_1121() {
     document.getElementById('cd').value = activity(61, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cs_1121_2910').value = activity(23, pov_date_cd_1079, t_pol_cs);
@@ -72,6 +78,13 @@ function get_cs_1121() {
         let res = parseFloat(document.getElementById('cs_1121').value);
         let ans = (res-12)*9/7;
         document.getElementById('res_cs_1121').value = ans.toFixed(2);
+}
+
+// todo сделать нормально Float не нужен и округление тоже
+function get_cs_04() {
+    let res = parseFloat(document.getElementById('cs_04').value);
+    let ans = 71 - res;
+    document.getElementById('res_cs_04').value = ans.toFixed(2);
 }
 
 function get_all() {
