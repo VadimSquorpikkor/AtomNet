@@ -326,19 +326,18 @@ p {
     text-indent: 40px;
 }
 
+/*todo объединить с header div*/
 .footer_div {
     background-color: orange;
-    height: 35px;
     font-family: sans-serif;
     color: white;
     border-radius: 20px;
-    /*position: fixed;*/
-    /*position: relative;*/
-    /*margin: 0;*/
     bottom: 0;
-    width: 90%;
-    /*text-align: center;*/
-    padding-top: 10px;
+    width: 95%;
+    padding: 5px 20px;
+    margin: 0 0;
+    text-indent: 0;
+
 }
 
 .header_div {
@@ -351,7 +350,6 @@ p {
     padding: 5px 20px;
     margin: 0 0;
     border-radius: 20px;
-
     text-indent: 0;
 }
 
