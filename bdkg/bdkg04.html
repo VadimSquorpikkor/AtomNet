@@ -62,7 +62,31 @@
         <li>
 
             <details>
-                <summary>Перепроверить установленные коэффициенты:</summary>
+                <summary>Перепроверить установленные коэффициенты:
+                    <br><span class="attention">Должны</span> стоять такие коэффициенты:
+                    <table class="small_table" align="center">
+                        <tr>
+                            <td>1U</td>
+                            <td>0.5</td>
+                        </tr>
+                        <tr>
+                            <td>2U</td>
+                            <td>0.5</td>
+                        </tr>
+                        <tr>
+                            <td>3U</td>
+                            <td>1.0</td>
+                        </tr>
+                        <tr>
+                            <td>4U</td>
+                            <td>1.0</td>
+                        </tr>
+                        <tr>
+                            <td>5U</td>
+                            <td>1.0</td>
+                        </tr>
+                    </table>
+                </summary>
                 <div>
 
                     <p>Подключить БД к технологическому БОИ
@@ -147,11 +171,19 @@
         <li>
             <details>
                 <summary>Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
-                    показаниям от ОСГИ <sup>137</sup>Cs
+                    показаниям от ОСГИ <sup>137</sup>Cs:
+                    <div class="yellow_back">
+                        Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910_2" type="text"
+                                                                                  value="0" title="k1" size="5"><br>
+                        Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516_2" type="text"
+                                                                                  value="0" title="k1" size="5">
+                    </div>
+                    Проверить скорость счета от Cs<sup>135</sup>, должна быть примерно 2 имп/с
                 </summary>
                 <div>
                     <ul>
                         <li>Закрепить источник <span class="attention">ОБЯЗАТЕЛЬНО латунной пластинкой к прибору</span>
+                            и <span class="attention">со снятым колпачком</span>
                             <img src="../imgs/bdkg04/10.jpg" width="800"></li>
                         <li>Подключить БД через адаптер USB к компьютеру:</li>
                         <img src="../imgs/bdkg04/11.jpg" width="800">
@@ -168,17 +200,18 @@
                             </div>
                             <img src="../imgs/bdkg04/12.jpg" width="800">
 
-                            Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
+                            <!--Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
                             считает не точно, мало статистики):
                             <form class="yellow_back">
                                 <i>Будет статистика, будет нормально работать. Пока считает примерно</i><br><br>
                                 мкЗв/ч <input id="cs_04" type="text" value="26" title="channel">
                                 <input type="button" value="Расчитать" onclick="get_cs_04()">
                                 Номинал (кОм): <input id="res_cs_04" type="text" title="res">
-                            </form>
+                            </form>-->
+                        <li>Проверить скорость счета от Cs<sup>135</sup>, должна быть примерно 2 имп/с</li>
 
 
-                            <span class="mark_yellow">Записать в базу настройку
+                        <li><span class="mark_yellow">Записать в базу настройку
                                 что?????????????????</span>
                             <a class="orange_link" title="Открыть базу настройки БДКГ-04"
                                href="file://///Newserv4/производство/Участок РИиР/База настроек/BDKG04.ods">&neArr;</a>
@@ -189,6 +222,16 @@
                         <!--<img src="../imgs/1121/03.png" width="500">-->
 
                     </ul>
+
+                </div>
+            </details>
+        </li>
+        <li>
+            <details>
+                <summary>Проконтролировать напряжение на выводе D4.1 на плата преобразователя напряжения в 3
+                    диапазоне. Проверить отсутствие показаний прибора во 2,3 диапазоне на фоне.
+                </summary>
+                <div>
 
                 </div>
             </details>
