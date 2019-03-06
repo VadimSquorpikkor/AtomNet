@@ -62,8 +62,12 @@ function get_cd_1123() {
 }
 
 function get_cs_bdkg04() {
+    document.getElementById('cd').value = activity(81, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cs_1123_2910').value = activity(33, pov_date_cd_1079, t_pol_cs);
     document.getElementById('cs_1123_516').value = activity(45, pov_date_cd_1079, t_pol_cs);
+    document.getElementById('cs_1123_516_2').value = activity(45, pov_date_cd_1079, t_pol_cs);
+    document.getElementById('cs_1123_2910_2').value = activity(33, pov_date_cd_1079, t_pol_cs);
+    document.getElementById('cd_2').value = activity(81, pov_date_cd_1079, t_pol_cd);
 
 }
 
@@ -93,4 +97,7 @@ function get_all() {
     get_cd_1123();
 }
 
+function get_path() {
+    open("../outside.html")
+}
 
