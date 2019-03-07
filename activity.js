@@ -6,6 +6,12 @@ function activity(a0, pov_date, t_pol) {
     return act.toFixed(4);
 }
 
+function activityAllDays(a0, pov_date, now_date, t_pol) {
+    let days_left = (now_date.getTime() - pov_date.getTime()) / (1000*60*60*24);
+    let act = a0 * Math.exp(-0.693147/t_pol * days_left);
+    return act.toFixed(4);
+}
+
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_cd_1079 = new Date(2019,0,30);
@@ -33,6 +39,7 @@ function activity_of_2910() {
 }
 //Вывод активностей для каждого из источников на сегодняшний день
 function get_act() {
+    set_num();
     // document.getElementById('516').value = days_left();
     document.getElementById('516').value = activity_of_cs137(a0_516);
     document.getElementById('517').value = activity_of_cs137(a0_517);
@@ -101,3 +108,23 @@ function get_path() {
     open("../outside.html")
 }
 
+function calc_act() {
+    let pov_date = new Date(document.getElementById('date').value);
+    let now_date = new Date(document.getElementById('date_now').value);
+    let act0 = document.getElementById('act0').value;
+
+    let rad = document.getElementsByName('r1');
+    if (rad[2].checked) {
+        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, t_pol_cd);
+    } else if (rad[3].checked) {
+        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, t_pol_cs);
+    }else if (rad[4].checked) {
+        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value);
+    }
+}
+
+function set_num() {
+    document.getElementById('act0').value = 90;
+    document.getElementById('date').value = "2018-02-12";
+    document.getElementById('date_now').valueAsDate = new Date();
+}

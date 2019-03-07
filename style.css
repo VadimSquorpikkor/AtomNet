@@ -91,10 +91,12 @@ img {
 }*/
 .dropdown-content .dropbtn {
     text-indent: 0;
+
 }
 .dropdown-content ul, .dropdown-content li {
     padding-left: 0;
     list-style-type: none;
+
 
 }
 
@@ -137,6 +139,7 @@ img {
 /*+меню в меню*/
 .dropdown-content, .dropdown-content>ul>li>.dropdown-content {
     display: none;
+
 }
 
 .dropdown-content>ul>li>.dropdown-content {
@@ -371,7 +374,8 @@ p {
 
 .yellow_back_center {
     font-size: 14px;
-    background-color: khaki;
+    /*background-color: khaki;*/
+    background-color: antiquewhite;
     padding: 10px;
     margin-left: 50px;
     width: 200px;
@@ -400,6 +404,7 @@ p {
     text-indent: 0;
     border-radius: 20px;
 
+    /*box-shadow: 3px 3px 11px 1px rgba(0, 0, 0, 0.43);*/
 }
 .yellow_back p {
     margin: 10px;
