@@ -105,7 +105,7 @@ function get_all() {
 }
 
 function get_path() {
-    open("../outside.html")
+    open("AtomNet/menu/menu.html")
 }
 
 function calc_act() {
