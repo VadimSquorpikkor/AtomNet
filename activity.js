@@ -124,6 +124,7 @@ function calc_act() {
 }
 
 function set_num() {
+    document.getElementsByName('r1')[2].checked = true;
     document.getElementById('act0').value = 90;
     document.getElementById('date').value = "2018-02-12";
     document.getElementById('date_now').valueAsDate = new Date();

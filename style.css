@@ -1,7 +1,5 @@
 /*todo Переписать CSS*/
-/*todo сделать иконку
- -- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-ресурс для сохдания иконок -- www.favicon.ru*/
+
 
 img {
 
@@ -31,7 +29,6 @@ img {
 /*region NEW DROP DOWN---------------------------------------*/
 .dropdown{
     background-color: #333;
-    /*background-color: antiquewhite;*/
     border-radius: 20px;
     padding: 0 20px;
     margin: 0;
@@ -47,8 +44,6 @@ img {
     padding: 0;
     overflow: hidden;
     background-color: #333;
-    /*background-color: antiquewhite;*/
-
 }
 
 /*todo а эти два селектора не одно и тоже?*/
@@ -57,14 +52,10 @@ img {
     color: white;
     padding: 16px 16px;
     text-decoration: none;
-
     margin: 0;
 }
 
-/*.dropdown li>a:hover,*/
-
 .dropdown > ul > li:hover>.dropbtn {
-    /*background-color: #333;*/
     background-color: antiquewhite;
     color: #555555;
     display: block;
@@ -77,18 +68,6 @@ img {
     transition-duration: 300ms;
 }
 
-/*.dropdown-content .dropbtn {------------------------
-    background-color: antiquewhite;
-    color: #555555;
-    display: block;
-    border-radius: 0;
-    padding: 0px 0px;
-    width: 150px;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 300ms;
-}*/
 .dropdown-content .dropbtn {
     text-indent: 0;
 
@@ -96,14 +75,11 @@ img {
 .dropdown-content ul, .dropdown-content li {
     padding-left: 0;
     list-style-type: none;
-
-
 }
 
 .dropdown-content > a:hover{
     font-size: 14px;
     background-color: orange;
-    /*background-color: antiquewhite;*/
     color: black;
     display: inline-block;
     border-radius: 0;
@@ -130,7 +106,6 @@ img {
     width: 350px;
 
     background-color: antiquewhite;
-    /*background-color: #333;*/
 }
 .dropdown {
     position: relative;
@@ -139,19 +114,17 @@ img {
 /*+меню в меню*/
 .dropdown-content, .dropdown-content>ul>li>.dropdown-content {
     display: none;
-
 }
 
 .dropdown-content>ul>li>.dropdown-content {
     box-shadow: -3px 3px 5px 0 rgba(0,0,0,0.75);
-
 }
 
 /*todo объединить со следующим селектором*/
 .dropdown-content>ul>li:hover > .dropdown-content {
     position: absolute;
     top: 0;
-    left: 280px;
+    left: 230px;
     display: block;
     height: 100%;
     background-color: antiquewhite;
@@ -166,7 +139,6 @@ img {
 
 
 /*+меню в меню*/
-/*.dropdown > ul > li:hover > .dropdown-content, .dropdown-content>ul>li:hover > .dropdown-content{*/
 .dropdown > ul > li:hover > .dropdown-content{
     position: absolute;
     top: 0;
@@ -175,11 +147,7 @@ img {
     height: 100%;
 
     background-color: antiquewhite;
-    /*background: none;*/
-    /*box-shadow: 10px 0px 17px -7px rgba(255,255,255,1);*/
-    /*background-color: #333;*/
     min-width: 160px;
-    /*box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);*/
     text-indent: 0;
 
     padding: 0;
@@ -193,9 +161,6 @@ img {
     box-shadow: inset 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
     border-radius: 5px;
     padding: 5px;
-
-    /*background-color: red;*/
-
 }
 /*endregion*/
 
@@ -404,6 +369,7 @@ p {
     text-indent: 0;
     border-radius: 20px;
 
+    box-shadow: none;
     /*box-shadow: 3px 3px 11px 1px rgba(0, 0, 0, 0.43);*/
 }
 .yellow_back p {
@@ -621,3 +587,6 @@ h3 {
     width: 300px;
     text-indent: 0;
 }
+
+
+
