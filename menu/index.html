@@ -22,7 +22,7 @@
     №2910: <input id="2910" type="text" value="0" title="k1" size="5">
 </div>
 
-<div class="yellow_back_centered" style="clear: none">
+<!--<div class="yellow_back_centered" style="clear: none">
     <div class="yellow_back_centered">
         Дата поверки: <input id="date" title="useless" name="r1" type="date" style="margin-right: 50px">
         Сегодня: <input id="date_now" title="useless" name="r1" type="date">
@@ -33,6 +33,23 @@
         <input id="t2_3" title="useless" name="r1" type="radio"> Custom
         <input id="custom" title="useless" name="r1" type="text" value="451" size="5"><br><br>
         A<sub>0</sub>(кБк)<input id="act0" title="useless" name="act0" type="text" size="5" style="margin-right: 10px">
+        <input title="useless" name="r1" type="button" value="Рассчитать" onclick="calc_act()">
+        <input id="act_main" title="useless" name="r1" type="text" size="5">(кБк)
+    </div>
+
+</div>-->
+
+<div class="yellow_back_centered" style="clear: left">
+    <div class="yellow_back" style="align-self: right; margin: 0 20px; alignment: right; background: antiquewhite; display: inline-block ">
+        Дата поверки<br><input id="date" title="useless" name="r1" type="date"><br>
+        Сегодня<br><input id="date_now" title="useless" name="r1" type="date"><br>
+        A<sub>0</sub><input id="act0" title="useless" name="act0" type="text" size="5" style="margin: 5px 10px 0">(кБк)
+    </div>
+    <div class="yellow_back" style="width: 310px;  display: inline-block; margin: 0; background: antiquewhite">
+        <input id="t2_1" title="useless" name="r1" type="radio"> <sup>109</sup>Cd (461.4 дней)<br>
+        <input id="t2_2" title="useless" name="r1" type="radio"> <sup>137</sup>Cs (11019.6 дней) <br>
+        <input id="t2_3" title="useless" name="r1" type="radio"> Custom
+        <input id="custom" title="useless" name="r1" type="text" value="451" size="5"><br><br>
         <input title="useless" name="r1" type="button" value="Рассчитать" onclick="calc_act()">
         <input id="act_main" title="useless" name="r1" type="text" size="5">(кБк)
     </div>
@@ -94,6 +111,12 @@
         <div class="menu_block_footer"><span>Прошивка.</span></div>
     </a>
 </div>
-
+<div class="menu_block">
+    <a href="../sertif_prosh/sertificate.html">
+        <img src="../imgs/main_menu/sertificate.jpg"/>
+        <div class="menu_block_top_violet"><span>Документы</span></div>
+        <div class="menu_block_footer"><span>Протоколы и сертификаты</span></div>
+    </a>
+</div>
 </body>
 </html>

@@ -204,8 +204,10 @@ hr {
 .menu_block_top_orange {
     background-color: darkorange;
 }
-
-.menu_block_top_green, .menu_block_top_red, .menu_block_top_blue, .menu_block_top_orange {
+.menu_block_top_violet {
+    background-color: darkmagenta;
+}
+.menu_block_top_green, .menu_block_top_red, .menu_block_top_blue, .menu_block_top_orange, .menu_block_top_violet {
     font-size: 13px;
     height: 23px;
     color: white;
