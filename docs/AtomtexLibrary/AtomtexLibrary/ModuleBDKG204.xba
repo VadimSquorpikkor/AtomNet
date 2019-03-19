@@ -12,6 +12,7 @@ dim oDialogBDKG204 as object
 Sub bdkg204_Dialog_Show
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogBDKG204 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogBDKG204 )
+   oDialogMain.endexecute()
    oDialogBDKG204.Execute()
 End Sub
 &apos;-----------------------------------------
@@ -42,5 +43,6 @@ end sub
 &apos;-----------------------------------------------------------
 
 
+Sub Macro1
 
-</script:module>
+End Sub</script:module>

@@ -7,4 +7,5 @@
  <library:element library:name="DialogBDKG02"/>
  <library:element library:name="DialogG23"/>
  <library:element library:name="DialogG01"/>
+ <library:element library:name="D6130"/>
 </library:library>

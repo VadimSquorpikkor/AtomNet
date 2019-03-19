@@ -61,6 +61,7 @@ Sub bdkg02_Dialog_Show
      oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
      oNumericFieldModel.DECIMALACCURACY = 2
    
+   oDialogMain.endexecute()   
    oDialogBDKG02.Execute()
    
 End Sub

@@ -36,12 +36,13 @@ Sub bdkg01_Dialog_Show
   oNumericFieldModel.value = 0.7
   oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField8&quot;)
   oNumericFieldModel.valuestep = 0.1
-  oNumericFieldModel.value = 7
+	oNumericFieldModel.value = 7
   
-  oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
-  oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
 
-  oDialogBDKG01.Execute()
+	oDialogMain.endexecute()
+	oDialogBDKG01.Execute()
 End Sub
 &apos;---------------------------------------------------
 private sub makeSertG01(path as string)

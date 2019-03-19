@@ -2,12 +2,27 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">REM  *****  BASIC  *****
 
-Sub Main
-	dim timevar as string
-	timevar = day(now)
-	selection.text = timevar
+Sub InsertTime
+&apos;	dim timevar as string
+&apos;	timevar = date
+&apos;	selection.text = timevar
+&apos;print datevalue(now)
+&apos;oCurSelection = thisComponent.getCurrentSelection()
+&apos;oCurSelection = &quot;s&quot;
+subInsertString(thisComponent,  datevalue(now), false)
+
 End Sub
 
-Sub Macro1
+&apos;sub subInsertString(oDoc, sString, bReplace)
+&apos;oVC = oDoc.getCurrentController.getViewCursor
+&apos;oText = oVC.text
+&apos;oText.insertString(oVC, sString, bReplace)
+&apos;end sub
 
-End Sub</script:module>
+
+
+sub subInsertString(oDoc, sString, bReplace)
+oVC = oDoc.getCurrentSelection
+xText.insertString( xTextCursor, &quot;more text ...&quot;, false )
+end sub
+</script:module>
