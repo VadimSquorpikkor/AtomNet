@@ -69,27 +69,6 @@ End Sub
 sub testForDaysLeft
 	print days_left_2910_NEW(oDateFieldModel)
 end sub
-&apos;--------------------------------------------------------------------
-function getDate(DateFieldModel)
-	dim dnum as long
-	dim year as integer
-	dim month as integer
-	dim day as integer
-	&apos;oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
-	dnum = DateFieldModel.date
-	day = dnum mod 100
-	month = dnum \ 100 mod 100
-	year = dnum \ 10000
-	getDate = insertZero(day) &amp;&quot;.&quot;&amp; insertZero(month) &amp;&quot;.&quot;&amp; year
-end function
-&apos;--------------------------------------------------------------------	
-function insertZero(number)
-	if number &gt; 9 then
-		insertZero = number
-	else 
-		insertZero = &quot;0&quot;&amp;number
-	end if
-end function
 &apos;--------------------------------------------------------------------	
   Function GetSelectedItem( oComboBoxModel As Object ) As String
       GetSelectedItem = oComboBoxModel.Text

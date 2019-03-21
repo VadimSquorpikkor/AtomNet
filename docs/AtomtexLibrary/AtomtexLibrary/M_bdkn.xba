@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_bdkn" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim RangeData 
+
+Sub Main
+	getArray
+End Sub
+
+sub getArray
+	RangeData = FillArrayFromSelection()
+	msgbox RangeData(0,0)
+end sub
+
+
+</script:module>

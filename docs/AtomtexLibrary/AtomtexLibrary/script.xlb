@@ -9,4 +9,5 @@
  <library:element library:name="ModuleG23"/>
  <library:element library:name="ModuleG01"/>
  <library:element library:name="M6130"/>
+ <library:element library:name="M_bdkn"/>
 </library:library>
