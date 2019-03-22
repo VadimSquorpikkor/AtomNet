@@ -2,16 +2,31 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_bdkn" script:language="StarBasic">REM  *****  BASIC  *****
 
+dim oDialogBDKN as object
+dim oDateFieldModel as object
 dim RangeData 
 
-Sub Main
-	getArray
+Sub bdkn_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogBDKN = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_bdkn )
+	oDateFieldModel = oDialogBDKN.Model.getByName(&quot;DateField1&quot;)
+   
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	oDialogMain.endexecute()   
+	oDialogBDKN.Execute()
 End Sub
 
-sub getArray
+sub makeSertEn
 	RangeData = FillArrayFromSelection()
-	msgbox RangeData(0,0)
+    MyFormat = &quot;0.0&quot;
+    OpenTemplate(&quot;file:///d:\sert_template\template_bdkn02_ser_EN.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, RangeData(0,0))
+	findAndRename(&quot;$k1$&quot;, Format(RangeData(6,2), MyFormat)
+    findAndRename(&quot;$k2$&quot;, Format(RangeData(6,3), MyFormat)
+    findAndRename(&quot;$k3$&quot;, Format(RangeData(6,4), MyFormat)
+    findAndRename(&quot;$k4$&quot;, Format(RangeData(6,5), MyFormat)
+    findAndRename(&quot;$k5$&quot;, Format(RangeData(14,5), MyFormat)
+    findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
 end sub
-
-
 </script:module>
