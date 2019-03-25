@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_mrp" script:language="StarBasic">REM  *****  BASIC  *****
+
+REM declare dialog object &quot;globally&quot;
+dim oDialogMRP as object
+dim oDateFieldModel as object
+dim oOptionButton as object
+&apos;-----------------------------------------
+Sub mrp_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialogMRP = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_MRP )
+   
+   oDateFieldModel = oDialogMRP.Model.getByName(&quot;DateField1&quot;)
+   oOptionButton = oDialogMRP.Model.getByName(&quot;OptionButton1&quot;)
+   
+  oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+  oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
+   
+  Dim nCount As Integer
+  Dim sItems As Variant
+  REM get control
+  oComboBox = oDialogMRP.getControl(&quot;ComboBox1&quot;)
+  REM first remove all old items from the list
+  nCount = oComboBox.getItemCount()
+  oComboBox.removeItems( 0, nCount )
+  REM add new items to the list
+  sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+  oComboBox.addItems( sItems, 0 )
+   
+     oNumericFieldModel = oDialogMRP.Model.getByName(&quot;NumericField1&quot;)
+     oNumericFieldModel.DECIMALACCURACY = 2
+   
+   oDialogMain.endexecute()   
+   oDialogMRP.Execute()
+   
+End Sub
+&apos;--------------------------------------------------------------------	
+&apos;--------------------------------------------------------------------	
+  Function GetSelectedItem( oComboBoxModel As Object ) As String
+      GetSelectedItem = oComboBoxModel.Text
+  End Function	
+&apos;--------------------------------------------------------------------	
+sub comboChanged
+	oNumericFieldModel = oDialogMRP.Model.getByName(&quot;NumericField1&quot;)
+	dim num as string
+	oComboBox = oDialogMRP.getControl(&quot;ComboBox1&quot;)
+	num = oComboBox.text
+	select case num
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
+	end select	
+end sub
+
+rem------------------------------------------------------------------
+Dim bg_1 as integer
+Dim bg_2 as integer
+Dim bg_3 as integer
+Dim bg_4 as integer
+Dim bg_5 as integer
+Dim dr_1 as integer
+Dim dr_2 as integer
+Dim dr_3 as integer
+Dim dr_4 as integer
+Dim dr_5 as integer
+Dim bg_average as double
+Dim dr_average as double
+Dim activity as double
+Dim rasch_znach_chuvstv as double
+Dim absolut_pogresh as double
+
+&apos;------------------------------------------------------------
+Sub getAllTextField
+    bg_1 = oDialogMRP.Model.getByName(&quot;NumericField2&quot;).Value
+    bg_2 = oDialogMRP.Model.getByName(&quot;NumericField3&quot;).Value
+    bg_3 = oDialogMRP.Model.getByName(&quot;NumericField4&quot;).Value
+    bg_4 = oDialogMRP.Model.getByName(&quot;NumericField5&quot;).Value
+    bg_5 = oDialogMRP.Model.getByName(&quot;NumericField6&quot;).Value
+    dr_1 = oDialogMRP.Model.getByName(&quot;NumericField7&quot;).Value
+    dr_2 = oDialogMRP.Model.getByName(&quot;NumericField8&quot;).Value
+    dr_3 = oDialogMRP.Model.getByName(&quot;NumericField9&quot;).Value
+    dr_4 = oDialogMRP.Model.getByName(&quot;NumericField10&quot;).Value
+    dr_5 = oDialogMRP.Model.getByName(&quot;NumericField11&quot;).Value
+    
+    activity = oDialogMRP.Model.getByName(&quot;NumericField1&quot;).Value
+End Sub
+&apos;------------------------------------------------------------
+Function average (dr1 as integer, dr2 as integer, dr3 as integer, dr4 as integer, dr5 as integer)
+    average = (dr1 + dr2 + dr3 + dr4 + dr5)/5
+End Function
+&apos;------------------------------------------------------------
+sub makeProtocol
+    MyFormat = &quot;0.00&quot;
+
+    getAllTextField()
+    bg_average = average(bg_1, bg_2, bg_3, bg_4, bg_5)
+    dr_average = average(dr_1, dr_2, dr_3, dr_4, dr_5)
+    &apos;msgbox activity
+    rasch_znach_chuvstv = (dr_average - bg_average)/activity
+    absolut_pogresh = 110.1 - rasch_znach_chuvstv
+    &apos;msgBox absolut_pogresh
+    
+    OpenTemplate(&quot;file:///f:\sert_template\template_mrp.odt&quot;)
+    findAndRename(&quot;$activity$&quot;, Format(activity, MyFormat)
+    findAndRename(&quot;$bg1$&quot;, bg_1)
+    findAndRename(&quot;$bg2$&quot;, bg_2)
+    findAndRename(&quot;$bg3$&quot;, bg_3)
+    findAndRename(&quot;$bg4$&quot;, bg_4)
+    findAndRename(&quot;$bg5$&quot;, bg_5)
+    findAndRename(&quot;$dr1$&quot;, dr_1)
+    findAndRename(&quot;$dr2$&quot;, dr_2)
+    findAndRename(&quot;$dr3$&quot;, dr_3)
+    findAndRename(&quot;$dr4$&quot;, dr_4)
+    findAndRename(&quot;$dr5$&quot;, dr_5)
+    findAndRename(&quot;$bg_avg$&quot;, bg_average)
+    findAndRename(&quot;$dr_avg$&quot;, dr_average)
+    findAndRename(&quot;$rasch$&quot;, Format(rasch_znach_chuvstv, MyFormat) )
+    findAndRename(&quot;$pogr$&quot;, Format(absolut_pogresh, MyFormat ) )    
+    findAndRename(&quot;$num_srk$&quot;, oDialogMRP.Model.getByName(&quot;TextField11&quot;).Text)
+    findAndRename(&quot;$num_mrp$&quot;, oDialogMRP.Model.getByName(&quot;TextField12&quot;).Text)
+    findAndRename(&quot;$num_bdkg$&quot;, oDialogMRP.Model.getByName(&quot;TextField13&quot;).Text)
+    findAndRename(&quot;$num_ist$&quot;, oDialogMRP.Model.getByName(&quot;ComboBox1&quot;).Text)    
+
+  If oOptionButton.State Then
+     findAndRename(&quot;$type$&quot;, &quot;920&quot;)
+  Else
+     findAndRename(&quot;$type$&quot;, &quot;920В&quot;)
+  End If
+end sub
+
+</script:module>

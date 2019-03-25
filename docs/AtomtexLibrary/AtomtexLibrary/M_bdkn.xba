@@ -20,7 +20,7 @@ End Sub
 sub makeSertEn
 	RangeData = FillArrayFromSelection()
     MyFormat = &quot;0.0&quot;
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkn02_ser_EN.odt&quot;)
+    OpenTemplate(&quot;file:///f:\sert_template\template_bdkn02_ser_EN.odt&quot;)
 	findAndRename(&quot;$bd_num$&quot;, RangeData(0,0))
 	findAndRename(&quot;$k1$&quot;, Format(RangeData(6,2), MyFormat)
     findAndRename(&quot;$k2$&quot;, Format(RangeData(6,3), MyFormat)

@@ -112,5 +112,28 @@ End function
 
 rem -------------------------------------------------------------------------------------------
 
+Sub OpenTemplate(documentURL)
+    Dim Doc As Object
+    Dim Url As String
+    Dim Dummy() &apos;An (empty) array of PropertyValues
+    Url = documentURL
+    Doc = StarDesktop.loadComponentFromURL(Url, &quot;_blank&quot;, 0, Dummy)
+End Sub
+rem------------------------------------------------------------
+Sub findAndRename(target as String, newName as String)
+    Dim oDescriptor &apos;Описатель поиска
+    Dim oFound &apos;Найденный диапазон
+    Dim oFoundAll &apos;Найденный диапазон
+    Dim n% &apos;Общая индексная переменная
+    oDescriptor = ThisComponent.createSearchDescriptor()
+    oDescriptor.SearchString = target
+    oFoundAll = ThisComponent.findAll(oDescriptor)
+    For n% = 0 to oFoundAll.getCount()-1
+        oFound = oFoundAll.getByIndex(n%)
+        oFound.setString(newName)
+    Next
+End Sub
+
+
 
 </script:module>

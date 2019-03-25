@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
 <library:library xmlns:library="http://openoffice.org/2000/library" library:name="AtomtexLibrary" library:readonly="false" library:passwordprotected="false">
- <library:element library:name="DialogMRP"/>
+ <library:element library:name="D_bdkn"/>
  <library:element library:name="DialogBDKG204"/>
  <library:element library:name="DialogMain"/>
  <library:element library:name="DialogBDKG02"/>
  <library:element library:name="DialogG23"/>
  <library:element library:name="DialogG01"/>
  <library:element library:name="D6130"/>
+ <library:element library:name="D_MRP"/>
+ <library:element library:name="D_35"/>
 </library:library>

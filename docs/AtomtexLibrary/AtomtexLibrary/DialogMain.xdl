@@ -3,7 +3,7 @@
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DialogMain" dlg:left="46" dlg:top="44" dlg:width="80" dlg:height="153" dlg:closeable="true" dlg:moveable="true">
  <dlg:bulletinboard>
   <dlg:button dlg:id="CommandButton1" dlg:tab-index="0" dlg:left="15" dlg:top="13" dlg:width="50" dlg:height="16" dlg:value="МРП-920">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.Module2.MrpDialog_Show?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_mrp.mrp_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton2" dlg:tab-index="1" dlg:left="15" dlg:top="29" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleBDKG02.bdkg02_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
@@ -21,7 +21,7 @@
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M6130.at6130_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton7" dlg:tab-index="6" dlg:left="15" dlg:top="109" dlg:width="50" dlg:height="16" dlg:value="БДКН">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M6130.at6130_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_bdkn.bdkn_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>
