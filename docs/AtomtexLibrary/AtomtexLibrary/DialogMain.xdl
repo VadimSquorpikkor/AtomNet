@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DialogMain" dlg:left="46" dlg:top="44" dlg:width="80" dlg:height="153" dlg:closeable="true" dlg:moveable="true">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DialogMain" dlg:left="46" dlg:top="44" dlg:width="80" dlg:height="141" dlg:closeable="true" dlg:moveable="true">
  <dlg:bulletinboard>
   <dlg:button dlg:id="CommandButton1" dlg:tab-index="0" dlg:left="15" dlg:top="13" dlg:width="50" dlg:height="16" dlg:value="МРП-920">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_mrp.mrp_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
