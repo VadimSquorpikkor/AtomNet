@@ -2,11 +2,11 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_35" script:language="StarBasic">REM  *****  BASIC  *****
 
-dim oDialogMRP as object
+dim oDialog35 as object
 dim oDateFieldModel as object
 
 rem-----------------------------------------
-Sub mrp_Dialog_Show
+Sub bdkg35_Dialog_Show
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialog35 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_35 )
    
@@ -145,38 +145,38 @@ rem----------BD 1-----------
     dr_4 = oDialog35.Model.getByName(&quot;NumericField10&quot;).Value
     dr_5 = oDialog35.Model.getByName(&quot;NumericField11&quot;).Value
 rem----------BD 2-----------
-    bg_1 = oDialog35.Model.getByName(&quot;NumericField12&quot;).Value
-    bg_2 = oDialog35.Model.getByName(&quot;NumericField13&quot;).Value
-    bg_3 = oDialog35.Model.getByName(&quot;NumericField14&quot;).Value
-    bg_4 = oDialog35.Model.getByName(&quot;NumericField15&quot;).Value
-    bg_5 = oDialog35.Model.getByName(&quot;NumericField16&quot;).Value
-    dr_1 = oDialog35.Model.getByName(&quot;NumericField17&quot;).Value
-    dr_2 = oDialog35.Model.getByName(&quot;NumericField18&quot;).Value
-    dr_3 = oDialog35.Model.getByName(&quot;NumericField19&quot;).Value
-    dr_4 = oDialog35.Model.getByName(&quot;NumericField20&quot;).Value
-    dr_5 = oDialog35.Model.getByName(&quot;NumericField21&quot;).Value
+    bg_6 = oDialog35.Model.getByName(&quot;NumericField12&quot;).Value
+    bg_7 = oDialog35.Model.getByName(&quot;NumericField13&quot;).Value
+    bg_8 = oDialog35.Model.getByName(&quot;NumericField14&quot;).Value
+    bg_9 = oDialog35.Model.getByName(&quot;NumericField15&quot;).Value
+    bg_10 = oDialog35.Model.getByName(&quot;NumericField16&quot;).Value
+    dr_6 = oDialog35.Model.getByName(&quot;NumericField17&quot;).Value
+    dr_7 = oDialog35.Model.getByName(&quot;NumericField18&quot;).Value
+    dr_8 = oDialog35.Model.getByName(&quot;NumericField19&quot;).Value
+    dr_9 = oDialog35.Model.getByName(&quot;NumericField20&quot;).Value
+    dr_10 = oDialog35.Model.getByName(&quot;NumericField21&quot;).Value
 rem----------BD 3-----------
-    bg_1 = oDialog35.Model.getByName(&quot;NumericField22&quot;).Value
-    bg_2 = oDialog35.Model.getByName(&quot;NumericField23&quot;).Value
-    bg_3 = oDialog35.Model.getByName(&quot;NumericField24&quot;).Value
-    bg_4 = oDialog35.Model.getByName(&quot;NumericField25&quot;).Value
-    bg_5 = oDialog35.Model.getByName(&quot;NumericField26&quot;).Value
-    dr_1 = oDialog35.Model.getByName(&quot;NumericField27&quot;).Value
-    dr_2 = oDialog35.Model.getByName(&quot;NumericField28&quot;).Value
-    dr_3 = oDialog35.Model.getByName(&quot;NumericField29&quot;).Value
-    dr_4 = oDialog35.Model.getByName(&quot;NumericField30&quot;).Value
-    dr_5 = oDialog35.Model.getByName(&quot;NumericField31&quot;).Value
+    bg_11 = oDialog35.Model.getByName(&quot;NumericField22&quot;).Value
+    bg_12 = oDialog35.Model.getByName(&quot;NumericField23&quot;).Value
+    bg_13 = oDialog35.Model.getByName(&quot;NumericField24&quot;).Value
+    bg_14 = oDialog35.Model.getByName(&quot;NumericField25&quot;).Value
+    bg_15 = oDialog35.Model.getByName(&quot;NumericField26&quot;).Value
+    dr_11 = oDialog35.Model.getByName(&quot;NumericField27&quot;).Value
+    dr_12 = oDialog35.Model.getByName(&quot;NumericField28&quot;).Value
+    dr_13 = oDialog35.Model.getByName(&quot;NumericField29&quot;).Value
+    dr_14 = oDialog35.Model.getByName(&quot;NumericField30&quot;).Value
+    dr_15 = oDialog35.Model.getByName(&quot;NumericField31&quot;).Value
 rem----------BD 4-----------
-    bg_1 = oDialog35.Model.getByName(&quot;NumericField32&quot;).Value
-    bg_2 = oDialog35.Model.getByName(&quot;NumericField33&quot;).Value
-    bg_3 = oDialog35.Model.getByName(&quot;NumericField34&quot;).Value
-    bg_4 = oDialog35.Model.getByName(&quot;NumericField35&quot;).Value
-    bg_5 = oDialog35.Model.getByName(&quot;NumericField36&quot;).Value
-    dr_1 = oDialog35.Model.getByName(&quot;NumericField37&quot;).Value
-    dr_2 = oDialog35.Model.getByName(&quot;NumericField38&quot;).Value
-    dr_3 = oDialog35.Model.getByName(&quot;NumericField39&quot;).Value
-    dr_4 = oDialog35.Model.getByName(&quot;NumericField40&quot;).Value
-    dr_5 = oDialog35.Model.getByName(&quot;NumericField41&quot;).Value
+    bg_16 = oDialog35.Model.getByName(&quot;NumericField32&quot;).Value
+    bg_17 = oDialog35.Model.getByName(&quot;NumericField33&quot;).Value
+    bg_18 = oDialog35.Model.getByName(&quot;NumericField34&quot;).Value
+    bg_19 = oDialog35.Model.getByName(&quot;NumericField35&quot;).Value
+    bg_20 = oDialog35.Model.getByName(&quot;NumericField36&quot;).Value
+    dr_16 = oDialog35.Model.getByName(&quot;NumericField37&quot;).Value
+    dr_17 = oDialog35.Model.getByName(&quot;NumericField38&quot;).Value
+    dr_18 = oDialog35.Model.getByName(&quot;NumericField39&quot;).Value
+    dr_19 = oDialog35.Model.getByName(&quot;NumericField40&quot;).Value
+    dr_20 = oDialog35.Model.getByName(&quot;NumericField41&quot;).Value
     
     activity = oDialog35.Model.getByName(&quot;NumericField1&quot;).Value
 End Sub
@@ -202,19 +202,19 @@ sub makeProtocol
     dr_average_4 = average(dr_16, dr_17, dr_18, dr_19, dr_20)
     
     rasch_znach_chuvstv_1 = (dr_average_1 - bg_average_1)/activity
-    absolut_pogresh_1 = 110.1 - rasch_znach_chuvstv_1
+    absolut_pogresh_1 = 55 - rasch_znach_chuvstv_1
     
     rasch_znach_chuvstv_2 = (dr_average_2 - bg_average_2)/activity
-    absolut_pogresh_2 = 110.1 - rasch_znach_chuvstv_2
+    absolut_pogresh_2 = 55 - rasch_znach_chuvstv_2
     
     rasch_znach_chuvstv_3 = (dr_average_3 - bg_average_3)/activity
-    absolut_pogresh_3 = 110.1 - rasch_znach_chuvstv_3
+    absolut_pogresh_3 = 55 - rasch_znach_chuvstv_3
     
     rasch_znach_chuvstv_4 = (dr_average_4 - bg_average_4)/activity
-    absolut_pogresh_4 = 110.1 - rasch_znach_chuvstv_4
+    absolut_pogresh_4 = 55 - rasch_znach_chuvstv_4
     &apos;msgBox absolut_pogresh
     
-    OpenTemplate(&quot;file:///f:\sert_template\template_mrp.odt&quot;)
+    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg35_protocol.odt&quot;)
     findAndRename(&quot;$activity$&quot;, Format(activity, MyFormat)
     
     findAndRename(&quot;$bg1$&quot;, bg_1)
@@ -244,8 +244,8 @@ sub makeProtocol
     findAndRename(&quot;$dr10$&quot;, dr_10)
     findAndRename(&quot;$bg_avg2$&quot;, bg_average_2)
     findAndRename(&quot;$dr_avg2$&quot;, dr_average_2)
-    findAndRename(&quot;$rasch12$&quot;, Format(rasch_znach_chuvstv_2, MyFormat) )
-    findAndRename(&quot;$pogr12$&quot;, Format(absolut_pogresh_2, MyFormat ) )
+    findAndRename(&quot;$rasch2$&quot;, Format(rasch_znach_chuvstv_2, MyFormat) )
+    findAndRename(&quot;$pogr2$&quot;, Format(absolut_pogresh_2, MyFormat ) )
     
     findAndRename(&quot;$bg11$&quot;, bg_11)
     findAndRename(&quot;$bg12$&quot;, bg_12)
@@ -262,16 +262,16 @@ sub makeProtocol
     findAndRename(&quot;$rasch3$&quot;, Format(rasch_znach_chuvstv_3, MyFormat) )
     findAndRename(&quot;$pogr3$&quot;, Format(absolut_pogresh_3, MyFormat ) )    
         
-    findAndRename(&quot;$bg16$&quot;, bg_1)
-    findAndRename(&quot;$bg17$&quot;, bg_2)
-    findAndRename(&quot;$bg18$&quot;, bg_3)
-    findAndRename(&quot;$bg19$&quot;, bg_4)
-    findAndRename(&quot;$bg20$&quot;, bg_5)
-    findAndRename(&quot;$dr16$&quot;, dr_1)
-    findAndRename(&quot;$dr17$&quot;, dr_2)
-    findAndRename(&quot;$dr18$&quot;, dr_3)
-    findAndRename(&quot;$dr19$&quot;, dr_4)
-    findAndRename(&quot;$dr20$&quot;, dr_5)
+    findAndRename(&quot;$bg16$&quot;, bg_16)
+    findAndRename(&quot;$bg17$&quot;, bg_17)
+    findAndRename(&quot;$bg18$&quot;, bg_18)
+    findAndRename(&quot;$bg19$&quot;, bg_19)
+    findAndRename(&quot;$bg20$&quot;, bg_20)
+    findAndRename(&quot;$dr16$&quot;, dr_16)
+    findAndRename(&quot;$dr17$&quot;, dr_17)
+    findAndRename(&quot;$dr18$&quot;, dr_18)
+    findAndRename(&quot;$dr19$&quot;, dr_19)
+    findAndRename(&quot;$dr20$&quot;, dr_20)
     findAndRename(&quot;$bg_avg4$&quot;, bg_average_4)
     findAndRename(&quot;$dr_avg4$&quot;, dr_average_4)
     findAndRename(&quot;$rasch4$&quot;, Format(rasch_znach_chuvstv_4, MyFormat) )
@@ -281,7 +281,9 @@ sub makeProtocol
     findAndRename(&quot;$bd1_num$&quot;, oDialog35.Model.getByName(&quot;TextField2&quot;).Text)    
     findAndRename(&quot;$bd2_num$&quot;, oDialog35.Model.getByName(&quot;TextField3&quot;).Text)    
     findAndRename(&quot;$bd3_num$&quot;, oDialog35.Model.getByName(&quot;TextField4&quot;).Text)    
-    findAndRename(&quot;$bd4_num$&quot;, oDialog35.Model.getByName(&quot;TextField5&quot;).Text)    
+    findAndRename(&quot;$bd4_num$&quot;, oDialog35.Model.getByName(&quot;TextField5&quot;).Text)  
+    
+    findAndRename(&quot;$num_ist$&quot;, oDialog35.Model.getByName(&quot;ComboBox1&quot;).Text)   
 
 end sub
 
