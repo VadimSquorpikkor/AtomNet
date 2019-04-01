@@ -57,6 +57,7 @@ Sub bdkg02_Dialog_Show
   REM add new items to the list
   sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
   oComboBox.addItems( sItems, 0 )
+   &apos;oComboBox.selectItemPos(0, true)
    
      oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
      oNumericFieldModel.DECIMALACCURACY = 2
