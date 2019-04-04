@@ -31,7 +31,7 @@ end sub
 sub makeSertEn
 	RangeData = FillArrayFromSelection()
     MyFormat = &quot;0.0&quot;
-    OpenTemplate(&quot;file:///f:\sert_template\template_bdkn02_ser_EN.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkn02_ser_EN.odt&quot;)
 	findAndRename(&quot;$bd_num$&quot;, RangeData(0,0))
 	findAndRename(&quot;$k1$&quot;, Format(RangeData(6,2), MyFormat)
     findAndRename(&quot;$k2$&quot;, Format(RangeData(6,3), MyFormat)
@@ -44,7 +44,7 @@ end sub
 sub makeProtRus
 	RangeData = FillArrayFromSelection()
     MyFormat = &quot;0.0&quot;
-    OpenTemplate(&quot;file:///f:\sert_template\template_bdkn02_prot_RU.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkn02_prot_RU.odt&quot;)
 	
 	findAndRename(&quot;$k1$&quot;, Format(RangeData(5,1), MyFormat)
     findAndRename(&quot;$k2$&quot;, Format(RangeData(5,2), MyFormat)

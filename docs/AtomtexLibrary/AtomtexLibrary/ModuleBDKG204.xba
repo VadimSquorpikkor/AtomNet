@@ -33,7 +33,7 @@ End Sub
 sub calculate
     getAllText_bdkg204()
     
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg204.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkg204.odt&quot;)
     &apos;-----------------------------------------------
 	drawTable()
 	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG204.Model.getByName(&quot;TextField2&quot;).Text)
@@ -45,4 +45,5 @@ end sub
 
 Sub Macro1
 
-End Sub</script:module>
+End Sub
+</script:module>

@@ -62,11 +62,11 @@ private sub makeSertG01(path as string)
 end sub
 &apos;-----------------------------------------------------
 private sub makeSertG01RU()
-	 makeSertG01(&quot;file:///d:\sert_template\template_bdkg01_ser_RU.odt&quot;)
+	 makeSertG01(sertPath &amp; &quot;template_bdkg01_ser_RU.odt&quot;)
 end sub
 &apos;-----------------------------------------------------
 private sub makeSertG01EN()
-	 makeSertG01(&quot;file:///d:\sert_template\template_bdkg01_ser_EN.odt&quot;)
+	 makeSertG01(sertPath &amp; &quot;template_bdkg01_ser_EN.odt&quot;)
 end sub
 
 

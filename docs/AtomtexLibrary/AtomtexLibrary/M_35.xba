@@ -4,6 +4,7 @@
 
 dim oDialog35 as object
 dim oDateFieldModel as object
+&apos;dim sertFolderPath as string = &quot;file:///d:\sert_template\&quot;
 
 rem-----------------------------------------
 Sub bdkg35_Dialog_Show
@@ -214,7 +215,8 @@ sub makeProtocol
     absolut_pogresh_4 = 55 - rasch_znach_chuvstv_4
     &apos;msgBox absolut_pogresh
     
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg35_protocol.odt&quot;)
+   
+    OpenTemplate(sertPath &amp; &quot;template_bdkg35_protocol.odt&quot;)
     findAndRename(&quot;$activity$&quot;, Format(activity, MyFormat)
     
     findAndRename(&quot;$bg1$&quot;, bg_1)

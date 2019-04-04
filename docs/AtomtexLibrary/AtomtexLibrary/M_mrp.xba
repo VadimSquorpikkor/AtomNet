@@ -6,6 +6,8 @@ REM declare dialog object &quot;globally&quot;
 dim oDialogMRP as object
 dim oDateFieldModel as object
 dim oOptionButton as object
+
+	
 &apos;-----------------------------------------
 Sub mrp_Dialog_Show
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
@@ -106,7 +108,7 @@ sub makeProtocol
 	dim bd_type as string
     MyFormat = &quot;0.00&quot;
 
-    OpenTemplate(&quot;file:///d:\sert_template\template_mrp.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_mrp.odt&quot;)
 
   If oOptionButton.State Then
      findAndRename(&quot;$type$&quot;, &quot;920&quot;)
@@ -118,9 +120,8 @@ sub makeProtocol
      bd_type = &quot;БДКГ-19&quot;
   End If
   
-  print koef
-     findAndRename(&quot;$koef$&quot;, koef)  
-     findAndRename(&quot;$bd_type$&quot;, bd_type)
+  	findAndRename(&quot;$koef$&quot;, koef)  
+	findAndRename(&quot;$bd_type$&quot;, bd_type)
   
     getAllTextField()
     bg_average = average(bg_1, bg_2, bg_3, bg_4, bg_5)
@@ -129,8 +130,7 @@ sub makeProtocol
     rasch_znach_chuvstv = (dr_average - bg_average)/activity
     absolut_pogresh = koef - rasch_znach_chuvstv
     &apos;msgBox absolut_pogresh
-    
-
+  
     findAndRename(&quot;$activity$&quot;, Format(activity, MyFormat)
     findAndRename(&quot;$bg1$&quot;, bg_1)
     findAndRename(&quot;$bg2$&quot;, bg_2)

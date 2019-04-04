@@ -4,11 +4,16 @@
 
 
 dim oDialogMain as object 
+&apos;dim sertPath as String
+global sertPath as String
+	
 rem-------------------------------------------------------------------------
 Sub MainDialog_Show
+	sertPath = &quot;file:///d:\sert_template\&quot;
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    oDialogMain.Execute()
+   &apos;sertPath = &quot;file:///d:\sert_template\&quot;
 End Sub
 
 rem --- ВСЕ ОБЩИЕ МЕТОДЫ ЗДЕСЬ ---
@@ -38,7 +43,8 @@ sub subInsertString(oDoc, sString, bReplace)
 	xText.insertString( xTextCursor, &quot;more text ...&quot;, false )
 end sub
 rem------метод для сортировки столбцов в calc-------------------------------------------------
-sub sort 
+sub sortColumns 
+	rem Сортировка выделенных столбцов в Calc 
 	dim document   as object
 	dim dispatcher as object
 	document   = ThisComponent.CurrentController.Frame
@@ -133,7 +139,16 @@ Sub findAndRename(target as String, newName as String)
         oFound.setString(newName)
     Next
 End Sub
-
-
+rem--------------------------------------------------------------
+sub testpath
+Dim fp As String, fn As String
+fp = ThisComponent.Location
+fn = Dir(fp) &apos; first call with path argument
+MsgBox(fn, 0, fp)
+while len(fn) &gt; 0
+  fn = dir() &apos;subsequent calls without path
+  msgbox fn
+wend
+end sub
 
 </script:module>

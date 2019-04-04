@@ -189,7 +189,7 @@ sub calculate
 	MyFormat = &quot;0.00&quot;
     getAllText_bdkg02()
     
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg02.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02.odt&quot;)
     &apos;-----------------------------------------------
 	drawTable()
 	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField2&quot;).Text)
@@ -204,7 +204,7 @@ end sub
 sub makeSertRU
 	getAllText_bdkg02()
     MyFormat = &quot;0.00&quot;
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg02_ser_RU.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02_ser_RU.odt&quot;)
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
 	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
@@ -227,7 +227,7 @@ sub makeSertENG
 
 	getAllText_bdkg02()
     MyFormat = &quot;0.00&quot;
-    OpenTemplate(&quot;file:///d:\sert_template\template_bdkg02_ser_ENG.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02_ser_ENG.odt&quot;)
 	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
 	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
 	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
