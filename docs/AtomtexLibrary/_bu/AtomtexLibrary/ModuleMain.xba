@@ -9,10 +9,11 @@ global sertPath as String
 	
 rem-------------------------------------------------------------------------
 Sub MainDialog_Show
-	sertPath = &quot;file:///f:\sert_template\&quot;
+	sertPath = &quot;file:///d:\sert_template\&quot;
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    oDialogMain.Execute()
+   &apos;sertPath = &quot;file:///d:\sert_template\&quot;
 End Sub
 
 rem --- ВСЕ ОБЩИЕ МЕТОДЫ ЗДЕСЬ ---

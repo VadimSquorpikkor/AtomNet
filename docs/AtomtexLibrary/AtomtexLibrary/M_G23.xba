@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G23" script:language="StarBasic">REM  *****  BASIC  *****
+
+REM !!!!! СДЕЛАТЬ ТОЛЬКО С ОДНИМ NUMFIELD, КАК МУЛЬТИПЛЕКСОР???? 
+
+dim oDialogG23 as object
+dim gstop as boolean 
+dim RangeData as object
+dim NumField1, NumField2, NumField3, NumField4, NumField5, NumField6, NumField7, NumField8, NumField9, NumField10, _
+	NumField11, NumField12, NumField13, NumField14, NumField15, NumField16, NumField17, NumField18, NumField19, NumField20, _
+	NumField21, NumField22, NumField23, NumField24, NumField25, NumField26, NumField27, NumField28, NumField29, NumField30, _
+	NumField31, NumField32, NumField33, NumField34, NumField35, NumField36, NumField37, NumField38, NumField39, NumField40, _
+	NumField41, NumField42, NumField43, NumField44, NumField45 as object
+dim array_of_fields as variant
+dim array_sert as variant
+dim oOptionButton as object
+dim oOptionButton2 as object
+
+Sub g23_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG23 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G23 )
+	NumField1 = oDialogG23.Model.getByName(&quot;NumericField1&quot;)
+	NumField2 = oDialogG23.Model.getByName(&quot;NumericField2&quot;)
+	NumField3 = oDialogG23.Model.getByName(&quot;NumericField3&quot;)
+	NumField4 = oDialogG23.Model.getByName(&quot;NumericField4&quot;)
+	NumField5 = oDialogG23.Model.getByName(&quot;NumericField5&quot;)
+	NumField6 = oDialogG23.Model.getByName(&quot;NumericField6&quot;)
+	NumField7 = oDialogG23.Model.getByName(&quot;NumericField7&quot;)
+	NumField8 = oDialogG23.Model.getByName(&quot;NumericField8&quot;)
+	NumField9 = oDialogG23.Model.getByName(&quot;NumericField9&quot;)
+	NumField10 = oDialogG23.Model.getByName(&quot;NumericField10&quot;)
+	NumField11 = oDialogG23.Model.getByName(&quot;NumericField11&quot;)
+	NumField12 = oDialogG23.Model.getByName(&quot;NumericField12&quot;)
+	NumField13 = oDialogG23.Model.getByName(&quot;NumericField13&quot;)
+	NumField14 = oDialogG23.Model.getByName(&quot;NumericField14&quot;)
+	NumField15 = oDialogG23.Model.getByName(&quot;NumericField15&quot;)
+	NumField16 = oDialogG23.Model.getByName(&quot;NumericField16&quot;)
+	NumField17 = oDialogG23.Model.getByName(&quot;NumericField17&quot;)
+	NumField18 = oDialogG23.Model.getByName(&quot;NumericField18&quot;)
+	NumField19 = oDialogG23.Model.getByName(&quot;NumericField19&quot;)
+	NumField20 = oDialogG23.Model.getByName(&quot;NumericField20&quot;)
+	NumField21 = oDialogG23.Model.getByName(&quot;NumericField21&quot;)
+	NumField22 = oDialogG23.Model.getByName(&quot;NumericField22&quot;)
+	NumField23 = oDialogG23.Model.getByName(&quot;NumericField23&quot;)
+	NumField24 = oDialogG23.Model.getByName(&quot;NumericField24&quot;)
+	NumField25 = oDialogG23.Model.getByName(&quot;NumericField25&quot;)
+	NumField26 = oDialogG23.Model.getByName(&quot;NumericField26&quot;)
+	NumField27 = oDialogG23.Model.getByName(&quot;NumericField27&quot;)
+	NumField28 = oDialogG23.Model.getByName(&quot;NumericField28&quot;)
+	NumField29 = oDialogG23.Model.getByName(&quot;NumericField29&quot;)
+	NumField30 = oDialogG23.Model.getByName(&quot;NumericField30&quot;)
+	NumField31 = oDialogG23.Model.getByName(&quot;NumericField31&quot;)
+	NumField32 = oDialogG23.Model.getByName(&quot;NumericField32&quot;)
+	NumField33 = oDialogG23.Model.getByName(&quot;NumericField33&quot;)
+	NumField34 = oDialogG23.Model.getByName(&quot;NumericField34&quot;)
+	NumField35 = oDialogG23.Model.getByName(&quot;NumericField35&quot;)
+	NumField36 = oDialogG23.Model.getByName(&quot;NumericField36&quot;)
+	NumField37 = oDialogG23.Model.getByName(&quot;NumericField37&quot;)
+	NumField38 = oDialogG23.Model.getByName(&quot;NumericField38&quot;)
+	NumField39 = oDialogG23.Model.getByName(&quot;NumericField39&quot;)
+	NumField40 = oDialogG23.Model.getByName(&quot;NumericField40&quot;)
+	NumField41 = oDialogG23.Model.getByName(&quot;NumericField41&quot;)
+	NumField42 = oDialogG23.Model.getByName(&quot;NumericField42&quot;)
+	NumField43 = oDialogG23.Model.getByName(&quot;NumericField43&quot;)
+	NumField44 = oDialogG23.Model.getByName(&quot;NumericField44&quot;)
+	NumField45 = oDialogG23.Model.getByName(&quot;NumericField45&quot;)
+	
+	array_of_fields = Array(NumField1, NumField2, NumField3, NumField4, NumField5, NumField6, NumField7, NumField8, NumField9, _
+					NumField10, NumField11, NumField12, NumField13, NumField14, NumField15, NumField16, NumField17, NumField18, _
+					NumField19, NumField20, NumField21, NumField22, NumField23, NumField24, NumField25, NumField26, NumField27, _
+					NumField28, NumField29, NumField30, NumField31, NumField32, NumField33, NumField34, NumField35, NumField36, _
+					NumField37, NumField38, NumField39, NumField40, NumField41, NumField42, NumField43, NumField44, NumField45)
+	
+	array_sert = Array(&quot;$bd1_num$&quot;, &quot;$k1_1$&quot;, &quot;$k1_2$&quot;, &quot;$k1_3$&quot;, &quot;$k1_4$&quot;, &quot;$k1_5$&quot;, &quot;$k1_6$&quot;, &quot;$k1_7$&quot;, &quot;$k1_8$&quot;, _
+					   &quot;$bd2_num$&quot;, &quot;$k2_1$&quot;, &quot;$k2_2$&quot;, &quot;$k2_3$&quot;, &quot;$k2_4$&quot;, &quot;$k2_5$&quot;, &quot;$k2_6$&quot;, &quot;$k2_7$&quot;, &quot;$k2_8$&quot;, _
+					   &quot;$bd3_num$&quot;, &quot;$k3_1$&quot;, &quot;$k3_2$&quot;, &quot;$k3_3$&quot;, &quot;$k3_4$&quot;, &quot;$k3_5$&quot;, &quot;$k3_6$&quot;, &quot;$k3_7$&quot;, &quot;$k3_8$&quot;, _
+					   &quot;$bd4_num$&quot;, &quot;$k4_1$&quot;, &quot;$k4_2$&quot;, &quot;$k4_3$&quot;, &quot;$k4_4$&quot;, &quot;$k4_5$&quot;, &quot;$k4_6$&quot;, &quot;$k4_7$&quot;, &quot;$k4_8$&quot;, _
+					   &quot;$bd5_num$&quot;, &quot;$k5_1$&quot;, &quot;$k5_2$&quot;, &quot;$k5_3$&quot;, &quot;$k5_4$&quot;, &quot;$k5_5$&quot;, &quot;$k5_6$&quot;, &quot;$k5_7$&quot;, &quot;$k5_8$&quot;)
+					   
+	oOptionButton = oDialogG23.Model.getByName(&quot;OptionButton1&quot;)
+	oOptionButton2 = oDialogG23.Model.getByName(&quot;OptionButton2&quot;)
+	oOptionButton.state = true
+	oDialogMain.endexecute()   
+	
+	oDialogG23.visible = true
+  	do until gstop       
+        wait (1000)
+ 	loop
+	oDialogG23.visible = false
+End Sub
+
+sub closedialogG23
+	gstop = true
+end sub
+
+sub getSingleColumn(num as integer, col as integer)
+	dim i as integer
+	RangeData = FillArrayFromSelection()
+    for i=0 to 8
+   		array_of_fields(i+num).value = RangeData(i, col)
+    next i
+end sub
+
+sub setBG_byRND
+	dim i as integer
+	for i=1 to 44 step 9
+		array_of_fields(i).value = 0.68 + rnd()*0.04
+		array_of_fields(i+1).value = 6.8 + rnd()*0.4
+	next i	
+end sub
+
+function random7()
+    MyFormat = &quot;0.000&quot; &apos;Format(activity, MyFormat)	
+	random7 = 12.89509&apos;Format((6.8 + rnd()*0.4), MyFormat)
+end function
+
+function random07()
+	random07 = 0.68 + rnd()*0.04
+end function
+
+sub getSingleColumn_1
+	getSingleColumn(0, 0)
+end sub
+sub getSingleColumn_2
+	getSingleColumn(9, 0)
+end sub
+sub getSingleColumn_3
+	getSingleColumn(18, 0)
+end sub
+sub getSingleColumn_4
+	getSingleColumn(27, 0)
+end sub
+sub getSingleColumn_5
+	getSingleColumn(36, 0)
+end sub
+sub getAllColumns
+	getSingleColumn(0, 0)
+	getSingleColumn(9, 1)
+	getSingleColumn(18, 2)
+	getSingleColumn(27, 3)
+	getSingleColumn(36, 4)
+end sub
+
+sub makeProt22Rus
+    OpenTemplate(sertPath &amp; &quot;template_bdkg22_pov.odt&quot;)
+	dim i as integer
+	for i = 0 to 44
+		findAndRename(array_sert(i), array_of_fields(i).value)	
+	next i 
+	
+	If oOptionButton.State Then
+    	findAndRename(&quot;$type$&quot;, &quot;22&quot;)
+    	findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    	findAndRename(&quot;$max$&quot;, &quot;10&quot;)
+	Else
+    	If oOptionButton2.State Then
+    		findAndRename(&quot;$type$&quot;, &quot;23&quot;)
+    		findAndRename(&quot;$unit$&quot;, &quot;Гр&quot;)
+    		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
+		Else
+    		findAndRename(&quot;$type$&quot;, &quot;23/1&quot;)
+    		findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
+		End If
+	End If	
+end sub
+
+
+</script:module>

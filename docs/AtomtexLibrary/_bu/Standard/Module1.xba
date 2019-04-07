@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub InsertTime
+&apos;	dim timevar as string
+&apos;	timevar = date
+&apos;	selection.text = timevar
+&apos;print datevalue(now)
+&apos;oCurSelection = thisComponent.getCurrentSelection()
+&apos;oCurSelection = &quot;s&quot;
+subInsertString(thisComponent,  datevalue(now), false)
+
+End Sub
+
+&apos;sub subInsertString(oDoc, sString, bReplace)
+&apos;oVC = oDoc.getCurrentController.getViewCursor
+&apos;oText = oVC.text
+&apos;oText.insertString(oVC, sString, bReplace)
+&apos;end sub
+
+
+
+sub subInsertString(oDoc, sString, bReplace)
+oVC = oDoc.getCurrentSelection
+xText.insertString( xTextCursor, &quot;more text ...&quot;, false )
+end sub
+
+
+sub sort
+rem ----------------------------------------------------------------------
+rem define variables
+dim document   as object
+dim dispatcher as object
+rem ----------------------------------------------------------------------
+rem get access to the document
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+
+rem ----------------------------------------------------------------------
+dim args1(6) as new com.sun.star.beans.PropertyValue
+args1(0).Name = &quot;ByRows&quot;
+args1(0).Value = false
+args1(1).Name = &quot;HasHeader&quot;
+args1(1).Value = true
+args1(2).Name = &quot;CaseSensitive&quot;
+args1(2).Value = false
+args1(3).Name = &quot;IncludeAttribs&quot;
+args1(3).Value = true
+args1(4).Name = &quot;UserDefIndex&quot;
+args1(4).Value = 0
+args1(5).Name = &quot;Col1&quot;
+args1(5).Value = 1
+args1(6).Name = &quot;Ascending1&quot;
+args1(6).Value = true
+
+dispatcher.executeDispatch(document, &quot;.uno:DataSort&quot;, &quot;&quot;, 0, args1())
+
+
+end sub
+
+function getDate()
+    dim dnum as long
+    dim year as integer
+    dim month as integer
+    dim day as integer
+     dnum = cDateToIso(Now)
+    day = dnum mod 100
+    month = dnum \ 100 mod 100
+    year = dnum \ 10000
+    getDate = insertZero(day) &amp;&quot;.&quot;&amp; insertZero(month) &amp;&quot;.&quot;&amp; year
+end function
+
+function insertZero(number)
+	if number &gt; 9 then
+		insertZero = number
+	else 
+		insertZero = &quot;0&quot;&amp;number
+	end if
+end function
+
+&apos;sub paste
+&apos;    dim document   as object
+&apos;   dim dispatcher as objectdocument   = ThisComponent.CurrentController.Frame
+&apos;   dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+&apos; dim args1(0) as new com.sun.star.beans.PropertyValue
+&apos;  args1(0).Name = &quot;Text&quot;
+&apos;   args1(0).Value = getDate()
+&apos;   dispatcher.executeDispatch(document, &quot;.uno:InsertText&quot;, &quot;&quot;, 0, args1())
+&apos;end sub
+
+   sub insertDate
+   rem ----------------------------------------------------------------------
+   rem define variables
+   dim document   as object
+   dim dispatcher as object
+   rem ----------------------------------------------------------------------
+   rem get access to the document
+   document   = ThisComponent.CurrentController.Frame
+   dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+    
+   rem ----------------------------------------------------------------------
+   dim args1(0) as new com.sun.star.beans.PropertyValue
+   args1(0).Name = &quot;Text&quot;
+   args1(0).Value = getDate()
+    
+   dispatcher.executeDispatch(document, &quot;.uno:InsertText&quot;, &quot;&quot;, 0, args1())
+   end sub
+</script:module>

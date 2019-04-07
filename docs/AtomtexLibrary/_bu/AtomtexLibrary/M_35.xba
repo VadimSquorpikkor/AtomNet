@@ -4,6 +4,7 @@
 
 dim oDialog35 as object
 dim oDateFieldModel as object
+&apos;dim sertFolderPath as string = &quot;file:///d:\sert_template\&quot;
 
 rem-----------------------------------------
 Sub bdkg35_Dialog_Show

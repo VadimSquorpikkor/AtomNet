@@ -6,9 +6,9 @@
  <library:element library:name="ModuleBDKG02"/>
  <library:element library:name="Module3"/>
  <library:element library:name="ModuleMain"/>
- <library:element library:name="M_35"/>
+ <library:element library:name="ModuleG23"/>
  <library:element library:name="ModuleG01"/>
  <library:element library:name="M6130"/>
  <library:element library:name="M_bdkn"/>
- <library:element library:name="M_G23"/>
+ <library:element library:name="M_35"/>
 </library:library>

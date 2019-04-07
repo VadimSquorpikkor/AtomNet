@@ -344,9 +344,12 @@ p {
     /*background-color: khaki;*/
     background-color: antiquewhite;
     padding: 10px;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
+    margin: 5px auto;
+    /*display: block;*/
     width: 200px;
     alignment: center;
+    align-self: center;
     text-indent: 0;
 }
 .yellow_back_centered {

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_bdkn" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim oDialogBDKN as object
+dim oDateFieldModel as object
+dim RangeData
+dim gstop as boolean 
+
+Sub bdkn_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogBDKN = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_bdkn )
+	oDateFieldModel = oDialogBDKN.Model.getByName(&quot;DateField1&quot;)
+   
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	oDialogMain.endexecute()   
+	
+	oDialogBDKN.visible = true
+  	do until gstop       
+        wait (1000)
+ 	loop
+	oDialogBDKN.visible = false
+
+End Sub
+
+sub closedialog
+	gstop = true
+end sub
+
+sub makeSertEn
+	RangeData = FillArrayFromSelection()
+    MyFormat = &quot;0.0&quot;
+    OpenTemplate(sertPath &amp; &quot;template_bdkn02_ser_EN.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, RangeData(0,0))
+	findAndRename(&quot;$k1$&quot;, Format(RangeData(6,2), MyFormat)
+    findAndRename(&quot;$k2$&quot;, Format(RangeData(6,3), MyFormat)
+    findAndRename(&quot;$k3$&quot;, Format(RangeData(6,4), MyFormat)
+    findAndRename(&quot;$k4$&quot;, Format(RangeData(6,5), MyFormat)
+    findAndRename(&quot;$k5$&quot;, Format(RangeData(14,5), MyFormat)
+    findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
+end sub
+
+sub makeProtRus
+	RangeData = FillArrayFromSelection()
+    MyFormat = &quot;0.0&quot;
+    OpenTemplate(sertPath &amp; &quot;template_bdkn02_prot_RU.odt&quot;)
+	
+	findAndRename(&quot;$k1$&quot;, Format(RangeData(5,1), MyFormat)
+    findAndRename(&quot;$k2$&quot;, Format(RangeData(5,2), MyFormat)
+    findAndRename(&quot;$k3$&quot;, Format(RangeData(5,3), MyFormat)
+    findAndRename(&quot;$k4$&quot;, Format(RangeData(5,4), MyFormat)
+    findAndRename(&quot;$k5$&quot;, Format(RangeData(5,5), MyFormat)
+    
+    
+	findAndRename(&quot;$k6$&quot;, Format(RangeData(6,2), MyFormat)
+    findAndRename(&quot;$k7$&quot;, Format(RangeData(6,3), MyFormat)
+    findAndRename(&quot;$k8$&quot;, Format(RangeData(6,4), MyFormat)
+    findAndRename(&quot;$k9$&quot;, Format(RangeData(6,5), MyFormat)
+    
+	findAndRename(&quot;$k10$&quot;, Format(RangeData(7,2), MyFormat)
+    findAndRename(&quot;$k11$&quot;, Format(RangeData(7,3), MyFormat)
+    findAndRename(&quot;$k12$&quot;, Format(RangeData(7,4), MyFormat)
+    findAndRename(&quot;$k13$&quot;, Format(RangeData(7,5), MyFormat)
+    
+	findAndRename(&quot;$k14$&quot;, Format(RangeData(8,2), MyFormat)
+    findAndRename(&quot;$k15$&quot;, Format(RangeData(8,3), MyFormat)
+    findAndRename(&quot;$k16$&quot;, Format(RangeData(8,4), MyFormat)
+    findAndRename(&quot;$k17$&quot;, Format(RangeData(8,5), MyFormat)
+
+    findAndRename(&quot;$srk_num$&quot;, oDialogBDKN.Model.getByName(&quot;TextField1&quot;).Text)
+    findAndRename(&quot;$bd_num$&quot;, oDialogBDKN.Model.getByName(&quot;TextField2&quot;).Text)
+    
+end sub
+</script:module>
