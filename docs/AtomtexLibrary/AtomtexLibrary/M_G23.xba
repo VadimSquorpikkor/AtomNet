@@ -105,19 +105,10 @@ end sub
 sub setBG_byRND
 	dim i as integer
 	for i=1 to 44 step 9
-		array_of_fields(i).value = 0.68 + rnd()*0.04
-		array_of_fields(i+1).value = 6.8 + rnd()*0.4
+		array_of_fields(i).value = cInt((0.68 + rnd()*0.04)*100)*0.01
+		array_of_fields(i+1).value = cInt((6.8 + rnd()*0.4)*10)*0.1 &apos;такой странный код с умножением и делением сделан для того чтобы округлить число
 	next i	
 end sub
-
-function random7()
-    MyFormat = &quot;0.000&quot; &apos;Format(activity, MyFormat)	
-	random7 = 12.89509&apos;Format((6.8 + rnd()*0.4), MyFormat)
-end function
-
-function random07()
-	random07 = 0.68 + rnd()*0.04
-end function
 
 sub getSingleColumn_1
 	getSingleColumn(0, 0)
@@ -146,7 +137,7 @@ sub makeProt22Rus
     OpenTemplate(sertPath &amp; &quot;template_bdkg22_pov.odt&quot;)
 	dim i as integer
 	for i = 0 to 44
-		findAndRename(array_sert(i), array_of_fields(i).value)	
+		findAndRename(array_sert(i), array_of_fields(i).value)
 	next i 
 	
 	If oOptionButton.State Then
