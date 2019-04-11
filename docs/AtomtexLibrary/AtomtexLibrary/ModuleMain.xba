@@ -9,7 +9,7 @@ global sertPath as String
 	
 rem-------------------------------------------------------------------------
 Sub MainDialog_Show
-	sertPath = &quot;file:///d:\sert_template\&quot;
+	sertPath = &quot;file:///f:\sert_template\&quot;
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    oDialogMain.Execute()
@@ -139,7 +139,7 @@ Sub findAndRename(target as String, newName as String)
     Next
 End Sub
 rem--------------------------------------------------------------
-sub testpath
+sub QQQtestpath
 Dim fp As String, fn As String
 fp = ThisComponent.Location
 fn = Dir(fp) &apos; first call with path argument
@@ -148,6 +148,13 @@ while len(fn) &gt; 0
   fn = dir() &apos;subsequent calls without path
   msgbox fn
 wend
+end sub
+
+sub testpath
+&apos;s = oDialogMain.getURL()
+&apos;dim s as string
+ &apos;s=DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
+msgbox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).geturl
 end sub
 
 </script:module>
