@@ -265,6 +265,15 @@ body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 20px 15px 20px;
     margin: 10px 20px 20px;
+
+
+}
+
+ol>li>div {
+    text-indent: 0;
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 10px 15px 10px;
+    margin: 5px 10px 10px;
 }
 
 img.small {
