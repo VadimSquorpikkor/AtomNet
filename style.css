@@ -602,5 +602,11 @@ h3 {
     text-indent: 0;
 }
 
+/*.bg_1121 {
+    !*background: white image("imgs/1121/1121_bg.png") no-repeat;*!
+    background-image: url("imgs/1121/1121_bg.png");
+    background: no-repeat;
+    background-color: white;
+}*/
 
 

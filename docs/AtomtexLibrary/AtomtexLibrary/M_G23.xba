@@ -2,7 +2,7 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G23" script:language="StarBasic">REM  *****  BASIC  *****
 
-REM !!!!! СДЕЛАТЬ ТОЛЬКО С ОДНИМ NUMFIELD, КАК МУЛЬТИПЛЕКСОР???? 
+REM !!!!! СДЕЛАТЬ ТОЛЬКО С ОДНИМ NUMFIELD, КАК МУЛЬТИПЛЕКСОР, см. М1121 !!!!!!
 
 dim oDialogG23 as object
 dim gstop as boolean 

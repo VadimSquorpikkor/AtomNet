@@ -6,43 +6,99 @@ dim oDialog1121 as object
 dim oDateFieldModel as object
 dim RangeData
 dim gstop as boolean 
-dim array_of_koef(7) as double
+dim array_of_vars(27) as double
+dim array_of_pogresh(27) as double
+dim array_of_dov_granica(27) as double
+dim array_of_control_point(8) as double
 
 Sub dks1121_Dialog_Show
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1121 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1121 )
 	oDateFieldModel = oDialog1121.Model.getByName(&quot;DateField1&quot;)
-   
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
-	oDialogMain.endexecute()   
+	oDialogMain.endexecute()  
+	
+	 array_of_control_point(0) = 0.07
+ 	 array_of_control_point(1) = 0.7
+ 	 array_of_control_point(2) = 7
+ 	 array_of_control_point(3) = 70
+ 	 array_of_control_point(4) = 0.7
+ 	 array_of_control_point(5) = 7
+ 	 array_of_control_point(6) = 70
+ 	 array_of_control_point(7) = 0.7
+ 	 array_of_control_point(8) = 7
 	
 	oDialog1121.visible = true
   	do until gstop       
         wait (1000)
  	loop
-	oDialogBDKN.visible = false
-
+	oDialog1121.visible = false
 End Sub
 
 sub closedialog
 	gstop = true
 end sub
 
-sub makeSertEn
-end sub
 
 function calculatedKoef(num as double)
 	calculatedKoef = num
 end function
+rem=======================================================================================
+sub getSingleColumn_1
+	getSingleColumn(1)
+end sub
 
-sub makeProtRus
+sub getSingleColumn_2
+	getSingleColumn(11)
+end sub
+
+sub getSingleColumn_3
+	getSingleColumn(21)
+end sub
+
+sub getSingleColumn(first_num as integer)
 	RangeData = FillArrayFromSelection()
-    MyFormat = &quot;0.0&quot;
-    OpenTemplate(sertPath &amp; &quot;template_1121_prot_RU.odt&quot;)
-	
-	findAndRename(&quot;$k1$&quot;, Format(RangeData(1,0), MyFormat)
+   	dim i as integer
+   	for i=0 to 9
+   		oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+first_num)).value = RangeData(i, 0)
+   	next i	
+end sub
+rem=======================================================================================
+function pogreshnost(num as double, contr_point as integer)
+	dim point as double
+	point = array_of_control_point(contr_point mod 9)
+	pogreshnost = ((num - point) / point) * 100
+	&apos;msgbox ((num - point)/point)
+end function
 
+function dov_granica(pogr as double)
+	dov_granica = 1.1 * sqr(16 + pogr*pogr + 0.36)
+end function	
+rem=======================================================================================
+sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
+	dim i as integer
+   	for i=0 to 8
+   		array_of_vars(i) = oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+2)).value		rem забрать из первой колонки
+   		array_of_vars(i+9) = oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+12)).value	rem забрать из второй колонки
+   		array_of_vars(i+18) = oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+22)).value	rem забрать из третьей колонки
+   	next i
+end sub
+rem=======================================================================================
+sub makeProtRus
+	MyFormat = &quot;0.00&quot;
+	getVarsFromFields
+    OpenTemplate(sertPath &amp; &quot;template_1121_prot_RU.odt&quot;)
+	dim i as integer
+	for i=1 to 27
+		findAndRename(&quot;$k&quot;+i+&quot;$&quot;, Format(array_of_vars(i-1), MyFormat)
+		array_of_pogresh(i-1) = pogreshnost(array_of_vars(i-1),i-1)
+		findAndRename(&quot;$L&quot;+i+&quot;$&quot;, Format(array_of_pogresh(i-1), MyFormat)
+		findAndRename(&quot;$m&quot;+i+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i-1)), MyFormat)
+	next i
+	findAndRename(&quot;$№1$&quot;, oDialog1121.Model.getByName(&quot;NumericField1&quot;).value)
+	findAndRename(&quot;$№2$&quot;, oDialog1121.Model.getByName(&quot;NumericField11&quot;).value)
+	findAndRename(&quot;$№3$&quot;, oDialog1121.Model.getByName(&quot;NumericField21&quot;).value)
 end sub
 
 </script:module>
