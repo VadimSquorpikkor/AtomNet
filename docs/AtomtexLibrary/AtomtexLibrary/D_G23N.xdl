@@ -42,7 +42,7 @@
   <dlg:button dlg:id="CommandButton5" dlg:tab-index="56" dlg:left="170" dlg:top="138" dlg:width="54" dlg:height="11" dlg:value="Вставить">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.getSingleColumn_3?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:img dlg:id="ImageControl1" dlg:tab-index="57" dlg:left="227" dlg:top="44" dlg:width="86" dlg:height="109" dlg:src="file:///C:/Users/Squorpikkor/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/g23.png"/>
+  <dlg:img dlg:id="ImageControl1" dlg:tab-index="57" dlg:left="227" dlg:top="44" dlg:width="86" dlg:height="109" dlg:src="file:///C:/Users/(USER)/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/g23.png"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="OptionButton1" dlg:tab-index="58" dlg:left="35" dlg:top="175" dlg:width="54" dlg:height="10" dlg:value="БДКГ-22"/>
    <dlg:radio dlg:id="OptionButton2" dlg:tab-index="59" dlg:left="35" dlg:top="185" dlg:width="54" dlg:height="10" dlg:value="БДКГ-23"/>

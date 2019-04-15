@@ -15,7 +15,12 @@
             </script>-->
 
     <script type="text/javascript" src="../include.js"></script>
-
+    <style>
+        .bground{
+            /*background: white url("../imgs/bdkg04/bdkg.png") no-repeat;*/
+            /*background-size: 100%;*/
+        }
+    </style>
 </head>
 
 <body onload="get_cs_bdkg04()">
@@ -36,7 +41,7 @@
 
 </div>
 
-<div>
+<div class="bground">
 
     <!--    <form class="yellow_back">
             <input type="button" value="open" onclick="get_path()">
@@ -45,7 +50,7 @@
 
     <h1>БДКГ-04</h1>
 
-<!--<img src="../imgs/bdkg04/bd.jpg" width="235"><br>-->
+    <!--<img src="../imgs/bdkg04/bd.jpg" width="235"><br>-->
 
     <div class="left_align">
         <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a><br>
@@ -53,52 +58,57 @@
     </div>
 
 
+
     <ol>
         <li>
-            <details>
-                <summary>Наклеить на прибор наклейку с номером. В
-                    <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">базу настройки
-                        БДКГ-04</a> и в перечень записать дату настройки, серийный номер и ФИО регулировщика.
-                </summary>
-                <img src="../imgs/bdkg04/02.jpg" width="400">
-                <img src="../imgs/bdkg04/01.jpg" width="300">
-            </details>
+            <div>
+                <details>
+                    <summary>Наклеить на прибор наклейку с номером. В
+                        <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">базу настройки
+                            БДКГ-04</a> и в перечень записать дату настройки, серийный номер и ФИО регулировщика.
+                    </summary>
+                    <img src="../imgs/bdkg04/02.jpg" width="400">
+                    <img src="../imgs/bdkg04/01.jpg" width="300">
+                </details>
+            </div>
         </li>
         <li>
-            <details>
-                <summary>Откусить выступающие ножки трансформатора</summary>
-                <img src="../imgs/bdkg04/03.jpg" width="800">
-            </details>
+            <div>
+                <details>
+                    <summary>Откусить выступающие ножки трансформатора</summary>
+                    <img src="../imgs/bdkg04/03.jpg" width="800">
+                </details>
+            </div>
         </li>
         <li>
+            <div>
+                <details>
+                    <summary>Перепроверить установленные коэффициенты:
+                        <br><span class="attention">Должны</span> стоять такие коэффициенты:
+                        <table class="small_table" align="center">
+                            <tr>
+                                <td>1U</td>
+                                <td>0.5</td>
+                            </tr>
+                            <tr>
+                                <td>2U</td>
+                                <td>0.5</td>
+                            </tr>
+                            <tr>
+                                <td>3U</td>
+                                <td>1.0</td>
+                            </tr>
+                            <tr>
+                                <td>4U</td>
+                                <td>1.0</td>
+                            </tr>
+                            <tr>
+                                <td>5U</td>
+                                <td>1.0</td>
+                            </tr>
+                        </table>
+                    </summary>
 
-            <details>
-                <summary>Перепроверить установленные коэффициенты:
-                    <br><span class="attention">Должны</span> стоять такие коэффициенты:
-                    <table class="small_table" align="center">
-                        <tr>
-                            <td>1U</td>
-                            <td>0.5</td>
-                        </tr>
-                        <tr>
-                            <td>2U</td>
-                            <td>0.5</td>
-                        </tr>
-                        <tr>
-                            <td>3U</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>4U</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>5U</td>
-                            <td>1.0</td>
-                        </tr>
-                    </table>
-                </summary>
-                <div>
 
                     <p>Подключить БД к технологическому БОИ
                         <img src="../imgs/bdkg04/04.jpg" width="800">
@@ -146,13 +156,15 @@
                             <td>1.0</td>
                         </tr>
                     </table>
-                </div>
-            </details>
+
+                </details>
+            </div>
         </li>
         <li>
-            <details>
-                <summary>Записать внутренние номера и дату.</summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Записать внутренние номера и дату.</summary>
+
                     <ul>
                         <li>Подключить БД к адаптеру USB</li>
                         <img src="../imgs/bdkg04/06.jpg" width="800">
@@ -165,34 +177,38 @@
                     <div class="yellow_back">Если перед тем, как нажать "Запись..." НЕ выделять строку с прибором,
                         Background сам подставит сегодняшнюю дату
                     </div>
-                </div>
 
-            </details>
+
+                </details>
+            </div>
         </li>
         <li>
-            <details>
-                <summary>Проверить ток потребления: должен быть примерно 20 мА</summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Проверить ток потребления: должен быть примерно 20 мА</summary>
+
                     Для того, чтобы измерить ток, у меня есть специальный адаптер USB с разрывом питания
                     и выходом на мультиметр:
                     <img src="../imgs/bdkg04/09.jpg" width="800">
-                </div>
-            </details>
+
+                </details>
+            </div>
         </li>
         <li>
-            <details>
-                <summary>Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
-                    показаниям от ОСГИ <sup>137</sup>Cs:
-                    <div class="yellow_back">
-                        Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910_2" type="text"
-                                                                                  value="0" title="k1" size="5"><br>
-                        Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516_2" type="text"
-                                                                                  value="0" title="k1" size="5">
-                    </div>
-                    Проверить скорость счета от Cs<sup>135</sup> во втором диапазоне,
-                    должна быть примерно 2 имп/с
-                </summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
+                        показаниям от ОСГИ <sup>137</sup>Cs:
+                        <div class="yellow_back">
+                            Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910_2" type="text"
+                                                                                      value="0" title="k1" size="5"><br>
+                            Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516_2" type="text"
+                                                                                      value="0" title="k1" size="5">
+                        </div>
+                        Проверить скорость счета от Cs<sup>135</sup> во втором диапазоне,
+                        должна быть примерно 2 имп/с
+                    </summary>
+
                     <ul>
                         <li>Закрепить источник <span class="attention">ОБЯЗАТЕЛЬНО латунной пластинкой к прибору</span>
                             и <span class="attention">со снятым колпачком</span>
@@ -242,18 +258,20 @@
 
                     </ul>
 
-                </div>
-            </details>
+
+                </details>
+            </div>
         </li>
 
         <li>
-            <details>
-                <summary>
-                    Проконтролировать напряжение на выводе D4.1 на плата преобразователя напряжения в 3
-                    диапазоне.
-                </summary>
+            <div>
+                <details>
+                    <summary>
+                        Проконтролировать напряжение на выводе D4.1 на плата преобразователя напряжения в 3
+                        диапазоне.
+                    </summary>
 
-                <div>
+
                     <ul>
                         <li>Подключить БД к компьютеру через адаптер USB</li>
                         <li>Запустить Background Calibration.</li>
@@ -270,21 +288,30 @@
                         </li>
                         <img src="../imgs/bdkg04/20.jpg" width="300">
 
-                        <span class="attention">В 3-ем диапазоне напряжение не должно превышать 4.9В!</span>
-                        Регулировка напряжения в 3 диапазоне осуществляется регулировкой резистора R24 на плате
+                        <span class="attention">В 3-ем диапазоне значение напряжения должно составлять 4.7-5В.</span>
+                        Регулировка напряжения в 3 диапазоне осуществляется подбором номинала резистора R24 на плате
                         преобразователя.<br>
-                        <span class="attention">Номинал резистора не должен привышать 12кОм!</span>
+                        <!--<span class="attention">Номинал резистора не должен привышать 12кОм!</span>-->
                         <img src="../imgs/bdkg04/19.jpg" width="800">
                     </ul>
-                </div>
+                    <div class="yellow_back">
+                        Примерно такие номиналы:
+                        <ul>
+                            <li>5,6 В &mdash; 11кОм</li>
+                            <li>4,3 В &mdash; 5,6кОм</li>
+                            <li>4,6 В &mdash; 7,5кОм</li>
+                        </ul>
+                    </div>
 
-            </details>
+                </details>
+            </div>
         </li>
 
         <li>
-            <details>
-                <summary>Проверить высокое</summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Настроить напряжение 3-го диапазона</summary>
+
                     <ul>
                         <li><span class="attention">Осцилографом</span>
                             замерить напряжение на высоком (в 1-м диапазоне):
@@ -315,8 +342,8 @@
                         <li>В ячейке "Расчет" отобразится значение напряжения на высоком в 3-м диапазоне</li>
                         <li>Переключится в 3-й диапазон и сравнить напряжение на высоком с расчетным</li>
                         <li>Если напряжение примерно совпало, идём дальше, если нет &mdash; корректируем.
-                            Для этого необходимо подобрать резистор R27 (или R24, если после настройки на
-                            предыдущем шаге ещё остался запас по напряжению, т.е. напряжение на 4.1 меньше 5-и В).
+                            Для этого необходимо подобрать резистор R27 <!--(или R24, если после настройки на
+                            предыдущем шаге ещё остался запас по напряжению, т.е. напряжение на 4.1 меньше 5-и В)-->.
                             <span class="attention">Отклонение от рассчетного значения не должно превышать 0,6-0,8 В</span>
                         </li>
                         <li>Чтобы увеличить, надо уменьшить и наоборот</li>
@@ -332,32 +359,37 @@
                                href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">&neArr;</a>
                         </li>
                     </ul>
-                </div>
-            </details>
+
+                </details>
+            </div>
         </li>
 
         <li>
-            <details>
-                <summary>Проверить отсутствие показаний прибора во 2 и 3 диапазоне на фоне
-                </summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Проверить отсутствие показаний прибора во 2 и 3 диапазоне на фоне
+                    </summary>
+
                     Если во 2 диапазоне на фоне есть показания, то на плате преобразователя тока регулируем R5 (R5
                     уменьшаем на 1 номинал).
                     <img src="../imgs/bdkg04/21.jpg" width="600">
-                </div>
-            </details>
+
+                </details>
+            </div>
         </li>
 
         <li>
-            <details>
-                <summary>Установить показания прибора от ОСГИ Сd<sup>109</sup> <b>1079</b> резисторами R24 на плате
-                    усилителя-преобразователя импульсов:
-                    <div class="yellow_back">
-                        Значение мощности дозы для Cd-109: <input id="cd_2" type="text" value="0" title="k1" size="5">
-                        <!--Значение мощности дозы для Cd-109: <p id="cd" >-->
-                    </div>
-                </summary>
-                <div>
+            <div>
+                <details>
+                    <summary>Установить показания прибора от ОСГИ Сd<sup>109</sup> <b>1079</b> резисторами R24 на плате
+                        усилителя-преобразователя импульсов:
+                        <div class="yellow_back">
+                            Значение мощности дозы для Cd-109: <input id="cd_2" type="text" value="0" title="k1"
+                                                                      size="5">
+                            <!--Значение мощности дозы для Cd-109: <p id="cd" >-->
+                        </div>
+                    </summary>
+
                     <ul>
                         <li>Закрепить источник ОСГИ Сd<sup>109</sup> <b>1079</b> на БД без колпачка</li>
                         <li>С помощью подбора номинала резистора R24 на плате усилителя-преобразователя импульсов
@@ -380,14 +412,22 @@
 
                             <img src="../imgs/bdkg04/17.jpg" width="350">
                     </ul>
-                </div>
-            </details>
 
+                </details>
+            </div>
 
-        <li>Приработать не менее 40 часов.</li>
-        <li>Перепроверить показания по 137Сs и 109Cd, и напряжение выв.1 D5.1 на плата преобразователя напряжения.
-            <span class="mark_green">Если прирабатывать приборы ДО регулировки, то перепроверять показания уже будет не нужно!!!</span></li>
-        <li>Отдать на линейку.</li>
+        <li>
+            <div>Приработать не менее 40 часов.</div>
+        </li>
+        <li>
+            <div>Перепроверить показания по 137Сs и 109Cd, и напряжение выв.1 D5.1 на плата преобразователя напряжения.
+                <span class="mark_green">Если прирабатывать приборы ДО регулировки, то перепроверять показания уже будет не нужно!!!</span>
+            </div>
+        </li>
+        <li>
+            <div>Отдать на линейку.</div>
+        </li>
+
     </ol>
 
 </div>

@@ -11,6 +11,7 @@ Sub bdkn_Dialog_Show
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialogBDKN = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_bdkn )
 	oDateFieldModel = oDialogBDKN.Model.getByName(&quot;DateField1&quot;)
+	oDialogBDKN.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;bdkn.png&quot;
    
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)

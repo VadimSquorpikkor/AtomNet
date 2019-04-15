@@ -28,6 +28,7 @@ Sub G23_Dialog_Show
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialogG23 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G23N )
 	oDateFieldModel = oDialogG23.Model.getByName(&quot;DateField1&quot;)
+	oDialogG23.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;g23.png&quot;
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	oDialogMain.endexecute()  

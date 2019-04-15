@@ -19,6 +19,6 @@
   <dlg:textfield dlg:id="TextField2" dlg:tab-index="5" dlg:left="20" dlg:top="37" dlg:width="34" dlg:height="10" dlg:value="464.002"/>
   <dlg:text dlg:id="Label1" dlg:tab-index="6" dlg:left="58" dlg:top="27" dlg:width="47" dlg:height="10" dlg:value="№ СРК (для n-02)"/>
   <dlg:text dlg:id="Label2" dlg:tab-index="7" dlg:left="58" dlg:top="37" dlg:width="49" dlg:height="10" dlg:value="№ БД (для n-02)"/>
-  <dlg:img dlg:style-id="0" dlg:id="ImageControl1" dlg:tab-index="8" dlg:left="6" dlg:top="90" dlg:width="106" dlg:height="62" dlg:src="file:///C:/Users/Squorpikkor/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/bdkn.png"/>
+  <dlg:img dlg:style-id="0" dlg:id="ImageControl1" dlg:tab-index="8" dlg:left="6" dlg:top="90" dlg:width="106" dlg:height="62"/>
  </dlg:bulletinboard>
 </dlg:window>

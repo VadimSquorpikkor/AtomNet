@@ -518,6 +518,17 @@ a:hover.white_font {
     border-radius: 25px;
 }
 
+body>div>.left_align {
+    /*box-shadow: none;*/
+    text-align: left;
+    font-size: smaller;
+    background-color: lemonchiffon;
+    text-indent: 0;
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.23);
+}
+
 ul {
     text-indent: 10px;
     font-size: 18px;
