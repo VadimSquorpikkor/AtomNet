@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleBDKG02" script:language="StarBasic">REM  *****  BASIC  *****
-
-Sub Main
-
-End Sub
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Z_tmp" script:language="StarBasic">REM  *****  BASIC  *****
 
 REM declare dialog object &quot;globally&quot;
 dim oDialogBDKG02 as object
@@ -121,7 +117,7 @@ Dim otn_pog_8 as Double
 Dim activity as Double  
 &apos;-----------------------------------------
 Sub getAllText_bdkg02
-    bground = oDialogBDKG02.Model.getByName(&quot;NumericField9&quot;).Value
+    bground = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value
     point_1 = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value
     point_2 = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value
     point_3 = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value
