@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G02" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem=======================================================================================
+dim oDialogG02 as object
+dim oDateFieldModel as object
+dim array_of_vars(7) as double
+dim array_of_pogresh(7) as double
+dim array_of_control_point(7) as double
+rem=======================================================================================
+Sub G02_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG02 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G02 )
+	oDateFieldModel = oDialogG02.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	
+	 array_of_control_point(0) = 0.7
+ 	 array_of_control_point(1) = 7
+ 	 array_of_control_point(2) = 70
+ 	 array_of_control_point(3) = 0.7
+ 	 array_of_control_point(4) = 7
+ 	 array_of_control_point(5) = 70
+ 	 array_of_control_point(6) = 0.7
+ 	 array_of_control_point(7) = 7
+
+	dim i as integer
+	for i=0 to 7
+			oDialogG02.Model.getByName(&quot;NumericField0&quot; + i).valueStep = array_of_control_point(i)/70
+			oDialogG02.Model.getByName(&quot;NumericField0&quot; + i).value = array_of_control_point(i)
+	next i
+	&apos;oDialogG23.Model.getByName(&quot;NumericField10&quot;).value = 1
+	oDialogG02.Model.getByName(&quot;NumericField10&quot;).value = 1000
+	oDialogG02.Model.getByName(&quot;NumericField11&quot;).value = 100
+	
+	oDialogMain.endexecute()   
+	oDialogG02.Execute()
+End Sub
+rem=======================================================================================
+function pogreshnost(num as double, contr_point as integer)
+	dim point as double
+	point = array_of_control_point(contr_point)
+	pogreshnost = ((num - point) / point) * 100
+end function
+rem=======================================================================================
+function dov_granica_2(pogr as double)
+	dov_granica = 1.1 * sqr(25 + pogr*pogr)
+end function	
+rem=======================================================================================
+sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
+	dim j as integer
+ 	for j=0 to 7
+   		array_of_vars(j) = oDialogG02.Model.getByName(&quot;NumericField&quot;+j).value
+   	next j	
+end sub
+rem=======================================================================================
+sub makeProtRus
+	MyFormat = &quot;0.00&quot;
+	getVarsFromFields
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02_new.odt&quot;)
+	dim j as integer
+	for j=0 to 7
+		findAndRename(&quot;$k&quot;+j+&quot;$&quot;, Format(array_of_vars(j), MyFormat)
+		array_of_pogresh(j) = pogreshnost(array_of_vars(j),array_of_control_point(j))
+		findAndRename(&quot;$L&quot;+j+&quot;$&quot;, Format(array_of_pogresh(j), MyFormat)
+		findAndRename(&quot;$m&quot;+j+&quot;$&quot;, Format(dov_granica_2(array_of_pogresh(j)), MyFormat)
+	next j
+	findAndRename(&quot;$№1$&quot;, oDialogG23.Model.getByName(&quot;NumericField000&quot;).value)
+	findAndRename(&quot;$№2$&quot;, oDialogG23.Model.getByName(&quot;NumericField001&quot;).value)
+	findAndRename(&quot;$№3$&quot;, oDialogG23.Model.getByName(&quot;NumericField002&quot;).value)
+	
+end sub
+
+</script:module>

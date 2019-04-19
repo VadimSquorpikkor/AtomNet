@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Dialog1" dlg:left="16" dlg:top="12" dlg:width="190" dlg:height="149" dlg:page="1" dlg:closeable="true" dlg:moveable="true">
+ <dlg:bulletinboard>
+  <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="0" dlg:left="74" dlg:top="26" dlg:width="76" dlg:height="105">
+   <dlg:title dlg:value="FrameControl1"/>
+  </dlg:titledbox>
+  <dlg:scrollbar dlg:id="ScrollBar1" dlg:tab-index="1" dlg:left="155" dlg:top="26" dlg:width="7" dlg:height="113" dlg:align="vertical"/>
+ </dlg:bulletinboard>
+</dlg:window>

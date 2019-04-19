@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G23N" script:language="StarBasic">REM  *****  BASIC  *****
+
+REM  ****** МОЖНО ИСПОЛЬЗОВАТЬ КАК ШАБЛОН *************
+
+rem**************************************************************************************
+rem	**						Основные концепции
+rem	**	1.Все NumFields номеруются с 0 (с 00 если несколько столбцов с numFields, каждый столбец нумеруется с 0). 
+rem **	Так перебор по полям будет производиться через For (для нескольких столбцов -- через два вложенных друг в друга For)
+rem **	2.Контрольные точки собираются в отдельный массив и служат  
+
+rem**************************************************************************************
+
+
+rem=======================================================================================
+dim oDialogG23 as object
+dim oDateFieldModel as object
+dim RangeData
+dim gstop as boolean 
+dim array_of_vars(2, 7) as double
+dim array_of_pogresh(23) as double
+dim array_of_control_point(7) as double
+dim oOptionButton as object
+dim oOptionButton2 as object
+rem=======================================================================================
+Sub G23_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG23 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G23N )
+	oDateFieldModel = oDialogG23.Model.getByName(&quot;DateField1&quot;)
+	oDialogG23.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;g23.png&quot;
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	oDialogMain.endexecute()  
+	
+	 array_of_control_point(0) = 0.7
+ 	 array_of_control_point(1) = 7
+ 	 array_of_control_point(2) = 70
+ 	 array_of_control_point(3) = 0.7
+ 	 array_of_control_point(4) = 7
+ 	 array_of_control_point(5) = 70
+ 	 array_of_control_point(6) = 0.7
+ 	 array_of_control_point(7) = 7
+
+	dim i,j as integer
+	for i=0 to 2
+		for j=0 to 7
+			oDialogG23.Model.getByName(&quot;NumericField&quot; + i + j).valueStep = array_of_control_point(j)/70
+			oDialogG23.Model.getByName(&quot;NumericField&quot; + i + j).value = array_of_control_point(j)
+		next j
+	next i
+	oDialogG23.Model.getByName(&quot;NumericField000&quot;).value = 1
+	oDialogG23.Model.getByName(&quot;NumericField001&quot;).value = 2
+	oDialogG23.Model.getByName(&quot;NumericField002&quot;).value = 3
+	
+	oOptionButton = oDialogG23.Model.getByName(&quot;OptionButton1&quot;)
+	oOptionButton2 = oDialogG23.Model.getByName(&quot;OptionButton2&quot;)
+	oOptionButton.state = true
+	
+	oDialogG23.visible = true
+  	do until gstop       
+        wait (1000)
+ 	loop
+	oDialogG23.visible = false
+End Sub
+rem=======================================================================================
+sub closedialog
+	gstop = true
+end sub
+rem=======================================================================================
+sub getSingleColumn_1
+	getSingleColumn(0)
+end sub
+rem=======================================================================================
+sub getSingleColumn_2
+	getSingleColumn(1)
+end sub
+rem=======================================================================================
+sub getSingleColumn_3
+	getSingleColumn(2)
+end sub
+rem=======================================================================================
+sub getSingleColumn(column_num as integer)
+	RangeData = FillArrayFromSelection()
+   	dim i as integer
+   	for i=0 to 7
+   		oDialogG23.Model.getByName(&quot;NumericField&quot;+column_num+i).value = RangeData(i+1, 0)
+   	next i	
+	oDialogG23.Model.getByName(&quot;NumericField00&quot;+column_num).value = RangeData(0, 0)
+end sub
+rem=======================================================================================
+function pogreshnost(num as double, contr_point as integer)
+	dim point as double
+	point = array_of_control_point(contr_point)
+	pogreshnost = ((num - point) / point) * 100
+end function
+rem=======================================================================================
+function dov_granica(pogr as double)
+	dov_granica = 1.1 * sqr(16 + pogr*pogr + 0.36)
+end function	
+rem=======================================================================================
+sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
+	dim i as integer
+   	for i=0 to 2
+   		for j=0 to 7
+   			array_of_vars(i,j) = oDialogG23.Model.getByName(&quot;NumericField&quot;+i+j).value
+   		next j	
+   	next i
+end sub
+rem=======================================================================================
+sub makeProtRus
+	MyFormat = &quot;0.00&quot;
+	getVarsFromFields
+    OpenTemplate(sertPath &amp; &quot;template_bdkg23_pov.odt&quot;)
+	dim i as integer
+	dim j as integer
+	for i=0 to 2
+		for j=0 to 7
+			findAndRename(&quot;$k&quot;+i+j+&quot;$&quot;, Format(array_of_vars(i,j), MyFormat)
+			&apos;array_of_pogresh(i-1) = pogreshnost(array_of_vars(i-1),i-1)
+			&apos;findAndRename(&quot;$L&quot;+i+&quot;$&quot;, Format(array_of_pogresh(i-1), MyFormat)
+			&apos;findAndRename(&quot;$m&quot;+i+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i-1)), MyFormat)
+		next j
+	next i
+	findAndRename(&quot;$№1$&quot;, oDialogG23.Model.getByName(&quot;NumericField000&quot;).value)
+	findAndRename(&quot;$№2$&quot;, oDialogG23.Model.getByName(&quot;NumericField001&quot;).value)
+	findAndRename(&quot;$№3$&quot;, oDialogG23.Model.getByName(&quot;NumericField002&quot;).value)
+
+
+	If oOptionButton.State Then
+    	findAndRename(&quot;$type$&quot;, &quot;22&quot;)
+    	findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    	findAndRename(&quot;$max$&quot;, &quot;10&quot;)
+	Else
+    	If oOptionButton2.State Then
+    		findAndRename(&quot;$type$&quot;, &quot;23&quot;)
+    		findAndRename(&quot;$unit$&quot;, &quot;Гр&quot;)
+    		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
+		Else
+    		findAndRename(&quot;$type$&quot;, &quot;23/1&quot;)
+    		findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
+		End If
+	End If	
+end sub
+
+</script:module>
