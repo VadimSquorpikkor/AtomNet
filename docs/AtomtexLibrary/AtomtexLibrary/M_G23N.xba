@@ -43,7 +43,6 @@ Sub G23_Dialog_Show
  	 array_of_control_point(7) = 7
  	 array_of_control_point(8) = 40
 
-
 	dim i,j as integer
 	for i=0 to 2
 		for j=0 to 7
@@ -53,9 +52,11 @@ Sub G23_Dialog_Show
 		oDialogG23.Model.getByName(&quot;NumericField&quot; + i + 8).valueStep = array_of_control_point(j)/40
 		oDialogG23.Model.getByName(&quot;NumericField&quot; + i + 8).value = array_of_control_point(j)
 	next i
-	oDialogG23.Model.getByName(&quot;NumericField000&quot;).value = 1
-	oDialogG23.Model.getByName(&quot;NumericField001&quot;).value = 2
-	oDialogG23.Model.getByName(&quot;NumericField002&quot;).value = 3
+	oDialogG23.Model.getByName(&quot;NumericField000&quot;).value = 101
+	oDialogG23.Model.getByName(&quot;NumericField001&quot;).value = 102
+	oDialogG23.Model.getByName(&quot;NumericField002&quot;).value = 103
+	
+	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = 97 + rnd()
 	
 	oOptionButton = oDialogG23.Model.getByName(&quot;OptionButton1&quot;)
 	oOptionButton2 = oDialogG23.Model.getByName(&quot;OptionButton2&quot;)
@@ -110,25 +111,39 @@ sub getVarsFromFields rem Вообще можно было бы обойтись
    	next i
 end sub
 rem=======================================================================================
+sub setBG_byRND
+	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = 97 + rnd()*6	
+end sub
+rem=======================================================================================
 sub makeProtRus
+	makeDoc(&quot;template_bdkg23_pov.odt&quot;)
+end sub
+rem=======================================================================================
+sub makeSertRus
+	makeDoc(&quot;template_bdkg23_sert.odt&quot;)
+end sub
+rem=======================================================================================
+sub makeDoc(path as String)
 	MyFormat = &quot;0.00&quot;
 	background = oDialogG23.Model.getByName(&quot;NumericField1&quot;).value / 1000
+	print background
 	getVarsFromFields
-    OpenTemplate(sertPath &amp; &quot;template_bdkg23_pov.odt&quot;)
+    OpenTemplate(sertPath &amp; path)
 	dim i as integer
 	dim j as integer
 	for i=0 to 2
 		rem добавление значения фона к первым трем точкам:
 		findAndRename(&quot;$k&quot;+i+0+&quot;$&quot;, Format(array_of_vars(i,0) + background, MyFormat)
+			print (array_of_vars(1,0) + background)
 		findAndRename(&quot;$k&quot;+i+1+&quot;$&quot;, Format(array_of_vars(i,1) + background, MyFormat)
 		findAndRename(&quot;$k&quot;+i+2+&quot;$&quot;, Format(array_of_vars(i,2) + background, MyFormat)
 		rem если бдкг-23 или 23/1, то добавляем ещё точку, если бдкг-22 -- ставим тире
 		if oOptionButton.State=false Then
 			findAndRename(&quot;$k&quot;+i+8+&quot;$&quot;, Format(array_of_vars(i,8), MyFormat)
 			else
-			findAndRename(&quot;$k&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
-			findAndRename(&quot;$L&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
-			findAndRename(&quot;$m&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
+			findAndRename(&quot;$k&quot;+i+8+&quot;$&quot;, &quot;–&quot;)
+			findAndRename(&quot;$L&quot;+i+8+&quot;$&quot;, &quot;–&quot;)
+			findAndRename(&quot;$m&quot;+i+8+&quot;$&quot;, &quot;–&quot;)
 		end if
 		rem for считает для всех точек, включая 40 Зв. если будет бдкг-22, то полей $k8$ $L8$ $m8$ 
 		rem в таблице уже не будет -- там будут прочерки, поэтому нет смысла вставлять if 	
@@ -140,26 +155,29 @@ sub makeProtRus
 		next j
 		
 	next i
-	findAndRename(&quot;$№1$&quot;, oDialogG23.Model.getByName(&quot;NumericField000&quot;).value)
+	findAndRename(&quot;$bd_num$&quot;, oDialogG23.Model.getByName(&quot;NumericField000&quot;).value)
 	findAndRename(&quot;$№2$&quot;, oDialogG23.Model.getByName(&quot;NumericField001&quot;).value)
 	findAndRename(&quot;$№3$&quot;, oDialogG23.Model.getByName(&quot;NumericField002&quot;).value)
-
+	findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
 
 	If oOptionButton.State Then
     	findAndRename(&quot;$type$&quot;, &quot;22&quot;)
-    	findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    	findAndRename(&quot;$u$&quot;, &quot;Зв&quot;)
     	findAndRename(&quot;$max$&quot;, &quot;10&quot;)
 	Else
     	If oOptionButton2.State Then
     		findAndRename(&quot;$type$&quot;, &quot;23&quot;)
-    		findAndRename(&quot;$unit$&quot;, &quot;Гр&quot;)
+    		findAndRename(&quot;$u$&quot;, &quot;Гр&quot;)
     		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
 		Else
     		findAndRename(&quot;$type$&quot;, &quot;23/1&quot;)
-    		findAndRename(&quot;$unit$&quot;, &quot;Зв&quot;)
+    		findAndRename(&quot;$type$&quot;, &quot;Зв&quot;)
     		findAndRename(&quot;$max$&quot;, &quot;100&quot;)
 		End If
 	End If	
 end sub
+
+
+
 
 </script:module>

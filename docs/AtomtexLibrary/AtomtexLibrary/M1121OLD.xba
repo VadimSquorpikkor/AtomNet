@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M1121" script:language="StarBasic">REM  *****  BASIC  *****
-
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M1121OLD" script:language="StarBasic">REM  *****  BASIC  *****
 
 rem=======================================================================================
 dim oDialog1121 as object
 dim oDateFieldModel as object
 dim RangeData
 dim gstop as boolean 
-dim array_of_vars(2,8) as double
-dim array_of_pogresh(2,8) as double
+dim array_of_vars(27) as double
+dim array_of_pogresh(27) as double
 dim array_of_control_point(8) as double
 rem=======================================================================================
 Sub dks1121_Dialog_Show
@@ -30,16 +29,14 @@ Sub dks1121_Dialog_Show
  	 array_of_control_point(7) = 0.7
  	 array_of_control_point(8) = 7
 
-	dim i,j as integer
-	for i=0 to 2
-		for j=0 to 8
-			oDialog1121.Model.getByName(&quot;NumericField&quot; + i + j).valueStep = array_of_control_point(j)/70
-			oDialog1121.Model.getByName(&quot;NumericField&quot; + i + j).value = array_of_control_point(j)
-		next j
+	dim i as integer rem т.е. value step равен значению контрольной точки деленной на 70
+	for i=2 to 28
+		oDialog1121.Model.getByName(&quot;NumericField&quot; + i).valueStep = array_of_control_point((i-2)mod 9)/70
+		oDialog1121.Model.getByName(&quot;NumericField&quot; + i).value = array_of_control_point((i-2)mod 9)
 	next i
-	oDialog1121.Model.getByName(&quot;NumericField001&quot;).value = 1
-	oDialog1121.Model.getByName(&quot;NumericField002&quot;).value = 2
-	oDialog1121.Model.getByName(&quot;NumericField003&quot;).value = 3
+	oDialog1121.Model.getByName(&quot;NumericField01&quot;).value = 1
+	oDialog1121.Model.getByName(&quot;NumericField02&quot;).value = 2
+	oDialog1121.Model.getByName(&quot;NumericField03&quot;).value = 3
 	
 	oDialog1121.visible = true
   	do until gstop       
@@ -53,28 +50,30 @@ sub closedialog
 end sub
 rem=======================================================================================
 sub getSingleColumn_1
-	getSingleColumn(0)
+	getSingleColumn(2, 1)
 end sub
 rem=======================================================================================
 sub getSingleColumn_2
-	getSingleColumn(1)
+	getSingleColumn(11, 2)
 end sub
 rem=======================================================================================
 sub getSingleColumn_3
-	getSingleColumn(2)
+	getSingleColumn(20, 3)
 end sub
 rem=======================================================================================
-sub getSingleColumn(column_num as integer)
+sub getSingleColumn(first_num as integer, column_num as integer)
 	RangeData = FillArrayFromSelection()
    	dim i as integer
    	for i=0 to 8
-   		oDialo1121.Model.getByName(&quot;NumericField&quot;+column_num+i).value = RangeData(i+1, 0)
+   		oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+first_num)).value = RangeData(i+1, 0)
    	next i	
-	oDialog1121.Model.getByName(&quot;NumericField00&quot;+column_num).value = RangeData(0, 0)
+	oDialog1121.Model.getByName(&quot;NumericField0&quot;+column_num).value = RangeData(0, 0)
 end sub
 rem=======================================================================================
-function pogreshnost(num as double, contr_point as double)
-	pogreshnost = ((num - contr_point) / contr_point) * 100
+function pogreshnost(num as double, contr_point as integer)
+	dim point as double
+	point = array_of_control_point(contr_point mod 9)
+	pogreshnost = ((num - point) / point) * 100
 end function
 rem=======================================================================================
 function dov_granica(pogr as double)
@@ -83,38 +82,25 @@ end function
 rem=======================================================================================
 sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
 	dim i as integer
-   	for i=0 to 2
-   		for j=0 to 8
-   			array_of_vars(i,j) = oDialog1121.Model.getByName(&quot;NumericField&quot;+i+j).value
-   		next j	
+   	for i=0 to 26
+   		array_of_vars(i) = oDialog1121.Model.getByName(&quot;NumericField&quot;+(i+2)).value
    	next i
 end sub
 rem=======================================================================================
 sub makeProtRus
 	MyFormat = &quot;0.00&quot;
-	dim bacground as double
-	background = 0.1
 	getVarsFromFields
     OpenTemplate(sertPath &amp; &quot;template_1121_prot_RU.odt&quot;)
 	dim i as integer
-	dim j as integer
-	for i=0 to 2
-		rem добавление значения фона к первым трем точкам:
-		findAndRename(&quot;$k&quot;+i+0+&quot;$&quot;, Format(array_of_vars(i,0) + background, MyFormat)
-		findAndRename(&quot;$k&quot;+i+1+&quot;$&quot;, Format(array_of_vars(i,1) + background, MyFormat)
-		findAndRename(&quot;$k&quot;+i+2+&quot;$&quot;, Format(array_of_vars(i,2) + background, MyFormat)
-		
-		for j=0 to 8
-			findAndRename(&quot;$k&quot;+i+j+&quot;$&quot;, Format(array_of_vars(i,j), MyFormat)
-			array_of_pogresh(i, j) = pogreshnost(array_of_vars(i, j), array_of_control_point(j))
-			findAndRename(&quot;$L&quot;+i+j+&quot;$&quot;, Format(array_of_pogresh(i, j), MyFormat)
-			findAndRename(&quot;$m&quot;+i+j+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i, j)), MyFormat)
-		next j
-		
+	for i=1 to 27
+		findAndRename(&quot;$k&quot;+i+&quot;$&quot;, Format(array_of_vars(i-1), MyFormat)
+		array_of_pogresh(i-1) = pogreshnost(array_of_vars(i-1),i-1)
+		findAndRename(&quot;$L&quot;+i+&quot;$&quot;, Format(array_of_pogresh(i-1), MyFormat)
+		findAndRename(&quot;$m&quot;+i+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i-1)), MyFormat)
 	next i
-	findAndRename(&quot;$№1$&quot;, oDialog1121.Model.getByName(&quot;NumericField001&quot;).value)
-	findAndRename(&quot;$№2$&quot;, oDialog1121.Model.getByName(&quot;NumericField002&quot;).value)
-	findAndRename(&quot;$№3$&quot;, oDialog1121.Model.getByName(&quot;NumericField003&quot;).value)
+	findAndRename(&quot;$№1$&quot;, oDialog1121.Model.getByName(&quot;NumericField01&quot;).value)
+	findAndRename(&quot;$№2$&quot;, oDialog1121.Model.getByName(&quot;NumericField02&quot;).value)
+	findAndRename(&quot;$№3$&quot;, oDialog1121.Model.getByName(&quot;NumericField03&quot;).value)
 end sub
 
 </script:module>

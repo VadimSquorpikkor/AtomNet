@@ -12,7 +12,7 @@
   </dlg:button>
   <dlg:text dlg:id="Label7" dlg:tab-index="12" dlg:left="17" dlg:top="107" dlg:width="28" dlg:height="10" dlg:value="70 мЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label8" dlg:tab-index="14" dlg:left="22" dlg:top="116" dlg:width="25" dlg:height="10" dlg:value="0,7 Зв/ч" dlg:align="right"/>
-  <dlg:datefield dlg:id="DateField1" dlg:tab-index="15" dlg:left="95" dlg:top="8" dlg:width="52" dlg:height="12" dlg:spin="true" dlg:dropdown="true"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="15" dlg:left="136" dlg:top="8" dlg:width="52" dlg:height="12" dlg:spin="true" dlg:dropdown="true"/>
   <dlg:button dlg:id="CommandButton2" dlg:tab-index="16" dlg:left="299" dlg:top="4" dlg:width="40" dlg:height="10" dlg:value="Закрыть">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.closedialog?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
@@ -44,9 +44,9 @@
   </dlg:button>
   <dlg:img dlg:id="ImageControl1" dlg:tab-index="57" dlg:left="250" dlg:top="28" dlg:width="86" dlg:height="109" dlg:src="file:///C:/Users/(USER)/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/g23.png"/>
   <dlg:radiogroup>
-   <dlg:radio dlg:id="OptionButton1" dlg:tab-index="58" dlg:left="6" dlg:top="191" dlg:width="54" dlg:height="10" dlg:value="БДКГ-22"/>
-   <dlg:radio dlg:id="OptionButton2" dlg:tab-index="59" dlg:left="6" dlg:top="202" dlg:width="54" dlg:height="10" dlg:value="БДКГ-23"/>
-   <dlg:radio dlg:id="OptionButton3" dlg:tab-index="60" dlg:left="6" dlg:top="211" dlg:width="54" dlg:height="10" dlg:value="БДКГ-23/1"/>
+   <dlg:radio dlg:id="OptionButton1" dlg:tab-index="58" dlg:left="6" dlg:top="191" dlg:width="38" dlg:height="10" dlg:value="БДКГ-22"/>
+   <dlg:radio dlg:id="OptionButton2" dlg:tab-index="59" dlg:left="6" dlg:top="202" dlg:width="38" dlg:height="10" dlg:value="БДКГ-23"/>
+   <dlg:radio dlg:id="OptionButton3" dlg:tab-index="60" dlg:left="6" dlg:top="211" dlg:width="38" dlg:height="10" dlg:value="БДКГ-23/1"/>
   </dlg:radiogroup>
   <dlg:button dlg:id="CommandButton6" dlg:tab-index="61" dlg:left="6" dlg:top="169" dlg:width="241" dlg:height="16" dlg:value="Вставить"/>
   <dlg:numericfield dlg:id="NumericField04" dlg:tab-index="8" dlg:left="48" dlg:top="94" dlg:width="30" dlg:height="10" dlg:spin="true"/>
@@ -85,7 +85,7 @@
   <dlg:numericfield dlg:id="NumericField18" dlg:tab-index="66" dlg:left="125" dlg:top="137" dlg:width="30" dlg:height="10" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField28" dlg:tab-index="68" dlg:left="205" dlg:top="137" dlg:width="30" dlg:height="10" dlg:spin="true"/>
   <dlg:button dlg:id="CommandButton7" dlg:tab-index="70" dlg:left="148" dlg:top="196" dlg:width="99" dlg:height="20" dlg:value="Калибровочный сертификат">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.makeProtRus?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.makeSertRus?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:titledbox dlg:id="FrameControl1" dlg:tab-index="71" dlg:left="168" dlg:top="24" dlg:width="79" dlg:height="142">
    <dlg:title dlg:value="БД 3"/>
@@ -99,5 +99,8 @@
   <dlg:text dlg:id="Label29" dlg:tab-index="74" dlg:left="92" dlg:top="36" dlg:width="12" dlg:height="10" dlg:value="№" dlg:align="right"/>
   <dlg:text dlg:id="Label30" dlg:tab-index="75" dlg:left="17" dlg:top="36" dlg:width="11" dlg:height="10" dlg:value="№" dlg:align="right"/>
   <dlg:text dlg:id="Label31" dlg:tab-index="76" dlg:left="171" dlg:top="36" dlg:width="11" dlg:height="10" dlg:value="№" dlg:align="right"/>
+  <dlg:button dlg:id="CommandButton8" dlg:tab-index="77" dlg:left="78" dlg:top="8" dlg:width="35" dlg:height="9" dlg:value="Random">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.setBG_byRND?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>
