@@ -18,9 +18,9 @@ dim oDialogG23 as object
 dim oDateFieldModel as object
 dim RangeData
 dim gstop as boolean 
-dim array_of_vars(2, 7) as double
-dim array_of_pogresh(23) as double
-dim array_of_control_point(7) as double
+dim array_of_vars(2, 8) as double
+dim array_of_pogresh(2, 8) as double
+dim array_of_control_point(8) as double
 dim oOptionButton as object
 dim oOptionButton2 as object
 rem=======================================================================================
@@ -41,6 +41,8 @@ Sub G23_Dialog_Show
  	 array_of_control_point(5) = 70
  	 array_of_control_point(6) = 0.7
  	 array_of_control_point(7) = 7
+ 	 array_of_control_point(8) = 40
+
 
 	dim i,j as integer
 	for i=0 to 2
@@ -48,6 +50,8 @@ Sub G23_Dialog_Show
 			oDialogG23.Model.getByName(&quot;NumericField&quot; + i + j).valueStep = array_of_control_point(j)/70
 			oDialogG23.Model.getByName(&quot;NumericField&quot; + i + j).value = array_of_control_point(j)
 		next j
+		oDialogG23.Model.getByName(&quot;NumericField&quot; + i + 8).valueStep = array_of_control_point(j)/40
+		oDialogG23.Model.getByName(&quot;NumericField&quot; + i + 8).value = array_of_control_point(j)
 	next i
 	oDialogG23.Model.getByName(&quot;NumericField000&quot;).value = 1
 	oDialogG23.Model.getByName(&quot;NumericField001&quot;).value = 2
@@ -83,16 +87,14 @@ rem=============================================================================
 sub getSingleColumn(column_num as integer)
 	RangeData = FillArrayFromSelection()
    	dim i as integer
-   	for i=0 to 7
+   	for i=0 to 8
    		oDialogG23.Model.getByName(&quot;NumericField&quot;+column_num+i).value = RangeData(i+1, 0)
    	next i	
 	oDialogG23.Model.getByName(&quot;NumericField00&quot;+column_num).value = RangeData(0, 0)
 end sub
 rem=======================================================================================
-function pogreshnost(num as double, contr_point as integer)
-	dim point as double
-	point = array_of_control_point(contr_point)
-	pogreshnost = ((num - point) / point) * 100
+function pogreshnost(num as double, contr_point as double)
+	pogreshnost = ((num - contr_point) / contr_point) * 100
 end function
 rem=======================================================================================
 function dov_granica(pogr as double)
@@ -102,7 +104,7 @@ rem=============================================================================
 sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
 	dim i as integer
    	for i=0 to 2
-   		for j=0 to 7
+   		for j=0 to 8
    			array_of_vars(i,j) = oDialogG23.Model.getByName(&quot;NumericField&quot;+i+j).value
    		next j	
    	next i
@@ -110,17 +112,33 @@ end sub
 rem=======================================================================================
 sub makeProtRus
 	MyFormat = &quot;0.00&quot;
+	background = oDialogG23.Model.getByName(&quot;NumericField1&quot;).value / 1000
 	getVarsFromFields
     OpenTemplate(sertPath &amp; &quot;template_bdkg23_pov.odt&quot;)
 	dim i as integer
 	dim j as integer
 	for i=0 to 2
-		for j=0 to 7
+		rem добавление значения фона к первым трем точкам:
+		findAndRename(&quot;$k&quot;+i+0+&quot;$&quot;, Format(array_of_vars(i,0) + background, MyFormat)
+		findAndRename(&quot;$k&quot;+i+1+&quot;$&quot;, Format(array_of_vars(i,1) + background, MyFormat)
+		findAndRename(&quot;$k&quot;+i+2+&quot;$&quot;, Format(array_of_vars(i,2) + background, MyFormat)
+		rem если бдкг-23 или 23/1, то добавляем ещё точку, если бдкг-22 -- ставим тире
+		if oOptionButton.State=false Then
+			findAndRename(&quot;$k&quot;+i+8+&quot;$&quot;, Format(array_of_vars(i,8), MyFormat)
+			else
+			findAndRename(&quot;$k&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
+			findAndRename(&quot;$L&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
+			findAndRename(&quot;$m&quot;+i+8+&quot;$&quot;, &quot;--&quot;)
+		end if
+		rem for считает для всех точек, включая 40 Зв. если будет бдкг-22, то полей $k8$ $L8$ $m8$ 
+		rem в таблице уже не будет -- там будут прочерки, поэтому нет смысла вставлять if 	
+		for j=0 to 8
 			findAndRename(&quot;$k&quot;+i+j+&quot;$&quot;, Format(array_of_vars(i,j), MyFormat)
-			&apos;array_of_pogresh(i-1) = pogreshnost(array_of_vars(i-1),i-1)
-			&apos;findAndRename(&quot;$L&quot;+i+&quot;$&quot;, Format(array_of_pogresh(i-1), MyFormat)
-			&apos;findAndRename(&quot;$m&quot;+i+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i-1)), MyFormat)
+			array_of_pogresh(i, j) = pogreshnost(array_of_vars(i, j), array_of_control_point(j))
+			findAndRename(&quot;$L&quot;+i+j+&quot;$&quot;, Format(array_of_pogresh(i, j), MyFormat)
+			findAndRename(&quot;$m&quot;+i+j+&quot;$&quot;, Format(dov_granica(array_of_pogresh(i, j)), MyFormat)
 		next j
+		
 	next i
 	findAndRename(&quot;$№1$&quot;, oDialogG23.Model.getByName(&quot;NumericField000&quot;).value)
 	findAndRename(&quot;$№2$&quot;, oDialogG23.Model.getByName(&quot;NumericField001&quot;).value)
