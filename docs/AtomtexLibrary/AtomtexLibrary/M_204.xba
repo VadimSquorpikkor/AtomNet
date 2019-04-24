@@ -6,10 +6,9 @@ rem=============================================================================
 dim oDialog204 as object
 dim oDateFieldModel as object
 dim POINTS_QNT as integer
-POINTS_QNT = 8
-dim array_of_vars(POINTS_QNT) as double
-dim array_of_pogresh(POINTS_QNT) as double
-dim array_of_control_point(POINTS_QNT) as double
+dim array_of_vars(8) as double
+dim array_of_pogresh(8) as double
+dim array_of_control_point(8) as double
 dim background as double
 rem=======================================================================================
 Sub G204_Dialog_Show
@@ -18,43 +17,30 @@ Sub G204_Dialog_Show
 	oDateFieldModel = oDialog204.Model.getByName(&quot;DateField1&quot;)
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
+
+	POINTS_QNT = 8
 	
-	 array_of_control_point(0) = 0.7
- 	 array_of_control_point(1) = 7
- 	 array_of_control_point(2) = 70
- 	 array_of_control_point(3) = 0.7
- 	 array_of_control_point(4) = 7
- 	 array_of_control_point(5) = 70
- 	 array_of_control_point(6) = 0.7
- 	 array_of_control_point(7) = 7
+	array_of_control_point(0) = 0.07
+	array_of_control_point(1) = 0.7
+ 	array_of_control_point(2) = 7
+	array_of_control_point(3) = 70
+	array_of_control_point(4) = 0.7
+	array_of_control_point(5) = 7
+	array_of_control_point(6) = 70
+	array_of_control_point(7) = 0.7
+	array_of_control_point(8) = 7
+
 
 	dim i as integer
-	for i=0 to 7
-			oDialogG02.Model.getByName(&quot;NumericField0&quot; + i).valueStep = array_of_control_point(i)/70
-			oDialogG02.Model.getByName(&quot;NumericField0&quot; + i).value = array_of_control_point(i)
+	for i=0 to POINTS_QNT
+			oDialog204.Model.getByName(&quot;NumericField0&quot; + i).valueStep = array_of_control_point(i)/70
+			oDialog204.Model.getByName(&quot;NumericField0&quot; + i).value = array_of_control_point(i)
 	next i
-	&apos;oDialogG23.Model.getByName(&quot;NumericField10&quot;).value = 1
-	oDialogG02.Model.getByName(&quot;NumericField10&quot;).value = 1000
-	oDialogG02.Model.getByName(&quot;NumericField11&quot;).value = 100
-
-	
-	Dim nCount As Integer
-	Dim sItems As Variant
-	oComboBox = oDialogG02.getControl(&quot;ComboBox1&quot;)
-	REM first remove all old items from the list
-	nCount = oComboBox.getItemCount()
-	oComboBox.removeItems( 0, nCount )
-	REM add new items to the list
-	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
-	oComboBox.addItems( sItems, 0 )
-	oComboBox.text = &quot;№516&quot;
-   
-    oNumericFieldModel = oDialogG02.Model.getByName(&quot;NumericField12&quot;)
-    oNumericFieldModel.DECIMALACCURACY = 2
-	oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+	&apos;oDialog204.Model.getByName(&quot;NumericField10&quot;).value = 1000
+	&apos;oDialog204.Model.getByName(&quot;NumericField11&quot;).value = 100
 	
 	oDialogMain.endexecute()   
-	oDialogG02.Execute()
+	oDialog204.Execute()
 End Sub
 rem=======================================================================================
 function pogreshnost(num as double, contr_point as double)
@@ -67,77 +53,57 @@ end function
 rem=======================================================================================
 sub getVarsFromFields rem Вообще можно было бы обойтись без массивов, работая напрямую с NumFields, но так удобнее читать код, так он понятнее
 	dim j as integer
- 	for j=0 to 7
-   		array_of_vars(j) = oDialogG02.Model.getByName(&quot;NumericField0&quot;+j).value
+ 	for j=0 to POINTS_QNT
+   		array_of_vars(j) = oDialog204.Model.getByName(&quot;NumericField0&quot;+j).value
+   		&apos;print (oDialog204.Model.getByName(&quot;NumericField0&quot;+j).value*100 &amp; &quot;--&quot; &amp;j)
    	next j	
 end sub
 rem=======================================================================================
 sub makeProtRus
 	MyFormat = &quot;0.00&quot;
-	background = oDialogG02.Model.getByName(&quot;NumericField11&quot;).value / 1000 
+	&apos;background = oDialogG02.Model.getByName(&quot;NumericField11&quot;).value / 1000 
 	getVarsFromFields
-    OpenTemplate(sertPath &amp; &quot;template_bdkg02_new.odt&quot;)
+    OpenTemplate(sertPath &amp; &quot;template_bdkg204.odt&quot;)
 	dim j as integer
-	for j=0 to 7
+	for j=0 to POINTS_QNT
 		findAndRename(&quot;$k&quot;+j+&quot;$&quot;, Format(array_of_vars(j), MyFormat)
 		array_of_pogresh(j) = pogreshnost(array_of_vars(j),array_of_control_point(j))
 		findAndRename(&quot;$L&quot;+j+&quot;$&quot;, Format(array_of_pogresh(j), MyFormat)
 		findAndRename(&quot;$m&quot;+j+&quot;$&quot;, Format(dov_granica_2(array_of_pogresh(j)), MyFormat)
 	next j
-	findAndRename(&quot;$h0$&quot;, Format(array_of_vars(0) + background, MyFormat)
-	findAndRename(&quot;$h1$&quot;, Format(array_of_vars(1) + background, MyFormat)
-	findAndRename(&quot;$h2$&quot;, Format(array_of_vars(2) + background, MyFormat)
-	findAndRename(&quot;$srk_num$&quot;, oDialogG02.Model.getByName(&quot;TextField1&quot;).text)
-	findAndRename(&quot;$bd_num$&quot;, oDialogG02.Model.getByName(&quot;TextField2&quot;).text)
-	findAndRename(&quot;$grad$&quot;, oDialogG02.Model.getByName(&quot;NumericField10&quot;).value)
-	findAndRename(&quot;$activity$&quot;, Format(oDialogG02.Model.getByName(&quot;NumericField12&quot;).value, MyFormat)
-	findAndRename(&quot;$bg$&quot;, background * 1000)
-	findAndRename(&quot;$source$&quot;, oDialogG02.getControl(&quot;ComboBox1&quot;).text)
+	findAndRename(&quot;$srk_num$&quot;, oDialog204.Model.getByName(&quot;TextField1&quot;).text)
+	findAndRename(&quot;$bd_num$&quot;, oDialog204.Model.getByName(&quot;TextField2&quot;).text)
+	&apos;findAndRename(&quot;$bg$&quot;, background * 1000)
 end sub
-rem=======================================================================================
-sub comboChanged
-&apos;print &quot;OK&quot;
-	oNumericFieldModel = oDialogG02.Model.getByName(&quot;NumericField12&quot;)
-	select case oDialogG02.getControl(&quot;ComboBox1&quot;).text
-		case &quot;№516&quot;
-		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
-		&apos;print get_activity(act516, oDateFieldModel)
-		case &quot;№517&quot;
-		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
-		case &quot;№518&quot;
-		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
-		case &quot;№519&quot;
-		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
-		case &quot;№520&quot;
-		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
-		case &quot;№521&quot;
-		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
-		case &quot;№2910&quot;
-		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
-	end select	
-end sub
+
 rem=======================================================================================
 sub makeSertificate(path as String)
 	getVarsFromFields
     MyFormat = &quot;0.00&quot;
     OpenTemplate(sertPath &amp; path)
-	findAndRename(&quot;$bd_num$&quot;, oDialogG02.Model.getByName(&quot;TextField2&quot;).Text)
-	findAndRename(&quot;$activity$&quot;, Format(oDialogG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
-	findAndRename(&quot;$source$&quot;, oDialogG02.Model.getByName(&quot;ComboBox1&quot;).Text)
-	findAndRename(&quot;$grad$&quot;, oDialogG02.Model.getByName(&quot;NumericField10&quot;).Value)
+	findAndRename(&quot;$bd_num$&quot;, oDialog204.Model.getByName(&quot;TextField2&quot;).Text)
 	findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
 	dim j as integer
-	for j=0 to 7
+	for j=0 to POINTS_QNT
 		findAndRename(&quot;$k&quot;+j+&quot;$&quot;, Format(array_of_vars(j), MyFormat)
 	next j    
 end sub
 rem=======================================================================================
 sub makeSertificateRU
-	makeSertificate(&quot;template_bdkg02_ser_RU.odt&quot;)
+	makeSertificate(&quot;template_bdkg204_ser_RU.odt&quot;)
 end sub
 rem=======================================================================================
 sub makeSertificateEN
-	makeSertificate(&quot;template_bdkg02_ser_ENG.odt&quot;)
+	makeSertificate(&quot;template_bdkg204_ser_RU.odt&quot;)
+end sub
+rem=======================================================================================
+sub getSingleColumn
+	RangeData = FillArrayFromSelection()
+   	dim i as integer
+   	for i=0 to 7
+   		oDialog204.Model.getByName(&quot;NumericField0&quot;+(i+1)).value = RangeData(i+1, 0)
+   	next i	
+   	oDialog204.Model.getByName(&quot;NumericField11&quot;).value = RangeData(0, 0)
 end sub
 
 </script:module>
