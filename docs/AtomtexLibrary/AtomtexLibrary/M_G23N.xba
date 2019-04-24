@@ -56,7 +56,7 @@ Sub G23_Dialog_Show
 	oDialogG23.Model.getByName(&quot;NumericField001&quot;).value = 102
 	oDialogG23.Model.getByName(&quot;NumericField002&quot;).value = 103
 	
-	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = 97 + rnd()
+	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = (97 + rnd()*6)\1
 	
 	oOptionButton = oDialogG23.Model.getByName(&quot;OptionButton1&quot;)
 	oOptionButton2 = oDialogG23.Model.getByName(&quot;OptionButton2&quot;)
@@ -112,7 +112,15 @@ sub getVarsFromFields rem Вообще можно было бы обойтись
 end sub
 rem=======================================================================================
 sub setBG_byRND
-	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = 97 + rnd()*6	
+	oDialogG23.Model.getByName(&quot;NumericField1&quot;).value = (97 + rnd()*6)\1 rem использую целочисленное деление для перевода вещественного числа в целое, просто отбрасывая дробную часть	
+end sub
+rem=======================================================================================
+sub setPoints_byRND
+&apos;	dim i as integer
+&apos;	for i=1 to 44 step 9
+&apos;		array_of_fields(i).value = 0.68 + rnd()*0.04
+&apos;		array_of_fields(i+1).value = 6.8 + rnd()*0.4
+&apos;	next i	
 end sub
 rem=======================================================================================
 sub makeProtRus
@@ -147,6 +155,8 @@ sub makeDoc(path as String)
 		end if
 		rem for считает для всех точек, включая 40 Зв. если будет бдкг-22, то полей $k8$ $L8$ $m8$ 
 		rem в таблице уже не будет -- там будут прочерки, поэтому нет смысла вставлять if 	
+		
+		rem заполняю таблицу 
 		for j=0 to 8
 			findAndRename(&quot;$k&quot;+i+j+&quot;$&quot;, Format(array_of_vars(i,j), MyFormat)
 			array_of_pogresh(i, j) = pogreshnost(array_of_vars(i, j), array_of_control_point(j))
