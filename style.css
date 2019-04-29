@@ -18,8 +18,8 @@ img {
     display: none;
     position: fixed;
     margin-top: 5px;
-    transition:all .5s ease;
-    transition-delay:5s;
+    transition-property:display;
+    transition-duration: 2s;
 }
 .header_div:hover #main_menu, #main_menu:hover{
     transition:all .5s ease;
@@ -35,7 +35,7 @@ img {
     box-shadow: 2px 3px 7px 2px rgba(0, 0, 0, 0.75);
 
     transition-property: background-color, color;
-    transition-duration: 300ms;
+    transition-duration: 500ms;
     transition-timing-function: ease-out;
 }
 .dropdown > ul {
@@ -65,7 +65,7 @@ img {
     margin: 0;
 
     transition-property: background-color, color;
-    transition-duration: 300ms;
+    transition-duration: 500ms;
 }
 
 .dropdown-content .dropbtn {
@@ -88,7 +88,7 @@ img {
     margin: 0;
 
     transition-property: background-color, color;
-    transition-duration: 300ms;
+    transition-duration: 500ms;
 }
 .dropdown-content >  ul > li:hover .dropbtn {
     background-color: orange;
@@ -134,7 +134,7 @@ img {
     margin: 0;
 
     transition-property: background-color, color;
-    transition-duration: 300ms;
+    transition-duration: 500ms;
 }
 
 
@@ -154,7 +154,7 @@ img {
     margin: 0;
 
     transition-property: background-color, color;
-    transition-duration: 300ms;
+    transition-duration: 500ms;
 }
 
 .inside_shadow {
@@ -433,6 +433,7 @@ summary {
     cursor: pointer;
 }
 
+
 .red_light {
     font-size: 16px;
     color: white;
@@ -620,4 +621,91 @@ h3 {
     background-color: white;
 }*/
 
+.spoiler_menu{
+    margin: 0;
+    padding: 0;
+    color: white;
+    border-radius: 15px;
 
+    background-color: #333;
+
+}
+
+.spoiler_menu ul{
+    list-style-type: none;
+    padding-left: 70px;
+    margin: 0;
+    position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
+}
+
+
+
+.spoiler_menu summary{
+    background-color: #333;
+    padding: 10px;
+    margin: 0;
+
+
+}
+
+.spoiler_menu details:first-child  summary{
+    border-radius: 15px 15px 0 0;
+}
+
+.spoiler_menu details:last-child  summary{
+    border-radius: 0 0 15px 15px;
+}
+
+.spoiler_menu summary :hover{
+    color: orange;
+/*    background-color: orange;
+    margin: 0;
+    padding: 0;*/
+}
+
+.spoiler_menu a {
+    font-size: 14px;
+    transition-property: all;
+    transition-duration: 350ms;
+}
+
+.spoiler_menu a:hover{
+    color: black;
+}
+
+.spoiler_menu li div{
+    display: none;
+}
+
+.spoiler_menu li:hover div{
+    /*position: absolute;*/
+    /*display: block;*/
+
+    top: 0;
+    margin: 0;
+    display: block;
+    position: absolute;
+    left: 100px;
+    color: #333333;
+
+
+}
+
+
+
+/*
+.dropdown-content>ul>li:hover > .dropdown-content {
+    position: absolute;
+    top: 0;
+    left: 230px;
+    display: block;
+    height: 100%;
+    background-color: antiquewhite;
+    min-width: 160px;
+    text-indent: 0;
+    padding: 0;
+    margin: 0;
+
+    transition-property: background-color, color;
+    transition-duration: 500ms;
+}*/
