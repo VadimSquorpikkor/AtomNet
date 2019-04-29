@@ -1,6 +1,5 @@
 /*todo Переписать CSS*/
 
-
 img {
 
     display: block;
@@ -18,16 +17,17 @@ img {
     display: none;
     position: fixed;
     margin-top: 5px;
-    transition-property:display;
+    transition-property: display;
     transition-duration: 2s;
 }
-.header_div:hover #main_menu, #main_menu:hover{
-    transition:all .5s ease;
+
+.header_div:hover #main_menu, #main_menu:hover {
+    transition: all .5s ease;
     display: block;
 }
 
 /*region NEW DROP DOWN---------------------------------------*/
-.dropdown{
+.dropdown {
     background-color: #333;
     border-radius: 20px;
     padding: 0 20px;
@@ -38,6 +38,7 @@ img {
     transition-duration: 500ms;
     transition-timing-function: ease-out;
 }
+
 .dropdown > ul {
     list-style-type: none;
     margin: 0;
@@ -55,7 +56,7 @@ img {
     margin: 0;
 }
 
-.dropdown > ul > li:hover>.dropbtn {
+.dropdown > ul > li:hover > .dropbtn {
     background-color: antiquewhite;
     color: #555555;
     display: block;
@@ -72,12 +73,13 @@ img {
     text-indent: 0;
 
 }
+
 .dropdown-content ul, .dropdown-content li {
     padding-left: 0;
     list-style-type: none;
 }
 
-.dropdown-content > a:hover{
+.dropdown-content > a:hover {
     font-size: 14px;
     background-color: orange;
     color: black;
@@ -90,12 +92,14 @@ img {
     transition-property: background-color, color;
     transition-duration: 500ms;
 }
-.dropdown-content >  ul > li:hover .dropbtn {
+
+.dropdown-content > ul > li:hover .dropbtn {
     background-color: orange;
     border-radius: 0;
 }
+
 /*+меню в меню*/
-.dropdown-content a, .dropdown-content>ul>li>a, .dropdown-content .dropbtn{
+.dropdown-content a, .dropdown-content > ul > li > a, .dropdown-content .dropbtn {
     font-size: 14px;
     color: black;
     padding: 5px 16px;
@@ -107,21 +111,22 @@ img {
 
     background-color: antiquewhite;
 }
+
 .dropdown {
     position: relative;
 }
 
 /*+меню в меню*/
-.dropdown-content, .dropdown-content>ul>li>.dropdown-content {
+.dropdown-content, .dropdown-content > ul > li > .dropdown-content {
     display: none;
 }
 
-.dropdown-content>ul>li>.dropdown-content {
-    box-shadow: -3px 3px 5px 0 rgba(0,0,0,0.75);
+.dropdown-content > ul > li > .dropdown-content {
+    box-shadow: -3px 3px 5px 0 rgba(0, 0, 0, 0.75);
 }
 
 /*todo объединить со следующим селектором*/
-.dropdown-content>ul>li:hover > .dropdown-content {
+.dropdown-content > ul > li:hover > .dropdown-content {
     position: absolute;
     top: 0;
     left: 230px;
@@ -137,9 +142,8 @@ img {
     transition-duration: 500ms;
 }
 
-
 /*+меню в меню*/
-.dropdown > ul > li:hover > .dropdown-content{
+.dropdown > ul > li:hover > .dropdown-content {
     position: absolute;
     top: 0;
     left: 180px;
@@ -162,6 +166,7 @@ img {
     border-radius: 5px;
     padding: 5px;
 }
+
 /*endregion*/
 
 /*region INDEX 3------------------------------------*/
@@ -204,9 +209,11 @@ hr {
 .menu_block_top_orange {
     background-color: darkorange;
 }
+
 .menu_block_top_violet {
     background-color: darkmagenta;
 }
+
 .menu_block_top_green, .menu_block_top_red, .menu_block_top_blue, .menu_block_top_orange, .menu_block_top_violet {
     font-size: 13px;
     height: 23px;
@@ -266,10 +273,9 @@ body > div {
     padding: 20px 15px 20px;
     margin: 10px 20px 20px;
 
-
 }
 
-ol>li>div {
+ol > li > div {
     text-indent: 0;
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 10px 15px 10px;
@@ -361,6 +367,7 @@ p {
     align-self: center;
     text-indent: 0;
 }
+
 .yellow_back_centered {
     margin: 5px 0 5px;
     font-size: 14px;
@@ -373,6 +380,7 @@ p {
     border-radius: 20px;
 
 }
+
 .yellow_back {
     margin: 10px 0 10px;
     padding: 10px 20px;
@@ -386,12 +394,15 @@ p {
     box-shadow: none;
     /*box-shadow: 3px 3px 11px 1px rgba(0, 0, 0, 0.43);*/
 }
+
 .yellow_back p {
     margin: 10px;
 }
+
 .yellow_back ul {
     font-size: 14px;
 }
+
 .attention {
     color: #ff3333;
 }
@@ -432,7 +443,6 @@ a {
 summary {
     cursor: pointer;
 }
-
 
 .red_light {
     font-size: 16px;
@@ -519,7 +529,7 @@ a:hover.white_font {
     border-radius: 25px;
 }
 
-body>div>.left_align {
+body > div > .left_align {
     /*box-shadow: none;*/
     text-align: left;
     font-size: smaller;
@@ -621,7 +631,7 @@ h3 {
     background-color: white;
 }*/
 
-.spoiler_menu{
+.spoiler_menu {
     margin: 0;
     padding: 0;
     color: white;
@@ -631,84 +641,97 @@ h3 {
 
 }
 
-.spoiler_menu ul{
+.spoiler_menu ul {
     list-style-type: none;
     padding-left: 70px;
     margin: 0;
     position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
+
 }
 
-
-
-.spoiler_menu summary{
+.spoiler_menu summary {
     background-color: #333;
     padding: 10px;
     margin: 0;
 
-
 }
 
-.spoiler_menu details:first-child  summary{
+.spoiler_menu details:first-child summary {
     border-radius: 15px 15px 0 0;
 }
 
-.spoiler_menu details:last-child  summary{
+.spoiler_menu details:last-child summary {
     border-radius: 0 0 15px 15px;
 }
 
-.spoiler_menu summary :hover{
+.spoiler_menu details:last-child {
+    padding-bottom: 15px;
+}
+
+.spoiler_menu summary :hover {
     color: orange;
-/*    background-color: orange;
-    margin: 0;
-    padding: 0;*/
+    /*    background-color: orange;
+        margin: 0;
+        padding: 0;*/
+
 }
 
 .spoiler_menu a {
-    font-size: 14px;
+    font-size: 15px;
+    display: block;
+    width: 350px;
+    margin: 4px;
+    /*height: 22px;*/
     transition-property: all;
     transition-duration: 350ms;
 }
 
-.spoiler_menu a:hover{
+.spoiler_menu div a:hover {
+    width: 90%;
     color: black;
 }
 
-.spoiler_menu li div{
+.spoiler_menu a:hover {
+    color: black;
+    padding: 0 5px;
+    /*width: 150px;*/
+
+}
+
+.spoiler_menu li div {
     display: none;
     margin: 0;
     text-indent: 0;
+    transition-property: all;
+    transition-duration: 1s;
+    transition-delay: 1s;
+
 }
 
-.spoiler_menu li:hover div{
+.spoiler_menu li div ul {
+    padding: 0;
+
+}
+
+.spoiler_menu li:hover div {
     /*position: absolute;*/
     /*display: block;*/
 
-    top: 0;
-    margin: 0;
+    transition-delay: 0s;
+
+    margin: -5px;
     display: block;
     position: absolute;
-    left: 100px;
-    color: #333333;
+    left: 170px;
+    /*top: 0;*/
+    /*top: 20px;*/
+    color: #444;
     padding: 0;
     text-indent: 0;
+    /*background-color: darkorange;*/
+    background-color: #444444;
+    border-radius: 10px;
+    width: 400px;
+    /*height: 200px;*/
 
 }
-
-
-
-/*
-.dropdown-content>ul>li:hover > .dropdown-content {
-    position: absolute;
-    top: 0;
-    left: 230px;
-    display: block;
-    height: 100%;
-    background-color: antiquewhite;
-    min-width: 160px;
-    text-indent: 0;
-    padding: 0;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-}*/
