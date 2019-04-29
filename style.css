@@ -675,6 +675,8 @@ h3 {
 
 .spoiler_menu li div{
     display: none;
+    margin: 0;
+    text-indent: 0;
 }
 
 .spoiler_menu li:hover div{
@@ -687,7 +689,8 @@ h3 {
     position: absolute;
     left: 100px;
     color: #333333;
-
+    padding: 0;
+    text-indent: 0;
 
 }
 
