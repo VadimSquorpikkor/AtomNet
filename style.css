@@ -184,7 +184,8 @@ hr {
     height: 156px; /*171*/
     width: 144px;
     text-indent: 0;
-    margin: 9px 0 0 9px;
+    margin: 5px;
+    /*margin: 9px 0 0 9px;*/
     padding: 0;
     float: left;
     line-height: 0.9;
@@ -432,13 +433,31 @@ h1 {
 
 a {
     color: darkorange;
-/ / color: #bd7400;
     font-size: 18px;
     font-family: sans-serif;
     text-decoration: none;
-    padding: 0 5px;
-
 }
+
+a:hover {
+    color: white;
+    background-color: darkorange;
+    border-radius: 9px;
+    padding: 0 4px;
+    /*margin: 0 -4px;*/
+}
+
+/*a:hover {
+    !*color:orangered;*!
+    font-size: 18px;
+    font-family: sans-serif;
+
+    color: white;
+    background-color: darkorange;
+    !*color:#bd7400;*!
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 0 5px 1px 5px; !*t r b l*!
+}*/
 
 summary {
     cursor: pointer;
@@ -490,18 +509,6 @@ summary div ul {
     font-family: sans-serif
 }
 
-a:hover {
-    /*color:orangered;*/
-    font-size: 18px;
-    font-family: sans-serif;
-
-    color: white;
-    background-color: darkorange;
-    /*color:#bd7400;*/
-    border-radius: 10px;
-    text-decoration: none;
-    padding: 0 5px 1px 5px; /*t r b l*/
-}
 
 /*USELESS: нужно будет добавить в div'ы color:white и можно будет удалять  */
 .white_font {
@@ -637,7 +644,7 @@ h3 {
     color: white;
     border-radius: 15px;
 
-    background-color: #333;
+    background-color: #444444;
 
 }
 
@@ -665,15 +672,11 @@ h3 {
 }
 
 .spoiler_menu details:last-child {
-    padding-bottom: 15px;
+    /*padding-bottom: 15px;*/
 }
 
 .spoiler_menu summary :hover {
     color: orange;
-    /*    background-color: orange;
-        margin: 0;
-        padding: 0;*/
-
 }
 
 .spoiler_menu a {
@@ -686,16 +689,8 @@ h3 {
     transition-duration: 350ms;
 }
 
-.spoiler_menu div a:hover {
-    width: 90%;
-    color: black;
-}
-
 .spoiler_menu a:hover {
     color: black;
-    padding: 0 5px;
-    /*width: 150px;*/
-
 }
 
 .spoiler_menu li div {
@@ -705,7 +700,9 @@ h3 {
     transition-property: all;
     transition-duration: 1s;
     transition-delay: 1s;
-
+    -moz-transition-property: all;
+    -moz-transition-duration: 1s;
+    -moz-transition-delay: 1s;
 }
 
 .spoiler_menu li div ul {
@@ -717,7 +714,7 @@ h3 {
     /*position: absolute;*/
     /*display: block;*/
 
-    transition-delay: 0s;
+    /*transition-delay: 0s;*/
 
     margin: -5px;
     display: block;
@@ -733,5 +730,45 @@ h3 {
     border-radius: 10px;
     width: 400px;
     /*height: 200px;*/
+    -moz-transition-property: all;
+    -moz-transition-duration: 1s;
+    -moz-transition-delay: 0s;
 
+}
+
+.spoiler_menu details {
+    /*height: 100px;*/
+    transition: all 0.3s ease 0.1s;
+}
+
+
+
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        /*height: 0;*/
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        /*height: 100px;*/
+        transform: translateY(0);
+    }
+}
+
+.spoiler_menu details[open] > ul {
+    animation-name: slideDown;
+    animation-duration: 400ms;
+    /*animation-timing-function:cubic-bezier(0, 0, 1, 0);*/
+    /*overflow:hidden;*/
+    /*padding-left: 18px;*/
+}
+
+details[open] > div {
+    animation-name: slideDown;
+    animation-duration: 200ms;
+    /*animation-timing-function:cubic-bezier(0, 0, 1, 0);*/
+    /*overflow:hidden;*/
+    /*padding-left: 18px;*/
 }
