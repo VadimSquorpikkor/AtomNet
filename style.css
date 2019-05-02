@@ -483,6 +483,10 @@ summary {
 	box-shadow: gray;
 }*/
 
+ol > li > div {
+    border-radius: 20px 0 20px 0;
+}
+
 details details p {
     box-shadow: 3px 3px 4px gray;
     padding: 15px;
@@ -736,10 +740,10 @@ h3 {
 
 }
 
-.spoiler_menu details {
-    /*height: 100px;*/
-    transition: all 0.3s ease 0.1s;
-}
+/*.spoiler_menu details {
+    !*height: 100px;*!
+    transition: all 0.3s;
+}*/
 
 
 
@@ -748,7 +752,7 @@ h3 {
     0% {
         opacity: 0;
         /*height: 0;*/
-        transform: translateY(-50px);
+        transform: translateY(50px);
     }
     100% {
         opacity: 1;
@@ -757,18 +761,19 @@ h3 {
     }
 }
 
-.spoiler_menu details[open] > ul {
+/*.spoiler_menu details[open] > ul {
     animation-name: slideDown;
     animation-duration: 400ms;
-    /*animation-timing-function:cubic-bezier(0, 0, 1, 0);*/
-    /*overflow:hidden;*/
-    /*padding-left: 18px;*/
-}
+    !*animation-timing-function:cubic-bezier(0, 0, 1, 0);*!
+    !*overflow:hidden;*!
+    !*padding-left: 18px;*!
+}*/
 
-details[open] > div {
+/*
+details[open] > div, details[open] {
     animation-name: slideDown;
-    animation-duration: 200ms;
-    /*animation-timing-function:cubic-bezier(0, 0, 1, 0);*/
-    /*overflow:hidden;*/
-    /*padding-left: 18px;*/
-}
+    animation-duration: 400ms;
+    !*animation-timing-function:cubic-bezier(0, 0, 1, 0);*!
+    !*overflow:hidden;*!
+    !*padding-left: 18px;*!
+}*/
