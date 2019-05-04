@@ -116,11 +116,10 @@ sub setBG_byRND
 end sub
 rem=======================================================================================
 sub setPoints_byRND
-&apos;	dim i as integer
-&apos;	for i=1 to 44 step 9
-&apos;		array_of_fields(i).value = 0.68 + rnd()*0.04
-&apos;		array_of_fields(i+1).value = 6.8 + rnd()*0.4
-&apos;	next i	
+	for j=0 to 2
+			oDialogG23.Model.getByName(&quot;NumericField&quot; + j + 0).value = 0.68 + rnd()*0.04
+			oDialogG23.Model.getByName(&quot;NumericField&quot; + j + 1).value = ((68 + rnd()*4)\1)/10
+	next j
 end sub
 rem=======================================================================================
 sub makeProtRus

@@ -43,22 +43,5 @@ Sub at6130_Dialog_Show
    oDialog6130.Execute()
 End Sub
 &apos;-----------------------------------------
-sub showLines()
-	msgbox oDialog6130.Model.getByName(&quot;TextField1&quot;).Text
-end sub
-&apos;-----------------------------------------
-Sub SearchCalc()
-   util = createUnoService(&quot;org.universolibre.EasyDev&quot;)
-   opt = createUnoStruct(&quot;org.universolibre.EasyDev.SearchReplace&quot;)
-   
-   doc = ThisComponent
-   sheet = doc.getCurrentController().getActiveSheet()
-   opt.Doc = sheet
-   opt.Search = &quot;searchstring&quot;
-   opt.First = True
-   
-   found = util.search(opt)
-   util.msgbox(found.AbsoluteName)
-   util.selectRange(doc, found)
-End Sub
+
 </script:module>

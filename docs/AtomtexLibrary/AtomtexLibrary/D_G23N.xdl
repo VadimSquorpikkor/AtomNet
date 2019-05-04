@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
-<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_G23N" dlg:left="9" dlg:top="4" dlg:width="341" dlg:height="223" dlg:closeable="true" dlg:moveable="true">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_G23N" dlg:left="9" dlg:top="4" dlg:width="367" dlg:height="223" dlg:closeable="true" dlg:moveable="true">
  <dlg:bulletinboard>
   <dlg:text dlg:id="Label2" dlg:tab-index="1" dlg:left="15" dlg:top="55" dlg:width="32" dlg:height="10" dlg:value="0,7 мкЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label3" dlg:tab-index="3" dlg:left="19" dlg:top="66" dlg:width="26" dlg:height="10" dlg:value="7 мкЗв/ч" dlg:align="right"/>
@@ -13,7 +13,7 @@
   <dlg:text dlg:id="Label7" dlg:tab-index="12" dlg:left="17" dlg:top="107" dlg:width="28" dlg:height="10" dlg:value="70 мЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label8" dlg:tab-index="14" dlg:left="22" dlg:top="116" dlg:width="25" dlg:height="10" dlg:value="0,7 Зв/ч" dlg:align="right"/>
   <dlg:datefield dlg:id="DateField1" dlg:tab-index="15" dlg:left="136" dlg:top="8" dlg:width="52" dlg:height="12" dlg:spin="true" dlg:dropdown="true"/>
-  <dlg:button dlg:id="CommandButton2" dlg:tab-index="16" dlg:left="299" dlg:top="4" dlg:width="40" dlg:height="10" dlg:value="Закрыть">
+  <dlg:button dlg:id="CommandButton2" dlg:tab-index="16" dlg:left="325" dlg:top="3" dlg:width="40" dlg:height="10" dlg:value="Закрыть">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.closedialog?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton3" dlg:tab-index="18" dlg:left="25" dlg:top="149" dlg:width="51" dlg:height="11" dlg:value="Вставить">
@@ -42,7 +42,7 @@
   <dlg:button dlg:id="CommandButton5" dlg:tab-index="56" dlg:left="182" dlg:top="149" dlg:width="54" dlg:height="11" dlg:value="Вставить">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.getSingleColumn_3?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:img dlg:id="ImageControl1" dlg:tab-index="57" dlg:left="250" dlg:top="28" dlg:width="86" dlg:height="109" dlg:src="file:///C:/Users/(USER)/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/g23.png"/>
+  <dlg:img dlg:id="ImageControl1" dlg:tab-index="57" dlg:left="250" dlg:top="73" dlg:width="114" dlg:height="91" dlg:src="file:///C:/Users/(USER)/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/g23.png"/>
   <dlg:radiogroup>
    <dlg:radio dlg:id="OptionButton1" dlg:tab-index="58" dlg:left="6" dlg:top="191" dlg:width="38" dlg:height="10" dlg:value="БДКГ-22"/>
    <dlg:radio dlg:id="OptionButton2" dlg:tab-index="59" dlg:left="6" dlg:top="202" dlg:width="38" dlg:height="10" dlg:value="БДКГ-23"/>
@@ -101,6 +101,9 @@
   <dlg:text dlg:id="Label31" dlg:tab-index="76" dlg:left="171" dlg:top="36" dlg:width="11" dlg:height="10" dlg:value="№" dlg:align="right"/>
   <dlg:button dlg:id="CommandButton8" dlg:tab-index="77" dlg:left="78" dlg:top="8" dlg:width="35" dlg:height="9" dlg:value="Random">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.setBG_byRND?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="CommandButton9" dlg:tab-index="78" dlg:left="252" dlg:top="27" dlg:width="33" dlg:height="26" dlg:value="RND">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.setPoints_byRND?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>
