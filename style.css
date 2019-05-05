@@ -1,5 +1,26 @@
 /*todo Переписать CSS*/
 
+input[type="text"], input[type="date"] {
+    font-family: "Trebuchet MS", sans-serif;
+    border: 0;
+    border-radius: 6px;
+    box-shadow: inset 5px 10px 5px -9px rgba(0,0,0,0.55);
+    -moz-box-shadow: inset 10px 10px 3px -7px rgba(0,0,0,0.55);
+    padding-left: 8px;
+    padding-right: 8px;
+    /*background-color: #dddddd;*/
+}
+
+input[type="button"] {
+
+}
+input[type="button"]:hover {
+
+}
+input[type="button"]:active {
+
+}
+
 img {
 
     display: block;
@@ -17,157 +38,16 @@ img {
     display: none;
     position: fixed;
     margin-top: 5px;
-    transition-property: display;
-    transition-duration: 2s;
+
 }
 
 .header_div:hover #main_menu, #main_menu:hover {
-    transition: all .5s ease;
+    /*transition: all .5s ease;*/
     display: block;
+/*    transition-property: all;
+    transition-duration: 2s;*/
 }
 
-/*region NEW DROP DOWN---------------------------------------*/
-.dropdown {
-    background-color: #333;
-    border-radius: 20px;
-    padding: 0 20px;
-    margin: 0;
-    box-shadow: 2px 3px 7px 2px rgba(0, 0, 0, 0.75);
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-    transition-timing-function: ease-out;
-}
-
-.dropdown > ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
-
-/*todo а эти два селектора не одно и тоже?*/
-.dropdown > ul > li > a, .dropbtn {
-    display: block;
-    color: white;
-    padding: 16px 16px;
-    text-decoration: none;
-    margin: 0;
-}
-
-.dropdown > ul > li:hover > .dropbtn {
-    background-color: antiquewhite;
-    color: #555555;
-    display: block;
-    border-radius: 0;
-    padding: 16px 16px;
-    width: 150px;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-}
-
-.dropdown-content .dropbtn {
-    text-indent: 0;
-
-}
-
-.dropdown-content ul, .dropdown-content li {
-    padding-left: 0;
-    list-style-type: none;
-}
-
-.dropdown-content > a:hover {
-    font-size: 14px;
-    background-color: orange;
-    color: black;
-    display: inline-block;
-    border-radius: 0;
-    padding: 5px 16px;
-    width: 350px;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-}
-
-.dropdown-content > ul > li:hover .dropbtn {
-    background-color: orange;
-    border-radius: 0;
-}
-
-/*+меню в меню*/
-.dropdown-content a, .dropdown-content > ul > li > a, .dropdown-content .dropbtn {
-    font-size: 14px;
-    color: black;
-    padding: 5px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    margin: 0;
-    width: 350px;
-
-    background-color: antiquewhite;
-}
-
-.dropdown {
-    position: relative;
-}
-
-/*+меню в меню*/
-.dropdown-content, .dropdown-content > ul > li > .dropdown-content {
-    display: none;
-}
-
-.dropdown-content > ul > li > .dropdown-content {
-    box-shadow: -3px 3px 5px 0 rgba(0, 0, 0, 0.75);
-}
-
-/*todo объединить со следующим селектором*/
-.dropdown-content > ul > li:hover > .dropdown-content {
-    position: absolute;
-    top: 0;
-    left: 230px;
-    display: block;
-    height: 100%;
-    background-color: antiquewhite;
-    min-width: 160px;
-    text-indent: 0;
-    padding: 0;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-}
-
-/*+меню в меню*/
-.dropdown > ul > li:hover > .dropdown-content {
-    position: absolute;
-    top: 0;
-    left: 180px;
-    display: block;
-    height: 100%;
-
-    background-color: antiquewhite;
-    min-width: 160px;
-    text-indent: 0;
-
-    padding: 0;
-    margin: 0;
-
-    transition-property: background-color, color;
-    transition-duration: 500ms;
-}
-
-.inside_shadow {
-    box-shadow: inset 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
-    border-radius: 5px;
-    padding: 5px;
-}
-
-/*endregion*/
 
 /*region INDEX 3------------------------------------*/
 /*------------------INDEX 3---------------------*/
@@ -392,8 +272,8 @@ p {
     text-indent: 0;
     border-radius: 20px;
 
-    box-shadow: none;
-    /*box-shadow: 3px 3px 11px 1px rgba(0, 0, 0, 0.43);*/
+    /*box-shadow: none;*/
+    box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
 }
 
 .yellow_back p {
@@ -446,18 +326,36 @@ a:hover {
     /*margin: 0 -4px;*/
 }
 
-/*a:hover {
-    !*color:orangered;*!
-    font-size: 18px;
-    font-family: sans-serif;
 
-    color: white;
+a[href$='.ods']{
+    background: url(imgs/file_types/ods.png) no-repeat left center;
+}
+a[href$='.odt']{
+    background: url(imgs/file_types/odt.png) no-repeat left center;
+}
+a[href$='.docx'], a[href$='.doc']{
+    background: url(imgs/file_types/doc.png) no-repeat left center;
+}
+a[href$='.xlsx'], a[href$='.xls']{
+    background: url(imgs/file_types/xls.png) no-repeat left center;
+}
+a[href$='.pdf']{
+    background: url(imgs/file_types/pdf.png) no-repeat left center;
+}
+a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'] {
+    background-size:  20px;
+    padding-left: 25px;
+}
+a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover{
+    padding-left: 25px;
     background-color: darkorange;
-    !*color:#bd7400;*!
-    border-radius: 10px;
-    text-decoration: none;
-    padding: 0 5px 1px 5px; !*t r b l*!
-}*/
+}
+
+table a[href$='.ods']:hover, table a[href$='.odt']:hover, table a[href$='.docx']:hover, table a[href$='.xlsx']:hover, table a[href$='.pdf']:hover, table a[href$='.doc']:hover{
+    padding-left: 22px;
+    background-color: white;
+}
+
 
 summary {
     cursor: pointer;
@@ -474,14 +372,8 @@ summary {
 
 .red_light:hover {
     background-color: #4CAF50;
-    /*	color: #ff3200;
-        text-shadow: 0 0 15px #ff7900, 0 0 15px #ff7900, 0 0 15px #ff7900;*/
-}
 
-/*details {
-	!*display: inline;*!
-	box-shadow: gray;
-}*/
+}
 
 ol > li > div {
     border-radius: 20px 0 20px 0;
@@ -695,6 +587,7 @@ h3 {
 
 .spoiler_menu a:hover {
     color: black;
+    background-color: darkorange;
 }
 
 .spoiler_menu li div {
