@@ -19,8 +19,10 @@ input[type="text"]:hover, input[type="date"]:hover {
 
 input[type="button"] {
     box-shadow:inset 0px 0px 3px 1px #111111;
-    background:linear-gradient(to bottom, #dfffb5 5%, #f5c98c 100%);
-    background-color:#dfffb5;
+    /*background:linear-gradient(to bottom, #dfffb5 5%, #f5c98c 100%);*/
+    /*background:linear-gradient(to bottom, #5bff5e 5%, #23f51a 100%);*/
+    background:#f59708;
+    /*background-color:#dfffb5;*/
     border-radius:8px;
     /*border:1px solid #18ab29;*/
     display:inline-block;
@@ -31,7 +33,8 @@ input[type="button"] {
     text-shadow:0px 3px 2px #000000;
 }
 input[type="button"]:hover {
-    background:linear-gradient(to bottom, #dfffb5 5%, #f5591e 100%);
+    background:linear-gradient(to bottom, #f4ff3a 5%, #f5a208 100%);
+    /*background: #f4f515;*/
 }
 input[type="button"]:active {
 
@@ -358,11 +361,14 @@ a[href$='.xlsx'], a[href$='.xls']{
 a[href$='.pdf']{
     background: url(imgs/file_types/pdf.png) no-repeat left center;
 }
-a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'] {
+a[href$='.rar']{
+    background: url(imgs/file_types/rar.png) no-repeat left center;
+}
+a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'] {
     background-size:  20px;
     padding-left: 25px;
 }
-a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover{
+a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover{
     padding-left: 25px;
     background-color: darkorange;
 }
