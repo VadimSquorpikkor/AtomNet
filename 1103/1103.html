@@ -7,20 +7,18 @@
     <script type="text/javascript" src="script_r.js"></script>
     <script type="text/javascript" src="../activity.js"></script>
     <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 </head>
 
 <body>
 
 
-
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button" style="float: left">
-    <ul>
-        <a href="../menu/index.html">Главная</a>
-        <li>ДКР-АТ1103М</li>
-    </ul>
+           id="menu_button">
+    <a href="../menu/index.html">Главная</a>
+    <a href="">ДКР-АТ1103М</a>
 
     <div w3-include-html="menu.html" class="spoiler_menu" id="main_menu"></div>
     <script>
@@ -92,12 +90,12 @@
         </li>
 
         <!--<div class="yellow_back">-->
-            <form class="yellow_back">
-                <i>Мало статистики, поэтому форма пока считает примерно</i><br><br>
-                U(mV) <input id="b" type="text" value="2.68" title="channel">
-                <input type="button" value="Расчитать" onclick="get_sm()">
-                Номинал (MОм): <input id="res_sm" type="text" title="res">
-            </form>
+        <form class="yellow_back">
+            <i>Мало статистики, поэтому форма пока считает примерно</i><br><br>
+            U(mV) <input id="b" type="text" value="2.68" title="channel">
+            <input type="button" value="Расчитать" onclick="get_sm()">
+            Номинал (MОм): <input id="res_sm" type="text" title="res">
+        </form>
         <!--</div>-->
         <br>
 
@@ -149,11 +147,6 @@
     </ol>
 
 
-</div>
-
-<div class="footer_div">
-    <a class="white_font" href="../menu/index.html">Содержание </a>
-    / ДКР-АТ1103М
 </div>
 
 
