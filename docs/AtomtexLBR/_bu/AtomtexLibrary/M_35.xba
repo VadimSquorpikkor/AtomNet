@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_35" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim oDialog35 as object
+dim oDateFieldModel as object
+&apos;dim sertFolderPath as string = &quot;file:///d:\sert_template\&quot;
+
+rem-----------------------------------------
+Sub bdkg35_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialog35 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_35 )
+   
+   oDateFieldModel = oDialog35.Model.getByName(&quot;DateField1&quot;)
+   
+  oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+  oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
+   
+  Dim nCount As Integer
+  Dim sItems As Variant
+  REM get control
+  oComboBox = oDialog35.getControl(&quot;ComboBox1&quot;)
+  REM first remove all old items from the list
+  nCount = oComboBox.getItemCount()
+  oComboBox.removeItems( 0, nCount )
+  REM add new items to the list
+  sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+  oComboBox.addItems( sItems, 0 )
+   
+     oNumericFieldModel = oDialog35.Model.getByName(&quot;NumericField1&quot;)
+     oNumericFieldModel.DECIMALACCURACY = 2
+   
+   oDialogMain.endexecute()   
+   oDialog35.Execute()
+   
+End Sub
+&apos;--------------------------------------------------------------------	
+  Function GetSelectedItem( oComboBoxModel As Object ) As String
+      GetSelectedItem = oComboBoxModel.Text
+  End Function	
+&apos;--------------------------------------------------------------------	
+sub comboChanged
+	oNumericFieldModel = oDialog35.Model.getByName(&quot;NumericField1&quot;)
+	dim num as string
+	oComboBox = oDialog35.getControl(&quot;ComboBox1&quot;)
+	num = oComboBox.text
+	select case num
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
+	end select	
+end sub
+
+rem------------------------------------------------------------------
+Dim bg_1 as double
+Dim bg_2 as double
+Dim bg_3 as double
+Dim bg_4 as double
+Dim bg_5 as double
+Dim dr_1 as double
+Dim dr_2 as double
+Dim dr_3 as double
+Dim dr_4 as double
+Dim dr_5 as double
+
+Dim bg_6 as double
+Dim bg_7 as double
+Dim bg_8 as double
+Dim bg_9 as double
+Dim bg_10 as double
+Dim dr_6 as double
+Dim dr_7 as double
+Dim dr_8 as double
+Dim dr_9 as double
+Dim dr_10 as double
+
+Dim bg_11 as double
+Dim bg_12 as double
+Dim bg_13 as double
+Dim bg_14 as double
+Dim bg_15 as double
+Dim dr_11 as double
+Dim dr_12 as double
+Dim dr_13 as double
+Dim dr_14 as double
+Dim dr_15 as double
+
+Dim bg_16 as double
+Dim bg_17 as double
+Dim bg_18 as double
+Dim bg_19 as double
+Dim bg_20 as double
+Dim dr_16 as double
+Dim dr_17 as double
+Dim dr_18 as double
+Dim dr_19 as double
+Dim dr_20 as double
+
+Dim bg_average_1 as double
+Dim dr_average_1 as double
+
+Dim bg_average_2 as double
+Dim dr_average_2 as double
+
+Dim bg_average_3 as double
+Dim dr_average_3 as double
+
+Dim bg_average_4 as double
+Dim dr_average_4 as double
+
+Dim rasch_znach_chuvstv_1 as double
+Dim absolut_pogresh_1 as double
+
+Dim rasch_znach_chuvstv_2 as double
+Dim absolut_pogresh_2 as double
+
+Dim rasch_znach_chuvstv_3 as double
+Dim absolut_pogresh_3 as double
+
+Dim rasch_znach_chuvstv_4 as double
+Dim absolut_pogresh_4 as double
+
+Dim activity as double
+&apos;------------------------------------------------------------
+Sub getAllTextField
+rem----------BD 1-----------
+    bg_1 = oDialog35.Model.getByName(&quot;NumericField2&quot;).Value
+    bg_2 = oDialog35.Model.getByName(&quot;NumericField3&quot;).Value
+    bg_3 = oDialog35.Model.getByName(&quot;NumericField4&quot;).Value
+    bg_4 = oDialog35.Model.getByName(&quot;NumericField5&quot;).Value
+    bg_5 = oDialog35.Model.getByName(&quot;NumericField6&quot;).Value
+    dr_1 = oDialog35.Model.getByName(&quot;NumericField7&quot;).Value
+    dr_2 = oDialog35.Model.getByName(&quot;NumericField8&quot;).Value
+    dr_3 = oDialog35.Model.getByName(&quot;NumericField9&quot;).Value
+    dr_4 = oDialog35.Model.getByName(&quot;NumericField10&quot;).Value
+    dr_5 = oDialog35.Model.getByName(&quot;NumericField11&quot;).Value
+rem----------BD 2-----------
+    bg_6 = oDialog35.Model.getByName(&quot;NumericField12&quot;).Value
+    bg_7 = oDialog35.Model.getByName(&quot;NumericField13&quot;).Value
+    bg_8 = oDialog35.Model.getByName(&quot;NumericField14&quot;).Value
+    bg_9 = oDialog35.Model.getByName(&quot;NumericField15&quot;).Value
+    bg_10 = oDialog35.Model.getByName(&quot;NumericField16&quot;).Value
+    dr_6 = oDialog35.Model.getByName(&quot;NumericField17&quot;).Value
+    dr_7 = oDialog35.Model.getByName(&quot;NumericField18&quot;).Value
+    dr_8 = oDialog35.Model.getByName(&quot;NumericField19&quot;).Value
+    dr_9 = oDialog35.Model.getByName(&quot;NumericField20&quot;).Value
+    dr_10 = oDialog35.Model.getByName(&quot;NumericField21&quot;).Value
+rem----------BD 3-----------
+    bg_11 = oDialog35.Model.getByName(&quot;NumericField22&quot;).Value
+    bg_12 = oDialog35.Model.getByName(&quot;NumericField23&quot;).Value
+    bg_13 = oDialog35.Model.getByName(&quot;NumericField24&quot;).Value
+    bg_14 = oDialog35.Model.getByName(&quot;NumericField25&quot;).Value
+    bg_15 = oDialog35.Model.getByName(&quot;NumericField26&quot;).Value
+    dr_11 = oDialog35.Model.getByName(&quot;NumericField27&quot;).Value
+    dr_12 = oDialog35.Model.getByName(&quot;NumericField28&quot;).Value
+    dr_13 = oDialog35.Model.getByName(&quot;NumericField29&quot;).Value
+    dr_14 = oDialog35.Model.getByName(&quot;NumericField30&quot;).Value
+    dr_15 = oDialog35.Model.getByName(&quot;NumericField31&quot;).Value
+rem----------BD 4-----------
+    bg_16 = oDialog35.Model.getByName(&quot;NumericField32&quot;).Value
+    bg_17 = oDialog35.Model.getByName(&quot;NumericField33&quot;).Value
+    bg_18 = oDialog35.Model.getByName(&quot;NumericField34&quot;).Value
+    bg_19 = oDialog35.Model.getByName(&quot;NumericField35&quot;).Value
+    bg_20 = oDialog35.Model.getByName(&quot;NumericField36&quot;).Value
+    dr_16 = oDialog35.Model.getByName(&quot;NumericField37&quot;).Value
+    dr_17 = oDialog35.Model.getByName(&quot;NumericField38&quot;).Value
+    dr_18 = oDialog35.Model.getByName(&quot;NumericField39&quot;).Value
+    dr_19 = oDialog35.Model.getByName(&quot;NumericField40&quot;).Value
+    dr_20 = oDialog35.Model.getByName(&quot;NumericField41&quot;).Value
+    
+    activity = oDialog35.Model.getByName(&quot;NumericField1&quot;).Value
+End Sub
+&apos;------------------------------------------------------------
+Function average (dr1 as double, dr2 as double, dr3 as double, dr4 as double, dr5 as double)
+    average = (dr1 + dr2 + dr3 + dr4 + dr5)/5
+End Function
+&apos;------------------------------------------------------------
+sub makeProtocol
+    MyFormat = &quot;0.00&quot;
+
+    getAllTextField()
+    bg_average_1 = average(bg_1, bg_2, bg_3, bg_4, bg_5)
+    dr_average_1 = average(dr_1, dr_2, dr_3, dr_4, dr_5)
+    
+    bg_average_2 = average(bg_6, bg_7, bg_8, bg_9, bg_10)
+    dr_average_2 = average(dr_6, dr_7, dr_8, dr_9, dr_10)
+    
+    bg_average_3 = average(bg_11, bg_12, bg_13, bg_14, bg_15)
+    dr_average_3 = average(dr_11, dr_12, dr_13, dr_14, dr_15)
+    
+    bg_average_4 = average(bg_16, bg_17, bg_18, bg_19, bg_20)
+    dr_average_4 = average(dr_16, dr_17, dr_18, dr_19, dr_20)
+    
+    rasch_znach_chuvstv_1 = (dr_average_1 - bg_average_1)/activity
+    absolut_pogresh_1 = 55 - rasch_znach_chuvstv_1
+    
+    rasch_znach_chuvstv_2 = (dr_average_2 - bg_average_2)/activity
+    absolut_pogresh_2 = 55 - rasch_znach_chuvstv_2
+    
+    rasch_znach_chuvstv_3 = (dr_average_3 - bg_average_3)/activity
+    absolut_pogresh_3 = 55 - rasch_znach_chuvstv_3
+    
+    rasch_znach_chuvstv_4 = (dr_average_4 - bg_average_4)/activity
+    absolut_pogresh_4 = 55 - rasch_znach_chuvstv_4
+    &apos;msgBox absolut_pogresh
+    
+   
+    OpenTemplate(sertPath &amp; &quot;template_bdkg35_protocol.odt&quot;)
+    findAndRename(&quot;$activity$&quot;, Format(activity, MyFormat)
+    
+    findAndRename(&quot;$bg1$&quot;, bg_1)
+    findAndRename(&quot;$bg2$&quot;, bg_2)
+    findAndRename(&quot;$bg3$&quot;, bg_3)
+    findAndRename(&quot;$bg4$&quot;, bg_4)
+    findAndRename(&quot;$bg5$&quot;, bg_5)
+    findAndRename(&quot;$dr1$&quot;, dr_1)
+    findAndRename(&quot;$dr2$&quot;, dr_2)
+    findAndRename(&quot;$dr3$&quot;, dr_3)
+    findAndRename(&quot;$dr4$&quot;, dr_4)
+    findAndRename(&quot;$dr5$&quot;, dr_5)
+    findAndRename(&quot;$bg_avg1$&quot;, bg_average_1)
+    findAndRename(&quot;$dr_avg1$&quot;, dr_average_1)
+    findAndRename(&quot;$rasch1$&quot;, Format(rasch_znach_chuvstv_1, MyFormat) )
+    findAndRename(&quot;$pogr1$&quot;, Format(absolut_pogresh_1, MyFormat ) )
+        
+    findAndRename(&quot;$bg6$&quot;, bg_6)
+    findAndRename(&quot;$bg7$&quot;, bg_7)
+    findAndRename(&quot;$bg8$&quot;, bg_8)
+    findAndRename(&quot;$bg9$&quot;, bg_9)
+    findAndRename(&quot;$bg10$&quot;, bg_10)
+    findAndRename(&quot;$dr6$&quot;, dr_6)
+    findAndRename(&quot;$dr7$&quot;, dr_7)
+    findAndRename(&quot;$dr8$&quot;, dr_8)
+    findAndRename(&quot;$dr9$&quot;, dr_9)
+    findAndRename(&quot;$dr10$&quot;, dr_10)
+    findAndRename(&quot;$bg_avg2$&quot;, bg_average_2)
+    findAndRename(&quot;$dr_avg2$&quot;, dr_average_2)
+    findAndRename(&quot;$rasch2$&quot;, Format(rasch_znach_chuvstv_2, MyFormat) )
+    findAndRename(&quot;$pogr2$&quot;, Format(absolut_pogresh_2, MyFormat ) )
+    
+    findAndRename(&quot;$bg11$&quot;, bg_11)
+    findAndRename(&quot;$bg12$&quot;, bg_12)
+    findAndRename(&quot;$bg13$&quot;, bg_13)
+    findAndRename(&quot;$bg14$&quot;, bg_14)
+    findAndRename(&quot;$bg15$&quot;, bg_15)
+    findAndRename(&quot;$dr11$&quot;, dr_11)
+    findAndRename(&quot;$dr12$&quot;, dr_12)
+    findAndRename(&quot;$dr13$&quot;, dr_13)
+    findAndRename(&quot;$dr14$&quot;, dr_14)
+    findAndRename(&quot;$dr15$&quot;, dr_15)
+    findAndRename(&quot;$bg_avg3$&quot;, bg_average_3)
+    findAndRename(&quot;$dr_avg3$&quot;, dr_average_3)
+    findAndRename(&quot;$rasch3$&quot;, Format(rasch_znach_chuvstv_3, MyFormat) )
+    findAndRename(&quot;$pogr3$&quot;, Format(absolut_pogresh_3, MyFormat ) )    
+        
+    findAndRename(&quot;$bg16$&quot;, bg_16)
+    findAndRename(&quot;$bg17$&quot;, bg_17)
+    findAndRename(&quot;$bg18$&quot;, bg_18)
+    findAndRename(&quot;$bg19$&quot;, bg_19)
+    findAndRename(&quot;$bg20$&quot;, bg_20)
+    findAndRename(&quot;$dr16$&quot;, dr_16)
+    findAndRename(&quot;$dr17$&quot;, dr_17)
+    findAndRename(&quot;$dr18$&quot;, dr_18)
+    findAndRename(&quot;$dr19$&quot;, dr_19)
+    findAndRename(&quot;$dr20$&quot;, dr_20)
+    findAndRename(&quot;$bg_avg4$&quot;, bg_average_4)
+    findAndRename(&quot;$dr_avg4$&quot;, dr_average_4)
+    findAndRename(&quot;$rasch4$&quot;, Format(rasch_znach_chuvstv_4, MyFormat) )
+    findAndRename(&quot;$pogr4$&quot;, Format(absolut_pogresh_4, MyFormat ) )        
+        
+    findAndRename(&quot;$srk_num$&quot;, oDialog35.Model.getByName(&quot;TextField1&quot;).Text)
+    findAndRename(&quot;$bd1_num$&quot;, oDialog35.Model.getByName(&quot;TextField2&quot;).Text)    
+    findAndRename(&quot;$bd2_num$&quot;, oDialog35.Model.getByName(&quot;TextField3&quot;).Text)    
+    findAndRename(&quot;$bd3_num$&quot;, oDialog35.Model.getByName(&quot;TextField4&quot;).Text)    
+    findAndRename(&quot;$bd4_num$&quot;, oDialog35.Model.getByName(&quot;TextField5&quot;).Text)  
+    
+    findAndRename(&quot;$num_ist$&quot;, oDialog35.Model.getByName(&quot;ComboBox1&quot;).Text)   
+
+end sub
+
+</script:module>
