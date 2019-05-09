@@ -41,9 +41,7 @@
     <ul>
         <li>Собрать по схеме</li>
 
-        <!--<img src="../imgs/bdkg27/01.jpg" width="400">-->
         <img src="../imgs/bdkg27/schema.jpg" width="800" style="text-indent: 0">
-        <!--<img src="../imgs/bdkg27/02.jpg" width="800">-->
         <li>Вот так это будет выглядеть:</li>
         <img src="../imgs/bdkg27/03.jpg" width="600">
 
@@ -58,95 +56,121 @@
             Зв/ч (примерно 4В).
             Для расчета значений напряжений вписать полученное напряжение в поле ввода и нажать "Рассчитать"
         </li>
-        <div>
-            <form class="yellow_back_centered">
-                <input id="u_7sv" type="text" value="4" title="" onchange="calc_bdkg27()">
-                <input type="button" value="Расчитать" onclick="calc_bdkg27()">
-            </form>
-        </div>
+    </ul>
 
-        <h3>Точка 1</h3>
-        <div>
-            <li>Выставить сопротивление 10<sup>9</sup></li>
-            <img src="../imgs/bdkg27/r1.jpg" width="400">
-            <li>Выставить на блоке питание следующее напряжение:</li>
-            <form class="yellow_back_centered">
-                <input id="u_10" type="text" value="0" title="">
-            </form>
+    <form class="green_back">
+        <input id="u_7sv" type="text" value="4" title="" onchange="calc_bdkg27()">
+        <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+    </form>
 
-            <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
-            <li>Записать данные в таблицу</li>
+    <ul>
+        <li>Дальше идет расчет четырех точек</li>
+    </ul>
 
-            <form class="yellow_back_centered"><br>
-                <input id="a1" type="text" value="10" title=""><br>
-                <input id="a2" type="text" value="10" title=""><br>
-                <input id="a3" type="text" value="10" title="">
-            </form>
-        </div>
+    <hr>
 
-        <h3>Точка 2</h3>
-        <div>
-            Выставить сопротивление 10<sup>8</sup>
-            <img src="../imgs/bdkg27/r2.jpg" width="370">
-        </div>
-        <div>
-            Выставить на блоке питание следующее напряжение:
-            <form class="yellow_back_centered">
-                <input id="u_70" type="text" value="0" title="">
-            </form>
+    <h3>Точка 1</h3>
+    <ul>
+        <li>Выставить сопротивление 10<sup>9</sup></li>
+        <img src="../imgs/bdkg27/r1.jpg" width="400">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
 
-            Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
+    <form class="green_back">
+        <input id="u_10" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
+        <li>Записать данные в таблицу</li>
+    </ul>
+
+    <form class="green_back"><br>
+        <input id="a1" type="text" value="10" title=""><br>
+        <input id="a2" type="text" value="10" title=""><br>
+        <input id="a3" type="text" value="10" title="">
+    </form>
+
+    <hr>
+
+    <h3>Точка 2</h3>
+
+    <ul>
+        <li>Выставить сопротивление 10<sup>8</sup></li>
+        <img src="../imgs/bdkg27/r2.jpg" width="370">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+
+    <form class="green_back">
+        <input id="u_70" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
             Записать данные в таблицу:
+        </li>
+    </ul>
+    <form class="green_back">
+        <input id="b1" type="text" value="70" title=""><br>
+        <input id="b2" type="text" value="70" title=""><br>
+        <input id="b3" type="text" value="70" title="">
+    </form>
 
-            <form class="yellow_back_centered">
-                <input id="b1" type="text" value="70" title=""><br>
-                <input id="b2" type="text" value="70" title=""><br>
-                <input id="b3" type="text" value="70" title="">
-            </form>
-            <br>
-        </div>
+    <hr>
 
-        <h3>Точка 3</h3>
-        <div>Выставить сопротивление 10<sup>7</sup>
-            <img src="../imgs/bdkg27/r3.jpg" width="370">
-        </div>
-        <div>Выставить на блоке питание следующее напряжение:
-            <form class="yellow_back_centered">
-                <input id="u_700" type="text" value="0" title="">
-            </form>
+    <h3>Точка 3</h3>
+    <ul>
+        <li>Выставить сопротивление 10<sup>7</sup></li>
+        <img src="../imgs/bdkg27/r3.jpg" width="370">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+    <form class="green_back">
+        <input id="u_700" type="text" value="0" title="">
+    </form>
 
-            Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
             Записать данные в таблицу
+        </li>
+    </ul>
+    <form class="green_back">
+        <input id="c1" type="text" value="700" title=""><br>
+        <input id="c2" type="text" value="700" title=""><br>
+        <input id="c3" type="text" value="700" title="">
+    </form>
 
-            <form class="yellow_back_centered">
-                <input id="c1" type="text" value="700" title=""><br>
-                <input id="c2" type="text" value="700" title=""><br>
-                <input id="c3" type="text" value="700" title="">
-            </form>
-        </div>
-        <br>
+    <hr>
 
-        <h3>Точка 4</h3>
+    <h3>Точка 4</h3>
+
+    <ul>
         <li>Выставить сопротивление 10<sup>7</sup></li>
         <img src="../imgs/bdkg27/r3.jpg" width="400">
         <li>Выставить на блоке питание следующее напряжение:</li>
-        <div>
-            <form class="yellow_back_center">
-                <input id="u_3000" type="text" value="0" title="">
-            </form>
-        </div>
-
-        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
-        <li>Записать данные в таблицу, нажать "Рассчитать"</li>
-
-        <form class="yellow_back_centered">
-            <input id="d1" type="text" value="3000" title=""><br>
-            <input id="d2" type="text" value="3000" title=""><br>
-            <input id="d3" type="text" value="3000" title=""><br>
-            <input type="button" value="Расчитать" onclick="calc_bdkg27()">
-        </form>
-
     </ul>
+    <form class="green_back">
+        <input id="u_3000" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
+        <li>Записать данные в таблицу^</li>
+    </ul>
+    <form class="green_back">
+        <input id="d1" type="text" value="3000" title=""><br>
+        <input id="d2" type="text" value="3000" title=""><br>
+        <input id="d3" type="text" value="3000" title=""><br>
+    </form>
+
+    <hr>
+
+    <ul>
+        <li>Все данные по точкам получены, нажать <input type="button" value="Расчитать" onclick="calc_bdkg27()"></li>
+    </ul>
+
+<!--    <form class="green_back">
+        <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+    </form>-->
 
 
     <table id="table1" style="max-width: 600px; margin: 5px auto">
@@ -187,32 +211,52 @@
         </tr>
 
     </table>
+    <ul>
+        <li>Расчитанную таблицу скопопастить в протокол поверки</li>
+        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму. Нажать "Расчитать".
+    </ul>
+    <form class="green_back">
+        <input id="g1" type="text" value="0.07" title=""><br>
+        <input id="g2" type="text" value="0.7" title=""><br>
+        <input id="g3" type="text" value="7" title=""><br>
+        <input id="g4" type="text" value="10" title=""><br>
+        <input type="button" value="Расчитать" onclick="calc_bdkg27_pogr()">
+    </form>
 
+    <ul>
+        <li>Расчитанную таблицу тоже скопопастить в протокол поверки (в протоколе поверки 2-е таблицы для расчета)</li>
+    </ul>
 
     <table id="table2" style="max-width: 500px; margin: 5px auto">
         <tr>
-            <th>H0</th>
-            <th>R</th>
-            <th>H</th>
-            <th>U</th>
+            <th>Hпр</th>
+            <th>Hпр-Hф</th>
+            <th>отн</th>
+            <th>дов</th>
         </tr>
         <tr>
-            <td>10</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
         </tr>
         <tr>
-            <td>70</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
         </tr>
         <tr>
-            <td>700</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
         </tr>
     </table>
 
@@ -225,9 +269,9 @@
 
     <ul class="attention">
         <li>В протоколе номером является номер ионизационной камеры, на неё же клеится поверочная наклейка!!!</li>
-        <li>Данные для другой таблицы протокола поверки беруться из журнала градуировки.
+        <!--<li>Данные для другой таблицы протокола поверки беруться из журнала градуировки.
             Рассчитать погрешности через файл Excel
-        </li>
+        </li>-->
     </ul>
 
 </div>

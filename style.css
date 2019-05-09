@@ -3,6 +3,7 @@
 #menu_button {
     background-color: #44c767;
     /*background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);*/
+    /*border-style: groove;*/
     border-radius: 30px;
     border-width: 4px;
     /*border: 1px solid #18ab29;*/
@@ -20,6 +21,7 @@
     box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.53);
 
 }
+
 #menu_button :hover {
     background: linear-gradient(to bottom, #f4ff3a 5%, #f5a208 100%);
 }
@@ -48,7 +50,9 @@ input[type="button"] {
     background: #f59708;
     /*background-color:#dfffb5;*/
     border-radius: 8px;
+    /*border-style: none;*/
     /*border:1px solid #18ab29;*/
+    border-width: 0;
     display: inline-block;
     cursor: pointer;
     color: #ffffff;
@@ -63,7 +67,7 @@ input[type="button"]:hover {
 }
 
 input[type="button"]:active {
-
+    background: linear-gradient(to bottom, #ffa86c 5%, #dc0d0c 100%);
 }
 
 img {
@@ -94,7 +98,8 @@ img {
     width: 100%;
     box-shadow: none;
 }
-.header_div_2>a, .header_div_2>a:hover {
+
+.header_div_2 > a, .header_div_2 > a:hover {
     /*text-shadow: 0 1px 0 #2f6627;*/
     border-radius: 0 0 0 0;
     font-family: Arial, sans-serif;
@@ -111,25 +116,22 @@ img {
     text-indent: 0;
     margin-left: 0;
 }
-.header_div_2>a:last-of-type {
+
+.header_div_2 > a:last-of-type {
     border-radius: 0 15px 15px 0;
 }
-.header_div_2>a:first-of-type {
+
+.header_div_2 > a:first-of-type {
     border-radius: 15px 0 0 15px;
 }
-.header_div_2>a:hover {
+
+.header_div_2 > a:hover {
     /*background-color: limegreen;*/
     background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);
 }
 
 /*region INDEX 3------------------------------------*/
 /*------------------INDEX 3---------------------*/
-
-hr {
-    color: white;
-    clear: left;
-    margin-top: 100px;
-}
 
 .menu_block {
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
@@ -349,6 +351,22 @@ p {
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
 }
 
+.green_back {
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: limegreen;
+    text-indent: 0;
+    text-align: center;
+    border-radius: 0;
+    box-shadow: 2px 5px 3px 0 rgba(0, 0, 0, 0.43);
+    width: 200px;
+}
+
+.green_back input {
+    width: 100px;
+    margin: 5px;
+}
+
 .activity_calculator {
     background-color: antiquewhite;
     border-radius: 20px;
@@ -399,14 +417,7 @@ p {
     padding: 100px;
 }
 
-h1 {
-    padding: 50px;
-    text-align: justify;
-    text-indent: 40px;
-    font-size: 24px;
-    font-family: sans-serif
 
-}
 
 a {
     color: darkorange;
@@ -575,10 +586,12 @@ th {
 }
 
 h1 {
+    font-size: 24px;
+    text-indent: 40px;
     font-family: "Times New Roman", monospace;
     /*padding-right: 10px;*/
     color: #bd7400;
-    font-size: 1.5em;
+    /*font-size: 1.5em;*/
     font-style: oblique;
     text-align: center;
     padding-bottom: 0;

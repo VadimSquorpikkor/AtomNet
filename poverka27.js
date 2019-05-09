@@ -24,6 +24,7 @@ let percent2;
 let percent3;
 let percent4;
 
+
 /*
 function settable_old() {
     var t = document.getElementById("table1");
@@ -61,17 +62,15 @@ function set_all_var() {
     d1 = parseFloat(document.getElementById('d1').value);
     d2 = parseFloat(document.getElementById('d2').value);
     d3 = parseFloat(document.getElementById('d3').value);
-
-
 }
 
 function average_of_3(first, second, third) {
     return (first + second + third) / 3;
 }
 
-function okmessage() {
+/*function okmessage() {
     document.getElementById('percent1').value = "working!!!";
-}
+}*/
 
 function calc_bdkg27() {
     set_all_var();
@@ -131,4 +130,56 @@ function settable() {
         tds[4].innerHTML = percent4.toFixed(2);
     }
 
+}
+
+function otnos_pogresh(point, izmer) {
+    return (izmer-point)/point*100;
+}
+
+function dov_granica(pogresh) {
+    return 1.1*Math.sqrt(4*4 + pogresh*pogresh);
+}
+
+function calc_bdkg27_pogr() {
+    let g1 = parseFloat(document.getElementById('g1').value);
+    let g2 = parseFloat(document.getElementById('g2').value);
+    let g3 = parseFloat(document.getElementById('g3').value);
+    let g4 = parseFloat(document.getElementById('g4').value);
+
+    let t = document.getElementById("table2");
+    let trs = t.getElementsByTagName("tr");
+    let tmp;
+
+    let tds = trs[1].getElementsByTagName("td");
+    {
+        tds[0].innerHTML = g1;
+        tds[1].innerHTML = g1;
+        tmp = otnos_pogresh(0.07, g1);
+        tds[2].innerHTML = tmp;
+        tds[3].innerHTML = dov_granica(tmp);
+    }
+    tds = trs[2].getElementsByTagName("td");
+    {
+        tds[0].innerHTML = g2;
+        tds[1].innerHTML = g2;
+        tmp = otnos_pogresh(0.7, g2);
+        tds[2].innerHTML = tmp;
+        tds[3].innerHTML = dov_granica(tmp);
+    }
+    tds = trs[3].getElementsByTagName("td");
+    {
+        tds[0].innerHTML = g3;
+        tds[1].innerHTML = g3;
+        tmp = otnos_pogresh(7, g3);
+        tds[2].innerHTML = tmp;
+        tds[3].innerHTML = dov_granica(tmp);
+    }
+    tds = trs[4].getElementsByTagName("td");
+    {
+        tds[0].innerHTML = g4;
+        tds[1].innerHTML = g4;
+        tmp = otnos_pogresh(10, g4);
+        tds[2].innerHTML = tmp;
+        tds[3].innerHTML = dov_granica(tmp);
+    }
 }
