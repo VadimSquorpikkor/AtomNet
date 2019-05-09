@@ -120,8 +120,6 @@ img {
 .header_div_2>a:hover {
     /*background-color: limegreen;*/
     background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);
-
-
 }
 
 /*region INDEX 3------------------------------------*/
@@ -508,18 +506,6 @@ summary div ul {
     color: orangered;
     font-size: 20px;
     font-family: sans-serif
-}
-
-/*USELESS: нужно будет добавить в div'ы color:white и можно будет удалять  */
-.white_font {
-    color: white;
-    text-decoration: none;
-}
-
-a:hover.white_font {
-    color: red;
-    text-decoration: none;
-    background-color: orange;
 }
 
 .right_align {
