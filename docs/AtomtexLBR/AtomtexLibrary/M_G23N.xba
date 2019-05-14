@@ -133,7 +133,7 @@ rem=============================================================================
 sub makeDoc(path as String)
 	MyFormat = &quot;0.00&quot;
 	background = oDialogG23.Model.getByName(&quot;NumericField1&quot;).value / 1000
-	print background
+	rem print background
 	getVarsFromFields
     OpenTemplate(sertPath &amp; path)
 	dim i as integer
@@ -141,7 +141,7 @@ sub makeDoc(path as String)
 	for i=0 to 2
 		rem добавление значения фона к первым трем точкам:
 		findAndRename(&quot;$k&quot;+i+0+&quot;$&quot;, Format(array_of_vars(i,0) + background, MyFormat)
-			print (array_of_vars(1,0) + background)
+		rem	print (array_of_vars(1,0) + background)
 		findAndRename(&quot;$k&quot;+i+1+&quot;$&quot;, Format(array_of_vars(i,1) + background, MyFormat)
 		findAndRename(&quot;$k&quot;+i+2+&quot;$&quot;, Format(array_of_vars(i,2) + background, MyFormat)
 		rem если бдкг-23 или 23/1, то добавляем ещё точку, если бдкг-22 -- ставим тире
