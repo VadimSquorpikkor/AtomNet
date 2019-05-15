@@ -77,6 +77,10 @@ img {
     text-indent: 0;
 }
 
+.line_through {
+    text-decoration: line-through;
+}
+
 .butt_in_text {
     float: left;
 }
