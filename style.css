@@ -79,6 +79,8 @@ img {
 
 .line_through {
     text-decoration: line-through;
+    color: gray;
+
 }
 
 .butt_in_text {
