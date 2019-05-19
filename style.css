@@ -228,7 +228,7 @@ body {
 
 body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 20px 15px 20px;
+    padding: 30px 15px 20px;
     margin: 10px 20px 20px;
 }
 
@@ -721,4 +721,45 @@ details[open] > div, details[open] {
     !*animation-timing-function:cubic-bezier(0, 0, 1, 0);*!
     !*overflow:hidden;*!
     !*padding-left: 18px;*!
+}*/
+
+/*
+@media (min-width: 950px) {
+    #main_menu {
+        font-size: 16px;
+        max-width: 100%;
+        display: block;
+        float: left;
+        position: static;
+    }
+
+    .header_div_2 {
+        padding-left: 10px;
+        text-indent: 0;
+        font-size: 14px;
+        padding-right: 10px;
+        float: left;
+        width: 400px;
+        position: static;
+        background-color: rgba(0,0,0,1);
+        box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+
+    }
+    .header_div_2 div, .header_div_2 a {
+        !*padding-left: 10px;*!
+        text-indent: 0;
+        margin-left: 0;
+    }
+    #menu_button {
+        display: none;
+    }
+
+    .spoiler_menu a:hover {
+        width: 95%;
+    }
+
+    body > div {
+        margin-left: 450px;
+    }
+
 }*/
