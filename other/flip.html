@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <META charset="utf8">
+    <title>Flip. Как шить</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Flip. Как шить</a>
+
+    <div w3-include-html="menu.html" class="spoiler_menu" id="main_menu"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div>
+    <h1>Flip. Как шить</h1>
+
+    <ul>
+        <li>Запустить Flip</li>
+        <li>Выбрать тип контроллера &mdash; AT89C51ED2 (как правило уже выбран), нажать соединение, выбрав RS232</li>
+        <img src="../imgs/flip/03.jpg" width="800">
+        <li>Выбрать порт, скорость 115200, нажать "Connect"</li>
+        <img src="../imgs/flip/02.jpg" width="250">
+        <li>Выбрать прошивку, нажать "Run"</li>
+        <img src="../imgs/flip/05.jpg" width="650">
+        <li>После окончания процесса прошивки снять флаг "BLJB", поставить "Level 2"</li>
+        <img src="../imgs/flip/06.jpg" width="650">
+        <li>БД прошит. Нажать "Disconnect"</li>
+
+    </ul>
+    <p>Если при попытке подключения выскакивает такое окно:
+        <img src="../imgs/flip/01.jpg">
+        это значит, что в системе </p>
+</div>
+
+</body>
+</html>
