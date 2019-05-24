@@ -146,6 +146,7 @@ img {
     padding: 0;
     float: left;
     line-height: 0.9;
+    visibility: visible;
 }
 
 .menu_block:hover {
@@ -229,7 +230,8 @@ body {
 body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
-    margin: 10px 20px 20px;
+    margin: 10px auto 20px;
+    max-width: 1000px;
 }
 
 ol > li > div, .nice_details{
@@ -302,7 +304,8 @@ p {
 }
 
 .yellow_back_centered {
-    margin: 5px 0 5px;
+    /*margin: 5px 0 5px;*/
+    margin: 5px auto 5px;
     font-size: 14px;
     background-color: antiquewhite;
     /*padding: 30px;*/
@@ -345,10 +348,11 @@ p {
 }
 
 .activity_calculator {
+    max-width: 1000px;
     background-color: antiquewhite;
     border-radius: 20px;
-    margin: 0 0 5px;
-    padding: 5px 5px 5px 15%;
+    margin: 0 auto 5px;
+    padding: 5px 10px 5px 10px;
     text-align: center;
 }
 
@@ -590,7 +594,7 @@ h3 {
 }*/
 
 .spoiler_menu {
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     color: white;
     border-radius: 15px;
