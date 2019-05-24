@@ -141,7 +141,7 @@ img {
     height: 156px; /*171*/
     width: 144px;
     text-indent: 0;
-    margin: 5px;
+    margin: 3px;
     /*margin: 9px 0 0 9px;*/
     padding: 0;
     float: left;
@@ -231,7 +231,7 @@ body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
-    max-width: 1000px;
+    max-width: 1200px;
 }
 
 ol > li > div, .nice_details{
@@ -321,7 +321,8 @@ p {
     margin: 10px 0 10px;
     padding: 10px 20px;
     font-size: 14px;
-    background-color: khaki;
+    /*background-color: khaki;*/
+    background-color: antiquewhite;
     align-self: center;
 
     text-indent: 0;
@@ -348,7 +349,7 @@ p {
 }
 
 .activity_calculator {
-    max-width: 1000px;
+    max-width: 1200px;
     background-color: antiquewhite;
     border-radius: 20px;
     margin: 0 auto 5px;

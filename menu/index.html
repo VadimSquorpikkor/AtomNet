@@ -24,14 +24,18 @@
 
 <div class="activity_calculator">
     <div style="float: left">
-        <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1" type="date"><br>
-        <span>Сегодня</span><input id="date_now" title="Дата, на момент которой необходимо рассчитать активность" name="r1" type="date"><br>
-        <span>A<sub>0</sub>(кБк)</span><input id="act0" title="Активность источника в день поверки" name="act0" type="text" size="5">
+        <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
+                                        type="date"><br>
+        <span>Сегодня</span><input id="date_now" title="Дата, на момент которой необходимо рассчитать активность"
+                                   name="r1" type="date"><br>
+        <span>A<sub>0</sub>(кБк)</span><input id="act0" title="Активность источника в день поверки" name="act0"
+                                              type="text" size="5">
     </div>
     <div>
         <input id="t2_1" title="" name="r1" type="radio"> <span><sup>109</sup>Cd (461.4 дней)</span><br>
         <input id="t2_2" title="" name="r1" type="radio"> <span><sup>137</sup>Cs (11019.6 дней)</span><br>
-        <input id="t2_3" title="Если нужно рассчитать какойто другой элемент" name="r1" type="radio"> <span>Custom</span>
+        <input id="t2_3" title="Если нужно рассчитать какойто другой элемент" name="r1" type="radio">
+        <span>Custom</span>
         <input id="custom" title="Период полураспада в днях" name="r1" type="text" value="451" size="5"><br>
         <input title="" name="r1" type="button" value="Рассчитать" onclick="calc_act()">
         <input id="act_main" title="" name="r1" type="text" size="5"><span>(кБк)</span>
@@ -46,62 +50,62 @@
 
 
 <div style="visibility: hidden; padding: 0">
-<div class="menu_block">
-    <a href="../srk2327/2327.html">
-        <img src="../imgs/main_menu/2327.jpg"/>
-        <div class="menu_block_top_red"><span>СРК</span></div>
-        <div class="menu_block_footer"><span>Инструкции, схемы.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../bdkg02/bdkg02.html">
-        <img src="../imgs/bdkg02/cond.jpg"/>
-        <div class="menu_block_top_green"><span>БДКГ-02</span></div>
-        <div class="menu_block_footer"><span>Настройка новых. Ремонт.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../bdkg22/bdkg22.html">
-        <img src="../imgs/main_menu/bdkg222.jpg"/>
-        <div class="menu_block_top_green"><span>БДКГ-22/23</span></div>
-        <div class="menu_block_footer"><span>Прошивка и настройка.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../1103/1103.html">
-        <img src="../imgs/main_menu/1103.png"/>
-        <div class="menu_block_top_blue"><span>ДКР-1103</span></div>
-        <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../1123/1121.html">
-        <img src="../imgs/main_menu/1121.png"/>
-        <div class="menu_block_top_blue"><span>ДКС-1121</span></div>
-        <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../1123/1123.html">
-        <img src="../imgs/main_menu/1121.png"/>
-        <div class="menu_block_top_blue"><span>ДКС-1123</span></div>
-        <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../other/signalizator.html">
-        <img src="../imgs/main_menu/sign.jpg"/>
-        <div class="menu_block_top_orange"><span>Сигнализатор</span></div>
-        <div class="menu_block_footer"><span>Прошивка.</span></div>
-    </a>
-</div>
-<div class="menu_block">
-    <a href="../sertif_prosh/sertificate.html">
-        <img src="../imgs/main_menu/sertificate.jpg"/>
-        <div class="menu_block_top_violet"><span>Документы</span></div>
-        <div class="menu_block_footer"><span>Протоколы и сертификаты</span></div>
-    </a>
-</div>
+    <div class="menu_block">
+        <a href="../srk2327/2327.html">
+            <img src="../imgs/main_menu/2327.jpg"/>
+            <div class="menu_block_top_red"><span>СРК</span></div>
+            <div class="menu_block_footer"><span>Инструкции, схемы.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../bdkg02/bdkg02.html">
+            <img src="../imgs/bdkg02/cond.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-02</span></div>
+            <div class="menu_block_footer"><span>Настройка новых. Ремонт.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../bdkg22/bdkg22.html">
+            <img src="../imgs/main_menu/bdkg222.jpg"/>
+            <div class="menu_block_top_green"><span>БДКГ-22/23</span></div>
+            <div class="menu_block_footer"><span>Прошивка и настройка.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../1103/1103.html">
+            <img src="../imgs/main_menu/1103.png"/>
+            <div class="menu_block_top_blue"><span>ДКР-1103</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../1123/1121.html">
+            <img src="../imgs/main_menu/1121.png"/>
+            <div class="menu_block_top_blue"><span>ДКС-1121</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../1123/1123.html">
+            <img src="../imgs/main_menu/1121.png"/>
+            <div class="menu_block_top_blue"><span>ДКС-1123</span></div>
+            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../other/signalizator.html">
+            <img src="../imgs/main_menu/sign.jpg"/>
+            <div class="menu_block_top_orange"><span>Сигнализатор</span></div>
+            <div class="menu_block_footer"><span>Прошивка.</span></div>
+        </a>
+    </div>
+    <div class="menu_block">
+        <a href="../sertif_prosh/sertificate.html">
+            <img src="../imgs/main_menu/sertificate.jpg"/>
+            <div class="menu_block_top_violet"><span>Документы</span></div>
+            <div class="menu_block_footer"><span>Протоколы и сертификаты</span></div>
+        </a>
+    </div>
 </div>
 
 </body>
