@@ -231,7 +231,7 @@ body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
-    max-width: 1200px;
+    /*max-width: 1200px;*/
 }
 
 ol > li > div, .nice_details{
@@ -349,7 +349,7 @@ p {
 }
 
 .activity_calculator {
-    max-width: 1200px;
+    /*max-width: 1200px;*/
     background-color: antiquewhite;
     border-radius: 20px;
     margin: 0 auto 5px;
@@ -686,6 +686,7 @@ h3 {
     background-color: #444444;
     border-radius: 10px;
     width: 400px;
+    z-index: 3;
     /*height: 200px;*/
     -moz-transition-property: all;
     -moz-transition-duration: 1s;
@@ -710,6 +711,47 @@ h3 {
         transform: translateY(0);
     }
 }
+
+.left_side_menu {
+    margin-left: auto;
+    float: left;
+    width: 450px;
+    margin-top: 2px;
+    height: 100%;
+    display: none;
+    padding: 0;
+    border-radius: 25px;
+
+}
+@media (min-width: 1200px){
+    body>div {
+        margin-left: 460px;
+    }
+    .div_for_menu_block {
+        margin-left: auto;
+    }
+    .left_side_menu {
+        display: block;
+    }
+    .header_div_2 {
+        margin-left: 470px;
+        /*position: static;*/
+        position: absolute;
+        /*margin-left: 0;
+        padding-left: 30px;
+        padding-top: 0;
+        margin-top: -10px;*/
+    }
+    #menu_button {
+        display: none;
+    }
+
+
+}
+
+
+
+
 
 /*.spoiler_menu details[open] > ul {
     animation-name: slideDown;
