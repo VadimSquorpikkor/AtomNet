@@ -11,6 +11,8 @@
 
 <body>
 
+
+
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
            id="menu_button">
@@ -24,10 +26,19 @@
     </script>
 </div>
 
+<div class="left_side_menu">
+
+    <div w3-include-html="menu2.html" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+<script>
+    includeHTML();
+</script>
+</div>
+
 <div>
 
     <h1>БДКГ-22/23</h1>
-    <div class="yellow_back">
+    <div class="left_align">
         <details>
             <summary>Полезные ссылки</summary>
             <a href="bdkg22prosh.html">Прошивка</a><br>
@@ -149,6 +160,8 @@
     </div>
 
 </div>
+
+
 
 </body>
 </html>
