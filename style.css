@@ -241,6 +241,7 @@ ol > li > div, .nice_details{
     margin: 5px 10px 10px;
     border-radius: 20px 0 20px 0;
 }
+
 body>div>ul>li>div {
 
     text-indent: 0;
@@ -559,28 +560,16 @@ th {
     float: left;
 }
 
-h1 {
-    font-size: 24px;
-    text-indent: 40px;
-    font-family: "Times New Roman", monospace;
-    /*padding-right: 10px;*/
+
+h1, h3 {
+    font-size: 26px;
     color: #bd7400;
-    /*font-size: 1.5em;*/
-    font-style: oblique;
     text-align: center;
-    padding-bottom: 0;
-    padding-top: 0;
+    font-family: Garamond, sans-serif;
 }
 
 h3 {
-    font-family: "Times New Roman", monospace;
-    /*padding-right: 10px;*/
-    color: #bd7400;
-    font-size: 1.5em;
-    font-style: oblique;
-    text-align: center;
-    padding-bottom: 0;
-    padding-top: 0;
+font-size: 22px;
 }
 
 .float_clear {
@@ -609,7 +598,6 @@ h3 {
     padding-left: 70px;
     margin: 0;
     position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
-
 }
 
 .spoiler_menu summary {
