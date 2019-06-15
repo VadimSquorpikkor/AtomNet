@@ -97,7 +97,7 @@ img {
     padding-bottom: 5px;
     background-color: rgba(0, 0, 0, 0);
     position: fixed;
-    width: 100%;
+    /*width: 100%;*/
     box-shadow: none;
 }
 
@@ -714,6 +714,7 @@ font-size: 22px;
 @media (min-width: 1300px){
     body>div {
         margin-left: 460px;
+        margin-right: 5px;
     }
     .div_for_menu_block {
         margin-left: auto;
@@ -722,6 +723,7 @@ font-size: 22px;
         display: block;
     }
     .header_div_2 {
+        /*padding-left: 470px;*/
         margin-left: 470px;
         /*position: static;*/
         position: absolute;
