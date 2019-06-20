@@ -386,6 +386,11 @@ p {
     color: #ff3333;
 }
 
+.attention_big {
+    color: #ff3333;
+    font-size: 20px;
+}
+
 .mark_green {
     background-color: greenyellow;
 }
