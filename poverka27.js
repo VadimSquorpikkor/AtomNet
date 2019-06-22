@@ -155,31 +155,31 @@ function calc_bdkg27_pogr() {
         tds[0].innerHTML = g1;
         tds[1].innerHTML = g1;
         tmp = otnos_pogresh(0.07, g1);
-        tds[2].innerHTML = tmp;
-        tds[3].innerHTML = dov_granica(tmp);
+        tds[2].innerHTML = tmp.toFixed(2);
+        tds[3].innerHTML = dov_granica(tmp).toFixed(2);
     }
     tds = trs[2].getElementsByTagName("td");
     {
         tds[0].innerHTML = g2;
         tds[1].innerHTML = g2;
         tmp = otnos_pogresh(0.7, g2);
-        tds[2].innerHTML = tmp;
-        tds[3].innerHTML = dov_granica(tmp);
+        tds[2].innerHTML = tmp.toFixed(2);
+        tds[3].innerHTML = dov_granica(tmp).toFixed(2);
     }
     tds = trs[3].getElementsByTagName("td");
     {
         tds[0].innerHTML = g3;
         tds[1].innerHTML = g3;
         tmp = otnos_pogresh(7, g3);
-        tds[2].innerHTML = tmp;
-        tds[3].innerHTML = dov_granica(tmp);
+        tds[2].innerHTML = tmp.toFixed(2);
+        tds[3].innerHTML = dov_granica(tmp).toFixed(2);
     }
     tds = trs[4].getElementsByTagName("td");
     {
         tds[0].innerHTML = g4;
         tds[1].innerHTML = g4;
         tmp = otnos_pogresh(10, g4);
-        tds[2].innerHTML = tmp;
-        tds[3].innerHTML = dov_granica(tmp);
+        tds[2].innerHTML = tmp.toFixed(2);
+        tds[3].innerHTML = dov_granica(tmp).toFixed(2);
     }
 }

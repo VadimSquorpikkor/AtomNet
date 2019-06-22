@@ -239,7 +239,17 @@ ol > li > div, .nice_details{
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 10px 15px 10px;
     margin: 5px 10px 10px;
-    border-radius: 20px 0 20px 0;
+    /*border-radius: 20px 0 20px 0;*/
+    border-radius: 8px;
+}
+
+.small_nice_details{
+    text-indent: 0;
+    box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
+    padding: 3px 10px;
+    margin: 5px;
+    /*border-radius: 20px 0 20px 0;*/
+    border-radius: 8px;
 }
 
 body>div>ul>li>div {
@@ -471,7 +481,7 @@ summary {
     background-color: coral;
     border-radius: 10px;
     text-decoration: none;
-    padding: 0 5px 1px 0; /*t r b l*/
+    padding: 0 5px 1px 5px; /*t r b l*/
     margin-left: 10px;
     text-indent: 10px;
 }
@@ -480,6 +490,8 @@ summary {
     background-color: #4CAF50;
 
 }
+
+
 
 details details p {
     box-shadow: 3px 3px 4px gray;
@@ -570,13 +582,28 @@ h1, h3 {
     font-size: 26px;
     color: #bd7400;
     text-align: center;
-    font-family: Garamond, sans-serif;
+    font-family: "Book Antiqua", sans-serif;
+    text-transform: uppercase;
 }
 
 h3 {
 font-size: 22px;
+    text-transform: none;
+
 }
 
+@font-face {
+    font-family: 'MyGaramond';
+    src: url('GARA.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'MyBookman';
+    src: url('BookmanUralic.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'MyPalladio';
+    src: url('Palladio.otf')  format('truetype');
+}
 .float_clear {
     clear: left;
 }
