@@ -582,7 +582,7 @@ h1, h3 {
     font-size: 26px;
     color: #bd7400;
     text-align: center;
-    font-family: "Book Antiqua", sans-serif;
+    font-family: "Book Antiqua", "Garamond", "Traditional Arabic", "Times New Roman", sans-serif;
     text-transform: uppercase;
 }
 
