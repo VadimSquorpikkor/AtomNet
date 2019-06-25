@@ -328,7 +328,7 @@ p {
 
 }
 
-.yellow_back {
+.yellow_back, .yellow_back_small {
     margin: 10px 0 10px;
     padding: 10px 20px;
     font-size: 14px;
@@ -341,6 +341,9 @@ p {
 
     /*box-shadow: none;*/
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
+}
+.yellow_back_small {
+    padding: 1px 20px;
 }
 
 .green_back {

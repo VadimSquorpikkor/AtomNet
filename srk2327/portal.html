@@ -75,7 +75,7 @@
                         <li>Запустить программу <b>ChipProg USB</b></li>
                         <li>Вставить микросхему (Ключ вверху!)</li>
                         <li>Выбрать микросхему ST Microelectronics M27C512 (Select device)</li>
-                        <li>Выбрать прошивку <span class="attention">_Portal.hex</span> (23.10.2018)
+                        <li>Выбрать прошивку &mdash; <span class="attention">_Portal.hex</span> (18.06.2019)
                             <img src="../imgs/pu900/900.png" width="900">
                         <li>Device status: In socket. Ready</li>
                         <li>Выбрать Auto programming</li>
@@ -267,8 +267,8 @@
         <details>
             <summary>Настройка БДКГ-35</summary>
             <br>
-            Для работы в составе портального монитора, в БДКГ-35 необходиимо изменить (чего-то там), иначе работа
-            системы будет некорректной. (тут будет, как это всё сделать)
+            Для работы в составе портального монитора, в БДКГ-35 необходиимо изменить время усреднения на 0,33 сек, иначе работа
+            системы будет некорректной. Для этого:
             <ul>
                 <li>Подключить БДКГ-35 к компьютеру с помощью USB-адаптера. <span class="attention">Линия
                             обмена подключается крест-накрест &mdash; желтый провод подключается к зеленому,
@@ -279,6 +279,11 @@
                     блок, можно работать
                 </li>
                 <img src="../imgs/portal/g-11/02.jpg" width="450">
+                <li>Проверить, какое время записано в блок, можно командой: <span class="yellow_back_small">03 00 02 00 02</span>
+                <li>В ответе будет: <span class="yellow_back_small"><< 01 03 04 <span class="attention">01 04</span> 00 00 0c ba</span>
+                , где <span class="attention">01 04</span> &mdash; это время усреднения блока (260 ms). Чтобы поставить 330 ms, нужно:</li>
+                </li>набрать команду: <span class="yellow_back_small">06 00 02 01 4a</span>
+                <li>Проверить, в ответе должно быть: <span class="yellow_back_small"><< 01 03 04 <span class="attention">01 4a</span> 00 00 0c ba</span></li>
                 <li><span class="attention">Обязательно на каждый БД наклеить малярку с адресом, под которым блок будет
                     работать в собранной системе, а в зеленую папку записать внутренний номер и адрес каждого блока</span>
                 </li>
@@ -317,10 +322,10 @@
     <div class="nice_details">
         <details>
             <summary>АРГУС</summary>
-            <img src="../imgs/portal/argus/a1.jpg" width="900">
-            <img src="../imgs/portal/argus/a3.jpg" width="350">
-            <img src="../imgs/portal/argus/a4.jpg" width="350">
-            <img src="../imgs/portal/argus/a5.jpg" width="350">
+            <img src="../imgs/portal/argus/a1.jpg" width="1200">
+            <img src="../imgs/portal/argus/a3.jpg" width="450">
+            <img src="../imgs/portal/argus/a4.jpg" width="450">
+            <img src="../imgs/portal/argus/a5.jpg" width="450">
         </details>
     </div>
 
