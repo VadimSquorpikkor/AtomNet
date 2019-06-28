@@ -425,6 +425,7 @@ a {
     font-size: 18px;
     font-family: sans-serif;
     text-decoration: none;
+    padding: 4px;
 }
 
 a:hover {
