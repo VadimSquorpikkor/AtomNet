@@ -663,13 +663,17 @@ font-size: 22px;
     font-size: 15px;
     display: block;
     width: 350px;
-    margin: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    /*padding: 4px 0 4px;*/
+    /*margin: 4px;*/
     /*height: 22px;*/
     transition-property: all;
     transition-duration: 350ms;
 }
 
 .spoiler_menu a:hover {
+    padding-left: 18px;
     color: black;
     background-color: darkorange;
 }
