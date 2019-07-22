@@ -1,5 +1,5 @@
 function show_menu(){
-    let x = document.getElementById("main_menu");
+    let x = document.getElementById("menu");
     if (x.style.display === "") {
         x.style.display = "block";
     }

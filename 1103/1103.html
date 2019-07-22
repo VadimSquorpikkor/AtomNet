@@ -20,7 +20,7 @@
     <a href="../menu/index.html">Главная</a>
     <a href="">ДКР-АТ1103М</a>
 
-    <div w3-include-html="menu.html" class="spoiler_menu" id="main_menu"></div>
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
     <script>
         includeHTML();
     </script>
@@ -28,10 +28,9 @@
 
 <div class="left_side_menu">
 
-    <div w3-include-html="menu2.html" class="spoiler_menu"></div>
-    <!--<div w3-include-html="menu.html"></div>-->
+    <div id="menu_left" class="spoiler_menu"></div>
     <script>
-        includeHTML();
+        includeHTML(open);
     </script>
 </div>
 

@@ -751,8 +751,8 @@ font-size: 22px;
     border-radius: 25px;
 
 }
-/*todo когда заработает jquery -- разкоментить*/
-/*@media (min-width: 1300px){
+
+@media (min-width: 1300px){
     body>div {
         margin-left: 460px;
         margin-right: 5px;
@@ -764,21 +764,21 @@ font-size: 22px;
         display: block;
     }
     .header_div_2 {
-        !*padding-left: 470px;*!
+        /*padding-left: 470px;*/
         margin-left: 470px;
-        !*position: static;*!
+        /*position: static;*/
         position: absolute;
-        !*margin-left: 0;
+        /*margin-left: 0;
         padding-left: 30px;
         padding-top: 0;
-        margin-top: -10px;*!
+        margin-top: -10px;*/
     }
     #menu_button {
         display: none;
     }
 
 
-}*/
+}
 
 
 
@@ -804,7 +804,6 @@ details[open] > div, details[open] {
 /*
 @media (min-width: 950px) {
     #main_menu {
-        font-size: 16px;
         max-width: 100%;
         display: block;
         float: left;
