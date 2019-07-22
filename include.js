@@ -15,12 +15,12 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../srk2327/2327.html">Настройка СРК</a></li>' +
-        '        <li><a href="../srk2327/mrp.html">МРП (Пешеходный монитор)</a></li>' +
-        '        <li><a href="../srk2327/portal.html">Портальный монитор</a></li>' +
+        '        <li><a href="../srk2327/mrp.html">&bullet; МРП (Пешеходный монитор)</a></li>' +
+        '        <li><a href="../srk2327/portal.html">&bullet; Портальный монитор</a></li>' +
+        '        <li><a href="../srk2327/BR.html">&bullet; ДРГ. Блок регистрации</a></li>' +
         '        <li><a href="../srk2327/941adapter.html">Адаптер интерфейсный АИ-АТ941</a></li>' +
         '        <li><a href="../srk2327/942.html">Адаптер интерфейсный АИ-АТ942</a></li>' +
         '        <li><a href="../srk2327/943.html">Адаптер интерфейсный АИ-АТ943</a></li>' +
-        '        <li><a href="../srk2327/BR.html">Блок регистрации</a></li>' +
         '        <li><a href="../srk2327/p900.html">Пульт управления ПУ-АТ900</a></li>' +
         '        <li><a href="../srk2327/sark2mrp.html">SARK2 и МРП</a></li>' +
         '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
