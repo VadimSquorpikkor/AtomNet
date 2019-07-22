@@ -1,5 +1,5 @@
 function includeHTML(mode_1) {
-    let mode = 'open';
+    let mode;
     let id;
     if (mode_1 == open) {
         mode = 'open';
@@ -198,4 +198,3 @@ function includeHTML(mode_1) {
 document.getElementById(id).innerHTML = menu;
 
 }
-
