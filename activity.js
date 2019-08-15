@@ -105,6 +105,7 @@ function get_all() {
     get_act();
     get_all_activities();
     get_cd_1123();
+
 }
 
 function get_path() {
