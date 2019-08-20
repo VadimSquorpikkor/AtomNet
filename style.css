@@ -415,7 +415,7 @@ p {
 .big_one {
     color: orangered;
     font-size: 36px;
-    padding: 100px;
+    padding-left: 100px;
 }
 
 
