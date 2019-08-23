@@ -43,20 +43,32 @@
 
         <img src="../imgs/br/01.jpg" width="700"/>
 
+    <div class="yellow_back">
+        <span class="attention">
+            <ul>
+                <li>Устройства сигнализации в составе ДРГ прошиваются специальной ДРГ прошивкой: ___PPP11scr.A03</li>
+                <li>Пульт управления в составе ДРГ прошиваются специальной ДРГ прошивкой: __Pult900LSCR.hex</li>
+            </ul>
+        </span>
+    </div>
+
     <ul>
         <li><span class="attention">Батарейка не нужна</span></li>
         <li>Переставить перемычки </li>
 
     <img src="../imgs/br/6.png" width="300"/>
 
+        <li>Подсоединить <a href="../imgs/br/13.jpg">кабель</a> RS-232 к X8</li>
+
+        <img src="../imgs/br/05.jpg" width="700"/>
+
         <li>Подать питание 12V на "PU"</li>
-        <li>Программа "FlashMagic"</li>
+        <li>Запустить программу "FlashMagic"</li>
+        <li>Выбрать контроллер NXP LPC2387, частота 18,432 МГц</li>
+        <li>Прошивка: <span class="attention">URSCR.hex</span></li>
 
     <img src="../imgs/br/2.png" width="514"/>
 
-        <li>Подсоединить <a href="../imgs/br/13.jpg">кабель</a> к X8</li>
-
-        <img src="../imgs/br/05.jpg" width="700"/>
 
         <li><span class="attention">Чтобы пульт работал с БР, пульт должен быть прошит SCR пршивкой</span></li>
         <li><span class="attention">Выбрать тип блока (БДКГ-25, скорее всего)</span></li>
@@ -102,6 +114,8 @@
         <li><span class="attention">Если подключить блоки другими адресами, БР перезапишет адреса, какие ему (БР-у) нужны</span> </li>
         <li>Есть вариант "jumpers", т.е. управлять не програмно, а аппаратно, но Николаев говорит нет, ставить 2 из 3 (т.е. програмно)</li>
     </ul>
+
+
 
 </div>
 </body>
