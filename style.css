@@ -722,6 +722,11 @@ font-size: 22px;
 
 }
 
+figcaption {
+    text-align: center;
+    font-style: italic;
+}
+
 /*.spoiler_menu details {
     !*height: 100px;*!
     transition: all 0.3s;
@@ -776,6 +781,7 @@ font-size: 22px;
     #menu_button {
         display: none;
     }
+
 
 
 }

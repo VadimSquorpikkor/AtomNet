@@ -42,6 +42,7 @@ function includeHTML(mode_1) {
         '            <div>' +
         '                <ul>' +
         '                    <li><a href="../bdkg02/bdkg-02rem.html">РЕМОНТ</a></li>' +
+        '                    <li><a href="../bdkg02/bdkg-02_100-200.html">Как поменять напряжение 100 &rarr; 200 вольт</a></li>' +
         '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Как сделать калибровку по фону и снять' +
         '                        градуировочное число</a></li>' +
         '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
