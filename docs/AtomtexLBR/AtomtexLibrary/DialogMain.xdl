@@ -35,5 +35,8 @@
   <dlg:button dlg:id="CommandButton12" dlg:tab-index="10" dlg:left="21" dlg:top="39" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02 new">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02.G02_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
+  <dlg:button dlg:id="CommandButton2" dlg:tab-index="11" dlg:left="71" dlg:top="39" dlg:width="50" dlg:height="16" dlg:value="1117M">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.at1117m_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>

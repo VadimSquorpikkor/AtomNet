@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1117" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem=======================================================================================
+Sub at1117m_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
+	rem oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
+	rem oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	rem oDateFieldModel.Date = cDateToIso(Now)
+
+
+	oDialogMain.endexecute()   
+	oDialog1117.Execute()
+End Sub
+</script:module>
