@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_1117" dlg:left="28" dlg:top="24" dlg:width="263" dlg:height="221" dlg:closeable="true" dlg:moveable="true">
+ <dlg:bulletinboard>
+  <dlg:fixedline dlg:id="FixedLine1" dlg:tab-index="0" dlg:left="-1" dlg:top="184" dlg:width="266" dlg:height="8"/>
+  <dlg:checkbox dlg:id="CheckBox1" dlg:tab-index="2" dlg:left="67" dlg:top="6" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКН-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox2" dlg:tab-index="3" dlg:left="67" dlg:top="19" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКН-03" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox4" dlg:tab-index="4" dlg:left="5" dlg:top="59" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПБ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox5" dlg:tab-index="5" dlg:left="5" dlg:top="71" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПБ-02" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox6" dlg:tab-index="6" dlg:left="5" dlg:top="83" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПБ-03" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox7" dlg:tab-index="7" dlg:left="5" dlg:top="6" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПА-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox8" dlg:tab-index="8" dlg:left="5" dlg:top="19" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПА-02" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox9" dlg:tab-index="9" dlg:left="5" dlg:top="31" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПА-03" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox10" dlg:tab-index="10" dlg:left="67" dlg:top="59" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПС-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox11" dlg:tab-index="11" dlg:left="67" dlg:top="71" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДПС-02" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox3" dlg:tab-index="12" dlg:left="128" dlg:top="6" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox12" dlg:tab-index="13" dlg:left="128" dlg:top="19" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-04" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox13" dlg:tab-index="14" dlg:left="128" dlg:top="31" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox14" dlg:tab-index="15" dlg:left="128" dlg:top="43" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox15" dlg:tab-index="16" dlg:left="128" dlg:top="55" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox16" dlg:tab-index="17" dlg:left="128" dlg:top="67" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox17" dlg:tab-index="18" dlg:left="128" dlg:top="79" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:checkbox dlg:id="CheckBox18" dlg:tab-index="19" dlg:left="128" dlg:top="91" dlg:width="51" dlg:height="10" dlg:page="1" dlg:value="БДКГ-01" dlg:checked="false"/>
+  <dlg:button dlg:id="cmdPrev" dlg:tab-index="20" dlg:left="156" dlg:top="196" dlg:width="50" dlg:height="18" dlg:value="Назад">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.prev_step?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="cmdNext" dlg:tab-index="1" dlg:left="207" dlg:top="196" dlg:width="50" dlg:height="18" dlg:value="Далее">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.next_step?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:text dlg:id="Label1" dlg:tab-index="21" dlg:left="4" dlg:top="198" dlg:width="95" dlg:height="18" dlg:value="Label1"/>
+  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="22" dlg:left="205" dlg:top="29" dlg:width="25" dlg:height="14" dlg:page="2" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField2" dlg:tab-index="23" dlg:left="205" dlg:top="43" dlg:width="25" dlg:height="14" dlg:page="2" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField3" dlg:tab-index="24" dlg:left="205" dlg:top="57" dlg:width="25" dlg:height="14" dlg:page="2" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField4" dlg:tab-index="25" dlg:left="205" dlg:top="70" dlg:width="25" dlg:height="14" dlg:page="2" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField5" dlg:tab-index="22" dlg:left="205" dlg:top="29" dlg:width="25" dlg:height="14" dlg:page="3" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField6" dlg:tab-index="23" dlg:left="205" dlg:top="43" dlg:width="25" dlg:height="14" dlg:page="3" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField7" dlg:tab-index="24" dlg:left="205" dlg:top="57" dlg:width="25" dlg:height="14" dlg:page="3" dlg:value="1"/>
+  <dlg:numericfield dlg:id="NumericField8" dlg:tab-index="25" dlg:left="205" dlg:top="70" dlg:width="25" dlg:height="14" dlg:page="3" dlg:value="1"/>
+ </dlg:bulletinboard>
+</dlg:window>

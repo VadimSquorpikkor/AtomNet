@@ -6,17 +6,10 @@
 dim oDialogMain as object 
 &apos;dim sertPath as String
 global sertPath as String
-
-
+	
 rem-------------------------------------------------------------------------
 Sub MainDialog_Show
-	rem sertPath = &quot;file:///f:\sert_template\&quot;
-	dim user_name as String
-
-	rem Установить  	
-	user_name = &quot;Serikov_VA&quot;
-	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\sert_template\&quot;
-	
+	sertPath = &quot;file:///f:\sert_template\&quot;
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    oDialogMain.Execute()

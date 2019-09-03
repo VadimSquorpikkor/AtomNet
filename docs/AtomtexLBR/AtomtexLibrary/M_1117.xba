@@ -2,6 +2,9 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1117" script:language="StarBasic">REM  *****  BASIC  *****
 
+dim oDialog1117 as object
+Dim cmdNext As Object
+Dim cmdPrev As Object
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
@@ -9,9 +12,28 @@ Sub at1117m_Dialog_Show
 	rem oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
 	rem oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	rem oDateFieldModel.Date = cDateToIso(Now)
+	cmdPrev = oDialog1117.getControl(&quot;cmdPrev&quot;)
+	cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;)
 
-
-	oDialogMain.endexecute()   
+	oDialogMain.endexecute()  
+	
+	&apos;Because of Multi-page don&apos;t forget to manage Step :
+  	oDialog1117.Model.Step = 1	 
 	oDialog1117.Execute()
+  	&apos;oDialog1117.dispose()
+End Sub
+ 
+Sub next_step
+
+   cmdPrev.Model.Enabled = true &apos;Not cmdPrev.Model.Enabled
+   if oDialog1117.Model.Step = 2 then cmdNext.Model.Enabled = False
+   oDialog1117.Model.Step = oDialog1117.Model.Step + 1   
+   
+End Sub
+ 
+Sub prev_step
+   cmdNext.Model.Enabled = true
+	if oDialog1117.Model.Step = 2 then cmdPrev.Model.Enabled = False
+   oDialog1117.Model.Step = oDialog1117.Model.Step - 1 
 End Sub
 </script:module>
