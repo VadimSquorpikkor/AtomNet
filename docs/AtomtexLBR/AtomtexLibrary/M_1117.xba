@@ -6,17 +6,41 @@ dim oDialog1117 as object
 Dim cmdNext As Object
 Dim cmdPrev As Object
 
+dim NumField1, NumField2, NumField3, NumField4, NumField5, NumField6, NumField7, NumField8, NumField9 as object
+dim TextField1, TextField2, TextField3, TextField4, TextField5, TextField6, TextField7, TextField8, TextField9 as object  
 dim typeText as object
 dim bdTipeCount as integer
 
 dim arrayOfBdTypes(19) as String
-
+dim arrayOfMeas(19) as String
+dim arrayOfPoints(19) as Variant
+dim arrayOfPointsQuantity(19) as integer
+dim layoutStep as integer
 rem=======================================================================================
 Sub at1117m_Dialog_Show
-	
-	bdTipeCount = 19
+	layoutStep = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
+&apos;	NumField1 = oDialog1117.Model.getByName(&quot;NumericField1&quot;)
+&apos;	NumField2 = oDialog1117.Model.getByName(&quot;NumericField2&quot;)
+&apos;	NumField3 = oDialog1117.Model.getByName(&quot;NumericField3&quot;)
+&apos;	NumField4 = oDialog1117.Model.getByName(&quot;NumericField4&quot;)
+&apos;	NumField5 = oDialog1117.Model.getByName(&quot;NumericField5&quot;)
+&apos;	NumField6 = oDialog1117.Model.getByName(&quot;NumericField6&quot;)
+&apos;	NumField7 = oDialog1117.Model.getByName(&quot;NumericField7&quot;)
+&apos;	NumField8 = oDialog1117.Model.getByName(&quot;NumericField8&quot;)
+&apos;	NumField9 = oDialog1117.Model.getByName(&quot;NumericField9&quot;)
+&apos;	TextField1 = oDialog1117.Model.getByName(&quot;NumericField1&quot;)
+&apos;	TextField2 = oDialog1117.Model.getByName(&quot;NumericField2&quot;)
+&apos;	TextField3 = oDialog1117.Model.getByName(&quot;NumericField3&quot;)
+&apos;	TextField4 = oDialog1117.Model.getByName(&quot;NumericField4&quot;)
+&apos;	TextField5 = oDialog1117.Model.getByName(&quot;NumericField5&quot;)
+&apos;	TextField6 = oDialog1117.Model.getByName(&quot;NumericField6&quot;)
+&apos;	TextField7 = oDialog1117.Model.getByName(&quot;NumericField7&quot;)
+&apos;	TextField8 = oDialog1117.Model.getByName(&quot;NumericField8&quot;)
+&apos;	TextField9 = oDialog1117.Model.getByName(&quot;NumericField9&quot;)	
+	bdTipeCount = 19
+	initialize
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	rem oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
 	rem oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
@@ -34,44 +58,65 @@ Sub at1117m_Dialog_Show
 	oDialog1117.Execute()
   	&apos;oDialog1117.dispose()
 End Sub
-
+rem=======================================================================================
 sub nextBd
-	
+	if layoutStep&lt;=bdTipeCount then 
+		makeLayout(layoutStep)
+		layoutStep = layoutStep + 1
+	end if
 end sub
-
+rem=======================================================================================
 sub initialize
+	addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8)
+	addDevice(1, &quot;БДКГ-03&quot;, &quot;Гр/ч&quot;, 5)
 rem -------------ТИПЫ БЛОКОВ------------------------
-	arrayOfBdTypes(0) = &quot;БДКГ-01&quot;
-	arrayOfBdTypes(1) = &quot;БДКГ-03&quot;
-	arrayOfBdTypes(2) = &quot;БДКГ-04&quot;
-	arrayOfBdTypes(3) = &quot;БДКГ-05&quot;
-	arrayOfBdTypes(4) = &quot;БДКГ-11&quot;
-	arrayOfBdTypes(5) = &quot;БДКГ-17&quot;
-	arrayOfBdTypes(6) = &quot;БДКГ-24&quot;
-	arrayOfBdTypes(7) = &quot;БДКГ-30&quot;
-	arrayOfBdTypes(8) = &quot;БДКГ-32&quot;
-	
-	arrayOfBdTypes(9) = &quot;БДКН-01&quot;
-	arrayOfBdTypes(10) = &quot;БДКН-03&quot;
-	
-	arrayOfBdTypes(11) = &quot;БДПА-01&quot;
-	arrayOfBdTypes(12) = &quot;БДПА-02&quot;
-	arrayOfBdTypes(13) = &quot;БДПБ-01&quot;
-	arrayOfBdTypes(14) = &quot;БДПБ-02&quot;
-	
-	arrayOfBdTypes(15) = &quot;БОИ-1&quot;
-	arrayOfBdTypes(16) = &quot;БОИ-2&quot;
-	arrayOfBdTypes(17) = &quot;БОИ-4&quot;
-	
-	arrayOfBdTypes(18) = &quot;БДКР-01&quot;
-	arrayOfBdTypes(19) = &quot;БДПС-02&quot;
+&apos;	arrayOfBdTypes(0) = &quot;БДКГ-01&quot;
+&apos;	arrayOfBdTypes(1) = &quot;БДКГ-03&quot;
+&apos;	arrayOfBdTypes(2) = &quot;БДКГ-04&quot;
+&apos;	arrayOfBdTypes(3) = &quot;БДКГ-05&quot;
+&apos;	arrayOfBdTypes(4) = &quot;БДКГ-11&quot;
+&apos;	arrayOfBdTypes(5) = &quot;БДКГ-17&quot;
+&apos;	arrayOfBdTypes(6) = &quot;БДКГ-24&quot;
+&apos;	arrayOfBdTypes(7) = &quot;БДКГ-30&quot;
+&apos;	arrayOfBdTypes(8) = &quot;БДКГ-32&quot;
+&apos;	
+&apos;	arrayOfBdTypes(9) = &quot;БДКН-01&quot;
+&apos;	arrayOfBdTypes(10) = &quot;БДКН-03&quot;
+&apos;	
+&apos;	arrayOfBdTypes(11) = &quot;БДПА-01&quot;
+&apos;	arrayOfBdTypes(12) = &quot;БДПА-02&quot;
+&apos;	arrayOfBdTypes(13) = &quot;БДПБ-01&quot;
+&apos;	arrayOfBdTypes(14) = &quot;БДПБ-02&quot;
+&apos;	
+&apos;	arrayOfBdTypes(15) = &quot;БОИ-1&quot;
+&apos;	arrayOfBdTypes(16) = &quot;БОИ-2&quot;
+&apos;	arrayOfBdTypes(17) = &quot;БОИ-4&quot;
+&apos;	
+&apos;	arrayOfBdTypes(18) = &quot;БДКР-01&quot;
+&apos;	arrayOfBdTypes(19) = &quot;БДПС-02&quot;
 end sub
- 
+rem======================================================================================= 
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(count as integer) 
-	
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	last = arrayOfPointsQuantity(count)
+	for i=1 to last
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = i rem для проверки
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = arrayOfMeas(count)
+		if oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true then
+			msgbox &quot;true&quot;
+		end if
+	next i	 	
 end function
- 
+rem======================================================================================= 
+sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer)
+	arrayOfBdTypes(i) = title
+	arrayOfMeas(i) = meas
+	arrayOfPointsQuantity(i) = pointQuantity
+	
+end sub
+rem======================================================================================= 
 Sub next_step
 
 &apos;   cmdPrev.Model.Enabled = true &apos;Not cmdPrev.Model.Enabled
@@ -80,7 +125,7 @@ Sub next_step
 
 
 End Sub
- 
+rem======================================================================================= 
 Sub prev_step
    cmdNext.Model.Enabled = true
 	if oDialog1117.Model.Step = 2 then cmdPrev.Model.Enabled = False

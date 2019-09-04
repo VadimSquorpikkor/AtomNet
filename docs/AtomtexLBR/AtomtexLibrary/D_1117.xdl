@@ -22,11 +22,11 @@
   <dlg:checkbox dlg:id="CheckBox15" dlg:tab-index="14" dlg:left="82" dlg:top="57" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКГ-11" dlg:checked="false"/>
   <dlg:checkbox dlg:id="CheckBox16" dlg:tab-index="15" dlg:left="82" dlg:top="70" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКГ-17" dlg:checked="false"/>
   <dlg:checkbox dlg:id="CheckBox18" dlg:tab-index="17" dlg:left="82" dlg:top="94" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКГ-30" dlg:checked="false"/>
-  <dlg:button dlg:id="cmdPrev" dlg:tab-index="18" dlg:left="156" dlg:top="189" dlg:width="50" dlg:height="18" dlg:value="Назад">
+  <dlg:button dlg:id="cmdPrev" dlg:tab-index="18" dlg:left="15" dlg:top="192" dlg:width="50" dlg:height="18" dlg:value="Назад">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.prev_step?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="cmdNext" dlg:tab-index="1" dlg:left="207" dlg:top="189" dlg:width="50" dlg:height="18" dlg:value="Далее">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.next_step?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.nextBd?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:checkbox dlg:id="CheckBox17" dlg:tab-index="16" dlg:left="82" dlg:top="81" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКГ-24" dlg:checked="false"/>
   <dlg:checkbox dlg:id="CheckBox19" dlg:tab-index="19" dlg:left="82" dlg:top="105" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКГ-32" dlg:checked="false"/>
