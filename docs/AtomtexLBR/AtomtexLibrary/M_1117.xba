@@ -5,13 +5,25 @@
 dim oDialog1117 as object
 Dim cmdNext As Object
 Dim cmdPrev As Object
+
+dim typeText as object
+dim bdTipeCount as integer
+
+dim arrayOfBdTypes(19) as String
+
 rem=======================================================================================
 Sub at1117m_Dialog_Show
+	
+	bdTipeCount = 19
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
+	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	rem oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
 	rem oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	rem oDateFieldModel.Date = cDateToIso(Now)
+	form = oDialog1117.Model
+	typeText.Text = &quot;Hello&quot;
+	
 	cmdPrev = oDialog1117.getControl(&quot;cmdPrev&quot;)
 	cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;)
 
@@ -22,13 +34,51 @@ Sub at1117m_Dialog_Show
 	oDialog1117.Execute()
   	&apos;oDialog1117.dispose()
 End Sub
+
+sub nextBd
+	
+end sub
+
+sub initialize
+rem -------------ТИПЫ БЛОКОВ------------------------
+	arrayOfBdTypes(0) = &quot;БДКГ-01&quot;
+	arrayOfBdTypes(1) = &quot;БДКГ-03&quot;
+	arrayOfBdTypes(2) = &quot;БДКГ-04&quot;
+	arrayOfBdTypes(3) = &quot;БДКГ-05&quot;
+	arrayOfBdTypes(4) = &quot;БДКГ-11&quot;
+	arrayOfBdTypes(5) = &quot;БДКГ-17&quot;
+	arrayOfBdTypes(6) = &quot;БДКГ-24&quot;
+	arrayOfBdTypes(7) = &quot;БДКГ-30&quot;
+	arrayOfBdTypes(8) = &quot;БДКГ-32&quot;
+	
+	arrayOfBdTypes(9) = &quot;БДКН-01&quot;
+	arrayOfBdTypes(10) = &quot;БДКН-03&quot;
+	
+	arrayOfBdTypes(11) = &quot;БДПА-01&quot;
+	arrayOfBdTypes(12) = &quot;БДПА-02&quot;
+	arrayOfBdTypes(13) = &quot;БДПБ-01&quot;
+	arrayOfBdTypes(14) = &quot;БДПБ-02&quot;
+	
+	arrayOfBdTypes(15) = &quot;БОИ-1&quot;
+	arrayOfBdTypes(16) = &quot;БОИ-2&quot;
+	arrayOfBdTypes(17) = &quot;БОИ-4&quot;
+	
+	arrayOfBdTypes(18) = &quot;БДКР-01&quot;
+	arrayOfBdTypes(19) = &quot;БДПС-02&quot;
+end sub
+ 
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout(count as integer) 
+	
+end function
  
 Sub next_step
 
-   cmdPrev.Model.Enabled = true &apos;Not cmdPrev.Model.Enabled
-   if oDialog1117.Model.Step = 2 then cmdNext.Model.Enabled = False
-   oDialog1117.Model.Step = oDialog1117.Model.Step + 1   
-   
+&apos;   cmdPrev.Model.Enabled = true &apos;Not cmdPrev.Model.Enabled
+&apos;   if oDialog1117.Model.Step = 2 then cmdNext.Model.Enabled = False
+&apos;   oDialog1117.Model.Step = oDialog1117.Model.Step + 1   
+
+
 End Sub
  
 Sub prev_step

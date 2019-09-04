@@ -18,4 +18,5 @@
  <library:element library:name="M_204"/>
  <library:element library:name="M6130N"/>
  <library:element library:name="M_1117"/>
+ <library:element library:name="Tab"/>
 </library:library>
