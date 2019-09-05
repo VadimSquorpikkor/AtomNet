@@ -9,19 +9,20 @@ Dim cmdPrev As Object
 dim NumField1, NumField2, NumField3, NumField4, NumField5, NumField6, NumField7, NumField8, NumField9 as object
 dim TextField1, TextField2, TextField3, TextField4, TextField5, TextField6, TextField7, TextField8, TextField9 as object  
 dim typeText as object
-dim bdTipeCount as integer
+dim mainCount as integer
 
 dim arrayOfBdTypes(19) as String
 dim arrayOfMeas(19) as String
 dim arrayOfPoints(19) as Variant
 dim arrayOfPointsQuantity(19) as integer
+dim arrayOfFlags(19) as integer
 dim layoutStep as integer
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	layoutStep = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
-	bdTipeCount = 19
+	mainCount = 19
 	initialize
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	rem oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
@@ -29,7 +30,9 @@ Sub at1117m_Dialog_Show
 	rem oDateFieldModel.Date = cDateToIso(Now)
 	form = oDialog1117.Model
 	typeText.Text = &quot;Hello&quot;
-	
+	&apos;for i=0 to mainCount
+	&apos;	arrayOfFlags(i)=0
+	&apos;next i
 	cmdPrev = oDialog1117.getControl(&quot;cmdPrev&quot;)
 	cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;)
 
@@ -41,11 +44,25 @@ Sub at1117m_Dialog_Show
   	&apos;oDialog1117.dispose()
 End Sub
 rem=======================================================================================
+sub start
+	for i=0 to mainCount
+		arrayOfFlags(i) = oDialog1117.getControl(&quot;CheckBox&quot; + i).State
+		rem msgbox arrayOfFlags(i)
+	next i
+end sub
+rem=======================================================================================
 sub nextBd
-	if layoutStep&lt;=bdTipeCount then 
-		makeLayout(layoutStep)
-		layoutStep = layoutStep + 1
-	end if
+rem	if layoutStep&lt;=bdTipeCount then
+		rem msgbox &quot;CheckBox&quot; + layoutStep
+		While layoutStep&lt;=bdTipeCount rem oDialog1117.getControl(&quot;CheckBox&quot; + layoutStep).State = 0 rem And layoutStep&lt;=bdTipeCount
+   			layoutStep = layoutStep + 1
+   			msgbox layoutStep
+   			if arrayOfFlags(layoutStep) = 1 then
+			makeLayout(layoutStep)
+   			end if
+		Wend 
+	rem	layoutStep = layoutStep + 1
+rem	end if
 end sub
 rem=======================================================================================
 sub initialize
