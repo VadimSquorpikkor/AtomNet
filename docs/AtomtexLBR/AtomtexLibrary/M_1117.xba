@@ -15,11 +15,12 @@ dim arrayOfBdTypes(19) as String
 dim arrayOfMeas(19) as String
 dim arrayOfPoints(19) as Variant
 dim arrayOfPointsQuantity(19) as integer
-dim arrayOfFlags(19) as integer
+dim startNum as integer
 dim layoutStep as integer
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	layoutStep = 0
+	startNum = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
 	mainCount = 19
@@ -45,24 +46,17 @@ Sub at1117m_Dialog_Show
 End Sub
 rem=======================================================================================
 sub start
-	for i=0 to mainCount
-		arrayOfFlags(i) = oDialog1117.getControl(&quot;CheckBox&quot; + i).State
-		rem msgbox arrayOfFlags(i)
-	next i
+
 end sub
 rem=======================================================================================
 sub nextBd
-rem	if layoutStep&lt;=bdTipeCount then
-		rem msgbox &quot;CheckBox&quot; + layoutStep
-		While layoutStep&lt;=bdTipeCount rem oDialog1117.getControl(&quot;CheckBox&quot; + layoutStep).State = 0 rem And layoutStep&lt;=bdTipeCount
-   			layoutStep = layoutStep + 1
-   			msgbox layoutStep
-   			if arrayOfFlags(layoutStep) = 1 then
-			makeLayout(layoutStep)
-   			end if
-		Wend 
-	rem	layoutStep = layoutStep + 1
-rem	end if
+		while oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 0 and startNum&lt;&gt;mainCount
+			startNum = startNum+1
+		wend
+		if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
+		makeLayout(startNum) 	
+		startNum = startNum+1
+		end if
 end sub
 rem=======================================================================================
 sub initialize
@@ -113,7 +107,7 @@ sub addDevice(i as integer, title as string, meas as string, pointQuantity as in
 	arrayOfBdTypes(i) = title
 	arrayOfMeas(i) = meas
 	arrayOfPointsQuantity(i) = pointQuantity
-	
+	rem msgbox title
 end sub
 rem======================================================================================= 
 Sub next_step
