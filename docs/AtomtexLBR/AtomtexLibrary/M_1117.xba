@@ -17,8 +17,12 @@ dim arrayOfPoints(19) as Variant
 dim arrayOfPointsQuantity(19) as integer
 dim startNum as integer
 dim layoutStep as integer
+dim arrayOfPointsValueArrays(19) as variant
+dim arrayOfPointsTextArrays(19) as variant
+dim emptyArray(5) as string
 rem=======================================================================================
 Sub at1117m_Dialog_Show
+	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
 	layoutStep = 0
 	startNum = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
@@ -39,9 +43,13 @@ Sub at1117m_Dialog_Show
 
 	oDialogMain.endexecute()  
 	
+	
 	&apos;Because of Multi-page don&apos;t forget to manage Step :
   	oDialog1117.Model.Step = 1	 
 	oDialog1117.Execute()
+	&apos;for i=1 to 9
+&apos;		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).Visible = false
+&apos;	next i
   	&apos;oDialog1117.dispose()
 End Sub
 rem=======================================================================================
@@ -50,52 +58,67 @@ sub start
 end sub
 rem=======================================================================================
 sub nextBd
+	if startNum&lt;=mainCount then
 		while oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 0 and startNum&lt;&gt;mainCount
 			startNum = startNum+1
 		wend
-		if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
-		makeLayout(startNum) 	
-		startNum = startNum+1
-		end if
+
+			if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
+				makeLayout(startNum) 	
+				startNum = startNum+1
+			end if
+		else
+			rem cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;).
+	end if	
 end sub
 rem=======================================================================================
 sub initialize
-		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8)
-		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5)
-		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8)
-		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4)
-		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4)
-		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5)
-		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7)
-		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7)
-		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9)
-		rem------------------------------
-		addDevice(9, &quot;БДКН-01&quot;, &quot;пп&quot;, 5)
-		addDevice(10, &quot;БДКН-03&quot;, &quot;пп&quot;, 5)
-		rem------------------------------
-		addDevice(11, &quot;БДПА-01&quot;, &quot;пп&quot;, 4)
-		addDevice(12, &quot;БДПА-02&quot;, &quot;пп&quot;, 4)
-		addDevice(13, &quot;БДПБ-01&quot;, &quot;пп&quot;, 6)
-		addDevice(14, &quot;БДПБ-02&quot;, &quot;пп&quot;, 5)
-		rem------------------------------
-		addDevice(15, &quot;БОИ-1&quot;, &quot;Зв/ч&quot;, 5)
-		addDevice(16, &quot;БОИ-2&quot;, &quot;Зв/ч&quot;, 5)
-		addDevice(17, &quot;БОИ-4&quot;, &quot;Зв/ч&quot;, 4)
-		rem------------------------------
-		addDevice(18, &quot;БДКР-01&quot;, &quot;Зв/ч&quot;, 4)
-		addDevice(19, &quot;БДПС-02&quot;, &quot;пп&quot;, 5)
+		rem g-17   g-30
+		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, Array(0.7,7,70,0.7,7,70,0.7,7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
+		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
+		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
+		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
+		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
+		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, Array(1,2,3,4,5), 						Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
+		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7, Array(0.7,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;))
+		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;))
+		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
+		rem------------------------------------------------------------------------------------------------------------------------
+		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, Array(0,5.9,57,235,1019),					emptyArray)
+		addDevice(10, &quot;БДКН-03&quot;, &quot;&quot;, 5, Array(0,5.9,55,232,1019),					emptyArray)
+		rem------------------------------------------------------------------------------------------------------------------------
+		addDevice(11, &quot;БДПА-01&quot;, &quot;&quot;, 4, Array(78.3,743,6300,62100),					emptyArray)
+		addDevice(12, &quot;БДПА-02&quot;, &quot;&quot;, 4, Array(74.4,630,5140,35600),					emptyArray)
+		addDevice(13, &quot;БДПБ-01&quot;, &quot;&quot;, 6, Array(102,236,6080,53500,154300,383600),	emptyArray)
+		addDevice(14, &quot;БДПБ-02&quot;, &quot;&quot;, 5, Array(14.2,74.4,514,6290,56800),			emptyArray)
+		rem------------------------------------------------------------------------------------------------------------------------
+		addDevice(15, &quot;БОИ-1&quot;, &quot;Зв/ч&quot;, 5, Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;))
+		addDevice(16, &quot;БОИ-2&quot;, &quot;Зв/ч&quot;, 5, Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;))
+		addDevice(17, &quot;БОИ-4&quot;, &quot;Зв/ч&quot;, 4, Array(70,0.7,7,70), 						Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;))
+		rem------------------------------------------------------------------------------------------------------------------------
+		addDevice(18, &quot;БДКР-01&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
+		addDevice(19, &quot;БДПС-02&quot;, &quot;пп&quot;, 5, Array(58.3,743,6300,60100,186000),		emptyArray)
 end sub
 rem======================================================================================= 
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(count as integer) 
+
 	typeText.Text = arrayOfBdTypes(count)
 	dim last as integer
 	last = arrayOfPointsQuantity(count)
+	dim point as variant
+	dim pointText as variant
+	dim measPointText as string
+	point = arrayOfPointsValueArrays(count)
+	pointText = arrayOfPointsTextArrays(count)
 	for i=1 to last
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = i rem для проверки
-		oDialog1117.getControl(&quot;Label&quot; + i).Text = arrayOfMeas(count)
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point(i-1)
+		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
+		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + pointText(i-1) + arrayOfMeas(count))
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
 	next i
 	for i=last+1 to 9
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
@@ -103,11 +126,17 @@ function makeLayout(count as integer)
 	next i	 	
 end function
 rem======================================================================================= 
-sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer)
+sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer, pointValue as variant, pointText as variant)
 	arrayOfBdTypes(i) = title
 	arrayOfMeas(i) = meas
 	arrayOfPointsQuantity(i) = pointQuantity
-	rem msgbox title
+	dim x as variant
+	x = pointValue
+	arrayOfPointsValueArrays(i) = x rem pointValue
+	dim y as variant
+	y = pointText
+	arrayOfPointsTextArrays(i) = y
+	
 end sub
 rem======================================================================================= 
 Sub next_step

@@ -243,6 +243,13 @@ ol > li > div, .nice_details{
     border-radius: 8px;
 }
 
+ol > li > div:hover, .nice_details:hover{
+    margin: 10px 6px 10px 6px;
+    padding: 5px 19px 5px 19px;
+    transition-property: all;
+    transition-duration: 350ms;
+}
+
 .small_nice_details{
     text-indent: 0;
     box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
@@ -425,15 +432,16 @@ a {
     font-size: 18px;
     font-family: sans-serif;
     text-decoration: none;
-    padding: 4px;
+    padding: 2px 4px;
 }
 
 a:hover {
     color: white;
     background-color: darkorange;
     border-radius: 9px;
-    padding: 0 4px;
-    /*margin: 0 -4px;*/
+    padding: 2px 4px;
+    transition-property: all;
+    transition-duration: 450ms;
 }
 
 a[href$='.ods'] {
