@@ -55,5 +55,8 @@
   <dlg:checkbox dlg:id="CheckBox17" dlg:tab-index="22" dlg:left="77" dlg:top="33" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БОИ-4" dlg:checked="false"/>
   <dlg:checkbox dlg:id="CheckBox18" dlg:tab-index="8" dlg:left="77" dlg:top="53" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДКР-01" dlg:checked="false"/>
   <dlg:checkbox dlg:id="CheckBox19" dlg:tab-index="9" dlg:left="77" dlg:top="65" dlg:width="32" dlg:height="10" dlg:page="1" dlg:value="БДПС-02" dlg:checked="false"/>
+  <dlg:button dlg:id="CommandButton2" dlg:tab-index="43" dlg:left="75" dlg:top="103" dlg:width="40" dlg:height="20" dlg:value="Remove Tab18">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleMain.Clean?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>

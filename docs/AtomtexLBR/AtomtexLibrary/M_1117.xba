@@ -153,4 +153,5 @@ Sub prev_step
 	if oDialog1117.Model.Step = 2 then cmdPrev.Model.Enabled = False
    oDialog1117.Model.Step = oDialog1117.Model.Step - 1 
 End Sub
+
 </script:module>
