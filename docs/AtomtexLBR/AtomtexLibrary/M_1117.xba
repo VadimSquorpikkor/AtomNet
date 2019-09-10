@@ -34,7 +34,7 @@ Sub at1117m_Dialog_Show
 	rem oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	rem oDateFieldModel.Date = cDateToIso(Now)
 	form = oDialog1117.Model
-	typeText.Text = &quot;Hello&quot;
+	rem typeText.Text = &quot;Hello&quot;
 	&apos;for i=0 to mainCount
 	&apos;	arrayOfFlags(i)=0
 	&apos;next i
@@ -55,6 +55,41 @@ End Sub
 rem=======================================================================================
 sub start
 
+end sub
+rem=======================================================================================
+sub deleteTable()
+	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+	
+	Dim Doc As Object
+	Dim TextTables As Object
+	Dim Table As Object
+	Dim I As Integer
+	Doc = ThisComponent
+	TextTables = Doc.getTextTables()
+	dim oTable as object
+
+	&apos;oTable1 = oAllTables.getByIndex(0)	&apos;Получаем таблицу по индексу, можно по имнени .getByName(&quot;Table1&quot;) 
+	
+	&apos;oTable = TextTables.getByName(&quot;Table1&quot;)
+	&apos;oTable.delete
+	
+	TextTables.removeByName(&quot;Table1&quot;)
+	
+	
+&apos;	
+&apos;For I = 0 to TextTables.count - 1
+&apos; 
+&apos;   		Table = TextTables(I)
+&apos;   		&apos; Editing table
+&apos; 		msgbox Table
+&apos;	Next I
+	
+	
+	&apos;Dim oTextTables As Variant   &apos; All tables of document
+	&apos;Dim oTextTable As Variant   &apos; One table
+	&apos;oTextTables = ThisComponent.getTextTables()
+   	&apos;msgbox oTextTables.
+   	  
 end sub
 rem=======================================================================================
 sub nextBd
