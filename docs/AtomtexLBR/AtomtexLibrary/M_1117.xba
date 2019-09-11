@@ -22,6 +22,8 @@ dim arrayOfPointsTextArrays(19) as variant
 dim emptyArray(5) as string
 rem=======================================================================================
 Sub at1117m_Dialog_Show
+	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
 	layoutStep = 0
 	startNum = 0
@@ -57,50 +59,32 @@ sub start
 
 end sub
 rem=======================================================================================
-sub deleteTable()
-	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+sub deleteTable(name as string)
+	rem OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
 	
-	Dim Doc As Object
-	Dim TextTables As Object
-	Dim Table As Object
-	Dim I As Integer
-	Doc = ThisComponent
-	TextTables = Doc.getTextTables()
 	dim oTable as object
-
-	&apos;oTable1 = oAllTables.getByIndex(0)	&apos;Получаем таблицу по индексу, можно по имнени .getByName(&quot;Table1&quot;) 
-	
-	&apos;oTable = TextTables.getByName(&quot;Table1&quot;)
-	&apos;oTable.delete
-	
-	TextTables.removeByName(&quot;Table1&quot;)
-	
-	
-&apos;	
-&apos;For I = 0 to TextTables.count - 1
-&apos; 
-&apos;   		Table = TextTables(I)
-&apos;   		&apos; Editing table
-&apos; 		msgbox Table
-&apos;	Next I
-	
-	
-	&apos;Dim oTextTables As Variant   &apos; All tables of document
-	&apos;Dim oTextTable As Variant   &apos; One table
-	&apos;oTextTables = ThisComponent.getTextTables()
-   	&apos;msgbox oTextTables.
-   	  
+    oTable = ThisComponent.getTextTables().getByName(name)
+    oTable.dispose()
 end sub
 rem=======================================================================================
 sub nextBd
+	if startNum &lt;&gt; 0 then
+		for i=0 to arrayOfPointsQuantity(startNum-1)
+			findAndRename((&quot;$&quot; + (startNum-1) + &quot;-0&quot; + i), (oDialog1117.Model.getByName(&quot;NumericField&quot;+i).value))	
+		next i
+		
+	end if
 	if startNum&lt;=mainCount then
 		while oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 0 and startNum&lt;&gt;mainCount
+			deleteTable(&quot;t&quot; + startNum)
 			startNum = startNum+1
 		wend
 
 			if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
 				makeLayout(startNum) 	
 				startNum = startNum+1
+			else 
+				deleteTable(&quot;t&quot; + startNum)
 			end if
 		else
 			rem cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;).
@@ -109,6 +93,8 @@ end sub
 rem=======================================================================================
 sub initialize
 		rem g-17   g-30
+		
+		rem первую переменную можно использовать для названия таблиц (Т-12) и названий ячеек таблицы ($T12-04) -- так проще и не надо вводить новых массивов переменных
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, Array(0.7,7,70,0.7,7,70,0.7,7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
@@ -146,16 +132,16 @@ function makeLayout(count as integer)
 	dim measPointText as string
 	point = arrayOfPointsValueArrays(count)
 	pointText = arrayOfPointsTextArrays(count)
-	for i=1 to last
+	for i=0 to last - 1
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point(i-1)
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point(i)
 		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
 		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
-		measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + pointText(i-1) + arrayOfMeas(count))
+		measPointText = (&quot;&quot; + point(i) + &quot; &quot; + pointText(i) + arrayOfMeas(count))
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
 	next i
-	for i=last+1 to 9
+	for i=last to 8
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
 	next i	 	
