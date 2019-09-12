@@ -99,6 +99,7 @@ img {
     position: fixed;
     /*width: 100%;*/
     box-shadow: none;
+
 }
 
 .header_div_2 > a, .header_div_2 > a:hover {
@@ -117,6 +118,7 @@ img {
     padding: 4px 15px;
     text-indent: 0;
     margin-left: 0;
+
 }
 
 .header_div_2 > a:last-of-type {
@@ -130,6 +132,7 @@ img {
 .header_div_2 > a:hover {
     /*background-color: limegreen;*/
     background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);
+
 }
 
 /*region INDEX 3------------------------------------*/
@@ -237,15 +240,18 @@ body > div {
 ol > li > div, .nice_details{
     text-indent: 0;
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 5px 15px 5px;
-    margin: 10px 10px 10px;
+    padding: 5px 15px 5px 15px;
+    margin: 10px 10px 10px 10px;
     /*border-radius: 20px 0 20px 0;*/
     border-radius: 8px;
+    transition-property: all;
+    transition-duration: 350ms;
 }
 
 ol > li > div:hover, .nice_details:hover{
-    margin: 10px 6px 10px 6px;
-    padding: 5px 19px 5px 19px;
+    box-shadow: 4px 1px 21px 1px rgba(255, 100, 0, 0.53);
+    padding: 5px 22px 5px 22px;
+    margin: 10px 3px 10px 3px;
     transition-property: all;
     transition-duration: 350ms;
 }
@@ -433,6 +439,8 @@ a {
     font-family: sans-serif;
     text-decoration: none;
     padding: 2px 4px;
+    transition-property: all;
+    transition-duration: 450ms;
 }
 
 a:hover {

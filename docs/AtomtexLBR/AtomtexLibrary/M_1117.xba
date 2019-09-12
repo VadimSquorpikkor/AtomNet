@@ -20,9 +20,13 @@ dim layoutStep as integer
 dim arrayOfPointsValueArrays(19) as variant
 dim arrayOfPointsTextArrays(19) as variant
 dim emptyArray(5) as string
+
+dim valueRecordsArray(19) as variant
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+
+	rem arrayOfBdTypes = Array(19)
 
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
 	layoutStep = 0
@@ -42,13 +46,14 @@ Sub at1117m_Dialog_Show
 	&apos;next i
 	cmdPrev = oDialog1117.getControl(&quot;cmdPrev&quot;)
 	cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;)
-
+	rem oDialog1117.getControl(&quot;NumericField1&quot;).setVisible(False)
 	oDialogMain.endexecute()  
-	
+			
 	
 	&apos;Because of Multi-page don&apos;t forget to manage Step :
   	oDialog1117.Model.Step = 1	 
 	oDialog1117.Execute()
+
 	&apos;for i=1 to 9
 &apos;		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).Visible = false
 &apos;	next i
@@ -119,6 +124,10 @@ sub initialize
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(18, &quot;БДКР-01&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;))
 		addDevice(19, &quot;БДПС-02&quot;, &quot;пп&quot;, 5, Array(58.3,743,6300,60100,186000),		emptyArray)
+		
+		for i=0 to mainCount
+			valueRecordsArray(i) = Array(0,0,0,0,0,0,0,0,0,0)
+		next i
 end sub
 rem======================================================================================= 
 rem настройка отображения виджета под каждый конкретный тип БД 
@@ -138,6 +147,7 @@ function makeLayout(count as integer)
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point(i)
 		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
 		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i)/70
 		measPointText = (&quot;&quot; + point(i) + &quot; &quot; + pointText(i) + arrayOfMeas(count))
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
 	next i
@@ -148,6 +158,7 @@ function makeLayout(count as integer)
 end function
 rem======================================================================================= 
 sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer, pointValue as variant, pointText as variant)
+	rem msgbox i
 	arrayOfBdTypes(i) = title
 	arrayOfMeas(i) = meas
 	arrayOfPointsQuantity(i) = pointQuantity
