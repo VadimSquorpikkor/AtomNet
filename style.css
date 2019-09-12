@@ -256,6 +256,20 @@ ol > li > div:hover, .nice_details:hover{
     transition-duration: 350ms;
 }
 
+summary:hover::marker {
+    color: #f5a208;
+}
+
+/* replace with custom image */
+/*summary {
+    list-style-image: url(right-arrow.svg);
+}
+
+!* hide arrow *!
+summary {
+    list-style-image: none;
+}*/
+
 .small_nice_details{
     text-indent: 0;
     box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
