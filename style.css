@@ -141,6 +141,7 @@ img {
 .menu_block {
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
     text-align: center;
+    alignment: center;
     height: 156px; /*171*/
     width: 144px;
     text-indent: 0;
@@ -150,6 +151,7 @@ img {
     float: left;
     line-height: 0.9;
     visibility: visible;
+    vertical-align: center;
 }
 
 .menu_block:hover {
@@ -186,6 +188,8 @@ img {
 .menu_block div span {
     vertical-align: middle;
     padding-top: 5px;
+    padding-left: 0px;
+
     /*color: #4CAF50;*/
 }
 
@@ -204,11 +208,12 @@ img {
 }
 
 .menu_block div {
-    padding-top: 0;
-    padding-bottom: 0;
+
+    padding: 0 0;
     text-indent: 0;
     margin: 0;
     text-align: center;
+    /*height: 35px;*/
 }
 
 .menu_block a {
