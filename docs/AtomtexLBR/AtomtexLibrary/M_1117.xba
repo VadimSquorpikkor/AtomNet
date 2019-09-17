@@ -143,8 +143,8 @@ sub initialize
 		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;))
 		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
 		rem------------------------------------------------------------------------------------------------------------------------
-		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, Array(0,5.9,57,235,1019),					emptyArray)
-		addDevice(10, &quot;БДКН-03&quot;, &quot;&quot;, 5, Array(0,5.9,55,232,1019),					emptyArray)
+		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, Array(1,5.9,57,235,1019),					emptyArray)
+		addDevice(10, &quot;БДКН-03&quot;, &quot;&quot;, 5, Array(1,5.9,55,232,1019),					emptyArray)
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(11, &quot;БДПА-01&quot;, &quot;&quot;, 4, Array(78.3,743,6300,62100),					emptyArray)
 		addDevice(12, &quot;БДПА-02&quot;, &quot;&quot;, 4, Array(74.4,630,5140,35600),					emptyArray)
@@ -177,11 +177,11 @@ function makeLayout(count as integer)
 	for i=0 to last - 1
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point(i)
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point(i), MyFormat)
 		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
 		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i)/70
-		measPointText = (&quot;&quot; + point(i) + &quot; &quot; + pointText(i) + arrayOfMeas(count))
+		measPointText = (&quot;&quot; +  Format(point(i), MyFormat)   + &quot; &quot; + pointText(i) + arrayOfMeas(count))
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
 	next i
 	for i=last to 8
