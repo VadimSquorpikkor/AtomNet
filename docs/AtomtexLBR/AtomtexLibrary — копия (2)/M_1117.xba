@@ -118,52 +118,12 @@ sub insertRecordsToTemplate
 	dim con_point as double
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 1 then rem проверка флага, есть данные или нет
-		 	for j=1 to uBound(valueRecordsArray(i))
+			for j=1 to uBound(valueRecordsArray(i))
 				num = valueRecordsArray(i)(j)
 				con_point = arrayOfPointsValueArrays(i)(j-1)
 				findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogreshnost(num, con_point), MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogreshnost(num, con_point), MyFormat))	
 			next j
-			rem сделать проверку не по i (9 и 10), а по имени (&quot;БДКН&quot;)
-			if i=9 or i=10 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
-				dim fon, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16 as double
-				fon = valueRecordsArray(i)(1)	rem фон
-				p1 = valueRecordsArray(i)(2)
-				p2 = valueRecordsArray(i)(3)
-				p3 = valueRecordsArray(i)(4)
-				p4 = valueRecordsArray(i)(5)
-				rem------------------------------------------------------------
-				p5 = (p1-fon)*0.6
-				p6 = p2*0.6
-				p7 = p3*0.86
-				p8 = p4*0.96
-				
-				findAndRename((&quot;$&quot; + i + &quot;-21&quot;), Format(p5, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-22&quot;), Format(p6, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-23&quot;), Format(p7, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-24&quot;), Format(p8, MyFormat))
-				rem------------------------------------------------------------
-				p9 = (p5 - 5.9)/5.9 * 100
-				p10 = (p6 - 57)/57 * 100
-				p11 = (p7 - 235)/235 * 100
-				p12 = (p8 - 1019)/1019 * 100
-				
-				findAndRename((&quot;$&quot; + i + &quot;-31&quot;), Format(p9, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-32&quot;), Format(p10, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-33&quot;), Format(p11, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-34&quot;), Format(p12, MyFormat))
-				rem------------------------------------------------------------
-				p13 = 1.1 * sqr(p9 * p9 + 5*5)
-				p14 = 1.1 * sqr(p10 * p10 + 5*5)
-				p15 = 1.1 * sqr(p11 * p11 + 5*5)
-				p16 = 1.1 * sqr(p12 * p12 + 5*5)
-				
-				findAndRename((&quot;$&quot; + i + &quot;-41&quot;), Format(p13, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-42&quot;), Format(p14, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-43&quot;), Format(p15, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-44&quot;), Format(p16, MyFormat))
-				rem------------------------------------------------------------
-			end if
 		else
 			deleteTable(&quot;t&quot; + i)
 		end if
