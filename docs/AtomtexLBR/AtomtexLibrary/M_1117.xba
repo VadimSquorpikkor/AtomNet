@@ -22,7 +22,8 @@ dim emptyArray(5) as string
 dim startNum as integer
 dim valueRecordsArray(19) as variant
 
-dim checkedPositionsArray(1) as integer
+dim checkedPositionsArray(0) as integer
+dim iCanStart as boolean
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
@@ -39,6 +40,23 @@ Sub at1117m_Dialog_Show
 	form = oDialog1117.Model
 	oDialogMain.endexecute()  
 	
+	
+	oDialog1117.getControl(&quot;bPrev&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;bDone&quot;).setVisible(false)
+	
+	oDialog1117.getControl(&quot;NumericField0&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField1&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField2&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField3&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField4&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField5&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField6&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField7&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;NumericField8&quot;).setVisible(false)
+	
+	iCanStart = false
+
 	&apos;Because of Multi-page don&apos;t forget to manage Step :
 &apos;  	oDialog1117.Model.Step = 1	 
 	oDialog1117.Execute()
@@ -56,22 +74,43 @@ sub collectCheckedPositionsToArray
 			checkedPositionsCount = checkedPositionsCount + 1
 		end if			
 	next i
-	rem размер массива устанавливается равным кол-ву выбранных CheckBox
-	redim checkedPositionsArray(checkedPositionsCount - 1) as integer	rem размер массива устанавливается равным кол-ву выбранных CheckBox
-	rem !!! переделать с redim preserve 
-	rem цикл для сохранения индексо чекнутых позицый в массив (второй раз пробегаюсь по всем чекбоксам)
-	rem вообще всё это можно было бы сделать за один цикл, если бы в ОО были коллекции
-	for i=0 to mainCount
-		if oDialog1117.getControl(&quot;CheckBox&quot; + i).State = 1 then
-			checkedPositionsArray(count) = i
-			count = count + 1
-		end if			
-	next i
+	if checkedPositionsCount&gt;0 then 
+		iCanStart = true
+		
+		rem размер массива устанавливается равным кол-ву выбранных CheckBox
+		redim checkedPositionsArray(checkedPositionsCount - 1) as integer	rem размер массива устанавливается равным кол-ву выбранных CheckBox
+		rem !!! переделать с redim preserve 
+		rem цикл для сохранения индексо чекнутых позицый в массив (второй раз пробегаюсь по всем чекбоксам)
+		rem вообще всё это можно было бы сделать за один цикл, если бы в ОО были коллекции
+		for i=0 to mainCount
+			if oDialog1117.getControl(&quot;CheckBox&quot; + i).State = 1 then
+				checkedPositionsArray(count) = i
+				count = count + 1
+			end if			
+		next i
+	end if
 end sub
 rem=======================================================================================
 sub start
 	collectCheckedPositionsToArray				rem позиции всех выбранных БД заносятся в архив
+	
+	if(iCanStart = true) then
+	
 	makeLayout(checkedPositionsArray(startNum))	rem создается лэйаут по первому чекнутому БД
+	oDialog1117.getControl(&quot;bNext&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;bDone&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;bStart&quot;).setVisible(false)
+	
+	oDialog1117.getControl(&quot;NumericField0&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField1&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField2&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField3&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField4&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField5&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField6&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField7&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;NumericField8&quot;).setVisible(true)
+	end if
 end sub
 rem=======================================================================================
 sub done
@@ -86,12 +125,16 @@ sub deleteTable(name as string)
 end sub
 rem=======================================================================================
 sub nextBd
+
 	if startNum &lt; uBound(checkedPositionsArray) then
 		insertDataToArray(checkedPositionsArray(startNum))
 		startNum = startNum + 1
 		makeLayout(checkedPositionsArray(startNum))
+		if startNum = uBound(checkedPositionsArray) then
+			oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
+		end if	
 	else
-		msgbox &quot;ВСЁ!&quot;	
+		oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)	
 	end if
 	rem oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)   
 end sub
@@ -125,49 +168,56 @@ sub insertRecordsToTemplate
 				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogreshnost(num, con_point), MyFormat))
 			next j
 			rem сделать проверку не по i (9 и 10), а по имени (&quot;БДКН&quot;)
-			if i=9 or i=10 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
-				dim fon, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16 as double
-				fon = valueRecordsArray(i)(1)	rem фон
-				p1 = valueRecordsArray(i)(2)
-				p2 = valueRecordsArray(i)(3)
-				p3 = valueRecordsArray(i)(4)
-				p4 = valueRecordsArray(i)(5)
-				rem------------------------------------------------------------
-				p5 = (p1-fon)*0.6
-				p6 = p2*0.6
-				p7 = p3*0.86
-				p8 = p4*0.96
-				
-				findAndRename((&quot;$&quot; + i + &quot;-21&quot;), Format(p5, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-22&quot;), Format(p6, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-23&quot;), Format(p7, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-24&quot;), Format(p8, MyFormat))
-				rem------------------------------------------------------------
-				p9 = (p5 - 5.9)/5.9 * 100
-				p10 = (p6 - 57)/57 * 100
-				p11 = (p7 - 235)/235 * 100
-				p12 = (p8 - 1019)/1019 * 100
-				
-				findAndRename((&quot;$&quot; + i + &quot;-31&quot;), Format(p9, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-32&quot;), Format(p10, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-33&quot;), Format(p11, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-34&quot;), Format(p12, MyFormat))
-				rem------------------------------------------------------------
-				p13 = 1.1 * sqr(p9 * p9 + 5*5)
-				p14 = 1.1 * sqr(p10 * p10 + 5*5)
-				p15 = 1.1 * sqr(p11 * p11 + 5*5)
-				p16 = 1.1 * sqr(p12 * p12 + 5*5)
-				
-				findAndRename((&quot;$&quot; + i + &quot;-41&quot;), Format(p13, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-42&quot;), Format(p14, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-43&quot;), Format(p15, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-44&quot;), Format(p16, MyFormat))
-				rem------------------------------------------------------------
+			if i=9 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
+				neutron_01(i)
+			end if
+			if i=10 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
+				neutron_03(i)
 			end if
 		else
 			deleteTable(&quot;t&quot; + i)
 		end if
 	next i
+end sub
+rem=======================================================================================
+sub neutron_01(i as integer)
+	dim point_br_array(3) as double
+	dim point_fio_array(3) as double
+	point_br_array = Array(0.6, 0.6, 0.86, 0.95)
+	point_fio_array = Array(5.9, 57, 235, 1019)
+	dim fon, p1, p2, p3 as double
+	fon = valueRecordsArray(i)(1)	rem фон
+	
+		for n = 1 to 4
+			p1 = (valueRecordsArray(i)(n+1)-fon)*point_br_array(n-1)	
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			p3 = 1.1 * sqr(p2 * p2 + 5*5)
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			
+		next n
+	
+end sub
+rem=======================================================================================
+sub neutron_03(i as integer)
+	dim point_br_array(3) as double
+	dim point_fio_array(3) as double
+	point_br_array = Array(0.87, 0.87, 0.96, 0.99)
+	point_fio_array = Array(8.3, 80, 331, 1434)
+	dim fon, p1, p2, p3 as double
+	fon = valueRecordsArray(i)(1)	rem фон
+	
+		for n = 1 to 4
+			p1 = (valueRecordsArray(i)(n+1)-fon)*point_br_array(n-1)	
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			p3 = 1.1 * sqr(p2 * p2 + 5*5)
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			
+		next n
+	
 end sub
 rem=======================================================================================
 sub initialize
@@ -183,8 +233,8 @@ sub initialize
 		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;))
 		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;))
 		rem------------------------------------------------------------------------------------------------------------------------
-		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, Array(1,5.9,57,235,1019),					emptyArray)
-		addDevice(10, &quot;БДКН-03&quot;, &quot;&quot;, 5, Array(1,5.9,55,232,1019),					emptyArray)
+		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, Array(0.5,5.9, 57, 235, 1019),				Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;))
+		addDevice(10, &quot;БДКН-03&quot;, &quot;&quot;, 5, Array(0.5,8.3, 80, 331, 1434),				Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;))
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(11, &quot;БДПА-01&quot;, &quot;&quot;, 4, Array(78.3,743,6300,62100),					emptyArray)
 		addDevice(12, &quot;БДПА-02&quot;, &quot;&quot;, 4, Array(74.4,630,5140,35600),					emptyArray)

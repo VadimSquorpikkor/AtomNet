@@ -55,7 +55,7 @@
   <dlg:button dlg:id="bPrev" dlg:tab-index="41" dlg:left="80" dlg:top="149" dlg:width="40" dlg:height="18" dlg:page="2" dlg:value="Пред">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.prevBd?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton1" dlg:tab-index="43" dlg:left="9" dlg:top="149" dlg:width="50" dlg:height="16" dlg:page="1" dlg:value="Старт">
+  <dlg:button dlg:id="bStart" dlg:tab-index="43" dlg:left="9" dlg:top="149" dlg:width="50" dlg:height="16" dlg:page="1" dlg:value="Старт">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.start?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>
