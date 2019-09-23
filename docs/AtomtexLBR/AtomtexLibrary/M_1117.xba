@@ -30,6 +30,8 @@ dim FacilityArray(19) as integer
 
 dim measLimitsCalculatedArray(10) as double
 dim measLimitsArray(19) as variant rem массив массивов границ измерения
+
+dim oDateFieldModel as object
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
@@ -45,6 +47,10 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	form = oDialog1117.Model
 	oDialogMain.endexecute()  
+	
+	oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+  	oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
 	
 	
 	oDialog1117.getControl(&quot;bPrev&quot;).setVisible(false)
@@ -261,7 +267,8 @@ sub insertRecordsToTemplate
 	next i
 	deleteUselessFacilities
 	deleteUselessMeasLimits
-	insertMeasLimits	
+	insertMeasLimits
+	findAndRename(&quot;$serial&quot;, oDialog1117.Model.getByName(&quot;TextField1&quot;).Text)	
 end sub
 rem=======================================================================================
 sub neutron_01(i as integer)
@@ -311,7 +318,7 @@ sub initialize
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.1,10000,0,0,0,0,0,0,0,0))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, 	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
-		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.03,300,0,0,0,0,0,0,0,0))
+		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.01,0.1,0,0,0,0,0,0,0,0))
 		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(1,2,3,4,5), 						Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
 		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7, 	Array(0.7,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,	Array(0.02,1000,0,0,0,0,0,0,0,0))
