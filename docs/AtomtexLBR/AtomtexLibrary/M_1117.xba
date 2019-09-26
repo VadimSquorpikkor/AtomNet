@@ -162,6 +162,25 @@ sub deleteUselessMeasLimits
 	next i
 end sub
 rem=======================================================================================
+function FacilityError(i as integer)
+	rem чтобы выдавалось максимальное число, нужно располагать все &quot;FacilityError&quot; в возрастающем порядке, тогда последний сработавший триггер будет с самым большим значением
+	if i\10000 = 1 then rem `110
+		FacilityError = 4
+	end if
+	if i\1000 mod 10 = 1 then rem `130
+		FacilityError = 5
+	end if
+	if i\100 mod 10 = 1 then rem `140
+		FacilityError = 5
+	end if	
+	if i\10 mod 10 = 1 then rem `alpha
+		FacilityError = 6
+	end if
+	if i mod 10 = 1 then rem `beta
+		FacilityError = 6
+	end if
+end function	
+rem=======================================================================================
 sub makeFacilityArray(i as integer)
 	if i\10000 = 1 then
 		FacilityTypeArray(0) = true
@@ -240,19 +259,31 @@ function pogreshnost(num as double, contr_point as double)
 	pogreshnost = ((num - contr_point) / contr_point) * 100
 end function
 rem=======================================================================================
+function dov_granica_3(pogr as double, percent as integer)
+	dov_granica_3 = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+rem=======================================================================================
 sub insertRecordsToTemplate
 	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
 	dim num as double
 	dim con_point as double
+	dim pogr_point as double
+	dim dov_point as double
+	dim currentFacilityError as integer
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 1 then rem проверка флага, есть данные или нет
 			makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
 		 	makeMeasLimitsArray(measLimitsArray(i))rem пересчитать макс и мин пределы измерений для выбраных БД с учетом нового добавленного БД
+		 	currentFacilityError = FacilityError(FacilityArray(i))
+			
 		 	for j=1 to uBound(valueRecordsArray(i))
 				num = valueRecordsArray(i)(j)
 				con_point = arrayOfPointsValueArrays(i)(j-1)
 				findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
-				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogreshnost(num, con_point), MyFormat))
+				pogr_point = pogreshnost(num, con_point)
+				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
+				dov_point = dov_granica_3(pogr_point, currentFacilityError)
+				findAndRename((&quot;$&quot; + i + &quot;-2&quot; + (j-1)), Format(dov_point, MyFormat))		
 			next j
 			rem сделать проверку не по i (9 и 10), а по имени (&quot;БДКН&quot;)
 			if i=9 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
@@ -315,6 +346,7 @@ sub initialize
 		rem gamma мк-м / alpha 1-10^4 / beta 1-10^5 / md neutron / pp neutron 
 		rem g-17   g-30
 		rem первую переменную можно использовать для названия таблиц (Т-12) и названий ячеек таблицы ($T12-04) -- так проще и не надо вводить новых массивов переменных
+																																rem 110 130 140 a b
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.1,10000,0,0,0,0,0,0,0,0))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, 	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
