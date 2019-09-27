@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Z_tmp" script:language="StarBasic">REM  *****  BASIC  *****
+
+REM declare dialog object &quot;globally&quot;
+dim oDialogBDKG02 as object
+dim oDateFieldModel as object
+&apos;-----------------------------------------
+Sub bdkg02_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialogBDKG02 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogBDKG02 )
+   
+   oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
+   
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7.0
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.7
+  oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7
+  
+  &apos;oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
+  oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+  oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
+  &apos;&apos;&apos;&apos;&apos;print oDateFieldModel.date
+  
+   
+  Dim nCount As Integer
+  Dim sItems As Variant
+  REM get control
+  oComboBox = oDialogBDKG02.getControl(&quot;ComboBox1&quot;)
+  REM first remove all old items from the list
+  nCount = oComboBox.getItemCount()
+  oComboBox.removeItems( 0, nCount )
+  REM add new items to the list
+  sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+  oComboBox.addItems( sItems, 0 )
+   &apos;oComboBox.selectItemPos(0, true)
+   
+     oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
+     oNumericFieldModel.DECIMALACCURACY = 2
+   
+   oDialogMain.endexecute()   
+   oDialogBDKG02.Execute()
+   
+End Sub
+&apos;--------------------------------------------------------------------	
+sub testForDaysLeft
+	print days_left_2910_NEW(oDateFieldModel)
+end sub
+&apos;--------------------------------------------------------------------	
+  Function GetSelectedItem( oComboBoxModel As Object ) As String
+      GetSelectedItem = oComboBoxModel.Text
+  End Function	
+&apos;--------------------------------------------------------------------	
+sub comboChanged
+	oNumericFieldModel = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;)
+	dim num as string
+	oComboBox = oDialogBDKG02.getControl(&quot;ComboBox1&quot;)
+	num = oComboBox.text
+	select case num
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+		&apos;print get_activity(act516)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
+	end select	
+end sub
+&apos;-----------------------------------------
+Dim bground as Double
+Dim point_1 as Double
+Dim point_2 as Double
+Dim point_3 as Double
+Dim point_4 as Double
+Dim point_5 as Double
+Dim point_6 as Double
+Dim point_7 as Double
+Dim point_8 as Double
+
+Dim otn_pog_1 as Double
+Dim otn_pog_2 as Double
+Dim otn_pog_3 as Double
+Dim otn_pog_4 as Double
+Dim otn_pog_5 as Double
+Dim otn_pog_6 as Double
+Dim otn_pog_7 as Double
+Dim otn_pog_8 as Double
+
+Dim activity as Double  
+&apos;-----------------------------------------
+Sub getAllText_bdkg02
+    bground = oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value
+    point_1 = oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value
+    point_2 = oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value
+    point_3 = oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value
+    point_4 = oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value
+    point_5 = oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value
+    point_6 = oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value
+    point_7 = oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value
+    point_8 = oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value
+    
+End Sub
+&apos;-----------------------------------------
+sub drawTable
+	MyFormat = &quot;0.0&quot;
+    findAndRename(&quot;$tab_11$&quot;, exponentialView(bground))
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_21$&quot;, exponentialView(point_1*1000+100))
+	findAndRename(&quot;$tab_22$&quot;, exponentialView(point_2*1000+100))
+	findAndRename(&quot;$tab_23$&quot;, exponentialView(point_3*1000+100))
+	findAndRename(&quot;$tab_24$&quot;, exponentialView(point_4*1000000))
+	findAndRename(&quot;$tab_25$&quot;, exponentialView(point_5*1000000))
+	findAndRename(&quot;$tab_26$&quot;, exponentialView(point_6*1000000))
+	findAndRename(&quot;$tab_27$&quot;, exponentialView(point_7*1000000000))
+	findAndRename(&quot;$tab_28$&quot;, exponentialView(point_8*1000000000))
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_31$&quot;, exponentialView(point_1*1000+100-bground))
+	findAndRename(&quot;$tab_32$&quot;, exponentialView(point_2*1000+100-bground))
+	findAndRename(&quot;$tab_33$&quot;, exponentialView(point_3*1000+100-bground))
+	&apos;-----------------------------------------------
+	otn_pog_1 = (point_1*1000+100-bground-700)/700*100
+	otn_pog_2 = (point_2*1000+100-bground-7000)/7000*100
+	otn_pog_3 = (point_3*1000+100-bground-70000)/70000*100
+	otn_pog_4 = (point_4*1000000-700000)/700000*100
+	otn_pog_5 = (point_5*1000000-7000000)/7000000*100
+	otn_pog_6 = (point_6*1000000-70000000)/70000000*100
+	otn_pog_7 = (point_7*1000000000-700000000)/700000000*100
+	otn_pog_8 = (point_8*1000000000-7000000000)/7000000000*100
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_41$&quot;, Format(otn_pog_1, MyFormat)
+	findAndRename(&quot;$tab_42$&quot;, Format(otn_pog_2, MyFormat)
+	findAndRename(&quot;$tab_43$&quot;, Format(otn_pog_3, MyFormat)
+	findAndRename(&quot;$tab_44$&quot;, Format(otn_pog_4, MyFormat)
+	findAndRename(&quot;$tab_45$&quot;, Format(otn_pog_5, MyFormat)
+	findAndRename(&quot;$tab_46$&quot;, Format(otn_pog_6, MyFormat)
+	findAndRename(&quot;$tab_47$&quot;, Format(otn_pog_7, MyFormat)
+	findAndRename(&quot;$tab_48$&quot;, Format(otn_pog_8, MyFormat)
+	&apos;-----------------------------------------------
+	findAndRename(&quot;$tab_51$&quot;, Format(1.1+sqr(25+otn_pog_1*otn_pog_1), MyFormat)
+	findAndRename(&quot;$tab_52$&quot;, Format(1.1+sqr(25+otn_pog_2*otn_pog_2), MyFormat)
+	findAndRename(&quot;$tab_53$&quot;, Format(1.1+sqr(16+otn_pog_3*otn_pog_3), MyFormat)
+	findAndRename(&quot;$tab_54$&quot;, Format(1.1+sqr(16+otn_pog_4*otn_pog_4), MyFormat)
+	findAndRename(&quot;$tab_55$&quot;, Format(1.1+sqr(16+otn_pog_5*otn_pog_5), MyFormat)
+	findAndRename(&quot;$tab_56$&quot;, Format(1.1+sqr(16+otn_pog_6*otn_pog_6), MyFormat)
+	findAndRename(&quot;$tab_57$&quot;, Format(1.1+sqr(16+otn_pog_7*otn_pog_7), MyFormat)
+	findAndRename(&quot;$tab_58$&quot;, Format(1.1+sqr(16+otn_pog_8*otn_pog_8), MyFormat)
+
+end sub
+
+sub set_field
+  oNumericFieldModel = oDialog.Model.NumericField1
+  oNumericFieldModel.Value = 25.40
+  oNumericFieldModel.DecimalAccuracy = 2
+end sub
+
+sub calculate
+	MyFormat = &quot;0.00&quot;
+    getAllText_bdkg02()
+    
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02.odt&quot;)
+    &apos;-----------------------------------------------
+	drawTable()
+	findAndRename(&quot;$srk_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField2&quot;).Text)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
+	&apos;findAndRename(&quot;$activity$&quot;, activity)
+	&apos;findAndRename(&quot;$activity$&quot;, Format(get_activity(act516), MyFormat)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)	
+end sub
+&apos;---------------------------------------------------
+sub makeSertRU
+	getAllText_bdkg02()
+    MyFormat = &quot;0.00&quot;
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02_ser_RU.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
+	
+	findAndRename(&quot;$p_1$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value)
+    findAndRename(&quot;$p_2$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value)
+    findAndRename(&quot;$p_3$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value)
+    findAndRename(&quot;$p_4$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value)
+    findAndRename(&quot;$p_5$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value)
+    findAndRename(&quot;$p_6$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value)
+    findAndRename(&quot;$p_7$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value)
+    findAndRename(&quot;$p_8$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value)
+    
+    findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
+end sub
+&apos;---------------------------------------------------
+&apos;Объединить методы, различаются только адресом
+sub makeSertENG
+
+	getAllText_bdkg02()
+    MyFormat = &quot;0.00&quot;
+    OpenTemplate(sertPath &amp; &quot;template_bdkg02_ser_ENG.odt&quot;)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG02.Model.getByName(&quot;TextField1&quot;).Text)
+	findAndRename(&quot;$activity$&quot;, Format(oDialogBDKG02.Model.getByName(&quot;NumericField12&quot;).Value, MyFormat)
+	findAndRename(&quot;$source$&quot;, oDialogBDKG02.Model.getByName(&quot;ComboBox1&quot;).Text)
+	findAndRename(&quot;$grad$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField10&quot;).Value)
+	
+	findAndRename(&quot;$p_1$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField1&quot;).Value)
+    findAndRename(&quot;$p_2$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField2&quot;).Value)
+    findAndRename(&quot;$p_3$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField3&quot;).Value)
+    findAndRename(&quot;$p_4$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField4&quot;).Value)
+    findAndRename(&quot;$p_5$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField5&quot;).Value)
+    findAndRename(&quot;$p_6$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField6&quot;).Value)
+    findAndRename(&quot;$p_7$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField7&quot;).Value)
+    findAndRename(&quot;$p_8$&quot;, oDialogBDKG02.Model.getByName(&quot;NumericField8&quot;).Value)
+    
+    findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
+end sub
+&apos;------------------------------------------------------------------
+rem Возможно есть смысл сделать через Format, чтобы было &quot;7,0&quot;, а не &quot;7&quot;
+function myRoundOne(num as Double)
+	dim int_num as long
+	int_num = num*10
+	myRoundOne = int_num*0.1
+end function
+&apos;------------------------------------------------------------------
+function exponentialView(num as double)
+	MyFormat = &quot;0.00&quot;
+	if num&lt;100 then
+		exponentialView = Format(num/10, MyFormat) &amp; &quot;E+01&quot;
+	elseif	num&lt;1000 then
+		exponentialView = Format(num/100, MyFormat) &amp; &quot;E+02&quot;
+	elseif	num&lt;10000 then
+		exponentialView =Format(num/1000, MyFormat) &amp; &quot;E+03&quot;
+	elseif	num&lt;100000 then
+		exponentialView = Format(num/10000, MyFormat) &amp; &quot;E+04&quot;
+	elseif	num&lt;1000000 then
+		exponentialView = Format(num/100000, MyFormat) &amp; &quot;E+05&quot;
+	elseif	num&lt;10000000 then
+		exponentialView = Format(num/1000000, MyFormat) &amp; &quot;E+06&quot;
+	elseif	num&lt;100000000 then
+		exponentialView = Format(num/10000000, MyFormat) &amp; &quot;E+07&quot;
+	elseif	num&lt;1000000000 then
+		exponentialView = Format(num/100000000, MyFormat) &amp; &quot;E+08&quot;
+	elseif	num&lt;10000000000 then
+		exponentialView = Format(num/1000000000, MyFormat) &amp; &quot;E+09&quot;
+	end if
+end function
+&apos;-----------------------------------------------------------
+
+
+
+</script:module>
