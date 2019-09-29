@@ -146,4 +146,97 @@ sub neutron_old(i as integer)
 				findAndRename((&quot;$&quot; + i + &quot;-44&quot;), Format(p16, MyFormat))
 				rem------------------------------------------------------------
 end sub
+
+
+
+
+
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old2(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	&apos;msgbox arrayOfPointsQuantity(count)
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim pointTextArray as variant
+	
+	dim measPointText as string
+	pointArray = arrayOfPointsValueArrays(count)
+	pointTextArray = arrayOfPointsTextArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(pointArray(i), MyFormat)
+		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
+		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		measPointText = (&quot;&quot; +  Format(pointArray(i), MyFormat)   + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count))
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
+
+
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim point as String
+	
+	pointArray = arrayOfPointsValueArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		
+		point = prefixWithNumber(pointArray(i))
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot;&quot; + point + arrayOfMeas(count)
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
+
+
+rem======================================================================================= 
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old3(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	&apos;msgbox arrayOfPointsQuantity(count)
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim pointTextArray as variant
+	
+	dim measPointText as string
+	pointArray = arrayOfPointsValueArrays(count)
+	pointTextArray = arrayOfPointsTextArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(pointArray(i), MyFormat)
+		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
+		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		measPointText = (&quot;&quot; +  Format(pointArray(i), MyFormat)   + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count))
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
 </script:module>

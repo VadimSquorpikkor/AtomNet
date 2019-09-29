@@ -17,7 +17,7 @@ dim startNum as integer
 dim layoutStep as integer
 dim arrayOfPointsValueArrays(19) as variant
 dim arrayOfPointsTextArrays(19) as variant
-dim emptyArray(5) as string
+dim emptyArray(6) as string
 
 dim startNum as integer
 dim valueRecordsArray(19) as variant
@@ -32,14 +32,17 @@ dim measLimitsCalculatedArray(10) as double
 dim measLimitsArray(19) as variant rem массив массивов границ измерения
 
 dim oDateFieldModel as object
+
+dim strokeForSaving as String
 rem=======================================================================================
 Sub at1117m_Dialog_Show
-	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
+	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
 	layoutStep = 0
 	startNum = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
 	mainCount = 19
+	oDialog1117.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;1117.png&quot;
 
 	redim arrayOfBdTypes(mainCount) as String
 
@@ -72,6 +75,7 @@ Sub at1117m_Dialog_Show
 	&apos;Because of Multi-page don&apos;t forget to manage Step :
 &apos;  	oDialog1117.Model.Step = 1	 
 	oDialog1117.Execute()
+	filename = &quot;qwerty&quot;
 End Sub
 rem=======================================================================================
 sub collectCheckedPositionsToArray
@@ -123,19 +127,12 @@ sub makeMeasLimitsArray(measArray as variant)
 			end if		
 		end if
 	next i 
-&apos;	msgbox measLimitsCalculatedArray(0)
-&apos;	msgbox measLimitsCalculatedArray(1)
 end sub
 rem=======================================================================================
 function rightPrefixAndNumber(n as double, lType as integer)
 	if lType = 1 or 7 then
-		if n &lt; 1000 then
-			msgbox n
-			rightPrefixAndNumber = &quot;&quot; + n + &quot; м&quot;
-		end if
-		if n &gt;= 1000 then
-			rightPrefixAndNumber = &quot;&quot; + n/1000 + &quot; &quot;
-		end if
+		if n &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + n + &quot; м&quot;
+		if n &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + n/1000 + &quot; &quot;
 	end if		
 end function
 rem=======================================================================================
@@ -156,54 +153,39 @@ end sub
 rem=======================================================================================
 sub deleteUselessMeasLimits
 	for i=0 to 4
-		if measLimitsCalculatedArray(i*2)=0 then
-			deleteTable(&quot;tml&quot; + i)
-		end if	
+		if measLimitsCalculatedArray(i*2)=0 then deleteTable(&quot;tml&quot; + i)
 	next i
 end sub
 rem=======================================================================================
 function FacilityError(i as integer)
 	rem чтобы выдавалось максимальное число, нужно располагать все &quot;FacilityError&quot; в возрастающем порядке, тогда последний сработавший триггер будет с самым большим значением
-	if i\10000 = 1 then rem `110
-		FacilityError = 4
-	end if
-	if i\1000 mod 10 = 1 then rem `130
-		FacilityError = 5
-	end if
-	if i\100 mod 10 = 1 then rem `140
-		FacilityError = 5
-	end if	
-	if i\10 mod 10 = 1 then rem `alpha
-		FacilityError = 6
-	end if
-	if i mod 10 = 1 then rem `beta
-		FacilityError = 6
-	end if
+	if i\10000 = 1 		 then FacilityError = 4 rem `110
+	if i\1000 mod 10 = 1 then FacilityError = 5 rem `130
+	if i\100 mod 10 = 1  then FacilityError = 5 rem `140
+	if i\10 mod 10 = 1   then FacilityError = 6 rem `alpha
+	if i mod 10 = 1      then FacilityError = 6 rem `beta
+end function	
+rem=======================================================================================
+function FacilityErrorSmart(i as integer, num as double)
+	rem метод проверяет ещё и каждую точку, если она меньше 1 мЗв/ч, то это погрешность 110-ой, если больше, то погрешность 130-й линейки 
+	if i\10000 = 1 		 and num &lt; 1  then FacilityErrorSmart = 4 rem `110
+	if i\1000 mod 10 = 1 and num &gt;= 1 then FacilityErrorSmart = 5 rem `130
+	if i\100 mod 10 = 1               then FacilityErrorSmart = 5 rem `140
+	if i\10 mod 10 = 1                then FacilityErrorSmart = 6 rem `alpha
+	if i mod 10 = 1                   then FacilityErrorSmart = 6 rem `beta
 end function	
 rem=======================================================================================
 sub makeFacilityArray(i as integer)
-	if i\10000 = 1 then
-		FacilityTypeArray(0) = true
-	end if
-	if i\1000 mod 10 = 1 then
-		FacilityTypeArray(1) = true
-	end if
-	if i\100 mod 10 = 1 then
-		FacilityTypeArray(2) = true
-	end if
-	if i\10 mod 10 = 1 then
-		FacilityTypeArray(3) = true
-	end if
-	if i mod 10 = 1 then
-		FacilityTypeArray(4) = true
-	end if
+	if i\10000 = 1 		 then FacilityTypeArray(0) = true
+	if i\1000 mod 10 = 1 then FacilityTypeArray(1) = true
+	if i\100 mod 10 = 1  then FacilityTypeArray(2) = true
+	if i\10 mod 10 = 1   then FacilityTypeArray(3) = true
+	if i mod 10 = 1      then FacilityTypeArray(4) = true
 end sub
 rem=======================================================================================
 sub deleteUselessFacilities
 	for i=0 to 4
-		if FacilityTypeArray(i) = 0 then
-			deleteTable(&quot;tf&quot; + i)		
-		end if
+		if FacilityTypeArray(i) = 0 then deleteTable(&quot;tf&quot; + i)	
 	next i
 end sub
 rem=======================================================================================
@@ -214,6 +196,15 @@ sub start
 		oDialog1117.getControl(&quot;bNext&quot;).setVisible(true)
 		oDialog1117.getControl(&quot;bDone&quot;).setVisible(true)
 		oDialog1117.getControl(&quot;bStart&quot;).setVisible(false)
+		oDialog1117.getControl(&quot;bPrev&quot;).setVisible(true)
+		
+		oDialog1117.getControl(&quot;bNext&quot;).setEnable(true)
+		oDialog1117.getControl(&quot;bDone&quot;).setEnable(false)
+		oDialog1117.getControl(&quot;bPrev&quot;).setEnable(false)
+		
+		for i=0 to mainCount
+			oDialog1117.getControl(&quot;CheckBox&quot; + i).setEnable(false)
+		next i
 	end if
 end sub
 rem=======================================================================================
@@ -229,19 +220,42 @@ sub deleteTable(name as string)
 end sub
 rem=======================================================================================
 sub nextBd
-
 	if startNum &lt; uBound(checkedPositionsArray) then
 		insertDataToArray(checkedPositionsArray(startNum))
 		startNum = startNum + 1
 		makeLayout(checkedPositionsArray(startNum))
+	
+		if startNum &gt; 0 then 
+			oDialog1117.getControl(&quot;bPrev&quot;).setEnable(true)
+		else 
+			oDialog1117.getControl(&quot;bPrev&quot;).setEnable(false)
+		end if
+	
 		if startNum = uBound(checkedPositionsArray) then
-			oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
+			oDialog1117.getControl(&quot;bNext&quot;).setEnable(false)
+			oDialog1117.getControl(&quot;bDone&quot;).setEnable(true)
 		end if	
 	else
-		oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)	
+		oDialog1117.getControl(&quot;bNext&quot;).setEnable(false)
+		oDialog1117.getControl(&quot;bDone&quot;).setEnable(true)	
 	end if
 	rem oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)   
 end sub
+rem=======================================================================================
+sub previousBD
+		if startNum &gt; 1 then 
+			oDialog1117.getControl(&quot;bPrev&quot;).setEnable(true)
+			startNum = startNum - 1
+			makeLayout(checkedPositionsArray(startNum))
+			oDialog1117.getControl(&quot;bNext&quot;).setEnable(true)
+		else 
+			oDialog1117.getControl(&quot;bPrev&quot;).setEnable(false)
+			startNum = startNum - 1
+			makeLayout(checkedPositionsArray(startNum))
+			
+		end if
+		oDialog1117.getControl(&quot;bDone&quot;).setEnable(false)
+end sub 
 rem=======================================================================================
 sub insertDataToArray(n as integer)
 	dim size as integer
@@ -263,21 +277,42 @@ function dov_granica_3(pogr as double, percent as integer)
 	dov_granica_3 = 1.1 * sqr(percent*percent + pogr*pogr)
 end function
 rem=======================================================================================
+function realNumberValue(num as double, prefix as String)
+	dim koef as double
+	if prefix = &quot;мк&quot; then koef = 0.001
+	if prefix = &quot;м&quot;  then koef = 1
+	if prefix = &quot;&quot;   then koef = 1000
+	realNumberValue = num * koef
+end function
+rem=======================================================================================
 sub insertRecordsToTemplate
-	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+	OpenTemplate(sertPath &amp; &quot;1117.odt&quot;)
 	dim num as double
 	dim con_point as double
 	dim pogr_point as double
 	dim dov_point as double
 	dim currentFacilityError as integer
+	dim prefix as string
+	dim serial as string
+	for i=0 to mainCount 
+		if valueRecordsArray(i)(0) = 0 then deleteTable(&quot;t&quot; + i) rem проверка флага, есть данные или нет
+	next i		
+	
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 1 then rem проверка флага, есть данные или нет
 			makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
 		 	makeMeasLimitsArray(measLimitsArray(i))rem пересчитать макс и мин пределы измерений для выбраных БД с учетом нового добавленного БД
-		 	currentFacilityError = FacilityError(FacilityArray(i))
+		 	rem currentFacilityError = FacilityError(FacilityArray(i))
 			
+			strokeForSaving = strokeForSaving &amp; arrayOfBdTypes(i) &amp; &quot; &quot;
 		 	for j=1 to uBound(valueRecordsArray(i))
-				num = valueRecordsArray(i)(j)
+		 		rem сделать отмену проверки точки на больше-меньше 1 мЗв/ч если нашлась точка больше 1мЗв/ч, после неё уже точно не будет точки меньше 1мЗв. 
+				rem Со следующим БД запрет снимать, проверять опять оба варианта  
+
+		 		prefix = arrayOfPointsTextArrays(i)(j-1)
+		 		num = valueRecordsArray(i)(j)
+		 		&apos;msgbox realNumberValue(num, prefix)
+		 		currentFacilityError = FacilityErrorSmart(FacilityArray(i), realNumberValue(num, prefix))
 				con_point = arrayOfPointsValueArrays(i)(j-1)
 				findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
 				pogr_point = pogreshnost(num, con_point)
@@ -285,21 +320,19 @@ sub insertRecordsToTemplate
 				dov_point = dov_granica_3(pogr_point, currentFacilityError)
 				findAndRename((&quot;$&quot; + i + &quot;-2&quot; + (j-1)), Format(dov_point, MyFormat))		
 			next j
-			rem сделать проверку не по i (9 и 10), а по имени (&quot;БДКН&quot;)
-			if i=9 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
-				neutron_01(i)
-			end if
-			if i=10 then	rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
-				neutron_03(i)
-			end if
-		else
-			deleteTable(&quot;t&quot; + i)
+			rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
+			if arrayOfBdTypes(i)=&quot;БДКН-01&quot; then	neutron_01(i)
+			if arrayOfBdTypes(i)=&quot;БДКН-03&quot; then	neutron_03(i)
 		end if
 	next i
 	deleteUselessFacilities
 	deleteUselessMeasLimits
 	insertMeasLimits
-	findAndRename(&quot;$serial&quot;, oDialog1117.Model.getByName(&quot;TextField1&quot;).Text)	
+	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
+	findAndRename(&quot;$serial&quot;, serial)	
+	strokeForSaving = &quot;1117 M &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	CopyVariableToClipboard(strokeForSaving)
+	msgbox &quot;Готово!&quot;
 end sub
 rem=======================================================================================
 sub neutron_01(i as integer)
@@ -346,13 +379,13 @@ sub initialize
 		rem gamma мк-м / alpha 1-10^4 / beta 1-10^5 / md neutron / pp neutron 
 		rem g-17   g-30
 		rem первую переменную можно использовать для названия таблиц (Т-12) и названий ячеек таблицы ($T12-04) -- так проще и не надо вводить новых массивов переменных
-																																rem 110 130 140 a b
+		rem EmptyArray - на 6 элементов																														rem 110 130 140 a b
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.1,10000,0,0,0,0,0,0,0,0))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, 	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
 		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.01,0.1,0,0,0,0,0,0,0,0))
-		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(1,2,3,4,5), 						Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
+		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(7,70,0.7,7,70), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),					01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
 		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7, 	Array(0.7,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,	Array(0.02,1000,0,0,0,0,0,0,0,0))
 		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, 	Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,Array(0,0,0,0,0,0,0,0,0,0))rem уточнить какие установки
 		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, 	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),11000,	Array(0.02,500,0,0,0,0,0,0,0,0))
@@ -362,7 +395,7 @@ sub initialize
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(11, &quot;БДПА-01&quot;, &quot;&quot;, 4, 	Array(78.3,743,6300,62100),				emptyArray,									00010,	Array(0,0,0.1,10,0,0,0,0,0,0))
 		addDevice(12, &quot;БДПА-02&quot;, &quot;&quot;, 4, Array(74.4,630,5140,35600),					emptyArray,									00010,	Array(0,0,0.05,5,0,0,0,0,0,0))
-		addDevice(13, &quot;БДПБ-01&quot;, &quot;&quot;, 5, Array(102,236,6080,53500,154300,383600),	emptyArray,									00001,	Array(0,0,0,0,1,5,0,0,0,0))
+		addDevice(13, &quot;БДПБ-01&quot;, &quot;&quot;, 6, Array(102,236,6080,53500,154300,383600),	emptyArray,									00001,	Array(0,0,0,0,1,5,0,0,0,0))
 		addDevice(14, &quot;БДПБ-02&quot;, &quot;&quot;, 5, Array(14.2,74.4,514,6290,56800),			emptyArray,									00001,	Array(0,0,0,0,0.5,1.5,0,0,0,0))
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(15, &quot;БОИ-1&quot;, &quot;Зв/ч&quot;, 5, Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				11000,	Array(1,10,0,0,0,0,0,0,0,0))
@@ -377,32 +410,49 @@ sub initialize
 &apos;		next i
 end sub
 rem======================================================================================= 
+function prefixWithNumber(i as double)
+	
+	if i&lt;1 then 
+		prefixWithNumber = &quot;&quot; + i*1000 + &quot;н &quot;
+	else 
+		prefixWithNumber = i 
+	end if
+end function
+rem=======================================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(count as integer) 
 
 	typeText.Text = arrayOfBdTypes(count)
 	dim last as integer
-	&apos;msgbox arrayOfPointsQuantity(count)
 	last = arrayOfPointsQuantity(count)
-	dim point as variant
-	dim pointText as variant
-	dim measPointText as string
-	point = arrayOfPointsValueArrays(count)
-	pointText = arrayOfPointsTextArrays(count)
+	dim pointArray as variant
+	dim pointTextArray as variant
+	dim point as double
+	
+	pointArray = arrayOfPointsValueArrays(count)
+	pointTextArray = arrayOfPointsTextArrays(count)
 	for i=0 to last - 1
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point(i), MyFormat)
-		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
-		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
-		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i)/70
-		measPointText = (&quot;&quot; +  Format(point(i), MyFormat)   + &quot; &quot; + pointText(i) + arrayOfMeas(count))
-		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
+		
+		point = pointArray(i)
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = rightStep(point)
+		
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count)
 	next i
 	for i=last to 8
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
 	next i	 	
+end function
+rem======================================================================================= 
+function rightStep(d as double) rem расчет правильного Step-а 
+	if             d&gt;1000 then rightStep = 10
+	if d&lt;=1000 and d&gt;10	  then rightStep = 1
+	if d&lt;=10   and d&gt;1    then rightStep = 0.1
+	if d&lt;=1    and d&gt;0.1  then rightStep = 0.01
+	if d&lt;=0.1  and d&gt;0.01 then rightStep = 0.001
 end function
 rem======================================================================================= 
 sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer, pointValue as variant, pointText as variant, FacilityType as integer, measLimits as variant)

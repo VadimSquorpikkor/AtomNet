@@ -14,12 +14,13 @@ Sub MainDialog_Show
 	dim user_name as String
 
 	rem Установить  	
-	user_name = &quot;Serikov_VA&quot;
-	rem user_name = &quot;Squorpikkor&quot;
+	rem user_name = &quot;Serikov_VA&quot;
+	user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\sert_template\&quot;
 	
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
+   	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
    oDialogMain.Execute()
 End Sub
 
@@ -76,7 +77,19 @@ sub sortColumns
 	dispatcher.executeDispatch(document, &quot;.uno:DataSort&quot;, &quot;&quot;, 0, args1())
 end sub
 rem-------------------------------------------------------------------------
-
+rem-------------------------------------------------------------------------
+Sub CopyVariableToClipboard(text as string)
+dim document   as object
+dim dispatcher as object
+dim oDoc, oVC
+oDoc = ThisComponent
+oVC = oDoc.CurrentController.getViewCursor
+oVC.String = text
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
+oVC.String = &quot;&quot;
+End Sub
 rem-------------------------------------------------------------------------
 sub insertDate
    dim document   as object
@@ -125,6 +138,8 @@ End function
 
 rem -------------------------------------------------------------------------------------------
 
+
+
 Sub OpenTemplate(documentURL)
     Dim Doc As Object
     Dim Url As String
@@ -145,6 +160,19 @@ Sub findAndRename(target as String, newName as String)
         oFound = oFoundAll.getByIndex(n%)
         oFound.setString(newName)
     Next
+End Sub
+rem------------------------------------------------------------
+Sub CopyToClipBoard( sText )
+  Dim oClip, oTR
+  &apos; create SystemClipboard instance
+  oClip = CreateUnoService( _
+      &quot;com.sun.star.datatransfer.clipboard.SystemClipboard&quot;)
+  oTR = createUnoListener(&quot;Tr_&quot;, _
+      &quot;com.sun.star.datatransfer.XTransferable&quot;)
+  &apos; set data
+  oClip.setContents( oTR,Null )
+  sTxtCString = sText
+  &apos;oClip.flushClipboard() &apos; does not work
 End Sub
 rem--------------------------------------------------------------
 sub QQQtestpath
