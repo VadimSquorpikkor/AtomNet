@@ -10,26 +10,26 @@ dim typeText as object
 dim mainCount as integer
 
 dim arrayOfBdTypes(1) as String
-dim arrayOfMeas(19) as String
-dim arrayOfPoints(19) as Variant
-dim arrayOfPointsQuantity(19) as integer
+dim arrayOfMeas(21) as String
+dim arrayOfPoints(21) as Variant
+dim arrayOfPointsQuantity(21) as integer
 dim startNum as integer
 dim layoutStep as integer
-dim arrayOfPointsValueArrays(19) as variant
-dim arrayOfPointsTextArrays(19) as variant
+dim arrayOfPointsValueArrays(21) as variant
+dim arrayOfPointsTextArrays(21) as variant
 dim emptyArray(6) as string
 
 dim startNum as integer
-dim valueRecordsArray(19) as variant
+dim valueRecordsArray(21) as variant
 
 dim checkedPositionsArray(0) as integer
 dim iCanStart as boolean
 
 dim FacilityTypeArray(4) as boolean
-dim FacilityArray(19) as integer
+dim FacilityArray(21) as integer
 
 dim measLimitsCalculatedArray(10) as double
-dim measLimitsArray(19) as variant rem массив массивов границ измерения
+dim measLimitsArray(21) as variant rem массив массивов границ измерения
 
 dim oDateFieldModel as object
 
@@ -41,7 +41,7 @@ Sub at1117m_Dialog_Show
 	startNum = 0
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117 )
-	mainCount = 19
+	mainCount = 21
 	oDialog1117.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;1117.png&quot;
 
 	redim arrayOfBdTypes(mainCount) as String
@@ -86,9 +86,13 @@ sub collectCheckedPositionsToArray
 	dim count as integer
 	count = 0
 	rem в этом цикле считаю кол-во чекнутых позицый, чтобы узнать, какой размер массива нужен будет для хранения индексов чекнутых позицый
-	for i=0 to mainCount
+	for i=0 to mainCount - 2
 		if oDialog1117.getControl(&quot;CheckBox&quot; + i).State = 1 then
 			checkedPositionsCount = checkedPositionsCount + 1
+			if arrayOfBdTypes(i) = &quot;БДПС-02 α&quot; then  rem это для бдпс -- здесь один чекбокс создает 3 таблицы
+				checkedPositionsCount = checkedPositionsCount + 2
+				i = i + 2
+			end if	
 		end if			
 	next i
 	if checkedPositionsCount&gt;0 then 
@@ -99,10 +103,15 @@ sub collectCheckedPositionsToArray
 		rem !!! переделать с redim preserve 
 		rem цикл для сохранения индексо чекнутых позицый в массив (второй раз пробегаюсь по всем чекбоксам)
 		rem вообще всё это можно было бы сделать за один цикл, если бы в ОО были коллекции
-		for i=0 to mainCount
+		for i=0 to mainCount - 2
 			if oDialog1117.getControl(&quot;CheckBox&quot; + i).State = 1 then
 				checkedPositionsArray(count) = i
 				rem setFacilityArray(i)
+				if arrayOfBdTypes(i) = &quot;БДПС-02 α&quot; then rem это для бдпс -- здесь один чекбокс создает 3 таблицы
+					checkedPositionsArray(count + 1) = i + 1
+					checkedPositionsArray(count + 2) = i + 2
+					i = i + 2 rem пропускается ещё две позиции для таблиц для бдпс, у них нет чекбокса, но будет порядковый номер
+				end if
 				count = count + 1
 			end if			
 		next i
@@ -202,7 +211,7 @@ sub start
 		oDialog1117.getControl(&quot;bDone&quot;).setEnable(false)
 		oDialog1117.getControl(&quot;bPrev&quot;).setEnable(false)
 		
-		for i=0 to mainCount
+		for i=0 to mainCount-2 rem mainCount-2 потому, что на самом деле чекбоксов на 2 меньше, чем блоков -- в бдпс-02 3 таблицы, но 1 чекбокс
 			oDialog1117.getControl(&quot;CheckBox&quot; + i).setEnable(false)
 		next i
 	end if
@@ -377,9 +386,10 @@ end sub
 rem=======================================================================================
 sub initialize
 		rem gamma мк-м / alpha 1-10^4 / beta 1-10^5 / md neutron / pp neutron 
+		rem gamma установку оставить только одну, общую -- какая именно (или какие) установка будет использоваться смотреть по диапазону измерения (используя  метод realNumberValue)
 		rem g-17   g-30
 		rem первую переменную можно использовать для названия таблиц (Т-12) и названий ячеек таблицы ($T12-04) -- так проще и не надо вводить новых массивов переменных
-		rem EmptyArray - на 6 элементов																														rem 110 130 140 a b
+		rem EmptyArray - на 6 элементов																			rem	 110 130 140 a b    gamma мк-м / alpha 1-10^4 / beta 1-10^5 / md neutron / pp neutron
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.1,10000,0,0,0,0,0,0,0,0))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, 	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
@@ -402,10 +412,13 @@ sub initialize
 		addDevice(16, &quot;БОИ-2&quot;, &quot;Зв/ч&quot;, 5, Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				11000,	Array(1,10,0,0,0,0,0,0,0,0))
 		addDevice(17, &quot;БОИ-4&quot;, &quot;Зв/ч&quot;, 4, Array(70,0.7,7,70), 						Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					11000,	Array(0.3,100,0,0,0,0,0,0,0,0))
 		rem------------------------------------------------------------------------------------------------------------------------
-		addDevice(18, &quot;БДКР-01&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					00000,Array(0,0,0,0,0,0,0,0,0,0))rem уточнить какие установки
-		addDevice(19, &quot;БДПС-02&quot;, &quot;пп&quot;, 5, Array(58.3,743,6300,60100,186000),		emptyArray,									11011,Array(0.1,30,2.4,100,6,10,0,0,0,0))rem уточнить какие установки
-		
-&apos;		for i=0 to mainCount
+		addDevice(18, &quot;БДКР-01&quot;, &quot;Зв/ч&quot;, 4, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					00000,	Array(0,0,0,0,0,0,0,0,0,0))rem уточнить какие установки
+		rem------------------------------------------------------------------------------------------------------------------------
+		addDevice(19, &quot;БДПС-02 α&quot;, &quot;&quot;, 5, Array(53.8,727,6300,62100,186000),		emptyArray,									00010,	Array(0,0,2.4,100,0,0,0,0,0,0))
+		addDevice(20, &quot;БДПС-02 β&quot;, &quot;&quot;, 5, Array(97,232,5700,52000,377100),			emptyArray,									00001,	Array(0,0,0,0,6,10,0,0,0,0))
+		addDevice(21, &quot;БДПС-02 γ&quot;, &quot;Зв/ч&quot;, 6, Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),			11000,	Array(0.1,30,0,0,0,0,0,0,0,0))
+		rem------------------------------------------------------------------------------------------------------------------------
+&apos;		for i=0 to mainCount   0.7,7,70,0.7,7,20
 &apos;			valueRecordsArray(i) = Array(0,0,0,0,0,0,0,0,0,0)
 &apos;		next i
 end sub
@@ -428,17 +441,18 @@ function makeLayout(count as integer)
 	dim pointArray as variant
 	dim pointTextArray as variant
 	dim point as double
+	dim nStep as double
 	
 	pointArray = arrayOfPointsValueArrays(count)
 	pointTextArray = arrayOfPointsTextArrays(count)
 	for i=0 to last - 1
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-		
 		point = pointArray(i)
+		nStep = rightStep(point)
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
-		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = rightStep(point)
-		
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count)
 	next i
 	for i=last to 8
@@ -453,6 +467,13 @@ function rightStep(d as double) rem расчет правильного Step-а
 	if d&lt;=10   and d&gt;1    then rightStep = 0.1
 	if d&lt;=1    and d&gt;0.1  then rightStep = 0.01
 	if d&lt;=0.1  and d&gt;0.01 then rightStep = 0.001
+end function
+rem======================================================================================= 
+function rightDecimalAccuracy(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
+	if nStep = 0.001 then rightDecimalAccuracy = 3
+	if nStep = 0.01  then rightDecimalAccuracy = 2
+	if nStep = 0.1 	 then rightDecimalAccuracy = 1
+	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
 end function
 rem======================================================================================= 
 sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer, pointValue as variant, pointText as variant, FacilityType as integer, measLimits as variant)

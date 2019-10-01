@@ -14,8 +14,8 @@ Sub MainDialog_Show
 	dim user_name as String
 
 	rem Установить  	
-	rem user_name = &quot;Serikov_VA&quot;
-	user_name = &quot;Squorpikkor&quot;
+	user_name = &quot;Serikov_VA&quot;
+	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\sert_template\&quot;
 	
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )

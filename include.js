@@ -26,7 +26,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
         '        <li><a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a></li>' +
         '        <li><a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a></li>' +
-        '        <li><a href="../docs/СРК_заказать.xls">ЗАКАЗАТЬ</a></li>' +
+        '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
