@@ -100,7 +100,7 @@ sub collectCheckedPositionsToArray
 		
 		rem размер массива устанавливается равным кол-ву выбранных CheckBox
 		redim checkedPositionsArray(checkedPositionsCount - 1) as integer	rem размер массива устанавливается равным кол-ву выбранных CheckBox
-		rem !!! переделать с redim preserve 
+		rem TODO !!! переделать с redim preserve 
 		rem цикл для сохранения индексо чекнутых позицый в массив (второй раз пробегаюсь по всем чекбоксам)
 		rem вообще всё это можно было бы сделать за один цикл, если бы в ОО были коллекции
 		for i=0 to mainCount - 2
@@ -277,7 +277,15 @@ sub insertDataToArray(n as integer)
 	valueRecordsArray(n) = array
 end sub
 rem=======================================================================================
-rem объединить методы -- это такой же метод, как в 204-м
+function randValue(num as double, otklonenie as double)
+	randValue = (num - otklonenie) + rnd()*otklonenie*2
+end function
+rem=======================================================================================
+function randValueGauss(num as double, lim as double)
+
+end function
+rem=======================================================================================
+rem TODO объединить методы -- это такой же метод, как в 204-м
 function pogreshnost(num as double, contr_point as double)
 	pogreshnost = ((num - contr_point) / contr_point) * 100
 end function
@@ -295,6 +303,7 @@ function realNumberValue(num as double, prefix as String)
 end function
 rem=======================================================================================
 sub insertRecordsToTemplate
+	MyFormat = &quot;0.0&quot;
 	OpenTemplate(sertPath &amp; &quot;1117.odt&quot;)
 	dim num as double
 	dim con_point as double
@@ -303,6 +312,11 @@ sub insertRecordsToTemplate
 	dim currentFacilityError as integer
 	dim prefix as string
 	dim serial as string
+	rem TODO сделать по Гауссу!!!
+	findAndRename(&quot;$bground&quot;, Format(randValue(90, 2), MyFormat)
+	findAndRename(&quot;$temp&quot;, Format(randValue(23, 2), MyFormat)
+	findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat)
+	findAndRename(&quot;$vlag&quot;, Format(randValue(80, 4), MyFormat)	
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 0 then deleteTable(&quot;t&quot; + i) rem проверка флага, есть данные или нет
 	next i		
@@ -310,12 +324,12 @@ sub insertRecordsToTemplate
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 1 then rem проверка флага, есть данные или нет
 			makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
-		 	makeMeasLimitsArray(measLimitsArray(i))rem пересчитать макс и мин пределы измерений для выбраных БД с учетом нового добавленного БД
+		 	makeMeasLimitsArray(measLimitsArray(i))rem TODO пересчитать макс и мин пределы измерений для выбраных БД с учетом нового добавленного БД
 		 	rem currentFacilityError = FacilityError(FacilityArray(i))
 			
 			strokeForSaving = strokeForSaving &amp; arrayOfBdTypes(i) &amp; &quot; &quot;
 		 	for j=1 to uBound(valueRecordsArray(i))
-		 		rem сделать отмену проверки точки на больше-меньше 1 мЗв/ч если нашлась точка больше 1мЗв/ч, после неё уже точно не будет точки меньше 1мЗв. 
+		 		rem TODO сделать отмену проверки точки на больше-меньше 1 мЗв/ч если нашлась точка больше 1мЗв/ч, после неё уже точно не будет точки меньше 1мЗв. 
 				rem Со следующим БД запрет снимать, проверять опять оба варианта  
 
 		 		prefix = arrayOfPointsTextArrays(i)(j-1)
@@ -323,7 +337,14 @@ sub insertRecordsToTemplate
 		 		&apos;msgbox realNumberValue(num, prefix)
 		 		currentFacilityError = FacilityErrorSmart(FacilityArray(i), realNumberValue(num, prefix))
 				con_point = arrayOfPointsValueArrays(i)(j-1)
-				findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
+				if num &lt; 0.1 and num &gt; 0 then
+					MyFormat = &quot;0.000&quot;
+					findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
+				else
+					findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), num) &apos;Format(num, MyFormat))
+				end if	
+				
+				MyFormat = &quot;0.00&quot;
 				pogr_point = pogreshnost(num, con_point)
 				findAndRename((&quot;$&quot; + i + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
 				dov_point = dov_granica_3(pogr_point, currentFacilityError)
@@ -395,7 +416,7 @@ sub initialize
 		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
 		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.01,0.1,0,0,0,0,0,0,0,0))
-		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(7,70,0.7,7,70), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),					01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
+		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),					01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
 		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7, 	Array(0.7,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,	Array(0.02,1000,0,0,0,0,0,0,0,0))
 		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, 	Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,Array(0,0,0,0,0,0,0,0,0,0))rem уточнить какие установки
 		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, 	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),11000,	Array(0.02,500,0,0,0,0,0,0,0,0))
