@@ -15,8 +15,8 @@ dim arrayOfPoints(21) as Variant
 dim arrayOfPointsQuantity(21) as integer
 dim startNum as integer
 dim layoutStep as integer
-dim arrayOfPointsValueArrays(21) as variant
-dim arrayOfPointsTextArrays(21) as variant
+dim arrayOfPointsValueArrays(21) as variant rem массив массивов значений контрольных точек (0.7, 7, 70 &lt;...&gt;)
+dim arrayOfPointsTextArrays(21) as variant	rem массив массивов значений префиксов контрольных точек (&quot;мк&quot;, &quot;м&quot;, &quot;&quot;)
 dim emptyArray(6) as string
 
 dim startNum as integer
@@ -34,6 +34,30 @@ dim measLimitsArray(21) as variant rem массив массивов грани�
 dim oDateFieldModel as object
 
 dim strokeForSaving as String
+rem=======================================================================================
+function sourceDistanceArray(point as double, prefix as string, bdType as string)
+	dim ar(1) as variant
+	ar = Array(&quot;Неизвестно&quot;,&quot;Неизвестно&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+	rem если это гамма блок:
+	if bdType = &quot;gamma&quot; then
+		if prefix = &quot;мк&quot; then
+				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
+				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
+				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
+				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
+		end if
+		if prefix = &quot;м&quot; then
+				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
+				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
+				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
+		end if
+		if prefix = &quot;&quot; then
+				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
+				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
+		end if	
+	end if
+	sourceDistanceArray = ar
+end function
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
@@ -312,6 +336,8 @@ sub insertRecordsToTemplate
 	dim currentFacilityError as integer
 	dim prefix as string
 	dim serial as string
+	dim bdType as string
+	dim sourceArray as variant 
 	rem TODO сделать по Гауссу!!!
 	findAndRename(&quot;$bground&quot;, Format(randValue(90, 2), MyFormat)
 	findAndRename(&quot;$temp&quot;, Format(randValue(23, 2), MyFormat)
@@ -326,7 +352,10 @@ sub insertRecordsToTemplate
 			makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
 		 	makeMeasLimitsArray(measLimitsArray(i))rem TODO пересчитать макс и мин пределы измерений для выбраных БД с учетом нового добавленного БД
 		 	rem currentFacilityError = FacilityError(FacilityArray(i))
+		 	
+			if facilityArray(i)\10000 = 1 or facilityArray(i)\1000 mod 10 = 1 then bdType = &quot;gamma&quot; rem TODO когда будет сделано выбор установки для бдкг по значению точки, а не по массиву,
 			
+			rem то тогда массив будет переделан в массив типов излучения (&quot;gamma&quot;, а не 11000), тогда надобности в этой проверке не будет, просто будет сверяться значение из массива
 			strokeForSaving = strokeForSaving &amp; arrayOfBdTypes(i) &amp; &quot; &quot;
 		 	for j=1 to uBound(valueRecordsArray(i))
 		 		rem TODO сделать отмену проверки точки на больше-меньше 1 мЗв/ч если нашлась точка больше 1мЗв/ч, после неё уже точно не будет точки меньше 1мЗв. 
@@ -337,6 +366,12 @@ sub insertRecordsToTemplate
 		 		&apos;msgbox realNumberValue(num, prefix)
 		 		currentFacilityError = FacilityErrorSmart(FacilityArray(i), realNumberValue(num, prefix))
 				con_point = arrayOfPointsValueArrays(i)(j-1)
+				&apos;msgbox sourceDistanceArray(con_point, prefix, bdType)(0)
+				sourceArray = sourceDistanceArray(con_point, prefix, bdType)
+				&apos;msgbox sourceArray(0)
+				
+				findAndRename((&quot;$&quot; + i + &quot;-3&quot; + (j-1)), sourceDistanceArray(con_point, prefix, bdType)(0)) rem название источника
+				findAndRename((&quot;$&quot; + i + &quot;-4&quot; + (j-1)), sourceDistanceArray(con_point, prefix, bdType)(1))	rem расстояние до источника
 				if num &lt; 0.1 and num &gt; 0 then
 					MyFormat = &quot;0.000&quot;
 					findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
@@ -498,7 +533,6 @@ function rightDecimalAccuracy(nStep as double) rem сколько знаков �
 end function
 rem======================================================================================= 
 sub addDevice(i as integer, title as string, meas as string, pointQuantity as integer, pointValue as variant, pointText as variant, FacilityType as integer, measLimits as variant)
-	rem msgbox i
 	arrayOfBdTypes(i) = title
 	arrayOfMeas(i) = meas
 	arrayOfPointsQuantity(i) = pointQuantity
