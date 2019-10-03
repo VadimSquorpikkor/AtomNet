@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Activity" script:language="StarBasic">REM  *****  BASIC  *****
+
+&apos;&apos;&apos;&apos;&apos;&apos;GET ACTIVITY&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;
+
+Sub Main
+
+End Sub
+
+&apos;function get_activity(a0 as double, days_left as integer, t_pol)
+&apos;	get_activity = a0 * exp(-0.693147/t_pol * days_left)
+&apos;end function
+
+public const act516 as double = 91.3
+public const act517 as double = 88.8
+public const act518 as double = 94.6
+public const act519 as double = 88.2
+public const act520 as double = 91.3
+public const act521 as double = 93.5
+public const act2910 as double = 67.7
+
+&apos;dim act_list(7) as array
+rem сделать константы активности как массив, тогда я смогу обращаться к ним из
+rem другого модуля. И можно будет выбирать по номеру элемента списка комбобокса
+rem так не нужны будут ифы и свитч кейсы
+
+&apos;-------------------------------------------------------------
+function days_left_2910(date)
+	days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17)	
+end function
+
+function days_left(date)
+	days_left = cDate(getDate(date)) - DateSerial(2016, 10, 12)	
+end function
+
+function get_activity(src as double, date)
+	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left(date))
+end function
+
+function get_activity2910(date)
+	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910(date))
+end function
+
+</script:module>

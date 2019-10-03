@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_35" dlg:left="47" dlg:top="22" dlg:width="212" dlg:height="241" dlg:closeable="true" dlg:moveable="true" dlg:title="БДКГ-35">
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="4" dlg:top="73" dlg:width="37" dlg:height="16" dlg:value="Скорость счета фона" dlg:align="center" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="1" dlg:left="170" dlg:top="6" dlg:width="33" dlg:height="10" dlg:value="Активность"/>
+  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="2" dlg:left="171" dlg:top="18" dlg:width="28" dlg:height="12" dlg:value="90.8"/>
+  <dlg:textfield dlg:id="TextField1" dlg:tab-index="3" dlg:left="12" dlg:top="18" dlg:width="34" dlg:height="10" dlg:align="center" dlg:value="452.000"/>
+  <dlg:textfield dlg:id="TextField2" dlg:tab-index="4" dlg:left="11" dlg:top="55" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.001"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="5" dlg:left="14" dlg:top="6" dlg:width="35" dlg:height="8" dlg:value="Номер СРК"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="6" dlg:left="22" dlg:top="41" dlg:width="18" dlg:height="10" dlg:value="БД 1"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="7" dlg:left="2" dlg:top="144" dlg:width="48" dlg:height="16" dlg:value="Скорость счета от источника" dlg:align="center" dlg:multiline="true"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="8" dlg:left="69" dlg:top="19" dlg:width="40" dlg:height="12" dlg:dropdown="true"/>
+  <dlg:combobox dlg:id="ComboBox1" dlg:tab-index="9" dlg:left="131" dlg:top="18" dlg:width="34" dlg:height="12" dlg:spin="true">
+   <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_mrp.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:combobox>
+  <dlg:numericfield dlg:id="NumericField2" dlg:tab-index="10" dlg:left="11" dlg:top="92" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField3" dlg:tab-index="11" dlg:left="11" dlg:top="102" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField4" dlg:tab-index="12" dlg:left="11" dlg:top="111" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField5" dlg:tab-index="13" dlg:left="11" dlg:top="122" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField6" dlg:tab-index="14" dlg:left="11" dlg:top="133" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField7" dlg:tab-index="15" dlg:left="10" dlg:top="163" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField8" dlg:tab-index="16" dlg:left="10" dlg:top="173" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField9" dlg:tab-index="17" dlg:left="10" dlg:top="183" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField10" dlg:tab-index="18" dlg:left="10" dlg:top="193" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField11" dlg:tab-index="19" dlg:left="10" dlg:top="204" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:fixedline dlg:id="FixedLine1" dlg:tab-index="20" dlg:left="47" dlg:top="67" dlg:width="9" dlg:height="153" dlg:align="vertical"/>
+  <dlg:text dlg:id="Label7" dlg:tab-index="21" dlg:left="58" dlg:top="73" dlg:width="37" dlg:height="16" dlg:value="Скорость счета фона" dlg:align="center" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label8" dlg:tab-index="22" dlg:left="56" dlg:top="144" dlg:width="48" dlg:height="16" dlg:value="Скорость счета от источника" dlg:align="center" dlg:multiline="true"/>
+  <dlg:numericfield dlg:id="NumericField12" dlg:tab-index="23" dlg:left="65" dlg:top="92" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField13" dlg:tab-index="24" dlg:left="65" dlg:top="102" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField14" dlg:tab-index="25" dlg:left="65" dlg:top="111" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField15" dlg:tab-index="26" dlg:left="65" dlg:top="122" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField16" dlg:tab-index="27" dlg:left="65" dlg:top="133" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField17" dlg:tab-index="28" dlg:left="63" dlg:top="163" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField18" dlg:tab-index="29" dlg:left="63" dlg:top="173" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField19" dlg:tab-index="30" dlg:left="63" dlg:top="183" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField20" dlg:tab-index="31" dlg:left="63" dlg:top="193" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField21" dlg:tab-index="32" dlg:left="63" dlg:top="204" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:fixedline dlg:id="FixedLine2" dlg:tab-index="33" dlg:left="101" dlg:top="67" dlg:width="9" dlg:height="153" dlg:align="vertical"/>
+  <dlg:text dlg:id="Label9" dlg:tab-index="34" dlg:left="112" dlg:top="73" dlg:width="37" dlg:height="16" dlg:value="Скорость счета фона" dlg:align="center" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label10" dlg:tab-index="35" dlg:left="110" dlg:top="144" dlg:width="48" dlg:height="16" dlg:value="Скорость счета от источника" dlg:align="center" dlg:multiline="true"/>
+  <dlg:numericfield dlg:id="NumericField22" dlg:tab-index="36" dlg:left="119" dlg:top="92" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField23" dlg:tab-index="37" dlg:left="119" dlg:top="102" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField24" dlg:tab-index="38" dlg:left="119" dlg:top="111" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField25" dlg:tab-index="39" dlg:left="119" dlg:top="122" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField26" dlg:tab-index="40" dlg:left="119" dlg:top="133" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField27" dlg:tab-index="41" dlg:left="118" dlg:top="163" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField28" dlg:tab-index="42" dlg:left="118" dlg:top="173" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField29" dlg:tab-index="43" dlg:left="118" dlg:top="183" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField30" dlg:tab-index="44" dlg:left="118" dlg:top="193" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField31" dlg:tab-index="45" dlg:left="118" dlg:top="204" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:fixedline dlg:id="FixedLine3" dlg:tab-index="46" dlg:left="155" dlg:top="67" dlg:width="9" dlg:height="153" dlg:align="vertical"/>
+  <dlg:text dlg:id="Label11" dlg:tab-index="47" dlg:left="164" dlg:top="73" dlg:width="37" dlg:height="16" dlg:value="Скорость счета фона" dlg:align="center" dlg:multiline="true"/>
+  <dlg:text dlg:id="Label12" dlg:tab-index="48" dlg:left="162" dlg:top="144" dlg:width="48" dlg:height="16" dlg:value="Скорость счета от источника" dlg:align="center" dlg:multiline="true"/>
+  <dlg:numericfield dlg:id="NumericField32" dlg:tab-index="49" dlg:left="171" dlg:top="92" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField33" dlg:tab-index="50" dlg:left="171" dlg:top="102" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField34" dlg:tab-index="51" dlg:left="171" dlg:top="111" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField35" dlg:tab-index="52" dlg:left="171" dlg:top="122" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField36" dlg:tab-index="53" dlg:left="171" dlg:top="133" dlg:width="29" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="325" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField37" dlg:tab-index="54" dlg:left="170" dlg:top="163" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField38" dlg:tab-index="55" dlg:left="170" dlg:top="173" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField39" dlg:tab-index="56" dlg:left="170" dlg:top="183" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField40" dlg:tab-index="57" dlg:left="170" dlg:top="193" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField41" dlg:tab-index="58" dlg:left="170" dlg:top="204" dlg:width="32" dlg:height="10" dlg:decimal-accuracy="1" dlg:value="10283" dlg:spin="true"/>
+  <dlg:textfield dlg:id="TextField3" dlg:tab-index="59" dlg:left="63" dlg:top="55" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.002"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="60" dlg:left="74" dlg:top="41" dlg:width="14" dlg:height="10" dlg:value="БД 2"/>
+  <dlg:textfield dlg:id="TextField4" dlg:tab-index="61" dlg:left="118" dlg:top="55" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.003"/>
+  <dlg:text dlg:id="Label13" dlg:tab-index="62" dlg:left="127" dlg:top="41" dlg:width="18" dlg:height="10" dlg:value="БД 3"/>
+  <dlg:textfield dlg:id="TextField5" dlg:tab-index="63" dlg:left="170" dlg:top="55" dlg:width="30" dlg:height="10" dlg:align="center" dlg:value="452.004"/>
+  <dlg:text dlg:id="Label14" dlg:tab-index="64" dlg:left="179" dlg:top="41" dlg:width="16" dlg:height="10" dlg:value="БД 4"/>
+  <dlg:text dlg:id="Label15" dlg:tab-index="65" dlg:left="134" dlg:top="7" dlg:width="29" dlg:height="10" dlg:value="Источник"/>
+  <dlg:button dlg:id="CommandButton1" dlg:tab-index="66" dlg:left="65" dlg:top="222" dlg:width="81" dlg:height="12" dlg:value="Протокол поверки"/>
+ </dlg:bulletinboard>
+</dlg:window>

@@ -416,14 +416,8 @@ sub insertRecordsToTemplate
 					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
 					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
-				if num &lt; 100 and num &gt;= 1 then
+				if num &gt;= 1 then
 					MyFormat = &quot;0.0&quot;
-					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
-				end if
-				if num &gt;= 100 then
-					MyFormat = &quot;0&quot;
 					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
 					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
 					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
