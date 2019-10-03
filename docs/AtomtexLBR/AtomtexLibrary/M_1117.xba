@@ -36,7 +36,6 @@ dim oDateFieldModel as object
 dim strokeForSaving as String
 rem=======================================================================================
 function avaragePointsRndArray(point as double, o_percent as double)
-	&apos;msgbox (&quot;p = &quot; + point) 
 	rem TODO сделать по Гауссу!!!
 	dim deviation as double
 	dim p1 as double
@@ -44,21 +43,18 @@ function avaragePointsRndArray(point as double, o_percent as double)
 	dim p3 as double
 	dim ar(2) as double 
 	deviation = o_percent/100*point
-	&apos;msgbox (&quot;deviation = &quot; + deviation) 
 	p1 = randValue(point, deviation)
-	&apos;msgbox p1
 	p2 = randValue(point, deviation)
-	p3 = (point*3 - p1) - p2
-	&apos;msgbox point*3
-	ar(0) = p1 	&apos;7,4
-	ar(1) = p2	&apos;7.3
-	ar(2) = p3	&apos;8.2
+	p3 = point*3 - p1 - p2
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
 	avaragePointsRndArray = ar	
 end function
 rem=======================================================================================
 function sourceDistanceArray(point as double, prefix as string, bdType as string)
 	dim ar(1) as variant
-	ar = Array(&quot;Неизвестно&quot;,&quot;Неизвестно&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
 	rem если это гамма блок:
 	if bdType = &quot;gamma&quot; then
 		if prefix = &quot;мк&quot; then
@@ -361,11 +357,15 @@ sub insertRecordsToTemplate
 	dim sourceArray as variant
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
 	rem TODO сделать по Гауссу!!!
-	percentOtk = 10 rem %
-	findAndRename(&quot;$bground&quot;, Format(randValue(90, 2), MyFormat)
-	findAndRename(&quot;$temp&quot;, Format(randValue(23, 2), MyFormat)
-	findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat)
-	findAndRename(&quot;$vlag&quot;, Format(randValue(80, 4), MyFormat)	
+	dim threePointArray(2) as double
+	dim bground as double
+	percentOtk = 7 rem %
+	bground = Format(randValue(95, 5), MyFormat)
+	findAndRename(&quot;$bground&quot;, bground)
+	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
+	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
+	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
+	
 	for i=0 to mainCount 
 		if valueRecordsArray(i)(0) = 0 then deleteTable(&quot;t&quot; + i) rem проверка флага, есть данные или нет
 	next i		
@@ -403,26 +403,31 @@ sub insertRecordsToTemplate
 					&apos;findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), avaragePointsRndArray(num, percentOtk)(1))
 					&apos;findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), avaragePointsRndArray(num, percentOtk)(2))
 				
+				threePointArray = avaragePointsRndArray(num, percentOtk)
 				if num &lt; 0.1 and num &gt; 0 then
 					MyFormat = &quot;0.000&quot;
-					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
 				if num &lt; 1 and num &gt;= 0.1 then
 					MyFormat = &quot;0.00&quot;
-					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
-					if num &gt;= 1 then
+				if num &gt;= 1 then
 					MyFormat = &quot;0.0&quot;
-					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
-					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
 				
-				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
+				if con_point&lt;1 and prefix=&quot;мк&quot; then 
+					findAndRename((&quot;$&quot; + i + &quot;-5&quot; + (j-1)), bground)
+				else	
+					findAndRename((&quot;$&quot; + i + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
+				end if	
 				
 				if num &lt; 0.1 and num &gt; 0 then
 					MyFormat = &quot;0.000&quot;
