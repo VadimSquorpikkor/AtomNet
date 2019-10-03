@@ -35,6 +35,27 @@ dim oDateFieldModel as object
 
 dim strokeForSaving as String
 rem=======================================================================================
+function avaragePointsRndArray(point as double, o_percent as double)
+	&apos;msgbox (&quot;p = &quot; + point) 
+	rem TODO сделать по Гауссу!!!
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim ar(2) as double 
+	deviation = o_percent/100*point
+	&apos;msgbox (&quot;deviation = &quot; + deviation) 
+	p1 = randValue(point, deviation)
+	&apos;msgbox p1
+	p2 = randValue(point, deviation)
+	p3 = (point*3 - p1) - p2
+	&apos;msgbox point*3
+	ar(0) = p1 	&apos;7,4
+	ar(1) = p2	&apos;7.3
+	ar(2) = p3	&apos;8.2
+	avaragePointsRndArray = ar	
+end function
+rem=======================================================================================
 function sourceDistanceArray(point as double, prefix as string, bdType as string)
 	dim ar(1) as variant
 	ar = Array(&quot;Неизвестно&quot;,&quot;Неизвестно&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
@@ -337,8 +358,10 @@ sub insertRecordsToTemplate
 	dim prefix as string
 	dim serial as string
 	dim bdType as string
-	dim sourceArray as variant 
+	dim sourceArray as variant
+	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
 	rem TODO сделать по Гауссу!!!
+	percentOtk = 10 rem %
 	findAndRename(&quot;$bground&quot;, Format(randValue(90, 2), MyFormat)
 	findAndRename(&quot;$temp&quot;, Format(randValue(23, 2), MyFormat)
 	findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat)
@@ -370,8 +393,37 @@ sub insertRecordsToTemplate
 				sourceArray = sourceDistanceArray(con_point, prefix, bdType)
 				&apos;msgbox sourceArray(0)
 				
+				
+				
 				findAndRename((&quot;$&quot; + i + &quot;-3&quot; + (j-1)), sourceDistanceArray(con_point, prefix, bdType)(0)) rem название источника
 				findAndRename((&quot;$&quot; + i + &quot;-4&quot; + (j-1)), sourceDistanceArray(con_point, prefix, bdType)(1))	rem расстояние до источника
+				
+				rem 
+					&apos;findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), avaragePointsRndArray(num, percentOtk)(0))
+					&apos;findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), avaragePointsRndArray(num, percentOtk)(1))
+					&apos;findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), avaragePointsRndArray(num, percentOtk)(2))
+				
+				if num &lt; 0.1 and num &gt; 0 then
+					MyFormat = &quot;0.000&quot;
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+				end if
+				if num &lt; 1 and num &gt;= 0.1 then
+					MyFormat = &quot;0.00&quot;
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+				end if
+					if num &gt;= 1 then
+					MyFormat = &quot;0.0&quot;
+					findAndRename((&quot;$&quot; + i + &quot;-6&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(0), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-7&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(1), MyFormat))
+					findAndRename((&quot;$&quot; + i + &quot;-8&quot; + (j-1)), Format(avaragePointsRndArray(num, percentOtk)(2), MyFormat))
+				end if
+				
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
+				
 				if num &lt; 0.1 and num &gt; 0 then
 					MyFormat = &quot;0.000&quot;
 					findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), Format(num, MyFormat))
