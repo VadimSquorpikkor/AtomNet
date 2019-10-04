@@ -34,6 +34,7 @@ dim measLimitsArray(21) as variant rem массив массивов грани�
 dim oDateFieldModel as object
 
 dim strokeForSaving as String
+
 rem=======================================================================================
 function avaragePointsRndArray(point as double, o_percent as double)
 	rem TODO сделать по Гауссу!!!
@@ -89,7 +90,7 @@ Sub at1117m_Dialog_Show
 
 	initialize
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
-	form = oDialog1117.Model
+	&apos;form = oDialog1117.Model
 	oDialogMain.endexecute()  
 	
 	oDateFieldModel = oDialog1117.Model.getByName(&quot;DateField1&quot;)
@@ -511,12 +512,12 @@ sub initialize
 		rem EmptyArray - на 6 элементов																			rem	 110 130 140 a b    gamma мк-м / alpha 1-10^4 / beta 1-10^5 / md neutron / pp neutron
 		addDevice(0, &quot;БДКГ-01&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.1,10000,0,0,0,0,0,0,0,0))
 		addDevice(1, &quot;БДКГ-03&quot;, &quot;Зв/ч&quot;, 5, 	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),			10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
-		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
+		addDevice(2, &quot;БДКГ-04&quot;, &quot;Зв/ч&quot;, 9, 	Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),11000,	Array(0.05,10000,0,0,0,0,0,0,0,0))
 		addDevice(3, &quot;БДКГ-05&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.03,0.3,0,0,0,0,0,0,0,0))
 		addDevice(4, &quot;БДКГ-11&quot;, &quot;Зв/ч&quot;, 4, 	Array(0.07,0.7,7,70),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),					10000,	Array(0.01,0.1,0,0,0,0,0,0,0,0))
 		addDevice(5, &quot;БДКГ-17&quot;, &quot;Зв/ч&quot;, 5, 	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),					01000,	Array(1000,100000,0,0,0,0,0,0,0,0))
-		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 7, 	Array(0.7,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,	Array(0.02,1000,0,0,0,0,0,0,0,0))
-		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 7, 	Array(0.03,7,70,0.7,7,70,0.7), 			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		11000,Array(0,0,0,0,0,0,0,0,0,0))rem уточнить какие установки
+		addDevice(6, &quot;БДКГ-24&quot;, &quot;Зв/ч&quot;, 8, 	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),	11000,	Array(0.02,1000,0,0,0,0,0,0,0,0))
+		addDevice(7, &quot;БДКГ-30&quot;, &quot;Гр/ч&quot;, 8, 	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),	11000,	Array(0,0,0,0,0,0,0,0,0,0))
 		addDevice(8, &quot;БДКГ-32&quot;, &quot;Зв/ч&quot;, 9, 	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),11000,	Array(0.02,500,0,0,0,0,0,0,0,0))
 		rem------------------------------------------------------------------------------------------------------------------------
 		addDevice(9, &quot;БДКН-01&quot;, &quot;&quot;, 5, 		Array(0.5,5.9, 57, 235, 1019),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),					00100,	Array(0,0,0,0,0,0,0,0,0.1,10000))
@@ -603,8 +604,8 @@ sub addDevice(i as integer, title as string, meas as string, pointQuantity as in
 	x = pointValue
 	arrayOfPointsValueArrays(i) = x rem pointValue
 	dim y as variant
-	y = pointText
-	arrayOfPointsTextArrays(i) = y
+	&apos;y = pointText
+	arrayOfPointsTextArrays(i) = pointText
 	FacilityArray(i) = FacilityType
 	dim z as variant
 	z = measLimits
