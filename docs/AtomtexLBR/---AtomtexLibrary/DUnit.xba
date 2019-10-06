@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="DUnit" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _BDname As String
+private _measUnit As String
+private _pointValue as new Collection
+private _pointText as new Collection
+private _BDType as string
+private _measLimit(1) as double
+private _measMinLimit as double
+private _measMaxLimit as double
+
+REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
+Private Sub Class_Initialize()
+End Sub
+
+Private Sub Class_Terminate()
+end sub
+
+REM --- CLASS METHODS
+Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	dim arr(0) as double
+	dim ar2(0) as double
+	dim ar3(1) as double
+	_BDname = BDname
+	_measUnit = measUnit
+	_BDType = BDType
+	arr = pointValue
+	ar2 = pointText
+	ar3 = measLimit
+	_measMinLimit = ar3(0)
+	_measMaxLimit = ar3(1)
+	dim i as integer
+	for i=0 to uBound(arr)
+		_pointValue.add(arr(i))
+		_pointText.add(ar2(i))
+	next i
+	rem msgbox _pointValue.item(2)
+End Sub
+
+public sub printBDType
+	msgbox _BDType
+end sub
+
+
+
+
+
+
+REM --- CLASS GET/LET/SET PROPERTIES                                                                 
+Public Property Get X As Double
+   X = _X
+End Property
+
+Public Property Let X(ByVal pValue As Double)
+   _X = pValue
+End property
+
+REM -----------------------------------------------------------------------------------------------------------------------
+Public Property Get Y As Double
+   Y = _Y
+End Property
+
+Public Property Let Y(ByVal pValue As Double)
+   _Y = pValue
+End property
+
+REM -----------------------------------------------------------------------------------------------------------------------
+Public Property Get Dummy As Variant
+   Dummy = Null
+End Property
+
+
+</script:module>

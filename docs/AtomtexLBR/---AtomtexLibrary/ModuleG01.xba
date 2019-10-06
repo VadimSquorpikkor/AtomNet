@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleG01" script:language="StarBasic">REM  *****  BASIC  *****
+
+REM declare dialog object &quot;globally&quot;
+dim oDialogBDKG01 as object
+dim oDateFieldModel as object
+&apos;-----------------------------------------
+
+Sub bdkg01_Dialog_Show
+   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+   oDialogBDKG01 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogG01 )
+   
+   oDateFieldModel = oDialogBDKG01.Model.getByName(&quot;DateField1&quot;)
+   
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField1&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField2&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7.0
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField3&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField4&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.70
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField5&quot;)
+  oNumericFieldModel.valuestep = 0.1
+  oNumericFieldModel.value = 7
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField6&quot;)
+  oNumericFieldModel.valuestep = 1
+  oNumericFieldModel.value = 70
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField7&quot;)
+  oNumericFieldModel.valuestep = 0.01
+  oNumericFieldModel.value = 0.7
+  oNumericFieldModel = oDialogBDKG01.Model.getByName(&quot;NumericField8&quot;)
+  oNumericFieldModel.valuestep = 0.1
+	oNumericFieldModel.value = 7
+  
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)&apos;DateSerial(2016, 10, 12)
+
+	oDialogMain.endexecute()
+	oDialogBDKG01.Execute()
+End Sub
+&apos;---------------------------------------------------
+private sub makeSertG01(path as string)
+    OpenTemplate(path)
+	findAndRename(&quot;$bd_num$&quot;, oDialogBDKG01.Model.getByName(&quot;TextField1&quot;).Text)
+	
+	findAndRename(&quot;$p_1$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField1&quot;).Value)
+    findAndRename(&quot;$p_2$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField2&quot;).Value)
+    findAndRename(&quot;$p_3$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField3&quot;).Value)
+    findAndRename(&quot;$p_4$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField4&quot;).Value)
+    findAndRename(&quot;$p_5$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField5&quot;).Value)
+    findAndRename(&quot;$p_6$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField6&quot;).Value)
+    findAndRename(&quot;$p_7$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField7&quot;).Value)
+    findAndRename(&quot;$p_8$&quot;, oDialogBDKG01.Model.getByName(&quot;NumericField8&quot;).Value)
+    
+    findAndRename(&quot;$date$&quot;, getDate(oDateFieldModel))
+end sub
+&apos;-----------------------------------------------------
+private sub makeSertG01RU()
+	 makeSertG01(sertPath &amp; &quot;template_bdkg01_ser_RU.odt&quot;)
+end sub
+&apos;-----------------------------------------------------
+private sub makeSertG01EN()
+	 makeSertG01(sertPath &amp; &quot;template_bdkg01_ser_EN.odt&quot;)
+end sub
+
+
+</script:module>
