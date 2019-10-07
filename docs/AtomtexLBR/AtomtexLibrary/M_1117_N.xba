@@ -32,16 +32,10 @@ Sub at1117m_Dialog_Show
 	oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(false)
 	
-	oDialog1117.getControl(&quot;NumericField0&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField1&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField2&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField3&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField4&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField5&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField6&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField7&quot;).setVisible(false)
-	oDialog1117.getControl(&quot;NumericField8&quot;).setVisible(false)
-		
+	for i=1 to 9
+		oDialog1117.getControl(&quot;NumericField&quot; + i).setVisible(false)
+	next i
+	
 	oDialog1117.Execute()
 End Sub
 rem=======================================================================================
@@ -84,8 +78,6 @@ sub addBDtoCollection(ByVal bname as string, ByVal measUnit as string, ByVal poi
 end sub
 rem=======================================================================================
 sub start
-	maxCheckedCount = checkedCount
-
 	oDialog1117.getControl(&quot;bNext&quot;).setVisible(true)
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(true)
 	oDialog1117.getControl(&quot;bStart&quot;).setVisible(false)
@@ -147,6 +139,7 @@ Sub checkBoxListener(oEvent As Object)
     else 	
     	checkedCount = checkedCount - 1
     end if
+    maxCheckedCount = checkedCount
     if checkedCount&gt;0 then rem кнопка &quot;старт&quot; активна только если чекнут хотя бы один чекбокс
     	oDialog1117.getControl(&quot;bStart&quot;).setEnable(true)
     else	
@@ -157,28 +150,51 @@ rem=============================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(bd as new DUnit) 
 	typeText.Text = bd.BDName
-	&apos;dim last as integer
-	&apos;last = arrayOfPointsQuantity(count)
-	&apos;dim pointArray as variant
-	&apos;dim pointTextArray as variant
-	&apos;dim point as double
-	&apos;dim nStep as double
-	
-	&apos;pointArray = arrayOfPointsValueArrays(count)
-	&apos;pointTextArray = arrayOfPointsTextArrays(count)
-	&apos;for i=0 to last - 1
-	&apos;	oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
-	&apos;	oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
-	&apos;	point = pointArray(i)
-	&apos;	nStep = rightStep(point)
-	&apos;	oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
-	&apos;	oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
-	&apos;	oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-	&apos;	oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count)
-	&apos;next i
-	&apos;for i=last to 8
-	&apos;	oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
-	&apos;	oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
-	&apos;next i	 	
+	for i=1 to bd.pointList.count
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		point = bd.pointList.item(i)
+		nStep = rightStep(point)
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+	next i
+	for i=bd.pointList.count+1 to 9
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
 end function
+rem======================================================================================= 
+function rightStep(d as double) rem расчет правильного Step-а 
+	if              d&gt;10000 then rightStep = 10
+	if d&lt;=10000 and d&gt;10	then rightStep = 1
+	if d&lt;=10    and d&gt;1     then rightStep = 0.1
+	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
+	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
+end function
+rem======================================================================================= 
+sub done
+	&apos;insertDataToList	
+end sub
+rem=======================================================================================
+sub insertDataToList(bd as new DUnit)
+	dim list as new Collection
+	list = bd.pointList
+	for i=1 to list.count
+		list.item(i) = oDialog1117.getControl(&quot;NumericField&quot; + i).Text
+	next i
+	bd.setValueList(list)
+end sub
+rem=======================================================================================
+sub insertRecordsToTemplate
+end sub
+rem=======================================================================================
+sub deleteTable(name as string)
+	dim oTable as object
+    oTable = ThisComponent.getTextTables().getByName(name)
+    oTable.dispose()
+end sub
+rem=======================================================================================
+
 </script:module>

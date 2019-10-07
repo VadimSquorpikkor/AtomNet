@@ -16,6 +16,7 @@ private _measLimit(1) as double
 private _measMinLimit as double
 private _measMaxLimit as double
 private _isPrintable as boolean
+private _measuredValue as new Collection
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -41,6 +42,7 @@ Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal point
 	for i=0 to uBound(arr)
 		_pointValue.add(arr(i))
 		_pointText.add(ar2(i))
+		_measuredValue.add(0)
 	next i
 	&apos;msgbox &quot;adddata - &quot; + BDName
 	rem msgbox _pointValue.item(2)
@@ -76,10 +78,12 @@ Public Function pointTextList As Collection
    pointTextList = _pointText
 End Function
 
+public function setValueList(measuredValue as Collection)
+	_measuredValue = measuredValue
+end function
 
-&apos;private _pointValue as new Collection
-&apos;private _pointText as new Collection
-
-
+public function valueList as Collection
+	valueList = _measuredValue
+end function
 
 </script:module>
