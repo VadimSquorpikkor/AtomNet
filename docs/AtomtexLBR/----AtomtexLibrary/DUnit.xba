@@ -15,7 +15,6 @@ private _BDType as string
 private _measLimit(1) as double
 private _measMinLimit as double
 private _measMaxLimit as double
-private _isPrintable as boolean
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -42,44 +41,40 @@ Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal point
 		_pointValue.add(arr(i))
 		_pointText.add(ar2(i))
 	next i
-	&apos;msgbox &quot;adddata - &quot; + BDName
 	rem msgbox _pointValue.item(2)
 End Sub
 
+public sub printBDType
+	msgbox _BDType
+end sub
+
+
+
+
+
+
 REM --- CLASS GET/LET/SET PROPERTIES                                                                 
-Public Property Get isPrintable As boolean
-   isPrintable = _isPrintable
+Public Property Get X As Double
+   X = _X
 End Property
 
-Public Property Let isPrintable(ByVal pValue As boolean)
-   _isPrintable = pValue
+Public Property Let X(ByVal pValue As Double)
+   _X = pValue
 End property
 
-Public Function BDName As string
-   BDName = _BDName
-   &apos;msgbox &quot;getter - &quot; + BDName
-End Function
+REM -----------------------------------------------------------------------------------------------------------------------
+Public Property Get Y As Double
+   Y = _Y
+End Property
 
-Public Function measUnit As string
-   measUnit = _measUnit
-End Function
+Public Property Let Y(ByVal pValue As Double)
+   _Y = pValue
+End property
 
-Public Function BDType As string
-   BDType = _BDType
-End Function
-
-Public Function pointList As Collection
-   pointList = _pointValue
-End Function
-
-Public Function pointTextList As Collection
-   pointTextList = _pointText
-End Function
-
-
-&apos;private _pointValue as new Collection
-&apos;private _pointText as new Collection
-
+REM -----------------------------------------------------------------------------------------------------------------------
+Public Property Get Dummy As Variant
+   Dummy = Null
+End Property
 
 
 </script:module>

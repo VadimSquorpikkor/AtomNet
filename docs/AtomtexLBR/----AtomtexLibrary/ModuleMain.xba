@@ -19,8 +19,6 @@ Sub MainDialog_Show
 	user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
-	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
-	
 	
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
@@ -81,11 +79,6 @@ sub sortColumns
 	dispatcher.executeDispatch(document, &quot;.uno:DataSort&quot;, &quot;&quot;, 0, args1())
 end sub
 rem-------------------------------------------------------------------------
-Function MySubstitute(sText1 as string, sText2 as string, sText3 as string) as string
-   FuncAcc = createunoservice(&quot;com.sun.star.sheet.FunctionAccess&quot;)
-   MySubstitute = FuncAcc.callFunction(&quot;SUBSTITUTE&quot;, array(sText1,sText2,sText3))
-End function
-rem-------------------------------------------------------------------------
 Sub collection2()
    Dim oColl As New Collection, i As Integer
    oColl.Add(&quot;First&quot;)
@@ -103,11 +96,14 @@ Sub collection3()
    &apos;du.printBDType
 End Sub 
 Sub collection()
-   dim bd1 as new DUnit
-   dim BDList as new collection
+   dim bd1,bd2,bd3 as new DUnit
 	bd1.addData(&quot;БДКГ-01&quot;,&quot;Зв/ч&quot;, Array(20,70,0.7,7,70), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(1,5))
+	bd2.addData(&quot;БДКГ-01&quot;,&quot;Зв/ч&quot;, Array(20,70,0.7,7,70), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;alpha&quot;, Array(1,5))
+	bd3.addData(&quot;БДКГ-01&quot;,&quot;Зв/ч&quot;, Array(20,70,0.7,7,70), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(1,5))
 	BDList.add(bd1)
-	msgbox BDList.item(1).BDName
+	BDList.add(bd2)
+	BDList.add(bd3)
+	BDList.item(2).printBDType
    
 End Sub
 rem-------------------------------------------------------------------------

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1117_old" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub Main
+
+End Sub
+
+	&apos;for i=1 to 9
+&apos;		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).Visible = false
+&apos;	next i
+
+rem======================================================================================= 
+Sub next_step
+
+&apos;   cmdPrev.Model.Enabled = true &apos;Not cmdPrev.Model.Enabled
+&apos;   if oDialog1117.Model.Step = 2 then cmdNext.Model.Enabled = False
+&apos;   oDialog1117.Model.Step = oDialog1117.Model.Step + 1   
+
+
+End Sub
+rem======================================================================================= 
+Sub prev_step
+   cmdNext.Model.Enabled = true
+	if oDialog1117.Model.Step = 2 then cmdPrev.Model.Enabled = False
+   oDialog1117.Model.Step = oDialog1117.Model.Step - 1 
+End Sub
+rem=======================================================================================
+sub checkBoxCheckerOld(impl as integer)
+	if startNum &lt;&gt; 0 then
+		for i=0 to arrayOfPointsQuantity(startNum-impl) rem (startNum-1)
+			rem findAndRename((&quot;$&quot; + (startNum-1) + &quot;-0&quot; + i), (oDialog1117.Model.getByName(&quot;NumericField&quot;+i).value))	
+			rem valueRecordsArray(startNum-impl)
+		next i
+		
+	end if
+	if startNum&lt;=mainCount and startNum&gt;=0 then
+		while oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 0 and startNum&lt;&gt;mainCount
+			rem deleteTable(&quot;t&quot; + startNum)
+			startNum = startNum+impl
+		wend
+
+			if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
+				makeLayout(startNum) 	
+				startNum = startNum+impl
+			else 
+				rem deleteTable(&quot;t&quot; + startNum)
+			end if
+		else
+			rem cmdNext = oDialog1117.getControl(&quot;cmdNext&quot;).
+	end if	
+end sub
+
+&apos;	if startNum &amp;lt;&amp;gt; 0 then
+&apos;		for i=0 to arrayOfPointsQuantity(startNum-1)
+&apos;			findAndRename((&amp;quot;$&amp;quot; + (startNum-1) + &amp;quot;-0&amp;quot; + i), (oDialog1117.Model.getByName(&amp;quot;NumericField&amp;quot;+i).value))	
+&apos;		next i
+&apos;		
+&apos;	end if
+&apos;	if startNum&amp;lt;=mainCount then
+&apos;		while oDialog1117.getControl(&amp;quot;CheckBox&amp;quot; + startNum).State = 0 and startNum&amp;lt;&amp;gt;mainCount
+&apos;			deleteTable(&amp;quot;t&amp;quot; + startNum)
+&apos;			startNum = startNum+1
+&apos;		wend
+&apos;
+&apos;			if oDialog1117.getControl(&amp;quot;CheckBox&amp;quot; + startNum).State = 1 then
+&apos;				makeLayout(startNum) 	
+&apos;				startNum = startNum+1
+&apos;			else 
+&apos;				deleteTable(&amp;quot;t&amp;quot; + startNum)
+&apos;			end if
+&apos;		else
+&apos;			rem cmdNext = oDialog1117.getControl(&amp;quot;cmdNext&amp;quot;).
+&apos;	end if	
+
+
+rem=======================================================================================
+sub checkBoxChecker(impl as integer)
+	if startNum&gt;-1 and startNum&lt;mainCount+1 then
+		while oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 0 and startNum&lt;&gt;mainCount
+			startNum = startNum+1
+		wend
+		if oDialog1117.getControl(&quot;CheckBox&quot; + startNum).State = 1 then
+&apos;			insertDataToArray
+			makeLayout(startNum) 	
+			startNum = startNum+1
+		end if
+	end if	
+end sub
+
+
+
+sub insertRecordsToTemplate
+	OpenTemplate(sertPath &amp; &quot;1117sorted.odt&quot;)
+	dim tempArray(1) as double
+	for i=0 to mainCount
+	&apos;	redim tempArray(uBound(valueRecordsArray(i))) as double
+		tempArray = valueRecordsArray(i)
+		&apos;msgbox &quot;ta = &quot; + uBound(tempArray) 
+		if tempArray(0) = 1 then
+			for j=1 to uBound(valueRecordsArray(i))
+				&apos;msgbox &quot;j = &quot; + j + &quot;, tempArray = &quot; + uBound(tempArray)
+				findAndRename((&quot;$&quot; + i + &quot;-0&quot; + (j-1)), tempArray(j))	
+			next j
+		else
+			deleteTable(&quot;t&quot; + i)
+		end if
+	next i
+end sub
+sub neutron_old(i as integer)
+				dim fon, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16 as double
+				fon = valueRecordsArray(i)(1)	rem фон
+				p1 = valueRecordsArray(i)(2)
+				p2 = valueRecordsArray(i)(3)
+				p3 = valueRecordsArray(i)(4)
+				p4 = valueRecordsArray(i)(5)
+				rem------------------------------------------------------------
+				p5 = (p1-fon)*0.6
+				p6 = p2*0.6
+				p7 = p3*0.86
+				p8 = p4*0.96
+				
+				findAndRename((&quot;$&quot; + i + &quot;-21&quot;), Format(p5, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-22&quot;), Format(p6, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-23&quot;), Format(p7, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-24&quot;), Format(p8, MyFormat))
+				rem------------------------------------------------------------
+				p9 = (p5 - 5.9)/5.9 * 100
+				p10 = (p6 - 57)/57 * 100
+				p11 = (p7 - 235)/235 * 100
+				p12 = (p8 - 1019)/1019 * 100
+				
+				findAndRename((&quot;$&quot; + i + &quot;-31&quot;), Format(p9, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-32&quot;), Format(p10, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-33&quot;), Format(p11, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-34&quot;), Format(p12, MyFormat))
+				rem------------------------------------------------------------
+				p13 = 1.1 * sqr(p9 * p9 + 5*5)
+				p14 = 1.1 * sqr(p10 * p10 + 5*5)
+				p15 = 1.1 * sqr(p11 * p11 + 5*5)
+				p16 = 1.1 * sqr(p12 * p12 + 5*5)
+				
+				findAndRename((&quot;$&quot; + i + &quot;-41&quot;), Format(p13, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-42&quot;), Format(p14, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-43&quot;), Format(p15, MyFormat))
+				findAndRename((&quot;$&quot; + i + &quot;-44&quot;), Format(p16, MyFormat))
+				rem------------------------------------------------------------
+end sub
+
+
+
+
+
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old2(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	&apos;msgbox arrayOfPointsQuantity(count)
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim pointTextArray as variant
+	
+	dim measPointText as string
+	pointArray = arrayOfPointsValueArrays(count)
+	pointTextArray = arrayOfPointsTextArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(pointArray(i), MyFormat)
+		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
+		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		measPointText = (&quot;&quot; +  Format(pointArray(i), MyFormat)   + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count))
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
+
+
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim point as String
+	
+	pointArray = arrayOfPointsValueArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		
+		point = prefixWithNumber(pointArray(i))
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = point
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot;&quot; + point + arrayOfMeas(count)
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
+
+
+rem======================================================================================= 
+rem настройка отображения виджета под каждый конкретный тип БД 
+function makeLayout_old3(count as integer) 
+
+	typeText.Text = arrayOfBdTypes(count)
+	dim last as integer
+	&apos;msgbox arrayOfPointsQuantity(count)
+	last = arrayOfPointsQuantity(count)
+	dim pointArray as variant
+	dim pointTextArray as variant
+	
+	dim measPointText as string
+	pointArray = arrayOfPointsValueArrays(count)
+	pointTextArray = arrayOfPointsTextArrays(count)
+	for i=0 to last - 1
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(pointArray(i), MyFormat)
+		rem oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = point(i-1)/point(i-1) rem шаг всегда равен десятой части числа 
+		rem measPointText = (&quot;&quot; + point(i-1) + &quot; &quot; + arrayOfMeas(count))
+		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = pointArray(i)/70
+		
+		measPointText = (&quot;&quot; +  Format(pointArray(i), MyFormat)   + &quot; &quot; + pointTextArray(i) + arrayOfMeas(count))
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = measPointText
+	next i
+	for i=last to 8
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i	 	
+end function
+</script:module>

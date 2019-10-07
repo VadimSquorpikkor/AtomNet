@@ -40,7 +40,7 @@
   </dlg:button>
   <dlg:img dlg:style-id="0" dlg:id="ImageControl1" dlg:tab-index="11" dlg:left="12" dlg:top="141" dlg:width="116" dlg:height="22"/>
   <dlg:button dlg:id="CommandButton10" dlg:tab-index="12" dlg:left="14" dlg:top="127" dlg:width="13" dlg:height="10" dlg:value="1">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.at1117m_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleMain.collection?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>

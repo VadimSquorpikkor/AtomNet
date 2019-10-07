@@ -241,7 +241,6 @@ sub deleteUselessFacilities
 end sub
 rem=======================================================================================
 sub start
-	msgbox &quot;start&quot;
 	collectCheckedPositionsToArray				rem позиции всех выбранных БД заносятся в архив
 	if(iCanStart = true) then
 		makeLayout(checkedPositionsArray(startNum))	rem создается лэйаут по первому чекнутому БД
@@ -475,11 +474,11 @@ sub neutron_01(i as integer)
 	
 		for n = 1 to 4
 			p1 = (valueRecordsArray(i)(n+1)-fon)*point_br_array(n-1)	
-			findAndRename((&quot;$&quot; + i + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
 			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
-			findAndRename((&quot;$&quot; + i + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
 			p3 = 1.1 * sqr(p2 * p2 + 5*5)
-			findAndRename((&quot;$&quot; + i + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
 			
 		next n
 	
@@ -495,11 +494,11 @@ sub neutron_03(i as integer)
 	
 		for n = 1 to 4
 			p1 = (valueRecordsArray(i)(n+1)-fon)*point_br_array(n-1)	
-			findAndRename((&quot;$&quot; + i + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
 			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
-			findAndRename((&quot;$&quot; + i + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
 			p3 = 1.1 * sqr(p2 * p2 + 5*5)
-			findAndRename((&quot;$&quot; + i + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
 			
 		next n
 	
