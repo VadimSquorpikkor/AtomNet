@@ -17,7 +17,6 @@ private _measMinLimit as double
 private _measMaxLimit as double
 private _isPrintable as boolean
 private _measuredValue as new Collection
-private _pointCount as integer
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -43,9 +42,8 @@ Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal point
 	for i=0 to uBound(arr)
 		_pointValue.add(arr(i))
 		_pointText.add(ar2(i))
-		_measuredValue.add(-1)
+		_measuredValue.add(0)
 	next i
-	_pointCount = uBound(arr)
 	&apos;msgbox &quot;adddata - &quot; + BDName
 	rem msgbox _pointValue.item(2)
 End Sub
@@ -70,10 +68,6 @@ End Function
 
 Public Function BDType As string
    BDType = _BDType
-End Function
-
-Public Function pointCount As integer
-   pointCount = _pointCount
 End Function
 
 Public Function pointList As Collection
