@@ -92,11 +92,4 @@ public function valueList as Collection
 	valueList = _measuredValue
 end function
 
-public function minLimit as double
-	minLimit = _measMinLimit
-end function
-
-public function maxLimit as double
-	maxLimit = _measMaxLimit
-end function
 </script:module>
