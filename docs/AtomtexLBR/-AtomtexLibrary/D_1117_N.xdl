@@ -56,7 +56,7 @@
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onNextButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="bDone" dlg:tab-index="1" dlg:left="178" dlg:top="237" dlg:width="40" dlg:height="18" dlg:page="2" dlg:value="Готово">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.done?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onDoneButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:text dlg:style-id="2" dlg:id="type_text" dlg:tab-index="40" dlg:left="131" dlg:top="108" dlg:width="80" dlg:height="20" dlg:page="1" dlg:align="center"/>
   <dlg:checkbox dlg:id="CheckBox20" dlg:tab-index="9" dlg:left="94" dlg:top="177" dlg:width="32" dlg:height="10" dlg:value="БДПС-02" dlg:checked="false">

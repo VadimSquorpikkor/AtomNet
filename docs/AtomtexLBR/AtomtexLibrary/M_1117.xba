@@ -493,6 +493,7 @@ sub neutron_03(i as integer)
 	dim fon, p1, p2, p3 as double
 	fon = valueRecordsArray(i)(1)	rem фон
 	
+	
 		for n = 1 to 4
 			p1 = (valueRecordsArray(i)(n+1)-fon)*point_br_array(n-1)	
 			findAndRename((&quot;$&quot; + i + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))

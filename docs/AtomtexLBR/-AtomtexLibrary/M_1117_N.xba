@@ -97,11 +97,18 @@ sub onPrevButton
 end sub
 rem=======================================================================================
 sub onNextButton
+	insertDataToList(BDList.item(count))
 	nextChecked
 	oDialog1117.getControl(&quot;bPrev&quot;).setEnable(true)
 end sub
+rem======================================================================================= 
+sub onDoneButton
+	insertDataToList(BDList.item(count))
+	insertRecordsToTemplate	
+end sub
 rem=======================================================================================
 private function nextChecked
+	rem if count&lt;&gt;0 then insertDataToList(BDList.item(count)) rem проверка -- если count = 0, значит функцию вызывает кнопка &quot;старт&quot;, а значит создавать лэйаут не нкжно
 	count = count + 1
 	while BDList.item(count).isPrintable=false &apos;count&lt;BDList.count
 		count = count + 1
@@ -151,10 +158,18 @@ rem настройка отображения виджета под каждый
 function makeLayout(bd as new DUnit) 
 	typeText.Text = bd.BDName
 	for i=1 to bd.pointList.count
+		dim value as double
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
 		point = bd.pointList.item(i)
 		nStep = rightStep(point)
+		&apos;msgbox bd.valueList.item(i)
+		value = bd.valueList.item(i)
+		&apos;&apos;&apos;if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
+			oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat) 
+		&apos;&apos;&apos;else
+			&apos;&apos;&apos;oDialog1117.getControl(&quot;NumericField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
+		&apos;&apos;&apos;end if		
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
@@ -173,21 +188,14 @@ function rightStep(d as double) rem расчет правильного Step-а
 	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
 	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
 end function
-rem======================================================================================= 
-sub done
-	&apos;insertDataToList	
-end sub
 rem=======================================================================================
-sub insertDataToList(bd as new DUnit)
+sub insertDataToList(bd as DUnit)
 	dim list as new Collection
-	list = bd.pointList
-	for i=1 to list.count
-		list.item(i) = oDialog1117.getControl(&quot;NumericField&quot; + i).Text
+	for i=1 to bd.pointCount
+		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Text)
 	next i
 	bd.setValueList(list)
-end sub
-rem=======================================================================================
-sub insertRecordsToTemplate
+	&apos;msgbox &quot;&quot; + count + &quot;, &quot; + bd.valueList.item(3)
 end sub
 rem=======================================================================================
 sub deleteTable(name as string)
@@ -196,5 +204,91 @@ sub deleteTable(name as string)
     oTable.dispose()
 end sub
 rem=======================================================================================
+sub insertRecordsToTemplate
+	dim facilities as new Facility
+	MyFormat = &quot;0.0&quot;
+	OpenTemplate(sertPath &amp; &quot;1117.odt&quot;)
+	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
+	rem TODO сделать по Гауссу!!!
+	dim threePointArray(2) as double
+	dim bground as double
+	percentOtk = 7 rem %
+	bground = Format(randValue(95, 5), MyFormat)
+	findAndRename(&quot;$bground&quot;, bground)
+	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
+	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
+	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
+	dim bd as new DUnit
+	
+	for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+		bd = BDList.item(i)
+		if bd.isPrintable = false then	deleteTable(&quot;t&quot; + (i-1))
+	next i
+	
+	for i=1 to BDList.count
+		bd = BDList.item(i)
+		strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
+		rem если сразу собирать данные по пределам (makeMeasLimitsArray), тогда не нужен будет метод makeFacilityArray -- 
+		rem будет понятно, какие типы излучения (бета гамма), и легко прикинуть, какая/какие гамма установки нужны (110 и/или 130) --
+		rem не нужно будет проверять каждую точку на болше-меньше 1 мЗв
+		if bd.isPrintable = true then
+			facilities.addTypeAndLimits(bd.BDType, bd.minLimit, bd.maxLimit)
+			
+			
+			
+			
+			
+		end if	
+		&apos;makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
+		
+		
+	next i
+
+	&apos;dim fArray() as boolean
+	&apos;fArray = facilities.FTypeArray
+	&apos;msgbox &quot;&quot;+fArray(0)+fArray(1)+fArray(2)+fArray(3)+fArray(4)
+
+
+	
+	dim num as double
+	dim con_point as double
+	dim pogr_point as double
+	dim dov_point as double
+	dim currentFacilityError as integer
+	dim prefix as string
+	dim serial as string
+	dim bdType as string
+	dim sourceArray as variant
+	
+	
+	
+	
+	&apos;deleteUselessFacilities
+	&apos;deleteUselessMeasLimits
+	&apos;insertMeasLimits
+	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
+	findAndRename(&quot;$serial&quot;, serial)
+	
+	rem удалить ненужные диапазоны
+	for i=0 to 4
+		dim f() as boolean
+		f = facilities.RadTypeArray
+		if f(i) = false then deleteTable(&quot;tml&quot; + i)	
+	next i
+	
+	rem удалить ненужные поверочные установки
+	for i=0 to 4
+	dim f2() as boolean
+		f2 = facilities.FacTypeArray
+		if f2(i) = false then deleteTable(&quot;tf&quot; + i)	
+	next i
+	
+	strokeForSaving = &quot;1117 M &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	CopyVariableToClipboard(strokeForSaving)
+	msgbox &quot;Готово!&quot;
+end sub
+
+
+
 
 </script:module>

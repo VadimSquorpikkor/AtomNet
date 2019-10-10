@@ -28,6 +28,12 @@ Sub at1117m_Dialog_Show
 	oDialog1117.getControl(&quot;bStart&quot;).setVisible(true)
 	oDialog1117.getControl(&quot;bStart&quot;).setEnable(false)
 	
+	oDialog1117.getControl(&quot;ser_rus&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;ser_rus&quot;).setEnable(false)
+	
+	oDialog1117.getControl(&quot;ser_eng&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;ser_eng&quot;).setEnable(false)
+	
 	oDialog1117.getControl(&quot;bPrev&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(false)
@@ -78,6 +84,10 @@ sub addBDtoCollection(ByVal bname as string, ByVal measUnit as string, ByVal poi
 end sub
 rem=======================================================================================
 sub start
+	oDialog1117.getControl(&quot;ser_rus&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;ser_eng&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;ComboBox1&quot;).setVisible(false)
+
 	oDialog1117.getControl(&quot;bNext&quot;).setVisible(true)
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(true)
 	oDialog1117.getControl(&quot;bStart&quot;).setVisible(false)
@@ -138,13 +148,21 @@ Sub checkBoxListener(oEvent As Object)
 	Dim oCheckbox As Object
     oCheckbox = oEvent.source.model
     dim position as integer
+    dim n as integer
     position = MySubstitute(oCheckbox.Name, &quot;CheckBox&quot;, &quot;&quot;) rem функция из ModuleMain. Возвращаю номер чекбокса (парсинг из его названия) 
-    BDList.item(position).isPrintable = oCheckbox.State rem при клике на чекбокс устанавливаю в переменную объекта БД значение из чБокса -- true или false  
-    &apos;msgbox BDList.item(position).isPrintable
+    if position = 20 then rem для БДПС-02 -- БД состоит из 3-х таблиц, поэтому при чеке работаем с тремя BDList.item&apos;ами
+    	BDList.item(position).isPrintable   = oCheckbox.State
+    	BDList.item(position+1).isPrintable = oCheckbox.State
+    	BDList.item(position+2).isPrintable = oCheckbox.State
+    	n = 3
+    else
+    	BDList.item(position).isPrintable = oCheckbox.State rem при клике на чекбокс устанавливаю в переменную объекта БД значение из чБокса -- true или false  	
+    	n = 1
+    end if
     if oCheckbox.State = 1 then
-    	checkedCount = checkedCount + 1
+    	checkedCount = checkedCount + n
     else 	
-    	checkedCount = checkedCount - 1
+    	checkedCount = checkedCount - n
     end if
     maxCheckedCount = checkedCount
     if checkedCount&gt;0 then rem кнопка &quot;старт&quot; активна только если чекнут хотя бы один чекбокс
@@ -155,22 +173,33 @@ Sub checkBoxListener(oEvent As Object)
 End Sub
 rem=======================================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
-function makeLayout(bd as new DUnit) 
-	typeText.Text = bd.BDName
+function makeLayout(bd as new DUnit)
+ 	typeText.Text = bd.BDName
 	for i=1 to bd.pointList.count
-		dim value as double
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
 		point = bd.pointList.item(i)
 		nStep = rightStep(point)
-		&apos;msgbox bd.valueList.item(i)
 		value = bd.valueList.item(i)
-		&apos;&apos;&apos;if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
+		
+		if point &lt; 0.1 and point &gt; 0 then
+			MyFormat = &quot;0.000&quot;
+		end if
+		if point &lt; 1 and point &gt;= 0.1 then
+			MyFormat = &quot;0.00&quot;
+		end if
+		if point &lt; 100 and point &gt;= 1 then
+			MyFormat = &quot;0.0&quot;
+		end if
+		if point &gt;= 100 then
+			MyFormat = &quot;0&quot;
+		end if
+				
+		if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
 			oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat) 
-		&apos;&apos;&apos;else
-			&apos;&apos;&apos;oDialog1117.getControl(&quot;NumericField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
-		&apos;&apos;&apos;end if		
-		oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat)
+		else
+			oDialog1117.getControl(&quot;NumericField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
+		end if	
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
@@ -188,6 +217,13 @@ function rightStep(d as double) rem расчет правильного Step-а
 	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
 	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
 end function
+rem======================================================================================= 
+function rightDecimalAccuracy(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
+	if nStep = 0.001 then rightDecimalAccuracy = 3
+	if nStep = 0.01  then rightDecimalAccuracy = 2
+	if nStep = 0.1 	 then rightDecimalAccuracy = 1
+	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
+end function
 rem=======================================================================================
 sub insertDataToList(bd as DUnit)
 	dim list as new Collection
@@ -195,6 +231,7 @@ sub insertDataToList(bd as DUnit)
 		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Text)
 	next i
 	bd.setValueList(list)
+	&apos;msgbox &quot;&quot;+list.count+&quot;, &quot;+bd.BDName
 	&apos;msgbox &quot;&quot; + count + &quot;, &quot; + bd.valueList.item(3)
 end sub
 rem=======================================================================================
@@ -219,6 +256,7 @@ sub insertRecordsToTemplate
 	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
 	dim bd as new DUnit
+	dim point as double
 	
 	for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		bd = BDList.item(i)
@@ -233,62 +271,213 @@ sub insertRecordsToTemplate
 		rem не нужно будет проверять каждую точку на болше-меньше 1 мЗв
 		if bd.isPrintable = true then
 			facilities.addTypeAndLimits(bd.BDType, bd.minLimit, bd.maxLimit)
-			
-			
-			
-			
-			
+			for j=1 to bd.pointList.count
+				&apos;msgbox bd.valueList.count
+				point = bd.valueList.item(j)
+				cont_point = bd.pointList.item(j)
+				prefix =  bd.pointTextList.item(j)
+				BDtype = bd.BDType
+				threePointArray = avaragePointsRndArray(point, percentOtk)
+				
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1))	rem расстояние до источника
+				
+				rem TODO сделать через select case
+				if point &lt; 0.1 and point &gt; 0 then
+					MyFormat = &quot;0.000&quot;
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
+				end if
+				if point &lt; 1 and point &gt;= 0.1 then
+					MyFormat = &quot;0.00&quot;
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
+				end if
+				if point &lt; 100 and point &gt;= 1 then
+					MyFormat = &quot;0.0&quot;
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
+				end if
+				if point &gt;= 100 then
+					MyFormat = &quot;0&quot;
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
+				end if
+				
+				if cont_point&lt;1 and prefix=&quot;мк&quot; then 
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-5&quot; + (j-1)), bground)
+				else	
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
+				end if
+				
+				if point &lt; 0.1 and point &gt; 0 then
+					MyFormat = &quot;0.000&quot;
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), Format(point, MyFormat))
+				else
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), point) &apos;Format(point, MyFormat))
+				end if
+				
+				MyFormat = &quot;0.00&quot;
+				pogr_point = otn_pogreshnost(point, cont_point)
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
+				dov_point = dov_granica(pogr_point, FacilityError(point, BDType, prefix))
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-2&quot; + (j-1)), Format(dov_point, MyFormat))
+			next j
+			rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных
+			if bd.BdName=&quot;БДКН-01&quot; then	neutron_01(i, bd)
+			if bd.BdName=&quot;БДКН-03&quot; then	neutron_03(i, bd)
 		end if	
-		&apos;makeFacilityArray(FacilityArray(i))rem переназначаю какие пров установки будут включены в протокол(добавляю например 11000 и сравниваю с уже сохраненными установками)
-		
 		
 	next i
 
-	&apos;dim fArray() as boolean
-	&apos;fArray = facilities.FTypeArray
-	&apos;msgbox &quot;&quot;+fArray(0)+fArray(1)+fArray(2)+fArray(3)+fArray(4)
-
-
-	
-	dim num as double
-	dim con_point as double
-	dim pogr_point as double
-	dim dov_point as double
-	dim currentFacilityError as integer
-	dim prefix as string
-	dim serial as string
-	dim bdType as string
-	dim sourceArray as variant
-	
-	
-	
-	
-	&apos;deleteUselessFacilities
-	&apos;deleteUselessMeasLimits
 	&apos;insertMeasLimits
 	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
 	findAndRename(&quot;$serial&quot;, serial)
 	
-	rem удалить ненужные диапазоны
+	rem удалить ненужные диапазоны----------------------------------
+	dim f() as boolean
+	f = facilities.RadTypeArray
 	for i=0 to 4
-		dim f() as boolean
-		f = facilities.RadTypeArray
 		if f(i) = false then deleteTable(&quot;tml&quot; + i)	
 	next i
-	
-	rem удалить ненужные поверочные установки
-	for i=0 to 4
+	rem удалить ненужные поверочные установки-----------------------
 	dim f2() as boolean
-		f2 = facilities.FacTypeArray
+	f2 = facilities.FacTypeArray
+	for i=0 to 4
 		if f2(i) = false then deleteTable(&quot;tf&quot; + i)	
 	next i
-	
+	rem ------------------------------------------------------------
 	strokeForSaving = &quot;1117 M &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
+rem=======================================================================================
+sub neutron_01(i as integer, bd as BUnit)
+	dim point_br_array(3) as double
+	dim point_fio_array(3) as double
+	point_br_array = Array(0.6, 0.6, 0.86, 0.95)
+	point_fio_array = Array(5.9, 57, 235, 1019)
+	dim fon, p1, p2, p3 as double
+	fon = bd.valueList.item(1)	rem фон
+	dim point as double
 
-
-
-
+	
+		for n = 1 to 4
+			point = bd.valueList.item(n+1)
+			p1 = (point-fon)*point_br_array(n-1)
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			p3 = 1.1 * sqr(p2 * p2 + 5*5)
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			
+		next n
+	
+end sub
+rem=======================================================================================
+rem TODO объединить методы neutron_03 и neutron_01
+sub neutron_03(i as integer, bd as BUnit)
+	dim point_br_array(3) as double
+	dim point_fio_array(3) as double
+	point_br_array = Array(0.87, 0.87, 0.96, 0.99)
+	point_fio_array = Array(8.3, 80, 331, 1434)
+	dim fon, p1, p2, p3 as double
+	fon = bd.valueList.item(1)	rem фон
+	dim point as double
+		
+		for n = 1 to 4
+			point = bd.valueList.item(n+1)
+			p1 = (point-fon)*point_br_array(n-1)	
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+			p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+			p3 = 1.1 * sqr(p2 * p2 + 5*5)
+			findAndRename((&quot;$&quot; + (i-1) + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+			
+		next n
+	
+end sub
+rem=======================================================================================
+function avaragePointsRndArray(point as double, o_percent as double)
+	rem TODO сделать по Гауссу!!!
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim ar(2) as double 
+	deviation = o_percent/100*point
+	p1 = randValue(point, deviation)
+	p2 = randValue(point, deviation)
+	p3 = point*3 - p1 - p2
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
+	avaragePointsRndArray = ar	
+end function
+rem=======================================================================================
+function randValue(num as double, otklonenie as double)
+	randValue = (num - otklonenie) + rnd()*otklonenie*2
+end function
+rem=======================================================================================
+function sourceDistanceArray(point as double, prefix as string, bdType as string)
+	dim ar(1) as variant
+	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+	rem если это гамма блок:
+	if bdType = &quot;gamma&quot; then
+		if prefix = &quot;мк&quot; then
+				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
+				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
+				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
+				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
+		end if
+		if prefix = &quot;м&quot; then
+				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
+				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
+				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
+		end if
+		if prefix = &quot;&quot; then
+				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
+				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
+		end if	
+	end if
+	sourceDistanceArray = ar
+end function
+rem=======================================================================================
+rem TODO объединить методы -- это такой же метод, как в 204-м
+function otn_pogreshnost(meas as double, contr_point as double)
+	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
+end function
+rem=======================================================================================
+function dov_granica(pogr as double, percent as integer)
+	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+rem=======================================================================================
+function FacilityError(point as double, BDType as string, prefix as string)
+	select case BDType
+	case &quot;gamma&quot;
+		dim koef as double
+		dim realPoint as double
+		if prefix = &quot;мк&quot; then koef = 0.001
+		if prefix = &quot;м&quot;  then koef = 1
+		if prefix = &quot;&quot;   then koef = 1000
+		realPoint = point * koef
+		if realPoint&lt;1 then
+			FacilityError = 4 rem `110
+		else
+			FacilityError = 5 rem `130
+		end if
+	case &quot;n-PP&quot;
+			FacilityError = 5 rem `140
+	case &quot;n-MD&quot;
+			FacilityError = 5 rem `140				
+	case &quot;alpha&quot;
+			FacilityError = 6 rem `alpha
+	case &quot;beta&quot;
+			FacilityError = 6 rem `beta
+	end select
+end function
 </script:module>

@@ -15,13 +15,6 @@ private _isPrintableR(4) as boolean
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
-	dim i as integer
-	for i=0 to 4
-		_isPrintableF(i) = false
-		_isPrintableR(i) = false
-		_minLimit(i) = 0
-		_maxLimit(i) = 0
-	next i
 End Sub
 
 Private Sub Class_Terminate()
@@ -30,37 +23,35 @@ end sub
 REM --- CLASS METHODS
 
 public function addTypeAndLimits(bdType as string, min as double, max as double)
-	select case bdType
-	case &quot;gamma&quot; 
-		&apos;msgbox &quot;gamma&quot;
+	if bdType = &quot;gamma&quot; then 
 		_isPrintableR(0) = true
 		if _minLimit(0)=0 or min&lt;_minLimit(0) then _minLimit(0)=min
-		if _maxLimit(0)=0 or max&gt;_maxLimit(0) then _maxLimit(0)=max
-	case &quot;alpha&quot;
-		&apos;msgbox &quot;alpha&quot;
+		if _maxLimit(0)=0 or max&gt;_maxLimit(0) then _minLimit(0)=min
+	end if	
+	if bdType = &quot;alpha&quot;  then
 		_isPrintableR(1) = true
 		if _minLimit(1)=0 or min&lt;_minLimit(1) then _minLimit(1)=min
-		if _maxLimit(1)=0 or max&gt;_maxLimit(1) then _maxLimit(1)=max
+		if _maxLimit(1)=0 or max&gt;_maxLimit(1) then _minLimit(1)=min
 		_isPrintableF(3) = true
-	case &quot;beta&quot;
-		&apos;msgbox &quot;beta&quot;
+	end if
+	if bdType = &quot;beta&quot; then
 		_isPrintableR(2) = true
 		if _minLimit(2)=0 or min&lt;_minLimit(2) then _minLimit(2)=min
-		if _maxLimit(2)=0 or max&gt;_maxLimit(2) then _maxLimit(2)=max
-		_isPrintableF(4) = true
-	case &quot;n-MD&quot;
-		&apos;msgbox &quot;n-MD&quot;
+		if _maxLimit(2)=0 or max&gt;_maxLimit(2) then _minLimit(2)=min
+		_isPrintableF(4)
+	end if	
+	if bdType = &quot;n-MD&quot;  then
 		_isPrintableR(3) = true
 		if _minLimit(3)=0 or min&lt;_minLimit(3) then _minLimit(3)=min
-		if _maxLimit(3)=0 or max&gt;_maxLimit(3) then _maxLimit(3)=max
+		if _maxLimit(3)=0 or max&gt;_maxLimit(3) then _minLimit(3)=min
 		_isPrintableF(2) = true
-	case &quot;n-PP&quot;
-		&apos;msgbox &quot;n-PP&quot;
+	end if	
+	if bdType = &quot;n-PP&quot;  then
 		_isPrintableR(4) = true
 		if _minLimit(4)=0 or min&lt;_minLimit(4) then _minLimit(4)=min
-		if _maxLimit(4)=0 or max&gt;_maxLimit(4) then _maxLimit(4)=max
+		if _maxLimit(4)=0 or max&gt;_maxLimit(4) then _minLimit(4)=min
 		_isPrintableF(2) = true
-	end select
+	end if
 	
 end function
 
@@ -69,19 +60,11 @@ public function RadTypeArray as variant
 end function
 
 public function is130necessary as boolean
-	if _maxLimit(0) &gt;= 1 then 
-		is130necessary = true
-	else	
-		is130necessary = false
-	end if	
+	if _maxLimit(0) &gt;= 1 then is130necessary = true
 end function
 
 public function is110necessary as boolean
-	if _minLimit(0) &lt; 1000 and _minLimit(0)&lt;&gt;0 then
-		is110necessary = true
-	else
-		is110necessary = false
-	end if	
+	if _minLimit(0) &lt; 1 then is110necessary = true
 end function
 
 public function FacTypeArray as variant
