@@ -42,6 +42,22 @@ Sub at1117m_Dialog_Show
 		oDialog1117.getControl(&quot;NumericField&quot; + i).setVisible(false)
 	next i
 	
+	dim nCount As Integer
+  	Dim sItems As Variant
+  	oComboBox = oDialog1117.getControl(&quot;ComboBox1&quot;)
+	REM first remove all old items from the list
+  	nCount = oComboBox.getItemCount()
+  	oComboBox.removeItems( 0, nCount )
+  	
+	&apos;oComboBox.selectItemPos(0)
+  	&apos;oComboBox.selectItemPos (0, true)
+ 
+  	REM add new items to the list
+  	rusItems = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
+  	engItems = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
+  	oComboBox.addItems( rusItems, 0 )
+	oComboBox.text = rusItems(0)
+	
 	oDialog1117.Execute()
 End Sub
 rem=======================================================================================
