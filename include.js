@@ -186,9 +186,10 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
-        '        <li><a href="../sertif_prosh/sertificate.html">Калибровочные сертификаты и протоколы поверки</a></li>' +
+        '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
+        '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для OpenOffice</a></li>' +
         '        <li><a href="../docs/AtomtexLibrary.rar">Макрос для OpenOffice (Протоколы поверки)</a></li>' +
-        '        <li><a href="../docs/GMS%20for%20Corel.rar">GMS for Corel</a></li>' +
+        '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
         '' +

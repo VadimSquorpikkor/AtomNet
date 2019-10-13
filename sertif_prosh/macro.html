@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Как установить макрос для протоколов и сертификатов</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Как установить макрос для протоколов и сертификатов</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Как установить макрос для протоколов и сертификатов</h1>
+
+
+    <img src="../imgs/macro/macro.jpg" width="700">
+
+    <p><span class="attention">ВНИМАНИЕ! Макрос пока ещё находится на стадии тестирования!</span></p>
+
+    <div class="yellow_back">
+        <ul>
+            <li>Если нужно просто обновить макрос, нужно просто перезаписать папку "AtomtexLibrary" в папке "Общие
+                документы"
+            </li>
+            <li>Макрос написан для OpenOffice, поэтому работать в MicrosoftOffice или в LibreOffice <span
+                    class="attention">НЕ БУДЕТ</span></li>
+        </ul>
+    </div>
+
+    <p>Если в процессе установки будет выскакивать такое окно, не обращаем внимания, жмем "ОК" (придется нажать
+        несколько раз подряд)
+        <img src="../imgs/macro/16.jpg" width="450"></p>
+
+
+    <ul>
+        <li>Распаковать <a href="../docs/AtomtexLibrary.rar">архив с макросом</a> в папку "C:/Пользователи/Общие/Общие
+            документы"
+            <img src="../imgs/macro/1.jpg" width="830">
+        </li>
+
+        <li>Запустить OpenOffice Writer и в открывшемся документе нажать Alt+F11. В появившемся окне нажать "Управление"
+            <img src="../imgs/macro/2.jpg" width="630"></li>
+
+        <li>Выбрать вкладку "Библиотеки" и нажать "Добавить"
+            <img src="../imgs/macro/3.jpg" width="490"></li>
+
+        <li>Открыть папку, в которую распаковывали архив, и в папке "AtomtexLibrary" выбрать файл "script.xlb". Нажать
+            "Открыть"
+            <img src="../imgs/macro/4.jpg" width="800">
+        </li>
+
+        <li>Нажать "OK"
+            <img src="../imgs/macro/5.jpg" width="380">
+        </li>
+
+        <li>Нажать "Закрыть"
+            <img src="../imgs/macro/6.jpg" width="490">
+        </li>
+
+        <li>Следующее окно не закрываем, раз уж мы здесь, сделаем ярлык для запуска макроса. Для этого выбираем нашу
+            библиотеку
+            ("AtomtexLibrary") и раскрываем её (нажимаем маленький плюсик):
+            <img src="../imgs/macro/7.jpg" width="630">
+        </li>
+
+        <li>Выбираем модуль "ModuleMain", а в нем &mdash; функцию "MainDialog_Show" (эта функция запускает главное окно
+            макроса) и нажимаем "Назначить"
+            <img src="../imgs/macro/9.jpg" width="630">
+        </li>
+
+        <li>Под ярлык макроса сделаем отдельную панель, так будет удобнее. Нажимаем "Создать"
+            <img src="../imgs/macro/10.jpg" width="620">
+        </li>
+
+        <li>Как-нибудь называем (например "Атомтех") и жмем "ОК"
+            <img src="../imgs/macro/11.jpg" width="380">
+        </li>
+
+        <li>Жмеем "Добавить"
+            <img src="../imgs/macro/12.jpg" width="620">
+        </li>
+
+        <li>Опять выбираем модуль "ModuleMain" и функцию "MainDialog_Show". Жмем "Добавить"
+            <img src="../imgs/macro/13.jpg" width="570">
+        </li>
+
+        <li>Нажать "Изменить", "Добавить значек"
+            <img src="../imgs/macro/14.jpg" width="670">
+        </li>
+
+        <li>Выбираем значек (если нужен значек АТОМТЕХ, жмем добавить и идем в папку с библиотекой, там где-то есть),
+            жмем "ОК"
+            <img src="../imgs/macro/15.jpg" width="620">
+        </li>
+
+        <li>Готово! Макрос установлен и работает
+            <img src="../imgs/macro/17.jpg" width="360">
+        </li>
+
+
+    </ul>
+
+
+</div>
+</body>
+</html>

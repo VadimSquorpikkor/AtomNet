@@ -37,8 +37,8 @@
   <dlg:text dlg:id="Label11" dlg:tab-index="51" dlg:left="120" dlg:top="90" dlg:width="8" dlg:height="10" dlg:value="№ " dlg:align="right"/>
   <dlg:img dlg:style-id="1" dlg:id="ImageControl1" dlg:tab-index="52" dlg:left="15" dlg:top="1" dlg:width="186" dlg:height="84" dlg:src="file:///C:/Users/Serikov_VA/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/1117.png"/>
   <dlg:textfield dlg:id="TextField1" dlg:tab-index="53" dlg:left="130" dlg:top="87" dlg:width="43" dlg:height="12" dlg:value="17777"/>
-  <dlg:button dlg:id="bStart" dlg:tab-index="43" dlg:left="137" dlg:top="135" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Протокол поверки">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.start?language=Basic&amp;location=application" script:language="Script"/>
+  <dlg:button dlg:id="bStart" dlg:tab-index="43" dlg:left="137" dlg:top="115" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Протокол поверки">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onProtocolButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="bPrev" dlg:tab-index="41" dlg:left="98" dlg:top="237" dlg:width="40" dlg:height="18" dlg:page="2" dlg:value="Пред">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onPrevButton?language=Basic&amp;location=application" script:language="Script"/>
@@ -119,13 +119,15 @@
   <dlg:numericfield dlg:id="NumericField3" dlg:tab-index="26" dlg:left="174" dlg:top="153" dlg:width="32" dlg:height="10" dlg:page="2" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField2" dlg:tab-index="24" dlg:left="174" dlg:top="143" dlg:width="32" dlg:height="10" dlg:page="2" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="22" dlg:left="174" dlg:top="133" dlg:width="32" dlg:height="10" dlg:page="2" dlg:spin="true"/>
-  <dlg:button dlg:id="ser_rus" dlg:tab-index="54" dlg:left="137" dlg:top="153" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Сертификат">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.start?language=Basic&amp;location=application" script:language="Script"/>
+  <dlg:button dlg:id="ser_rus" dlg:tab-index="54" dlg:left="137" dlg:top="133" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Сертификат">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onRSertButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="ser_eng" dlg:tab-index="55" dlg:left="137" dlg:top="171" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Sertificate">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.start?language=Basic&amp;location=application" script:language="Script"/>
+  <dlg:button dlg:id="ser_eng" dlg:tab-index="55" dlg:left="137" dlg:top="151" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Sertificate">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onESertButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:combobox dlg:id="ComboBox1" dlg:tab-index="56" dlg:left="137" dlg:top="208" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
-  <dlg:text dlg:id="Label10" dlg:tab-index="57" dlg:left="137" dlg:top="198" dlg:width="71" dlg:height="10" dlg:value="Технический контроль" dlg:align="center"/>
+  <dlg:combobox dlg:id="ComboBox1" dlg:tab-index="56" dlg:left="137" dlg:top="183" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
+  <dlg:text dlg:id="Label10" dlg:tab-index="57" dlg:left="137" dlg:top="173" dlg:width="71" dlg:height="10" dlg:value="Проверку произвел:" dlg:align="center"/>
+  <dlg:combobox dlg:id="ComboBox2" dlg:tab-index="58" dlg:left="137" dlg:top="208" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
+  <dlg:text dlg:id="Label12" dlg:tab-index="59" dlg:left="137" dlg:top="198" dlg:width="71" dlg:height="10" dlg:value="Технический контроль:" dlg:align="center"/>
  </dlg:bulletinboard>
 </dlg:window>

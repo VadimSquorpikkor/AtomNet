@@ -8,7 +8,9 @@ dim typeText as object						rem название типа БД
 dim BDList as new Collection 				rem коллекция блоков детектирования
 dim checkedCount as integer					rem количество чекнутых чБоксов для выбора типов БД
 dim count as integer
-dim maxCheckedCount as integer 
+dim maxCheckedCount as integer
+dim rusItems1, engItems1, rusItems2, engItems2 as variant
+dim protocolType as String
 
 rem=======================================================================================
 Sub at1117m_Dialog_Show
@@ -37,26 +39,33 @@ Sub at1117m_Dialog_Show
 	oDialog1117.getControl(&quot;bPrev&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;bNext&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;type_text&quot;).setVisible(false)
+	
 	
 	for i=1 to 9
 		oDialog1117.getControl(&quot;NumericField&quot; + i).setVisible(false)
+		oDialog1117.getControl(&quot;Label&quot; + i).setVisible(false)
 	next i
 	
-	dim nCount As Integer
-  	Dim sItems As Variant
-  	oComboBox = oDialog1117.getControl(&quot;ComboBox1&quot;)
+	
+	
+	oComboBox1 = oDialog1117.getControl(&quot;ComboBox1&quot;)
+	oComboBox2 = oDialog1117.getControl(&quot;ComboBox2&quot;)
 	REM first remove all old items from the list
-  	nCount = oComboBox.getItemCount()
-  	oComboBox.removeItems( 0, nCount )
+  	oComboBox1.removeItems( 0, oComboBox1.getItemCount() )
+  	oComboBox2.removeItems( 0, oComboBox2.getItemCount() )  	
   	
-	&apos;oComboBox.selectItemPos(0)
-  	&apos;oComboBox.selectItemPos (0, true)
- 
   	REM add new items to the list
-  	rusItems = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
-  	engItems = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
-  	oComboBox.addItems( rusItems, 0 )
-	oComboBox.text = rusItems(0)
+  	rusItems1 = Array( &quot;В. Писаренко&quot;, &quot;С. Кульчинский&quot;, &quot;Д. Кульчинский&quot; )
+  	engItems1 = Array( &quot;V. Pisarenko&quot;, &quot;S. Kulchinsky&quot;, &quot;D. Kulchinsky&quot; )
+  	oComboBox1.addItems( rusItems1, 0 )
+	oComboBox1.text = rusItems1(0)
+	&apos;msgbox oComboBox1.SELECTION
+	
+  	rusItems2 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
+  	engItems2 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
+  	oComboBox2.addItems( rusItems2, 0 )
+	oComboBox2.text = rusItems2(0)
 	
 	oDialog1117.Execute()
 End Sub
@@ -112,6 +121,12 @@ sub start
 	oDialog1117.getControl(&quot;bNext&quot;).setEnable(true)
 	oDialog1117.getControl(&quot;bDone&quot;).setEnable(false)
 	oDialog1117.getControl(&quot;bPrev&quot;).setEnable(false)
+
+	oDialog1117.getControl(&quot;type_text&quot;).setVisible(true)
+	oDialog1117.getControl(&quot;Label10&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;Label12&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;ComboBox1&quot;).setVisible(false)
+	oDialog1117.getControl(&quot;ComboBox2&quot;).setVisible(false)
 	
 	nextChecked	
 end sub
@@ -131,6 +146,23 @@ rem=============================================================================
 sub onDoneButton
 	insertDataToList(BDList.item(count))
 	insertRecordsToTemplate	
+end sub
+rem======================================================================================= 
+sub onProtocolButton
+	protocolType = &quot;protRus&quot;
+
+	start
+end sub
+rem======================================================================================= 
+sub onESertButton
+	protocolType = &quot;sertEng&quot;
+
+	start		
+end sub
+rem======================================================================================= 
+sub onRSertButton
+	protocolType = &quot;sertRus&quot;
+	start
 end sub
 rem=======================================================================================
 private function nextChecked
@@ -183,8 +215,12 @@ Sub checkBoxListener(oEvent As Object)
     maxCheckedCount = checkedCount
     if checkedCount&gt;0 then rem кнопка &quot;старт&quot; активна только если чекнут хотя бы один чекбокс
     	oDialog1117.getControl(&quot;bStart&quot;).setEnable(true)
+    	oDialog1117.getControl(&quot;ser_eng&quot;).setEnable(true)
+    	oDialog1117.getControl(&quot;ser_rus&quot;).setEnable(true)
     else	
     	oDialog1117.getControl(&quot;bStart&quot;).setEnable(false)
+    	oDialog1117.getControl(&quot;ser_eng&quot;).setEnable(false)
+    	oDialog1117.getControl(&quot;ser_rus&quot;).setEnable(false)
     end if	
 End Sub
 rem=======================================================================================
@@ -258,9 +294,33 @@ sub deleteTable(name as string)
 end sub
 rem=======================================================================================
 sub insertRecordsToTemplate
+	dim path as string
+	dim calibName, techName as string
+	if protocolType = &quot;protRus&quot; then
+		path = &quot;1117.odt&quot;
+	end if
+	if protocolType = &quot;sertRus&quot; then
+		calibName = rusItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
+		techName  = rusItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
+	
+		findAndRename(&quot;$calibratedBy&quot;, calibName)
+		findAndRename(&quot;$techControlBy&quot;, techName)
+		
+		path = &quot;1117_sr.odt&quot;		
+	end if
+	if protocolType = &quot;sertEng&quot; then
+		calibName = engItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
+		techName  = engItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
+	
+		findAndRename(&quot;$calibratedBy&quot;, calibName)
+		findAndRename(&quot;$techControlBy&quot;, techName)
+		
+		path = &quot;1117_se.odt&quot;		
+	end if
+	
 	dim facilities as new Facility
 	MyFormat = &quot;0.0&quot;
-	OpenTemplate(sertPath &amp; &quot;1117.odt&quot;)
+	OpenTemplate(sertPath &amp; path)
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
 	rem TODO сделать по Гауссу!!!
 	dim threePointArray(2) as double

@@ -16,8 +16,8 @@ Sub MainDialog_Show
 	rem Установить
 	
 	rem user_name = &quot;Tarasenko_VV&quot;  	
-	user_name = &quot;Serikov_VA&quot;
-	rem user_name = &quot;Squorpikkor&quot;
+	rem user_name = &quot;Serikov_VA&quot;
+	user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
@@ -85,6 +85,15 @@ Function MySubstitute(sText1 as string, sText2 as string, sText3 as string) as s
    FuncAcc = createunoservice(&quot;com.sun.star.sheet.FunctionAccess&quot;)
    MySubstitute = FuncAcc.callFunction(&quot;SUBSTITUTE&quot;, array(sText1,sText2,sText3))
 End function
+rem-------------------------------------------------------------------------
+Function ComboItemPosition(ComboBox as variant)
+   For x = 0 to ComboBox.ItemCount - 1
+      If ComboBox.Items(x) = ComboBox.Text Then
+         ComboItemPosition = x
+      end if
+   next x
+end Function
+
 rem-------------------------------------------------------------------------
 Sub collection2()
    Dim oColl As New Collection, i As Integer
