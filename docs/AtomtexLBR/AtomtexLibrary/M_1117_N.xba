@@ -288,9 +288,19 @@ sub insertDataToList(bd as DUnit)
 end sub
 rem=======================================================================================
 sub deleteTable(name as string)
-	dim oTable as object
-    oTable = ThisComponent.getTextTables().getByName(name)
-    oTable.dispose()
+	Dim oSDescr As Variant
+	Dim oResults As Variant
+	oSDescr = ThisComponent.createSearchDescriptor()
+	oSDescr.setSearchString(name)
+	oResults = ThisComponent.findAll(oSDescr)
+	msgbox &quot;&quot; + name + oResults.count
+	If oResults.count = 0 Then
+		Exit Sub   &apos; Nothing to do...
+	else
+		dim oTable as object
+    	oTable = ThisComponent.getTextTables().getByName(name)
+    	oTable.dispose()
+    end if	
 end sub
 rem=======================================================================================
 sub insertRecordsToTemplate

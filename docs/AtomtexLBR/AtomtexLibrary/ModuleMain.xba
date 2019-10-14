@@ -16,8 +16,8 @@ Sub MainDialog_Show
 	rem Установить
 	
 	rem user_name = &quot;Tarasenko_VV&quot;  	
-	rem user_name = &quot;Serikov_VA&quot;
-	user_name = &quot;Squorpikkor&quot;
+	user_name = &quot;Serikov_VA&quot;
+	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
@@ -195,9 +195,6 @@ rem
 End function
 
 rem -------------------------------------------------------------------------------------------
-
-
-
 Sub OpenTemplate(documentURL)
     Dim Doc As Object
     Dim Url As String
@@ -218,6 +215,25 @@ Sub findAndRename(target as String, newName as String)
         oFound = oFoundAll.getByIndex(n%)
         oFound.setString(newName)
     Next
+End Sub
+rem------------------------------------------------------------
+Sub findAndDoSomething
+Dim oSDescr As Variant
+Dim oResults As Variant
+Dim oFound As Variant
+Dim sText As String
+Dim i As Long
+   oSDescr = ThisComponent.createSearchDescriptor()
+   oSDescr.setSearchString(&quot;Giv besked, hvis du ikke kan komme&quot;) &apos; Or what?
+   oResults = ThisComponent.findAll(oSDescr)
+   If IsEmpty(oResults) Or IsNull(oResults) Then Exit Sub   &apos; Nothing to do...
+   For i = 0 To oResults.getCount()-1   &apos; Enumerate all results
+      oFound = oResults.getByIndex(i)   &apos; One of them
+&apos; Now do something
+&apos; for example sText = oFound.getString()
+&apos; or oFound.setString(&quot;It was &quot;+(i+1)+&quot; fragment&quot;)
+&apos; or If oFound.CharHeight &lt;&gt; 10 Then...Else...EndIf
+   Next i
 End Sub
 rem------------------------------------------------------------
 Sub CopyToClipBoard( sText )
