@@ -287,7 +287,17 @@ sub insertDataToList(bd as DUnit)
 	&apos;msgbox &quot;&quot; + count + &quot;, &quot; + bd.valueList.item(3)
 end sub
 rem=======================================================================================
-sub deleteTable(name as string)
+sub deleteTable22222(name as string)
+	&apos;on error  Goto ErrorHandler
+		dim oTable as object
+   		oTable = ThisComponent.getTextTables().getByName(name)
+   		&apos;if Not IsEmpty(oTable) then 
+   		oTable.dispose()
+   	&apos;ErrorHandler:	
+   	&apos;resume
+end sub
+rem=======================================================================================
+sub deleteTable2(name as string)
 	Dim oSDescr As Variant
 	Dim oResults As Variant
 	oSDescr = ThisComponent.createSearchDescriptor()
@@ -303,6 +313,23 @@ sub deleteTable(name as string)
     end if	
 end sub
 rem=======================================================================================
+sub deleteTable3(name as string)
+dim g as variant
+tables = ThisComponent.getTextTables()
+     For i = tables.Count-1 to 0 step -1
+       &apos;g = go.getByIndex(i)
+       &apos;if g.name = name then g.dispose
+       msgbox tables.getByIndex(i)
+     next i
+end sub
+rem=======================================================================================
+sub deleteTable(name as string)
+tables = ThisComponent.TextTables()
+     if tables.hasByName(name) then
+     ThisComponent.Text.removeTextContent(tables.getByName(name))
+     end if
+end sub
+rem=======================================================================================
 sub insertRecordsToTemplate
 	dim path as string
 	dim calibName, techName as string
@@ -313,6 +340,8 @@ sub insertRecordsToTemplate
 		calibName = rusItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
 		techName  = rusItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
 	
+
+	
 		findAndRename(&quot;$calibratedBy&quot;, calibName)
 		findAndRename(&quot;$techControlBy&quot;, techName)
 		
@@ -321,12 +350,15 @@ sub insertRecordsToTemplate
 	if protocolType = &quot;sertEng&quot; then
 		calibName = engItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
 		techName  = engItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
+
 	
-		findAndRename(&quot;$calibratedBy&quot;, calibName)
+		findAndRename(&quot;$calibr&quot;, calibName)
 		findAndRename(&quot;$techControlBy&quot;, techName)
 		
 		path = &quot;1117_se.odt&quot;		
 	end if
+	
+&apos;			findAndRename(&quot;$calibr&quot;, &quot;calibName&quot;)
 	
 	dim facilities as new Facility
 	MyFormat = &quot;0.0&quot;
@@ -338,6 +370,7 @@ sub insertRecordsToTemplate
 	percentOtk = 7 rem %
 	bground = Format(randValue(95, 5), MyFormat)
 	findAndRename(&quot;$bground&quot;, bground)
+&apos;	findAndRename(&quot;$calibr&quot;, &quot;calibName&quot;)
 	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
 	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
