@@ -339,26 +339,13 @@ sub insertRecordsToTemplate
 	if protocolType = &quot;sertRus&quot; then
 		calibName = rusItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
 		techName  = rusItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
-	
-
-	
-		findAndRename(&quot;$calibratedBy&quot;, calibName)
-		findAndRename(&quot;$techControlBy&quot;, techName)
-		
 		path = &quot;1117_sr.odt&quot;		
 	end if
 	if protocolType = &quot;sertEng&quot; then
 		calibName = engItems1(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox1&quot;)))
 		techName  = engItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
-
-	
-		findAndRename(&quot;$calibr&quot;, calibName)
-		findAndRename(&quot;$techControlBy&quot;, techName)
-		
 		path = &quot;1117_se.odt&quot;		
 	end if
-	
-&apos;			findAndRename(&quot;$calibr&quot;, &quot;calibName&quot;)
 	
 	dim facilities as new Facility
 	MyFormat = &quot;0.0&quot;
@@ -374,6 +361,11 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
 	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
+	findAndRename(&quot;$date&quot;, getDate(oDialog1117.Model.getByName(&quot;DateField1&quot;)))
+	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
+	findAndRename(&quot;$serial&quot;, serial)
+	findAndRename(&quot;$calibratedBy&quot;, calibName)
+	findAndRename(&quot;$controlledBy&quot;, techName)
 	dim bd as new DUnit
 	dim point as double
 	
