@@ -20,6 +20,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.11&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -78,22 +79,22 @@ sub initialize1117
 	addBDtoCollection(&quot;БДКГ-11&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.01,0.1))
 	addBDtoCollection(&quot;БДКГ-17&quot;, 	&quot;Зв/ч&quot;,	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;gamma&quot;,	Array(1000,100000))
 	addBDtoCollection(&quot;БДКГ-24&quot;, 	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0.02,1000))
-	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0,0,0,0,0,0,0,0,0,0))
+	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,			Array(0,0,0,0,0,0,0,0,0,0))
 	addBDtoCollection(&quot;БДКГ-32&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	&quot;gamma&quot;,	Array(0.02,500))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДКН-01&quot;,	&quot;&quot;,		Array(0.5,5.9, 57, 235, 1019),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-PP&quot;,		Array(0.1,10000))
 	addBDtoCollection(&quot;БДКН-03&quot;,	&quot;&quot;,		Array(0.5,8.3, 80, 331, 1434),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-MD&quot;,		Array(0.1,10))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
-	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))
+	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))	rem №12
 	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;&quot;,		Array(74.4,630,5140,35600),				emptyArray,										&quot;alpha&quot;,	Array(0.05,5))
 	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(102,236,6080,53500,154300,383600),emptyArray,										&quot;beta&quot;,		Array(1,5))
 	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,1.5))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
-	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))
+	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))		rem №16
 	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))
 	addBDtoCollection(&quot;БОИ-4&quot;,		&quot;Зв/ч&quot;,	Array(70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(0.3,100))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
-	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,	Array(0,0))rem уточнить какие установки
+	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,			Array(0,0))rem уточнить какие установки
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(53.8,727,6300,62100,186000),		emptyArray,										&quot;alpha&quot;,	Array(2.4,100))
 	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,10))
@@ -280,7 +281,8 @@ rem=============================================================================
 sub insertDataToList(bd as DUnit)
 	dim list as new Collection
 	for i=1 to bd.pointCount
-		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Text)
+		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Value)
+		&apos;msgbox list.item(list.count)
 	next i
 	bd.setValueList(list)
 	&apos;msgbox &quot;&quot;+list.count+&quot;, &quot;+bd.BDName
@@ -367,52 +369,63 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
 	dim bd as new DUnit
-	dim point as double
+	dim m_point as double
 	
 	for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		bd = BDList.item(i)
-		if bd.isPrintable = false then	deleteTable(&quot;t&quot; + (i-1))
+		if bd.isPrintable = false then
+			if protocolType = &quot;protRus&quot; then
+				deleteTable(&quot;t&quot; + (i-1))
+			else
+				deleteTable(&quot;tlim&quot; + (i))
+				deleteTable(&quot;tp&quot; + (i))
+				deleteTable(&quot;t&quot; + (i-1))
+			end if			
+		end if	
 	next i
 	
 	for i=1 to BDList.count
 		bd = BDList.item(i)
-		strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
+		
 		rem если сразу собирать данные по пределам (makeMeasLimitsArray), тогда не нужен будет метод makeFacilityArray -- 
 		rem будет понятно, какие типы излучения (бета гамма), и легко прикинуть, какая/какие гамма установки нужны (110 и/или 130) --
 		rem не нужно будет проверять каждую точку на болше-меньше 1 мЗв
 		if bd.isPrintable = true then
+			strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
 			facilities.addTypeAndLimits(bd.BDType, bd.minLimit, bd.maxLimit)
 			for j=1 to bd.pointList.count
 				&apos;msgbox bd.valueList.count
-				point = bd.valueList.item(j)
+				
+				m_point = bd.valueList.item(j)
+				rem msgbox &quot;bd: &quot; + bd.valueList.item(j) + &quot;, p: &quot; + m_point
 				cont_point = bd.pointList.item(j)
 				prefix =  bd.pointTextList.item(j)
 				BDtype = bd.BDType
-				threePointArray = avaragePointsRndArray(point, percentOtk)
+				threePointArray = avaragePointsRndArray(m_point, percentOtk)
 				
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1))	rem расстояние до источника
 				
 				rem TODO сделать через select case
-				if point &lt; 0.1 and point &gt; 0 then
+				if m_point &lt; 0.1 and m_point &gt; 0 then
 					MyFormat = &quot;0.000&quot;
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
-				if point &lt; 1 and point &gt;= 0.1 then
+				if m_point &lt; 1 and m_point &gt;= 0.1 then
 					MyFormat = &quot;0.00&quot;
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
-				if point &lt; 100 and point &gt;= 1 then
+				if m_point &lt; 100 and m_point &gt;= 1 then
 					MyFormat = &quot;0.0&quot;
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
 				end if
-				if point &gt;= 100 then
+				if m_point &gt;= 100 then
 					MyFormat = &quot;0&quot;
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
@@ -425,17 +438,17 @@ sub insertRecordsToTemplate
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
 				end if
 				
-				if point &lt; 0.1 and point &gt; 0 then
+				if m_point &lt; 0.1 and m_point &gt; 0 then
 					MyFormat = &quot;0.000&quot;
-					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), Format(point, MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), Format(m_point, MyFormat))
 				else
-					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), point) &apos;Format(point, MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), m_point) &apos;Format(m_point, MyFormat))
 				end if
 				
 				MyFormat = &quot;0.00&quot;
-				pogr_point = otn_pogreshnost(point, cont_point)
+				pogr_point = otn_pogreshnost(m_point, cont_point)
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
-				dov_point = dov_granica(pogr_point, FacilityError(point, BDType, prefix))
+				dov_point = dov_granica(pogr_point, FacilityError(m_point, BDType, prefix))
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-2&quot; + (j-1)), Format(dov_point, MyFormat))
 			next j
 			rem проверка -- нейтронный или нет, предыдущий цикл отрабатывавет и для нейтронных, следущий блок -- только для нейтронных

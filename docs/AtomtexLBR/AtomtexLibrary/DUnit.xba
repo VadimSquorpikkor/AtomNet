@@ -94,6 +94,7 @@ end function
 
 rem список измеренных значений (0.67, 73, ...)
 public function valueList as Collection
+	&apos;dim valueList(8) as double
 	valueList = _measuredValue
 end function
 
