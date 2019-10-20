@@ -11,6 +11,7 @@ dim count as integer
 dim maxCheckedCount as integer
 dim rusItems1, engItems1, rusItems2, engItems2 as variant
 dim protocolType as String
+dim measLimitsArray(11) as double rem 6 типов, каждого по два (min, max) = 12
 
 rem=======================================================================================
 Sub at1117m_Dialog_Show
@@ -20,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.11&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.12&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -71,7 +72,7 @@ Sub at1117m_Dialog_Show
 	oDialog1117.Execute()
 End Sub
 rem=======================================================================================
-sub initialize1117
+sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md neutron / pp neutron
 	addBDtoCollection(&quot;БДКГ-01&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 		&quot;gamma&quot;,	Array(0.1,10000))
 	addBDtoCollection(&quot;БДКГ-03&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, 	Array(0.03,0.3))
 	addBDtoCollection(&quot;БДКГ-04&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.05,10000))
@@ -79,7 +80,7 @@ sub initialize1117
 	addBDtoCollection(&quot;БДКГ-11&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.01,0.1))
 	addBDtoCollection(&quot;БДКГ-17&quot;, 	&quot;Зв/ч&quot;,	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;gamma&quot;,	Array(1000,100000))
 	addBDtoCollection(&quot;БДКГ-24&quot;, 	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0.02,1000))
-	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,			Array(0,0,0,0,0,0,0,0,0,0))
+	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,			Array(0,0))
 	addBDtoCollection(&quot;БДКГ-32&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	&quot;gamma&quot;,	Array(0.02,500))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДКН-01&quot;,	&quot;&quot;,		Array(0.5,5.9, 57, 235, 1019),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-PP&quot;,		Array(0.1,10000))
@@ -87,8 +88,8 @@ sub initialize1117
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))	rem №12
 	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;&quot;,		Array(74.4,630,5140,35600),				emptyArray,										&quot;alpha&quot;,	Array(0.05,5))
-	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(102,236,6080,53500,154300,383600),emptyArray,										&quot;beta&quot;,		Array(1,5))
-	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,1.5))
+	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(102,236,6080,53500,154300,383600),emptyArray,										&quot;beta&quot;,		Array(1,50))
+	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,15))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))		rem №16
 	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))
@@ -97,7 +98,7 @@ sub initialize1117
 	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,			Array(0,0))rem уточнить какие установки
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(53.8,727,6300,62100,186000),		emptyArray,										&quot;alpha&quot;,	Array(2.4,100))
-	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,10))
+	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,100))
 	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				&quot;gamma&quot;,	Array(0.1,30))
 	&apos;msgbox BDList.item(1).BDName rem для проверки
 end sub
@@ -332,6 +333,96 @@ tables = ThisComponent.TextTables()
      end if
 end sub
 rem=======================================================================================
+function limitComparator(min as double, max as double, position as integer)
+	&apos;msgbox &quot;LC&quot; + min + &quot;, &quot; + max 
+	if measLimitsArray(position)=0   OR measLimitsArray(position) &gt; min   then measLimitsArray(position) = min
+	if measLimitsArray(position+1)=0 OR measLimitsArray(position+1) &lt; max then measLimitsArray(position+1) = max	
+end function
+rem=======================================================================================
+sub calculateMeasLimitsArray(min as double, max as double, bdType as string) rem TODO вообще-то можно в параметре передавать не свойства, а сразу объект класса DUnit
+	&apos;msgbox &quot;&quot;+min+&quot; &quot;+max+&quot; &quot;+bdType
+	select case bdType
+	case &quot;gamma&quot;
+		limitComparator(min, max, 0)
+	case &quot;alpha&quot;
+		limitComparator(min, max, 2)
+	case &quot;beta&quot;
+		limitComparator(min, max, 4)
+	case &quot;n-PP&quot;
+		limitComparator(min, max, 6)
+	case &quot;n-MD&quot;
+		limitComparator(min, max, 8)
+	case &quot;gamma-Gy&quot;
+		limitComparator(min, max, 10)
+	end select	
+end sub
+rem=======================================================================================
+function rightPrefixAndNumber(n as integer) as string
+	dim p as double
+	p = measLimitsArray(n)
+	&apos;msgbox &quot;n-&quot;+n+&quot;:&quot;+&quot; = &quot;+p
+	select case n
+	case 0 rem ------------ gamma min -------------
+		if p &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;
+	case 1 rem ------------ gamma max -------------
+		if p &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + p + &quot; м&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; &quot;
+	case 2 rem ------------ alpha min -------------
+		rightPrefixAndNumber = Format(p, MyFormat)
+	case 3 rem ------------ alpha max -------------
+		if p = 10 then
+			findAndRename(&quot;$a_max_E&quot;, 5)
+			rightPrefixAndNumber = &quot;&quot;
+		end if	
+		if p = 100 then
+			findAndRename(&quot;$a_max_E&quot;, 6)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$a_max_E&quot;, 4)
+			rightPrefixAndNumber = p
+		end if	
+	case 4 rem ------------ beta min -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 5 rem ------------ beta max -------------
+		if p = 100 then
+			findAndRename(&quot;$b_max_E&quot;, 6)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$b_max_E&quot;, 5)
+			rightPrefixAndNumber = p/10
+		end if
+	case 6 rem ------------ n-pp min -------------
+		msgbox &quot;6pp: &quot;+p
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 7 rem ------------ n-pp max -------------
+		if p = 10000 then
+			findAndRename(&quot;$n_max_E&quot;, 4)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$n_max_E&quot;, 4)
+			rightPrefixAndNumber = p
+		end if
+	case 8 rem ------------ n-md min -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 9 rem ------------ n-md max -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	end select
+end function
+rem=======================================================================================
+sub insertMeasLimits
+	findAndRename(&quot;$g_min&quot;,   rightPrefixAndNumber(0))
+	findAndRename(&quot;$g_max&quot;,   rightPrefixAndNumber(1))
+	findAndRename(&quot;$a_min&quot;,   rightPrefixAndNumber(2))
+	findAndRename(&quot;$a_max&quot;,   rightPrefixAndNumber(3))
+	findAndRename(&quot;$b_min&quot;,   rightPrefixAndNumber(4))
+	findAndRename(&quot;$b_max&quot;,   rightPrefixAndNumber(5))
+	findAndRename(&quot;$ppn_min&quot;, rightPrefixAndNumber(6))
+	findAndRename(&quot;$ppn_max&quot;, rightPrefixAndNumber(7))
+	findAndRename(&quot;$mdn_min&quot;, rightPrefixAndNumber(8))
+	findAndRename(&quot;$mdn_max&quot;, rightPrefixAndNumber(9))
+end sub
+rem=======================================================================================
 sub insertRecordsToTemplate
 	dim path as string
 	dim calibName, techName as string
@@ -349,7 +440,7 @@ sub insertRecordsToTemplate
 		path = &quot;1117_se.odt&quot;		
 	end if
 	
-	dim facilities as new Facility
+	dim facilities as new Facility rem ссылка локальная, так при создании нового протокола не нужно будет обнулять лимиты и списки установок
 	MyFormat = &quot;0.0&quot;
 	OpenTemplate(sertPath &amp; path)
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
@@ -371,6 +462,7 @@ sub insertRecordsToTemplate
 	dim bd as new DUnit
 	dim m_point as double
 	
+	
 	for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		bd = BDList.item(i)
 		if bd.isPrintable = false then
@@ -391,6 +483,8 @@ sub insertRecordsToTemplate
 		rem будет понятно, какие типы излучения (бета гамма), и легко прикинуть, какая/какие гамма установки нужны (110 и/или 130) --
 		rem не нужно будет проверять каждую точку на болше-меньше 1 мЗв
 		if bd.isPrintable = true then
+			calculateMeasLimitsArray(bd.minLimit, bd.maxLimit, bd.bdType)
+			&apos;msgbox &quot;&quot;+measLimitsArray(0) + &quot;, &quot;+measLimitsArray(1)
 			strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
 			facilities.addTypeAndLimits(bd.BDType, bd.minLimit, bd.maxLimit)
 			for j=1 to bd.pointList.count
@@ -466,7 +560,7 @@ sub insertRecordsToTemplate
 	dim f() as boolean
 	f = facilities.RadTypeArray
 	for i=0 to 4
-		if f(i) = false then deleteTable(&quot;tml&quot; + i)	
+		&apos;if f(i) = false then deleteTable(&quot;tml&quot; + i)	
 	next i
 	rem удалить ненужные поверочные установки-----------------------
 	dim f2() as boolean
@@ -474,7 +568,12 @@ sub insertRecordsToTemplate
 	for i=0 to 4
 		if f2(i) = false then deleteTable(&quot;tf&quot; + i)	
 	next i
+	rem удалить ненужные пределы измерений--------------------------
+	for i=0 to 5 rem нет смысла проверять обе точки, не может одна из точек равняться 0, а другая числу
+		if measLimitsArray(i*2)=0 then deleteTable(&quot;tml&quot; + i)
+	next i
 	rem ------------------------------------------------------------
+	insertMeasLimits
 	strokeForSaving = &quot;1117 M &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
