@@ -8,15 +8,15 @@ Option Explicit
 
 REM --- Internal Variables                                                                           
 private _Fname As String
-private _maxLimit(4) as double
-private _minLimit(4) as double
-private _isPrintableF(4) as boolean
-private _isPrintableR(4) as boolean
+private _maxLimit(5) as double
+private _minLimit(5) as double
+private _isPrintableF(5) as boolean
+private _isPrintableR(5) as boolean
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
 	dim i as integer
-	for i=0 to 4
+	for i=0 to 5
 		_isPrintableF(i) = false
 		_isPrintableR(i) = false
 		_minLimit(i) = 0
@@ -60,6 +60,13 @@ public function addTypeAndLimits(bdType as string, min as double, max as double)
 		if _minLimit(4)=0 or min&lt;_minLimit(4) then _minLimit(4)=min
 		if _maxLimit(4)=0 or max&gt;_maxLimit(4) then _maxLimit(4)=max
 		_isPrintableF(2) = true
+	case &quot;gamma-Gy&quot;
+		&apos;msgbox &quot;Gy&quot;
+		_isPrintableR(5) = true
+		if _minLimit(5)=0 or min&lt;_minLimit(5) then _minLimit(5)=min
+		if _maxLimit(5)=0 or max&gt;_maxLimit(5) then _maxLimit(5)=max
+		
+		
 	end select
 	
 end function
@@ -69,17 +76,17 @@ public function RadTypeArray as variant
 end function
 
 public function is130necessary as boolean
-	if _maxLimit(0) &gt;= 1 then 
+	if _maxLimit(5) &gt;= 1 OR _maxLimit(0) &gt;= 1 then 
 		is130necessary = true
-	else	
+	else		
 		is130necessary = false
 	end if	
 end function
 
 public function is110necessary as boolean
-	if _minLimit(0) &lt; 1000 and _minLimit(0)&lt;&gt;0 then
+	if (_minLimit(5) &lt; 1000 and _minLimit(5)&lt;&gt;0) OR (_minLimit(0) &lt; 1000 and _minLimit(0)&lt;&gt;0) then
 		is110necessary = true
-	else
+	else	
 		is110necessary = false
 	end if	
 end function

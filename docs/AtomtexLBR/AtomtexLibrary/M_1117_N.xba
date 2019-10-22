@@ -80,7 +80,7 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	addBDtoCollection(&quot;БДКГ-11&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.01,0.1))
 	addBDtoCollection(&quot;БДКГ-17&quot;, 	&quot;Зв/ч&quot;,	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;gamma&quot;,	Array(1000,100000))
 	addBDtoCollection(&quot;БДКГ-24&quot;, 	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0.02,1000))
-	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,			Array(0,0))
+	addBDtoCollection(&quot;БДКГ-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma-Gy&quot;,	Array(0.02,1))
 	addBDtoCollection(&quot;БДКГ-32&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	&quot;gamma&quot;,	Array(0.02,500))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДКН-01&quot;,	&quot;&quot;,		Array(0.5,5.9, 57, 235, 1019),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-PP&quot;,		Array(0.1,10000))
@@ -408,6 +408,13 @@ function rightPrefixAndNumber(n as integer) as string
 		rightPrefixAndNumber = &quot;&quot; + p
 	case 9 rem ------------ n-md max -------------
 		rightPrefixAndNumber = &quot;&quot; + p
+	case 10 rem ------------ gamma-Gy min -------------
+		if p &lt; 0.6  then rightPrefixAndNumber = &quot;&quot; + p*1000 + &quot; н&quot;
+		if p &lt; 1000 AND p &gt;= 0.6 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;
+	case 11 rem ------------ gamma-Gy max -------------
+		if p &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + p + &quot; м&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; &quot;	
 	end select
 end function
 rem=======================================================================================
@@ -422,6 +429,8 @@ sub insertMeasLimits
 	findAndRename(&quot;$ppn_max&quot;, rightPrefixAndNumber(7))
 	findAndRename(&quot;$mdn_min&quot;, rightPrefixAndNumber(8))
 	findAndRename(&quot;$mdn_max&quot;, rightPrefixAndNumber(9))
+	findAndRename(&quot;$k_min&quot;,   rightPrefixAndNumber(10))
+	findAndRename(&quot;$k_max&quot;,   rightPrefixAndNumber(11))
 end sub
 rem=======================================================================================
 sub insertRecordsToTemplate
@@ -461,6 +470,8 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$serial&quot;, serial)
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
+	findAndRename(&quot;$b_bg&quot;, Format(randValue(13, 2), &quot;0.0&quot;))
+	findAndRename(&quot;$s_bg&quot;, Format(randValue(0.005, 0.005), &quot;0.00&quot;))
 	dim bd as new DUnit
 	dim m_point as double
 	dim isEmpty as boolean
@@ -564,13 +575,13 @@ sub insertRecordsToTemplate
 	rem удалить ненужные диапазоны----------------------------------
 	dim f() as boolean
 	f = facilities.RadTypeArray
-	for i=0 to 4
+	for i=0 to 5
 		&apos;if f(i) = false then deleteTable(&quot;tml&quot; + i)	
 	next i
 	rem удалить ненужные поверочные установки-----------------------
 	dim f2() as boolean
 	f2 = facilities.FacTypeArray
-	for i=0 to 4
+	for i=0 to 5
 		if f2(i) = false then deleteTable(&quot;tf&quot; + i)	
 	next i
 	rem удалить ненужные пределы измерений--------------------------
@@ -655,7 +666,7 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	dim ar(1) as variant
 	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
 	rem если это гамма блок:
-	if bdType = &quot;gamma&quot; then
+	if bdType = &quot;gamma&quot; OR bdType = &quot;gamma-Gy&quot; then
 		if prefix = &quot;мк&quot; then
 				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
 				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
@@ -703,6 +714,18 @@ function FacilityError(point as double, BDType as string, prefix as string)
 		else
 			FacilityError = 5 rem `130
 		end if
+	case &quot;gamma-Gy&quot;
+		dim koef2 as double
+		dim realPoint2 as double
+		if prefix = &quot;мк&quot; then koef2 = 0.001
+		if prefix = &quot;м&quot;  then koef2 = 1
+		if prefix = &quot;&quot;   then koef2 = 1000
+		realPoint = point2 * koef2
+		if realPoint&lt;1 then
+			FacilityError = 4 rem `110
+		else
+			FacilityError = 5 rem `130
+		end if	
 	case &quot;n-PP&quot;
 			FacilityError = 5 rem `140
 	case &quot;n-MD&quot;
