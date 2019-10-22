@@ -130,6 +130,6 @@
   <dlg:text dlg:id="Label10" dlg:tab-index="57" dlg:left="137" dlg:top="173" dlg:width="71" dlg:height="10" dlg:value="Проверку произвел:" dlg:align="center"/>
   <dlg:combobox dlg:id="ComboBox2" dlg:tab-index="58" dlg:left="137" dlg:top="208" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:text dlg:id="Label12" dlg:tab-index="59" dlg:left="137" dlg:top="198" dlg:width="71" dlg:height="10" dlg:value="Технический контроль:" dlg:align="center"/>
-  <dlg:text dlg:style-id="3" dlg:id="Label_version" dlg:tab-index="60" dlg:left="203" dlg:top="3" dlg:width="20" dlg:height="10" dlg:align="center"/>
+  <dlg:text dlg:style-id="3" dlg:id="Label_version" dlg:tab-index="60" dlg:left="201" dlg:top="3" dlg:width="24" dlg:height="10" dlg:align="center"/>
  </dlg:bulletinboard>
 </dlg:window>

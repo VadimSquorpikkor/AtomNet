@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.12&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.14&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -394,7 +394,7 @@ function rightPrefixAndNumber(n as integer) as string
 			rightPrefixAndNumber = p/10
 		end if
 	case 6 rem ------------ n-pp min -------------
-		msgbox &quot;6pp: &quot;+p
+		&apos;msgbox &quot;6pp: &quot;+p
 		rightPrefixAndNumber = &quot;&quot; + p
 	case 7 rem ------------ n-pp max -------------
 		if p = 10000 then
@@ -657,10 +657,13 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	rem если это гамма блок:
 	if bdType = &quot;gamma&quot; then
 		if prefix = &quot;мк&quot; then
+				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
 				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
 				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
 				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
 				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
+				if point = 20 	then ar = Array(&quot;9ХК&quot;,&quot;299.9&quot;)
+				if point = 240 	then ar = Array(&quot;9ХК&quot;,&quot;88.9&quot;)
 		end if
 		if prefix = &quot;м&quot; then
 				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
@@ -668,8 +671,10 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
 		end if
 		if prefix = &quot;&quot; then
+				if point = 0.5 	then ar = Array(&quot;163&quot;,&quot;277.4&quot;)
 				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
 				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
+				if point = 40 	then ar = Array(&quot;163&quot;,&quot;32.7&quot;)
 		end if	
 	end if
 	sourceDistanceArray = ar
