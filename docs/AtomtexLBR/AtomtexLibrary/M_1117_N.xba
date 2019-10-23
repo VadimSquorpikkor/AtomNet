@@ -472,6 +472,7 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$controlledBy&quot;, techName)
 	findAndRename(&quot;$b_bg&quot;, Format(randValue(13, 2), &quot;0.0&quot;))
 	findAndRename(&quot;$s_bg&quot;, Format(randValue(0.005, 0.005), &quot;0.00&quot;))
+	findAndRename(&quot;$b2_bg&quot;, Format(randValue(17, 2), &quot;0.0&quot;))
 	dim bd as new DUnit
 	dim m_point as double
 	dim isEmpty as boolean
