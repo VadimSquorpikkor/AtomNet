@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.16&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.17&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -129,6 +129,10 @@ sub start
 	oDialog1117.getControl(&quot;Label12&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;ComboBox1&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;ComboBox2&quot;).setVisible(false)
+	
+	for i=1 to 20
+		oDialog1117.getControl(&quot;CheckBox&quot; + i).setEnable(false)
+	next i
 	
 	nextChecked	
 end sub
