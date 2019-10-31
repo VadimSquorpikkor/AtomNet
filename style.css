@@ -1,5 +1,11 @@
 /*todo Переписать CSS*/
 
+ol ul {
+    list-style-type: none;
+    margin-left: 15px;
+    padding-left: 15px;
+}
+
 #menu_button {
     background-color: #44c767;
     /*background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);*/
@@ -494,6 +500,10 @@ a[href$='.pdf'] {
 a[href$='.rar'] {
     background: url(imgs/file_types/rar.png) no-repeat left center;
 }
+
+/*a[href$='.zip'] {
+    background: url(imgs/file_types/rar.png) no-repeat left center;
+}*/
 
 a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'] {
     background-size: 20px;

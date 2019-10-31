@@ -96,7 +96,7 @@ function includeHTML(mode_1) {
         '            </div>' +
         '        </li>' +
         '        <li><a href="../bdkg/bdkg35.html">БДКГ-35</a></li>' +
-        '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204. Прошивка.</a></li>' +
+        '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>' +
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
         '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a>' +
         '            <div>' +
@@ -136,6 +136,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
+        '        <li><a href="../other/ed2_prosh.html">Прошивка ED2</a></li>' +
         '' +
         '    </ul>' +
         '</details>' +
@@ -188,7 +189,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для OpenOffice</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.rar">Макрос для OpenOffice (Протоколы поверки)</a></li>' +
+        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для OpenOffice (Протоколы поверки)</a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>БДКГ-204</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Прошивка ED2</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Прошивка ED2</h1>
+
+    <ol>
+        <li>Необходимо раздобыть программатор.</li>
+        <li>Для программирования контроллеров ED2 необходимо так же найти колодку</li>
+
+        <img src="../imgs/ed2/7.jpg" width="700">
+
+        <li>Вставить колодку в программатор. Подключить программатор к компьютеру и к блоку питания</li>
+
+        <img src="../imgs/ed2/8.jpg" width="800">
+
+        <li>Открываем ChipProg-48</li>
+        <li>Настраиваем программатор:</li>
+        <ul>
+            <li> 5.1 Выбираем микросхему AT89C51ED2</li>
+        <img src="../imgs/ed2/10.jpg" width="600">
+            <li> 5.2 Выбираем файл прошивки</li>
+        <img src="../imgs/ed2/9.jpg" width="600">
+            <li> 5.3 Настраиваем параметры прошивки (LockBit2 и SSB, см. рисунок)</li>
+            <li> 5.4 Выбираем Auto Programming</li>
+        <img src="../imgs/ed2/11.jpg" width="900">
+
+
+<!--
+            <img src="../imgs/ed2/3.png" width="600">
+            <img src="../imgs/ed2/4.png" width="600">
+-->
+
+        </ul>
+        <li>Вставить МК в колодку, как на фото. Важно куда смотрит ключ </li>
+        <img src="../imgs/ed2/12.jpg" width="700">
+        <li>Если программа пишет, что плохой контакт, то необходимо контакты МК протереть ластикок и/или
+            спиртом. Если не помогает - протереть контакты колодки
+        </li>
+        <li>Для прошивки необходимо нажать кнопку Выполнить или нажать кнопку START на программатора.
+            Использовать кнопку намного удобнее, когда программируешь много схем потоком.
+        </li>
+        <li>Дождаться завершения прошивки. Последнее сообщение должно быть "Программирование HSB... OK" (8)</li>
+        <ul>
+            <li> 9.1 В случае появления сообщения о плохом контакте - см. п.8</li>
+            <li> 9.2 Если появляется сообщение "Неверный идентификатор микросхемы" попробуйте ее достать и вставить
+                снова. Не помогло - см. п.8. Если и это не помогло - идем на склад менять микросхему (надо вставить
+                картинку с кричащим хомячком на этот пункт)
+            </li>
+        </ul>
+        <li>Извлечь микросхему нажатием на колодку</li>
+        <li>Подписать микросхему: (9)</li>
+        <ul>
+            <li>Первая строка - условное обозначение прибора (Например для БДКГ-04 -> [Значек Гамма]-4)</li>
+            <li>Вторая строка - Инициалы в формате ФИО</li>
+        </ul>
+        <li>Вернуть микросхемы в пенал. Обращаем внимание на положение ключа! (10)</li>
+        <li>Сделать запись в журнале. Журнал у Васи на тумбочке</li>
+        <li>Отдать на скалд/сборку</li>
+    </ol>
+
+
+</div>
+
+</body>
+</html>

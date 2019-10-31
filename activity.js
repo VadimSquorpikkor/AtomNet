@@ -88,6 +88,13 @@ function get_cd_1121() {
 
 }
 
+function get_act_204() {
+    document.getElementById('cd').value = activity(63, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    document.getElementById('cd2').value = activity(3.3, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    document.getElementById('cs').value = activity(23, new Date(2018,12,15), t_pol_cs);
+
+}
+
 function get_cs_1121() {
         let res = parseFloat(document.getElementById('cs_1121').value);
         let ans = (res-12)*9/7;
