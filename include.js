@@ -122,13 +122,21 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
+        '        <span>БД нейтронного излучения</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../other/6102.html">6102. Настройка нейтронного детектора</a></li>' +
+        '        <li><a href="../other/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
+        '        <li><a href="../other/bdkn_01_03.html">БДКН-01/БДКН-03</a></li>' +
+        '    </ul>' +
+        '</details>' +
+        '' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
         '        <span>Всякое разное</span>' +
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../other/signalizator.html">Сигнализатор</a></li>' +
-        '        <li><a href="../other/6102.html">6102. Настройка нейтронного детектора</a></li>' +
-        '        <li><a href="../other/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
-        '        <li><a href="../other/bdkn_01_03.html">БДКН-01/БДКН-03</a></li>' +
         '        <li><a href="../other/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
