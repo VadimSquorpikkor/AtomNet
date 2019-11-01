@@ -138,12 +138,15 @@ function includeHTML(mode_1) {
         '        <span>Всякое разное</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../other/signalizator.html">Сигнализатор</a></li>' +
+        '        <li><a href="../other/signalizator.html">Устройство сигнализации 1121,1123</a></li>' +
         '        <li><a href="../other/boi2.html">Блок обработки информации БОИ2</a></li>' +
         '        <li><a href="../other/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
         '        <li><a href="../other/delitel.html">Проверка делителя</a></li>' +
+        '        <li><a href="../other/umnoz_1121.html">Проверки умножителя 1121,α,β,1103,1125</a></li>' +
+        '        <li><a href="../other/umnoz_1315.html">Проверка умножителя 1315</a></li>' +
+        '        <li><a href="../other/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
@@ -151,6 +154,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '        <li><a href="../other/dgb-025.html">Входной контроль ДГБ-0,25</a></li>' +
         '        <li><a href="../other/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
+        '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
         '' +
         '    </ul>' +
         '</details>' +

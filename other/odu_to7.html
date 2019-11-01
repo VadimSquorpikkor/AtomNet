@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Переходник ODU на ТО-7</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Переходник ODU на ТО-7</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Переходник ODU на ТО 7 контактов</h1>
+
+    <img src="../imgs/odu_to7/1.png" width="700">
+
+    <table id="table2" style="max-width: 500px; margin: 5px auto">
+        <tr>
+            <th>ODU</th>
+            <th>TO7</th>
+            <th>Цвет</th>
+            <th>Назначение</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>белый</td>
+            <td>минус</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+            <td>коричневый</td>
+            <td>питание +6В</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>зеленый</td>
+            <td>RX от адаптера</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>4</td>
+            <td>желтый</td>
+            <td>TX от адаптера</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>серый</td>
+            <td>&mdash;</td>
+        </tr>
+    </table>
+
+
+</div>
+
+</body>
+</html>

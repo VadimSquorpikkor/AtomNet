@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Проверка умножителя 1315</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Проверка умножителя 1315</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Проверка умножителя 1315</h1>
+
+
+    <ul>
+        <li>Проверяем мультиметром на короткое замыкание провода, припаянные к умножителю</li>
+        <img src="../imgs/umnoz_1315/1.jpg" width="400">
+        <li>Проверяем мультиметром правильность установки и исправность светодиода. Мультиметр в режиме измерения диода
+            (прозвонки). Светодиод должен светиться синим цветом, номинал KP-1608QBC-D
+        </li>
+        <li>Собрать схему для проверки. Взять пульт для умножителей, подключить к источнику питания Б5-78/6 (подаем
+            напряжение 6-7 В). К выводам пульта подключаем осциллограф и умножитель.
+        </li>
+        <img src="../imgs/umnoz_1315/2.jpg" width="700">
+        <li>На осциллографе должна быть такая картина</li>
+        <img src="../imgs/umnoz_1315/3.jpg" width="400">
+        <li>Проверить мультиметром (1000в) напряжение на конденсаторах относительно земли
+            <img src="../imgs/umnoz_1315/4.jpg" width="400">
+            Напряжения должны быть :
+        </li>
+
+        <table id="table2" style="max-width: 800px; margin: 5px auto">
+            <tr>
+                <td>Точка</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>10</td>
+                <td>11</td>
+            </tr>
+            <tr>
+                <td>Напряжение</td>
+                <td>76</td>
+                <td>20</td>
+                <td>140</td>
+                <td>180</td>
+                <td>218</td>
+                <td>247</td>
+                <td>280</td>
+                <td>315</td>
+                <td>345</td>
+                <td>375</td>
+                <td>397</td>
+            </tr>
+        </table>
+
+        <li>При измерении мультиметром напряжения на 11 точке , картинка на осциллографе изменится и будет такая:</li>
+        <img src="../imgs/umnoz_1315/5.jpg" width="400">
+        <li>Потребление от источника питания рабочего умножителя не более 20ма, если потребление больше (например 60ма)
+            и картинка на осциллографе с сильно заваленными фронтами, значит умножитель не исправен.
+        </li>
+        <li>Ремонт заключается в проверке элементов и монтажа.
+        </li>
+        <li>Обратить внимание на качество пайки, чтобы не было не припаянных элементов.
+        </li>
+        <li>Проверить диоды мультиметром.</li>
+        <li>Проверить маленькие конденсаторы мультиметром (предел 20Мом), должно быть не менее 2 Мом ! что меньше-
+            менять. Номинал 0603-X7R-0,1 мкФ +_10%-100В (06031C104KAT2A)
+        </li>
+
+    </ul>
+
+
+</div>
+
+</body>
+</html>
