@@ -4,6 +4,7 @@
     <META charset="utf8">
     <title>БДКН-03</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../activity.js"></script>
     <script type="text/javascript" src="../include.js"></script>
     <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
@@ -49,8 +50,23 @@
         <li>включаем БОИ , запускаем ATAS, спектр долчен быть как на рисунке
             (259 канал +5%-3% т.е. диапазон 255-270канал)
         <img src="../imgs/bdkn-03_2/spectr_atas.jpg" width="900">
-            если канал не соответствует - регулируем усиление подбором резистором R36, R37
-            расчет в <a href="../imgs/bdkn-03_2/bdkn_raschet_resistora.xlsx">файле</a> таблицы</li>
+            если канал не соответствует &mdash; регулируем усиление подбором резистором R36, R37
+            расчет в <a href="../imgs/bdkn-03_2/bdkn_raschet_resistora.xlsx">файле</a> или воспользоваться формой:</li>
+        <form class="yellow_back">
+            <i>Проверяем номиналы запаяных резисторов, если отличаются от табличных, меняем табличные значения</i><br><br>
+            R37: <input id="r_37" type="text" value="560" title="res">
+            R36: <input id="r_36" type="text" value="3900" title="res"><br><br>
+            Номер канала: <input id="channel" type="text" value="259" title="ch">
+            <input type="button" value="Расчитать" onclick="resistor_bdkn_03()"><br>
+            <hr color="#FFF">
+            <img src="../imgs/attention.png" width="100" style="float: left; margin: 20px">
+            <div style="text-indent: 0; background-color: transparent">
+            <i><span class="attention">Перепаивается только один из резисторов</span><br> Смотрим, какой из номиналов ближе к реальному:</i><br><br>
+
+            R37: <input id="r_37_calc" type="text" title="res"><br>
+            R36: <input id="r_36_calc" type="text" title="res">
+            </div>
+        </form>
         <img src="../imgs/bdkn-03_2/R36_R37.jpg" width="600">
         <li>записываем серийный номер при помощи Background calibration</li>
         <li>проверяем фон- подключаем к бои , ставим вдали от источников, за час должен набрать не более 40нЗ при 5%</li>

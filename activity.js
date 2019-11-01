@@ -101,6 +101,20 @@ function get_cs_1121() {
         document.getElementById('res_cs_1121').value = ans.toFixed(2);
 }
 
+function resistor_bdkn_03() {
+    let res37 = parseInt(document.getElementById('r_37').value);
+    let res36 = parseInt(document.getElementById('r_36').value);
+    let channel = parseInt(document.getElementById('channel').value);
+    let div = -(res36 + res37)/(1 + (20000/(20000 + res36 + res37)*(channel/(259 - channel))));
+    let new37 = res37 + div;
+    let summa = res36 + new37;
+    let res37calc = summa - res36;
+    let res36calc = summa - res37;
+
+    document.getElementById('r_37_calc').value = res37calc.toFixed(2);
+    document.getElementById('r_36_calc').value = res36calc.toFixed(2);
+}
+
 // todo сделать нормально Float не нужен и округление тоже
 function get_cs_04() {
     let res = parseFloat(document.getElementById('cs_04').value);
