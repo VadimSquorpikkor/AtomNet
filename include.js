@@ -125,9 +125,11 @@ function includeHTML(mode_1) {
         '        <span>БД нейтронного излучения</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../other/6102.html">6102. Настройка нейтронного детектора</a></li>' +
-        '        <li><a href="../other/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
-        '        <li><a href="../other/bdkn_01_03.html">БДКН-01/БДКН-03</a></li>' +
+        '        <li><a href="../bdkn/6102.html">6102. Настройка нейтронного детектора</a></li>' +
+        '        <li><a href="../bdkn/bdkn-01.html">БДКН-01</a></li>' +
+        '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
+        '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
+        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01/БДКН-03</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
@@ -144,7 +146,8 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
-        '        <li><a href="../other/ed2_prosh.html">Прошивка ED2</a></li>' +
+        '        <li><a href="../other/flip.html">Flip. Как шить</a></li>' +
+        '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '' +
         '    </ul>' +
         '</details>' +
@@ -196,7 +199,7 @@ function includeHTML(mode_1) {
         '    <ul>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
-        '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для OpenOffice</a></li>' +
+        '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для протоколов</a></li>' +
         '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для OpenOffice (Протоколы поверки)</a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +

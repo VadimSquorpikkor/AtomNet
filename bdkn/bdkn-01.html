@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>TITLE</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">TITLE</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>TITLE</h1>
+
+    <img src="../imgs/under_construction.jpg">
+
+    <p>Берем плату для проверки плат БДКН. Запоминаем ток потребления (около 7,2мА)</p>
+
+    <h3>Проверка плат преобразователя напряжения 436121.004</h3>
+    <ol>
+        <li>Подключить</li>
+        <div>
+            <ul>
+                <li>4 - Земля (черный)</li>
+                <li>5 - +5В (красный)</li>
+                <li>3 - +3,3В (желтый)</li>
+                <li>2 - +3,3В (желтый)</li>
+            </ul>
+        </div>
+        <li>Проверяем ток потребления. Должен быть около 5мА, т.е амперметр должен показывать около 12,2мА</li>
+        <li>Проверяем напряжение на транзисторе. Должно иметь такую амплитуду и форму</li>
+        <li>Проверяем напряжение на делителе. Должно быть около 20В</li>
+    </ol>
+
+    <h3>Проверка плат преобразователя импульсов 468741.013</h3>
+
+    <ol>
+        <li>Подключить</li>
+        <div>
+            <ul>
+                <li>9 - Земля</li>
+                <li>11 - +3,3В</li>
+                <li>10 - +5В</li>
+            </ul>
+        </div>
+        <li>Проверить ток потребления. Должен быть около 9,4мА
+        </li>
+        <li>Проверяем напряжения в точках. Удобнее использовать осциллограф
+        </li>
+
+        <table style="max-width: 500px; margin: 5px auto">
+            <tr>
+                <th>Точка</th>
+                <th>Напряжение</th>
+            </tr>
+            <tr>
+                <td>D7.1</td>
+                <td>-5В</td>
+            </tr>
+            <tr>
+                <td>D7.2</td>
+                <td>+5В</td>
+            </tr>
+            <tr>
+                <td>D8.3</td>
+                <td>1,8В</td>
+            </tr>
+            <tr>
+                <td>D6.7</td>
+                <td>0,085В</td>
+            </tr>
+            <tr>
+                <td>D1.7</td>
+                <td>-4,76В</td>
+            </tr>
+            <tr>
+                <td>D2.3</td>
+                <td>+2,43В</td>
+            </tr>
+            <tr>
+                <td>VT3-C18</td>
+                <td>-2,66В</td>
+            </tr>
+            <tr>
+                <td>R15-VT2</td>
+                <td>0,45В</td>
+            </tr>
+        </table>
+
+        <li>Поставить щуп осциллографа в точку 8. должно быть +5В.
+            Подать +5В с точки 13 на площадку №3 (дотронуться)
+            Напряжение в точке изменится на противоположенное, а потом должно вернуться
+        </li>
+    </ol>
+
+    <h3>Проверка плат устройства обработки 468154.017</h3>
+
+    <ol>
+        <li>Подключить</li>
+        <div>
+            <ul>
+                <li>5 - +5В</li>
+                <li>4 - Земля</li>
+            </ul>
+        </div>
+        <li>Проверяем ток потребления. Должен быть около 5,8мА
+        </li>
+    </ol>
+</div>
+
+</body>
+</html>

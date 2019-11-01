@@ -1,10 +1,10 @@
 /*todo Переписать CSS*/
 
-/*ol ul {
+ol ul li{
     list-style-type: none;
     margin-left: 15px;
     padding-left: 15px;
-}*/
+}
 
 #menu_button {
     background-color: #44c767;
@@ -501,16 +501,17 @@ a[href$='.rar'] {
     background: url(imgs/file_types/rar.png) no-repeat left center;
 }
 
-/*a[href$='.zip'] {
+a[href$='.zip'] {
     background: url(imgs/file_types/rar.png) no-repeat left center;
-}*/
+}
 
-a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'] {
+
+a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'], a[href$='.zip'] {
     background-size: 20px;
     padding-left: 25px;
 }
 
-a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover {
+a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
     padding-left: 25px;
     background-color: darkorange;
 }
