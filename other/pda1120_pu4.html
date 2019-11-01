@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>КПК 1120 БОИ4</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">КПК 1120 БОИ4</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>КПК 1120 БОИ4</h1>
+
+    <img src="../imgs/boi4/1.jpg" width="300">
+
+    <ol>
+        <li> Получить КПК, колпачки и переходники на складе</li>
+        <li> Достать КПК из коробок и в пакетах отдать на сборку вместе с колпачками и переходниками</li>
+        <li> После возвращения вставить аккумуляторы в КПК и включить. (1,2)</li>
+        <li> Если КПК до этого не использовались, то при включении выбрать часовой пояс (Minsk +3) и ввести текущее
+            время и дату.
+        </li>
+        <li> Идем Пуск->Settings->System->Regional Settings.
+            <div class="li_div">Вверху слева выбираем Date и ставим формат dd-MMM-yy.<br>
+                Переключаемся в Time и ставим HH:mm:ss.<br>
+                Нажимаем OK.
+            </div>
+        </li>
+        <li> Жмем струлку назад и выбираем Clock&Alarms. Проверяем время. Если все правильно - выходим
+        <li> Жмем Пуск->File Explorer.
+            <div class="li_div"> Вставить флешку с программой<br>
+                Сверху слева выбираем Hard Disk(2)<br>
+                Выбираем программу SurveyM. Долгим нажатием выбираем Copy(3)<br>
+                Нажимаем сверху на стрелку и переходим My Device<br>
+                Листаем вниз, зажимаем на пустом месте и выбираем Paste(4)<br>
+                Теперь появилось прниложение на самом устройтсве
+            </div>
+        </li>
+        <li> Устанавливаем SurveyM
+            <div class="li_div">Выбираем скопирпованное приложение<br>
+                Нажимаем Install
+        <li> После установки выходим и идему Пуск. В конце появится приложение (5). Заходим
+            <div class="li_div">Выбираем язык (English)
+                Попадаем в приложение<br>
+                Выбираем Menu и листаем вниз. Там будет пункт Calibration coefficients (6)<br>
+                Выбираем и у нас спрашивает пароль.Это текущее время без знаков, т.е. если сейчас 13:55, то 1355. Время
+                смотрим
+                вверху справа. Если вы не поменяли формат времени и выдало ошибку, то нужно добавить 12 часов<br>
+                Устанавливаем следующие коэффициенты(7)<br>
+                Нажимаем галочку
+            </div>
+        </li>
+        <li> ВАЖНО! Чтобы коэффициенты сохранились жмем Menu->Exit.
+            <div class="li_div">Приложение выйдет и выключится.<br>
+                Войти вновь в приложение и проверить коэффициенты. Если они установлены правильно, то фон будет в мкЗв,
+                если они
+                не сохранились, то мЗв
+            </div>
+        </li>
+        <li> Идем Пуск->Settings->System->About. Справа вверху находим Device ID (8) и выбираем.
+            <div class="li_div">Device ID переписываем на молярку и снизу еще пишем код устройства (1120)<br>
+                Клеим на колпак.
+            </div>
+        </li>
+        <li> При необходимости заряжаем и отдаем на линейку</li>
+        <li> Ставим на фон и проводим калибровку. 3 коэффициент</li>
+        <li> Проверяем GPS. Для этого идем settings-System-GPS и выбираем COM8.Ставим на окно и ждем когда связь
+            установится.
+        </li>
+        <li> Проверяем связь с БД. Для этого подключаем рабочий блок и проверяем соединение.
+            <div class="li_div">В случае отсутствия обмена проверяем напряжение питания и логические уровни нуля на
+                линиях передачи.
+            </div>
+        </li>
+    </ol>
+
+
+</div>
+
+</body>
+</html>

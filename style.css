@@ -6,6 +6,18 @@ ol ul li{
     padding-left: 15px;
 }
 
+.li_div, .li_div:hover {
+    padding-top: 0;
+    text-indent: 0;
+    padding-left: 30px;
+    box-shadow: none;
+    margin-left: 10px;
+}
+
+body>div>ul>li, body>div>ol>li {
+    margin-bottom: 10px;
+}
+
 #menu_button {
     background-color: #44c767;
     /*background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);*/

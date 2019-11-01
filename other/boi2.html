@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Блок обработки информации БОИ2</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Блок обработки информации БОИ2</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Блок обработки информации БОИ2</h1>
+
+    <img src="../imgs/boi2/boi2.png" width="321">
+
+    <ul>
+        <li>Измерение высокого напряжения на БОИ2 рис1.</li>
+        <img src="../imgs/boi2/1.jpg" width="700">
+        <li>Проверять ток потребления удобно на резисторе R29 (рис2). Режим измерения на мультиметре 200мВ. Ток
+            потребления равен напряжение (1.5мВ) разделить на сопротивление резистора R29 (0.047Ом) и равен
+            приблизительно 30мА с включенной двойной подсветкой.
+        </li>
+        <img src="../imgs/boi2/2.jpg" width="700">
+
+        <li>Проверять ток зарядки удобно на резисторе R35 (рис3). Режим измерения на мультиметре 2В. Ток потребления
+            равен напряжение (0.5В) разделить на сопротивление резистора R35 (1Ом) и равен приблизительно 500мА.
+        </li>
+        <img src="../imgs/boi2/3.jpg" width="700">
+    </ul>
+
+
+</div>
+
+</body>
+</html>

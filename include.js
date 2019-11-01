@@ -139,6 +139,7 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../other/signalizator.html">Сигнализатор</a></li>' +
+        '        <li><a href="../other/boi2.html">Блок обработки информации БОИ2</a></li>' +
         '        <li><a href="../other/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
@@ -148,6 +149,8 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
         '        <li><a href="../other/flip.html">Flip. Как шить</a></li>' +
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
+        '        <li><a href="../other/dgb-025.html">Входной контроль ДГБ-0,25</a></li>' +
+        '        <li><a href="../other/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
         '' +
         '    </ul>' +
         '</details>' +
