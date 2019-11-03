@@ -1,9 +1,15 @@
 /*todo Переписать CSS*/
 
-ol ul li{
+
+
+/*ol ul li{
     list-style-type: none;
     margin-left: 15px;
     padding-left: 15px;
+}*/
+
+.no_markers {
+    list-style-type: none;
 }
 
 .li_div, .li_div:hover {
@@ -15,7 +21,7 @@ ol ul li{
 }
 
 body>div>ul>li, body>div>ol>li {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 #menu_button {
@@ -259,6 +265,7 @@ body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
+    border-radius: 15px;
     /*max-width: 1200px;*/
 }
 
@@ -380,7 +387,7 @@ p {
 
 }
 
-.yellow_back, .yellow_back_small {
+.yellow_back, .yellow_back_small, .tips_and_tricks {
     margin: 10px 0 10px;
     padding: 10px 20px;
     font-size: 16px;
@@ -396,6 +403,21 @@ p {
 }
 .yellow_back_small {
     padding: 1px 20px;
+}
+
+.tips_and_tricks {
+    background: url("imgs/lamp.png") no-repeat;
+    background-position: 20px;
+    background-size: 50px 60px;
+    padding-left: 100px;
+    background-color: #ddddff;
+    min-height: 50px;
+    border-radius: 5px;
+    margin: 10px 20px;
+    /*font-style: italic;*/
+    box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
+    text-indent: 0;
+    font-size: 14px;
 }
 
 .green_back {

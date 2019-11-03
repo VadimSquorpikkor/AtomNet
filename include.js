@@ -145,6 +145,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
         '        <li><a href="../other/delitel.html">Проверка делителя</a></li>' +
         '        <li><a href="../other/umnoz_1121.html">Проверки умножителя 1121,α,β,1103,1125</a></li>' +
+        '        <li><a href="../1123/1123_umnoz.html">Проверки умножителя 1123</a></li>' +
         '        <li><a href="../other/umnoz_1315.html">Проверка умножителя 1315</a></li>' +
         '        <li><a href="../other/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
