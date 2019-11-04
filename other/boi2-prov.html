@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>БОИ-2. Проверка</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">БОИ-2. Проверка</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>БОИ-2. Проверка</h1>
+
+    <ul>
+        <li>Подключить клавиатуру</li>
+        <li>Подключить плату к аккумулятору. При включении удерживать кнопку «ПАМЯТЬ»</li>
+        <li>Проверяем потребление. Около 11мА</li>
+        <li>Вводим инициализацию 957. Для этого нажимаем 3 раза на кнопку «ПАМЯТЬ». Появляются “---”. Нажимаем 2 раза на
+            кнопку «ПУСК». Первый «-» начнет мигать. Кнопками вверх/вниз вводим 9. Нажимаем «ПУСК» и мигает второй
+            символ. Вводим 5. Так же вводим 7
+        </li>
+        <li>Выключаем плату</li>
+        <li>Подключаем адаптер
+        <img src="../imgs/boi2/11.jpg" width="800">
+        Отключаем аккумулятор. Индикатор заряда должен быть 0%. Подключаем аккумулятор. Индикатор заряда — 55%</li>
+        <li>Включаем плату одновременно зажимаю кнопку подсветки. Проверяем работу всех сегментов</li>
+        <img src="../imgs/boi2/12.jpg" width="500">
+        <li>Двойным нажатием кнопки подсветки включаем полную подсветку и проверяем отсутствие грязи и мусора</li>
+        <li>Выключаем плату. Смотрим ток зарядки (около 400-450 мА)</li>
+        <li>Отключаем аккумулятор и адаптер. Подключаем через переходник к компьютеру
+        <img src="../imgs/boi2/13.jpg" width="800">
+        Проверяем наличие обмена с Background calibration</li>
+        <li>Выключаем плату и отсоединяем. Ставим отметку о проверке</li>
+    </ul>
+
+
+</div>
+
+</body>
+</html>
