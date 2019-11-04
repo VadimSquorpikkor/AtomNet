@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <META charset="utf8">
+    <title>Проверка умножителя БДКГ-201М</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Проверка умножителя БДКГ-201М</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <!--<div w3-include-html="menu.html"></div>-->
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div>
+
+    <h1>Проверка умножителя БДКГ-201М</h1>
+
+    <ul>
+        <li>1. Проверяем мультиметром на короткое замыкание провода, припаянные к умножителю.</li>
+        <img src="../imgs/umnoz_201m/1.jpg" width="600">
+        <li>2. Проверяем мультиметром правильность установки и исправность светодиода. Мультиметр в режиме измерения
+            диода (прозвонки). Светодиод должен светиться синим цветом, номинал KP-1608QBC-D.
+        </li>
+        <li>3. Собрать схему для проверки. Взять пульт для умножителей, подключить к источнику питания Б5-78/6 (подаем
+            напряжение 6-7 В). К выводам пульта подключаем осциллограф и умножитель.
+        </li>
+        <img src="../imgs/umnoz_201m/2.jpg" width="700">
+        <li>На осциллографе должна быть такая картина</li>
+        <img src="../imgs/umnoz_201m/3.jpg" width="400">
+        <li>4. Проверить мультиметром (1000в) напряжение на конденсаторах относительно земли</li>
+        <img src="../imgs/umnoz_201m/4.jpg" width="500">
+        <li>Напряжения должны быть :</li>
+
+        <table id="table2" style="max-width: 800px; margin: 5px auto">
+            <tr>
+                <th>Точка</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+
+            </tr>
+            <tr>
+                <td>Напряжение</td>
+                <td>390</td>
+                <td>410</td>
+                <td>425</td>
+                <td>130</td>
+                <td>&mdash;</td>
+                <td>218</td>
+                <td>250</td>
+                <td>280</td>
+                <td>315</td>
+                <td>345</td>
+                <td>370</td>
+
+            </tr>
+        </table>
+
+        <li>При измерении мультиметром напряжения на 3 точке , картинка на осциллографе изменится и будет такая:
+        </li>
+        <img src="../imgs/umnoz_201m/5.jpg" width="500">
+        <li>Потребление от источника питания  рабочего умножителя не более 20ма, если потребление больше (например 60ма)
+            и картинка на осциллографе с сильно заваленными фронтами,  значит умножитель не исправен.
+        </li>
+        <li>Ремонт заключается в проверке элементов и монтажа.</li>
+        <li>Обратить внимание на качество пайки, чтобы не было не припаянных элементов.</li>
+        <li>Проверить диоды мультиметром.</li>
+        <li>Проверить маленькие конденсаторы мультиметром (предел 20Мом), должно быть не менее 2 Мом ! что меньше
+            &mdash; менять. Номинал 0603-X7R-0,1 мкФ ±10%-100В (06031C104KAT2A)
+        </li>
+    </ul>
+
+
+</div>
+
+</body>
+</html>
