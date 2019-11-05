@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.17&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.18&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -100,7 +100,7 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(53.8,727,6300,62100,186000),		emptyArray,										&quot;alpha&quot;,	Array(2.4,100))
 	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,100))
 	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				&quot;gamma&quot;,	Array(0.1,30))
-	&apos;msgbox BDList.item(1).BDName rem для проверки
+	&apos;msgbox BDList.item(1).BDName rem для проверки   
 end sub
 rem=======================================================================================
 sub addBDtoCollection(ByVal bname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
@@ -438,6 +438,8 @@ sub insertMeasLimits
 end sub
 rem=======================================================================================
 sub insertRecordsToTemplate
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;	
 	dim path as string
 	dim calibName, techName, mainType as string
 	if protocolType = &quot;protRus&quot; then
@@ -517,6 +519,8 @@ sub insertRecordsToTemplate
 				prefix =  bd.pointTextList.item(j)
 				BDtype = bd.BDType
 				threePointArray = avaragePointsRndArray(m_point, percentOtk)
+				
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-9&quot; + (j-1)), cont_point) rem активность источника источника для альфа/бета (то же контрольная точка), 
 				
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1))	rem расстояние до источника
