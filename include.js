@@ -80,6 +80,7 @@ function includeHTML(mode_1) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
+        '        <li><a href="../bdkg/bdkg11m.html">БДКГ-11М</a></li>' +
         '        <li><a href="../bdkg22/bdkg22.html">БДКГ-22/23. Прошивка и настройка</a>' +
         '            <div>' +
         '                <ul>' +
@@ -146,7 +147,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../bdkn/bdkn-01.html">БДКН-01</a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
-        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01/БДКН-03</a></li>' +
+        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01/БДКН-03<span class="under_construction"></span></a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
@@ -210,11 +211,12 @@ function includeHTML(mode_1) {
         '        <span>БОИ</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../other/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
-        '        <li><a href="../other/boi2-prog.html">БОИ-2 Прошивка</a></li>' +
-        '        <li><a href="../other/boi2-prov.html">БОИ-2 Проверка</a></li>' +
-        '        <li><a href="../other/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
-        '        <li><a href="../other/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
+        '        <li><a href="../boi/boi1-uo.html">БОИ-1. Устройство Обработки<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../boi/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
+        '        <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
+        '        <li><a href="../boi/boi2-prog.html">БОИ-2 Прошивка</a></li>' +
+        '        <li><a href="../boi/boi2-prov.html">БОИ-2 Проверка</a></li>' +
+        '        <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +

@@ -148,6 +148,13 @@ function calc_act() {
     }
 }
 
+function exp_all() {
+    let x = document.getElementsByTagName("details");
+    let i;
+    for (i = 0; i < x.length; i++) {
+        x[i].setAttribute("open", "true");
+}
+
 function set_num() {
     document.getElementsByName('r1')[2].checked = true;
     document.getElementById('act0').value = 90;

@@ -1,5 +1,13 @@
 /*todo Переписать CSS*/
 
+.under_construction:before {
+    font-size: 14px;
+    color: #ff3333;
+    padding: 3px 20px;
+    text-shadow: 0 3px 2px #000000;
+    font-style: italic;
+    content: "в работе";
+}
 
 
 /*ol ul li{
