@@ -1,5 +1,12 @@
 /*todo Переписать CSS*/
 
+.logo_div {
+    background: #333333 url("logo2.png") no-repeat center;
+    height: 80px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
 .under_construction:before {
     font-size: 14px;
     color: #ff3333;
@@ -8,7 +15,6 @@
     font-style: italic;
     content: "в работе";
 }
-
 
 /*ol ul li{
     list-style-type: none;
@@ -339,7 +345,7 @@ body>div>ul>li>div {
 }
 
 div {
-    padding: 5px 20px;
+    /*padding: 5px 20px;*/
     text-align: justify;
     text-indent: 40px;
     font-size: 18px;
@@ -381,12 +387,14 @@ p {
     text-align: right;
 }
 
-.yellow_back_centered {
-    /*margin: 5px 0 5px;*/
-    margin: 5px auto 5px;
+.yellow_back_index_right {
+    /*margin: 5px auto 5px; !*так было до лого*!*/
+    margin: 5px;
+    /*margin-top: 10px;*/
+    /*margin-left: 5px;*/
+    /*margin-bottom: 5px;*/
     font-size: 14px;
     background-color: antiquewhite;
-    /*padding: 30px;*/
     align-self: center;
     text-align: center;
     padding: 10px;
@@ -448,7 +456,9 @@ p {
     /*max-width: 1200px;*/
     background-color: antiquewhite;
     border-radius: 20px;
-    margin: 0 auto 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+    /*margin: 0 auto 5px;  до лого*/
     padding: 5px 10px 5px 10px;
     text-align: center;
 }
@@ -852,37 +862,45 @@ figcaption {
 
 }
 
+.div_for_menu_block {
+    margin-top: 2px;
+}
+
 @media (min-width: 1300px){
     body>div {
         margin-left: 460px;
         margin-right: 5px;
     }
-    .div_for_menu_block {
-        margin-left: auto;
-    }
     .left_side_menu {
         display: block;
     }
     .header_div_2 {
-        /*padding-left: 470px;*/
         margin-left: 470px;
-        /*position: static;*/
         position: absolute;
-        /*margin-left: 0;
-        padding-left: 30px;
-        padding-top: 0;
-        margin-top: -10px;*/
+
     }
     #menu_button {
         display: none;
     }
-
-
-
 }
 
-
-
+@media (max-width: 500px) {
+    #menu {
+        float: none;
+    }
+}
+@media (min-width: 800px) {
+    #menu {
+        float: left;
+        width: 420px;
+    }
+    .yellow_back_index_right, .activity_calculator, .div_for_menu_block {
+        margin-left: 430px;
+    }
+    .div_for_menu_block {
+        margin-top: 2px;
+    }
+}
 
 
 /*.spoiler_menu details[open] > ul {

@@ -153,6 +153,7 @@ function exp_all() {
     let i;
     for (i = 0; i < x.length; i++) {
         x[i].setAttribute("open", "true");
+    }
 }
 
 function set_num() {
@@ -161,3 +162,4 @@ function set_num() {
     document.getElementById('date').value = "2018-02-12";
     document.getElementById('date_now').valueAsDate = new Date();
 }
+

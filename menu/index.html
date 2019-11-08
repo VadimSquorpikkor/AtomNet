@@ -10,8 +10,14 @@
 
 <body onload="get_all()">
 
+<div class="logo_div"></div>
 
-<div class="yellow_back_centered">
+<div id="menu" class="spoiler_menu"> <!-- style="float: left; width: 450px; margin-right: 10px"--></div>
+<script>
+    includeHTML();
+</script>
+
+<div class="yellow_back_index_right">  <!--style="margin-left: 460px"-->
     №516: <input id="516" type="text" value="0" title="k1" size="5">
     №517: <input id="517" type="text" value="0" title="k1" size="5">
     №518: <input id="518" type="text" value="0" title="k1" size="5">
@@ -21,7 +27,7 @@
     №2910: <input id="2910" type="text" value="0" title="k1" size="5">
 </div>
 
-<div class="activity_calculator">
+<div class="activity_calculator">  <!--style="margin-left: 460px"-->
     <div style="float: left">
         <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
                                         type="date"><br>
@@ -40,24 +46,8 @@
         <input id="act_main" title="" name="r1" type="text" size="5"><span>(кБк)</span>
     </div>
 </div>
-<!--
-<div class="yellow_back_centered">
-    <input title="" name="r1" type="button" value="Рqqqq" onclick="exp_all()">
-</div>
--->
 
-<div id="menu" class="spoiler_menu"></div>
-<script>
-    includeHTML();
-</script>
-
-<!--old include with jquery-->
-<!--<div w3-include-html="menu.html" class="spoiler_menu"></div>
-<script>
-    includeHTML();
-</script>-->
-
-<div class="div_for_menu_block" style="visibility: hidden; padding: 0">
+<div class="div_for_menu_block" style="visibility: hidden; padding: 0"><!-- style="visibility: hidden; padding: 0-->
     <div class="menu_block">
         <a href="../srk2327/2327.html">
             <img src="../imgs/main_menu/2327.jpg"/>
@@ -107,13 +97,6 @@
             <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
         </a>
     </div>
-<!--    <div class="menu_block">
-        <a href="../other/signalizator.html">
-            <img src="../imgs/main_menu/sign.jpg"/>
-            <div class="menu_block_top_orange"><span>Сигнализатор</span></div>
-            <div class="menu_block_footer"><span>Прошивка.</span></div>
-        </a>
-    </div>-->
     <div class="menu_block">
         <a href="../sertif_prosh/sertificate.html">
             <img src="../imgs/main_menu/sertificate.jpg"/>
