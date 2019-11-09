@@ -149,10 +149,8 @@ function calc_act() {
 }
 
 function exp_all() {
-    let x = document.getElementsByTagName("details");
-    let i;
-    for (i = 0; i < x.length; i++) {
-        x[i].setAttribute("open", "true");
+    for (let item of document.getElementsByTagName("details")) {
+        item.open = !item.open;
     }
 }
 

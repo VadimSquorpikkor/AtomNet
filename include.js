@@ -217,8 +217,9 @@ function includeHTML(mode_1) {
         '        <li><a href="../boi/boi1-uo.html">БОИ-1. Устройство Обработки<span class="under_construction"></span></a></li>' +
         '        <li><a href="../boi/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
         '        <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
-        '        <li><a href="../boi/boi2-prog.html">БОИ-2 Прошивка</a></li>' +
-        '        <li><a href="../boi/boi2-prov.html">БОИ-2 Проверка</a></li>' +
+        '        <li><a href="../boi/boi2-prog.html">БОИ-2. Прошивка</a></li>' +
+        '        <li><a href="../boi/boi2-prov.html">БОИ-2. Проверка</a></li>' +
+        '        <li><a href="../boi/boi4_pp_prosh.html">БОИ-4. Прошивка платы преобразователя</a></li>' +
         '        <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
         '    </ul>' +
         '</details>' +
@@ -238,12 +239,12 @@ function includeHTML(mode_1) {
         '        <span>Всякое разное</span>' +
         '    </summary>' +
         '    <ul>' +
+        '        <li><a href="../other/bdrm-05m.html">БДРМ-05М. Настройка</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
         '        <li><a href="../other/flip.html">Flip. Как шить</a></li>' +
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
-
         '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
         '' +
         '    </ul>' +
