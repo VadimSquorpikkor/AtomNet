@@ -736,14 +736,14 @@ font-size: 22px;
 
 .spoiler_menu ul {
     list-style-type: none;
-    padding-left: 70px;
+    padding-left: 60px;
     margin: 0;
     position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
 }
 
 .spoiler_menu summary {
     background-color: #333;
-    padding: 10px;
+    padding: 8px;
     margin: 0;
 
 }
@@ -765,6 +765,7 @@ font-size: 22px;
 }
 
 .spoiler_menu a {
+    /*padding-left: 10px;*/
     font-size: 15px;
     display: block;
     width: 350px;
@@ -824,7 +825,10 @@ font-size: 22px;
     -moz-transition-property: all;
     -moz-transition-duration: 1s;
     -moz-transition-delay: 0s;
+}
 
+#neutron {
+    background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
 }
 
 figcaption {
@@ -890,7 +894,7 @@ figcaption {
     }
 }
 @media (min-width: 800px) {
-    #menu {
+    #index_menu {
         float: left;
         width: 420px;
     }

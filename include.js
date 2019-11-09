@@ -1,14 +1,17 @@
 function includeHTML(mode_1) {
     let mode;
     let id;
-    if (mode_1 == open) {
+    if (mode_1 === open) {
         mode = 'open';
         id = 'menu_left';
+    } else if (mode_1 === 'index') {
+        id = 'index_menu';
+        mode = '';
     } else {
         id = 'menu';
         mode = '';
     }
-    let menu =
+    document.getElementById(id).innerHTML =
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -142,7 +145,7 @@ function includeHTML(mode_1) {
         '    <summary>' +
         '        <span>БД нейтронного излучения</span>' +
         '    </summary>' +
-        '    <ul>' +
+        '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка нейтронного детектора</a></li>' +
         '        <li><a href="../bdkn/bdkn-01.html">БДКН-01</a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
@@ -204,7 +207,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
         '        <li><a href="../other/umnoz_201m.html">Проверка умножителя БДКГ-201М</a></li>' +
         '   </ul>' +
-        '</details>'+
+        '</details>' +
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
@@ -261,7 +264,5 @@ function includeHTML(mode_1) {
         '' +
         '    </ul><br>' +
         '</details>';
-
-    document.getElementById(id).innerHTML = menu;
 
 }
