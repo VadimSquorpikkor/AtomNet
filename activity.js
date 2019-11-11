@@ -3,7 +3,7 @@
 function activity(a0, pov_date, t_pol) {
     let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
-    return act.toFixed(4);
+    return act.toFixed(3);
 }
 
 function activityAllDays(a0, pov_date, now_date, t_pol) {
