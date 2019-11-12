@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.18&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.20&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -76,7 +76,7 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	addBDtoCollection(&quot;БДКГ-01&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 		&quot;gamma&quot;,	Array(0.1,10000))
 	addBDtoCollection(&quot;БДКГ-03&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, 	Array(0.03,0.3))
 	addBDtoCollection(&quot;БДКГ-04&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.05,10000))
-	addBDtoCollection(&quot;БДКГ-05&quot;,	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.03,0.3))
+	addBDtoCollection(&quot;БДКГ-05&quot;,	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, 	Array(0.03,0.3))
 	addBDtoCollection(&quot;БДКГ-11&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.01,0.1))
 	addBDtoCollection(&quot;БДКГ-17&quot;, 	&quot;Зв/ч&quot;,	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;gamma&quot;,	Array(1000,100000))
 	addBDtoCollection(&quot;БДКГ-24&quot;, 	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0.02,1000))
@@ -91,15 +91,19 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(102,236,6080,53500,154300,383600),emptyArray,										&quot;beta&quot;,		Array(1,50))
 	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,15))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
-	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))		rem №16
-	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,10))
+	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))	rem №16
+	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))
 	addBDtoCollection(&quot;БОИ-4&quot;,		&quot;Зв/ч&quot;,	Array(70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(0.3,100))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
-	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,	Array(0.05,0.1))rem уточнить какие установки
+	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,	Array(0.05,0.1))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(53.8,727,6300,62100,186000),		emptyArray,										&quot;alpha&quot;,	Array(2.4,100))
 	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,100))
 	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				&quot;gamma&quot;,	Array(0.1,30))
+	rem-------старые БОИ с сбм--------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БОИ-1 сбм&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100))
+	addBDtoCollection(&quot;БОИ-2 сбм&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100))
+	
 	&apos;msgbox BDList.item(1).BDName rem для проверки   
 end sub
 rem=======================================================================================
@@ -133,6 +137,8 @@ sub start
 	for i=1 to 20
 		oDialog1117.getControl(&quot;CheckBox&quot; + i).setEnable(false)
 	next i
+	oDialog1117.getControl(&quot;CheckBox23&quot;).setEnable(false)
+	oDialog1117.getControl(&quot;CheckBox24&quot;).setEnable(false)
 	
 	nextChecked	
 end sub

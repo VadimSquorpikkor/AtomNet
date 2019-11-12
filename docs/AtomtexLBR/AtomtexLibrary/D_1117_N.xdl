@@ -30,12 +30,12 @@
   <dlg:titledbox dlg:id="FrameControl4" dlg:tab-index="47" dlg:left="51" dlg:top="189" dlg:width="35" dlg:height="34">
    <dlg:title dlg:value="Бета"/>
   </dlg:titledbox>
-  <dlg:titledbox dlg:id="FrameControl5" dlg:tab-index="48" dlg:left="91" dlg:top="106" dlg:width="35" dlg:height="49">
+  <dlg:titledbox dlg:id="FrameControl5" dlg:tab-index="48" dlg:left="91" dlg:top="106" dlg:width="37" dlg:height="49">
    <dlg:title dlg:value="БОИ"/>
   </dlg:titledbox>
-  <dlg:titledbox dlg:id="FrameControl6" dlg:tab-index="49" dlg:left="91" dlg:top="158" dlg:width="35" dlg:height="65"/>
-  <dlg:datefield dlg:id="DateField1" dlg:tab-index="50" dlg:left="47" dlg:top="87" dlg:width="58" dlg:height="12" dlg:dropdown="true"/>
-  <dlg:text dlg:id="Label11" dlg:tab-index="51" dlg:left="120" dlg:top="90" dlg:width="8" dlg:height="10" dlg:value="№ " dlg:align="right"/>
+  <dlg:titledbox dlg:id="FrameControl6" dlg:tab-index="51" dlg:left="91" dlg:top="196" dlg:width="37" dlg:height="27"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="49" dlg:left="47" dlg:top="87" dlg:width="58" dlg:height="12" dlg:dropdown="true"/>
+  <dlg:text dlg:id="Label11" dlg:tab-index="50" dlg:left="120" dlg:top="90" dlg:width="8" dlg:height="10" dlg:value="№ " dlg:align="right"/>
   <dlg:img dlg:style-id="1" dlg:id="ImageControl1" dlg:tab-index="52" dlg:left="15" dlg:top="1" dlg:width="186" dlg:height="84" dlg:src="file:///C:/Users/Serikov_VA/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/1117.png"/>
   <dlg:textfield dlg:id="TextField1" dlg:tab-index="53" dlg:left="130" dlg:top="87" dlg:width="43" dlg:height="12" dlg:value="17777"/>
   <dlg:button dlg:id="bStart" dlg:tab-index="43" dlg:left="137" dlg:top="115" dlg:width="71" dlg:height="18" dlg:page="1" dlg:value="Протокол поверки">
@@ -51,10 +51,10 @@
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.onDoneButton?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:text dlg:style-id="2" dlg:id="type_text" dlg:tab-index="40" dlg:left="131" dlg:top="108" dlg:width="80" dlg:height="20" dlg:page="1" dlg:align="center"/>
-  <dlg:checkbox dlg:id="CheckBox20" dlg:tab-index="9" dlg:left="94" dlg:top="177" dlg:width="32" dlg:height="10" dlg:value="БДПС-02" dlg:checked="false">
+  <dlg:checkbox dlg:id="CheckBox20" dlg:tab-index="9" dlg:left="94" dlg:top="212" dlg:width="32" dlg:height="10" dlg:value="БДПС-02" dlg:checked="false">
    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.checkBoxListener?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:checkbox>
-  <dlg:checkbox dlg:id="CheckBox19" dlg:tab-index="8" dlg:left="94" dlg:top="165" dlg:width="32" dlg:height="10" dlg:value="БДКР-01" dlg:checked="false">
+  <dlg:checkbox dlg:id="CheckBox19" dlg:tab-index="8" dlg:left="94" dlg:top="199" dlg:width="32" dlg:height="10" dlg:value="БДКР-01" dlg:checked="false">
    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.checkBoxListener?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:checkbox>
   <dlg:checkbox dlg:id="CheckBox18" dlg:tab-index="21" dlg:left="94" dlg:top="139" dlg:width="32" dlg:height="10" dlg:value="БОИ-4" dlg:checked="false">
@@ -131,5 +131,15 @@
   <dlg:combobox dlg:id="ComboBox2" dlg:tab-index="58" dlg:left="137" dlg:top="208" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:text dlg:id="Label12" dlg:tab-index="59" dlg:left="137" dlg:top="198" dlg:width="71" dlg:height="10" dlg:value="Технический контроль:" dlg:align="center"/>
   <dlg:text dlg:style-id="3" dlg:id="Label_version" dlg:tab-index="60" dlg:left="201" dlg:top="3" dlg:width="24" dlg:height="10" dlg:align="center"/>
+  <dlg:titledbox dlg:id="FrameControl7" dlg:tab-index="61" dlg:left="91" dlg:top="155" dlg:width="37" dlg:height="35">
+   <dlg:title dlg:value="БОИ(сбм)"/>
+  </dlg:titledbox>
+  <dlg:checkbox dlg:id="CheckBox23" dlg:tab-index="62" dlg:left="94" dlg:top="166" dlg:width="28" dlg:height="8" dlg:value="БОИ-1" dlg:checked="false">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.checkBoxListener?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:checkbox>
+  <dlg:checkbox dlg:id="CheckBox24" dlg:tab-index="63" dlg:left="94" dlg:top="178" dlg:width="28" dlg:height="8" dlg:value="БОИ-2" dlg:checked="false">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.checkBoxListener?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:checkbox>
+  <dlg:button dlg:id="CommandButton1" dlg:tab-index="64" dlg:left="9" dlg:top="87" dlg:width="32" dlg:height="12" dlg:value="Сброс"/>
  </dlg:bulletinboard>
 </dlg:window>

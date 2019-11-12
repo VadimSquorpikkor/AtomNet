@@ -15,7 +15,8 @@ Sub MainDialog_Show
 
 	rem user_name = &quot;Tarasenko_VV&quot;  	
 
-	user_name = &quot;Serikov_VA&quot;
+	user_name = &quot;Kurbatova&quot;
+	rem user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
