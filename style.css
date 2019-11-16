@@ -16,6 +16,13 @@
     content: "в работе";
 }
 
+.red_light_title {
+    font-size: 20px;
+    color: #FF6633;
+    text-shadow: 1px 4px 5px #aba8a8;
+    /*text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;*/
+}
+
 .under_construction:hover:before {
     color: #ffffff;
 }

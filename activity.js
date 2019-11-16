@@ -49,6 +49,7 @@ function get_act() {
     document.getElementById('520').value = activity_of_cs137(a0_520);
     document.getElementById('521').value = activity_of_cs137(a0_521);
     document.getElementById('2910').value = activity_of_2910();
+    document.getElementById('1079').value = activity(525, new Date(2018,9,15), t_pol_cd);
 }
 
 //Сумарная активность всех источников

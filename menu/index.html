@@ -18,16 +18,24 @@
 </script>
 
 <div class="yellow_back_index_right">  <!--style="margin-left: 460px"-->
-    №516: <input id="516" type="text" value="0" title="k1" size="4">
-    №517: <input id="517" type="text" value="0" title="k1" size="4">
-    №518: <input id="518" type="text" value="0" title="k1" size="4">
-    №519: <input id="519" type="text" value="0" title="k1" size="4">
-    №520: <input id="520" type="text" value="0" title="k1" size="4">
-    №521: <input id="521" type="text" value="0" title="k1" size="4">
-    №2910: <input id="2910" type="text" value="0" title="k1" size="4">
+    <img src="../imgs/radiation.png" width="80" style="float: left; margin-left: 10px; margin-right: 10px; margin-top: -2px">
+    <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7">
+        <span class="red_light_title">Активность источников:</span>
+        <hr color="ff6633">
+
+        <sup>139</sup>Cs №516: <input id="516" type="text" value="0" title="k1" size="4">
+        <sup>139</sup>Cs №517: <input id="517" type="text" value="0" title="k1" size="4">
+        <sup>139</sup>Cs №518: <input id="518" type="text" value="0" title="k1" size="4">
+        <sup>139</sup>Cs №519: <input id="519" type="text" value="0" title="k1" size="4"><br><br>
+        <sup>139</sup>Cs №520: <input id="520" type="text" value="0" title="k1" size="4">
+        <sup>139</sup>Cs №521: <input id="521" type="text" value="0" title="k1" size="4">
+        <sup>139</sup>Cs №2910: <input id="2910" type="text" value="0" title="k1" size="4">
+        <sup>109</sup>Cd №1079: <input id="1079" type="text" value="0" title="k1" size="5">
+    </div>
 </div>
 
 <div class="activity_calculator">  <!--style="margin-left: 460px"-->
+
     <div style="float: left">
         <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
                                         type="date"><br>
@@ -42,8 +50,11 @@
         <input id="t2_3" title="Если нужно рассчитать какойто другой элемент" name="r1" type="radio">
         <span>Custom</span>
         <input id="custom" title="Период полураспада в днях" name="r1" type="text" value="451" size="5"><br>
+    </div>
+    <div style="margin-left: 150px">
         <input title="" name="r1" type="button" value="Рассчитать" onclick="calc_act()">
         <input id="act_main" title="" name="r1" type="text" size="5"><span>(кБк)</span>
+
     </div>
 </div>
 
