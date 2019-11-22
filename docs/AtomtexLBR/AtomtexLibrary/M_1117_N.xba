@@ -706,15 +706,6 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	sourceDistanceArray = ar
 end function
 rem=======================================================================================
-rem TODO объединить методы -- это такой же метод, как в 204-м
-function otn_pogreshnost(meas as double, contr_point as double)
-	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
-end function
-rem=======================================================================================
-function dov_granica(pogr as double, percent as integer)
-	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
-end function
-rem=======================================================================================
 function FacilityError(point as double, BDType as string, prefix as string)
 	select case BDType
 	case &quot;gamma&quot;

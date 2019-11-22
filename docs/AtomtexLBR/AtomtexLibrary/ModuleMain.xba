@@ -29,6 +29,16 @@ Sub MainDialog_Show
 End Sub
 
 rem --- ВСЕ ОБЩИЕ МЕТОДЫ ЗДЕСЬ ---
+rem=======================================================================================
+function otn_pogreshnost(meas as double, contr_point as double)
+	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
+end function
+rem=======================================================================================
+function dov_granica(pogr as double, percent as integer)
+	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+
+
 function getDate(DateFieldModel)
 	dim dnum as long
 	dim year as integer
@@ -36,6 +46,7 @@ function getDate(DateFieldModel)
 	dim day as integer
 	&apos;oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
 	dnum = DateFieldModel.date
+	&apos;msgbox &quot;DATE: &quot; &amp; dnum
 	day = dnum mod 100
 	month = dnum \ 100 mod 100
 	year = dnum \ 10000

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G02N" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem---------------------------------------------------------------------------------------------------------
+dim oDialogG02N as object
+dim oDateFieldModel as object
+dim oNumericFieldModel as object
+dim oListBox as object
+dim BDList as new Collection
+dim mainCount as integer
+rem---------------------------------------------------------------------------------------------------------
+Sub G02N_Dialog_Show
+	maxBDCount = 10
+
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG02N = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G02N )
+	oDateFieldModel = oDialogG02N.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	
+	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
+	
+	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
+	REM first remove all old items from the list
+	nCount = oComboBox.getItemCount()
+	oComboBox.removeItems( 0, nCount )
+	REM add new items to the list
+	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+	oComboBox.addItems( sItems, 0 )
+	oComboBox.text = &quot;№516&quot;
+	
+	oNumericFieldModel = oDialogG02N.Model.getByName(&quot;ActivityField&quot;)
+	oNumericFieldModel.DECIMALACCURACY = 2
+	oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+	
+	
+	oDialogMain.endexecute()   
+	oDialogG02N.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;text = getFacilityText(0) &amp; getFacilityText(1)
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	select case oDialogG02N.getControl(&quot;ActivityCombo&quot;).text
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
+	end select	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	rem добавляю в коллекцию несколько БДКГ-02 (до ввода значений: у всех значения по-умолчанию)
+	rem в переменную имени БД сохраняю номер (&quot;452.002&quot;)
+	dim bdName as string
+	dim nCount as integer
+		
+	bdName = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
+	&apos;msgbox bdname
+	dim bd as new DUnit
+	bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;,	Array(0.1,10000)) rem TODO уточнить границы
+	&apos;msgbox oListBox.getItemCount()
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bdName, nCount )
+	BDList.add(bd)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	if oListBox.getItemCount()=0 then
+		msgbox &quot;Нечего удалять!&quot;
+	else
+		oListBox.removeItems(oListBox.getItemCount()-1, 1 )
+		BDList.remove(BDList.count)
+	end if	
+end Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script:module>

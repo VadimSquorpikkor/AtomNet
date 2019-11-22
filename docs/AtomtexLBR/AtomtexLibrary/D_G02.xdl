@@ -52,6 +52,6 @@
   <dlg:numericfield dlg:id="NumericField06" dlg:tab-index="6" dlg:left="220" dlg:top="81" dlg:width="25" dlg:height="12" dlg:value="0.71" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField07" dlg:tab-index="7" dlg:left="220" dlg:top="93" dlg:width="25" dlg:height="12" dlg:value="6.9" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField11" dlg:tab-index="12" dlg:left="38" dlg:top="84" dlg:width="26" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0" dlg:value="99"/>
-  <dlg:numericfield dlg:id="NumericField12" dlg:tab-index="10" dlg:left="38" dlg:top="53" dlg:width="26" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0"/>
+  <dlg:numericfield dlg:id="NumericField12" dlg:tab-index="10" dlg:left="38" dlg:top="53" dlg:width="29" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0"/>
  </dlg:bulletinboard>
 </dlg:window>

@@ -71,6 +71,7 @@ sub getVarsFromFields rem Вообще можно было бы обойтись
 end sub
 rem=======================================================================================
 sub makeProtRus
+	&apos;msgbox 
 	MyFormat = &quot;0.00&quot;
 	background = oDialogG02.Model.getByName(&quot;NumericField11&quot;).value / 1000 
 	getVarsFromFields

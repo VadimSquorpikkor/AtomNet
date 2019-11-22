@@ -26,20 +26,24 @@ rem другого модуля. И можно будет выбирать по 
 rem так не нужны будут ифы и свитч кейсы
 
 &apos;-------------------------------------------------------------
-function days_left_2910(date)
-	days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17)	
+function days_left_2910(mdate)
+	&apos;days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17) rem OLD VERSION FOR ENG OFFICE
+	days_left_2910 = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;5/17/2016&quot;))) rem М/Ч/Г
 end function
 
-function days_left(date)
-	days_left = cDate(getDate(date)) - DateSerial(2016, 10, 12)	
+function days_left(mdate)
+	dim count1 as Date
+	dim count2 as Date
+&apos;	days_left = cDate(getDate(mdate)) - DateSerial(2016, 10, 12) rem OLD VERSION  FOR ENG OFFICE
+	days_left = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;10/12/2016&quot;))) rem М/Ч/Г
 end function
 
-function get_activity(src as double, date)
-	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left(date))
+function get_activity(src as double, mdate)
+	get_activity = src * exp(-0.693147/(365.25 * 30.17) * days_left(mdate))
 end function
 
-function get_activity2910(date)
-	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910(date))
+function get_activity2910(mdate)
+	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910(mdate))
 end function
 
 </script:module>
