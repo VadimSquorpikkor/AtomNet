@@ -16,8 +16,8 @@ Sub MainDialog_Show
 	rem user_name = &quot;Tarasenko_VV&quot;  	
 
 	rem user_name = &quot;Kurbatova&quot;
-	rem user_name = &quot;Serikov_VA&quot;
-	user_name = &quot;Squorpikkor&quot;
+	user_name = &quot;Serikov_VA&quot;
+	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
@@ -29,29 +29,9 @@ Sub MainDialog_Show
 End Sub
 
 rem --- ВСЕ ОБЩИЕ МЕТОДЫ ЗДЕСЬ ---
-rem=======================================================================================
-function otn_pogreshnost(meas as double, contr_point as double)
-	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
-end function
-rem=======================================================================================
-function dov_granica(pogr as double, percent as integer)
-	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
-end function
 
 
-function getDate(DateFieldModel)
-	dim dnum as long
-	dim year as integer
-	dim month as integer
-	dim day as integer
-	&apos;oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
-	dnum = DateFieldModel.date
-	&apos;msgbox &quot;DATE: &quot; &amp; dnum
-	day = dnum mod 100
-	month = dnum \ 100 mod 100
-	year = dnum \ 10000
-	getDate = insertZero(day) &amp;&quot;.&quot;&amp; insertZero(month) &amp;&quot;.&quot;&amp; year
-end function
+
 &apos;--------------------------------------------------------------------	
 function insertZero(number)
 	if number &gt; 9 then
@@ -65,32 +45,7 @@ sub subInsertString(oDoc, sString, bReplace)
 	oVC = oDoc.getCurrentSelection
 	xText.insertString( xTextCursor, &quot;more text ...&quot;, false )
 end sub
-rem------метод для сортировки столбцов в calc-------------------------------------------------
-sub sortColumns 
-	rem Сортировка выделенных столбцов в Calc 
-	dim document   as object
-	dim dispatcher as object
-	document   = ThisComponent.CurrentController.Frame
-	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
 
-	dim args1(6) as new com.sun.star.beans.PropertyValue
-	args1(0).Name = &quot;ByRows&quot;
-	args1(0).Value = false
-	args1(1).Name = &quot;HasHeader&quot;
-	args1(1).Value = true
-	args1(2).Name = &quot;CaseSensitive&quot;
-	args1(2).Value = false
-	args1(3).Name = &quot;IncludeAttribs&quot;
-	args1(3).Value = true
-	args1(4).Name = &quot;UserDefIndex&quot;
-	args1(4).Value = 0
-	args1(5).Name = &quot;Col1&quot;
-	args1(5).Value = 1
-	args1(6).Name = &quot;Ascending1&quot;
-	args1(6).Value = true
-
-	dispatcher.executeDispatch(document, &quot;.uno:DataSort&quot;, &quot;&quot;, 0, args1())
-end sub
 rem-------------------------------------------------------------------------
 Function MySubstitute(sText1 as string, sText2 as string, sText3 as string) as string
    FuncAcc = createunoservice(&quot;com.sun.star.sheet.FunctionAccess&quot;)
@@ -146,87 +101,7 @@ Sub coll()
    Next i
    Print
 End Sub
-rem-------------------------------------------------------------------------
-Sub CopyVariableToClipboard(text as string)
-dim document   as object
-dim dispatcher as object
-dim oDoc, oVC
-oDoc = ThisComponent
-oVC = oDoc.CurrentController.getViewCursor
-oVC.String = text
-document   = ThisComponent.CurrentController.Frame
-dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
-dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
-oVC.String = &quot;&quot;
-End Sub
-rem-------------------------------------------------------------------------
-sub insertDate
-   dim document   as object
-   dim dispatcher as object
-   document   = ThisComponent.CurrentController.Frame
-   dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
-   dim args1(0) as new com.sun.star.beans.PropertyValue
-   args1(0).Name = &quot;Text&quot;
-   args1(0).Value = getDate()
-   dispatcher.executeDispatch(document, &quot;.uno:InsertText&quot;, &quot;&quot;, 0, args1())
-end sub
-rem-------------------------------------------------------------------------
-function FillArrayFromSelection
-rem Супер метод -- заполняет массив данными из выделенной области в Calc и возвращает этот массив
-rem 
-    dim oCellRange as object
-    dim oCursor as object
-    dim oRange as object
-    dim oSheet as object
-    dim startRow as long, startColumn as long, endRow as long, endColumn as long
-    dim x,y as long
-    dim oRow, oArray
 
-    oSheet = thiscomponent.currentcontroller.activesheet
-    oCellRange = thiscomponent.getcurrentselection
-
-    startRow= oCellRange.getrangeaddress.startrow
-    startColumn = oCellRange.getrangeaddress.startcolumn
-    endRow = oCellRange.getrangeaddress.endrow
-    endColumn =oCellRange.getrangeaddress.endcolumn
-
-    oCellRange = thiscomponent.currentcontroller.getselection
-    oRange = oSheet.getcellrangebyposition(startColumn,startRow,endColumn,endRow)
-
-    oArray = oRange.getDataArray()
-      
-    dim RangeData(UBound(oArray),UBound(oArray(0)))
-   
-    for x = 0 to UBound(oArray)
-       for y = 0 to UBound(oArray(x))
-          RangeData(x,y) = oArray(x)(y)
-       next y
-    next x
-    FillArrayFromSelection = RangeData
-End function
-
-rem -------------------------------------------------------------------------------------------
-Sub OpenTemplate(documentURL)
-    Dim Doc As Object
-    Dim Url As String
-    Dim Dummy() &apos;An (empty) array of PropertyValues
-    Url = documentURL
-    Doc = StarDesktop.loadComponentFromURL(Url, &quot;_blank&quot;, 0, Dummy)
-End Sub
-rem------------------------------------------------------------
-Sub findAndRename(target as String, newName as String)
-    Dim oDescriptor &apos;Описатель поиска
-    Dim oFound &apos;Найденный диапазон
-    Dim oFoundAll &apos;Найденный диапазон
-    Dim n% &apos;Общая индексная переменная
-    oDescriptor = ThisComponent.createSearchDescriptor()
-    oDescriptor.SearchString = target
-    oFoundAll = ThisComponent.findAll(oDescriptor)
-    For n% = 0 to oFoundAll.getCount()-1
-        oFound = oFoundAll.getByIndex(n%)
-        oFound.setString(newName)
-    Next
-End Sub
 rem------------------------------------------------------------
 Sub findAndDoSomething
 Dim oSDescr As Variant

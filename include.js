@@ -147,7 +147,7 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка нейтронного детектора</a></li>' +
-        '        <li><a href="../bdkn/bdkn-01.html">БДКН-01<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../bdkn/bdkn-01.html">Проверка плат БДКН-01/04<span class="under_construction"></span></a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
         '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01/БДКН-03<span class="under_construction"></span></a></li>' +

@@ -336,13 +336,6 @@ tables = ThisComponent.getTextTables()
      next i
 end sub
 rem=======================================================================================
-sub deleteTable(name as string)
-tables = ThisComponent.TextTables()
-     if tables.hasByName(name) then
-     ThisComponent.Text.removeTextContent(tables.getByName(name))
-     end if
-end sub
-rem=======================================================================================
 function limitComparator(min as double, max as double, position as integer)
 	&apos;msgbox &quot;LC&quot; + min + &quot;, &quot; + max 
 	if measLimitsArray(position)=0   OR measLimitsArray(position) &gt; min   then measLimitsArray(position) = min
@@ -675,35 +668,6 @@ end function
 rem=======================================================================================
 function randValue(num as double, otklonenie as double)
 	randValue = (num - otklonenie) + rnd()*otklonenie*2
-end function
-rem=======================================================================================
-function sourceDistanceArray(point as double, prefix as string, bdType as string)
-	dim ar(1) as variant
-	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
-	rem если это гамма блок:
-	if bdType = &quot;gamma&quot; OR bdType = &quot;gamma-Gy&quot; then
-		if prefix = &quot;мк&quot; then
-				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
-				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
-				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
-				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
-				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
-				if point = 20 	then ar = Array(&quot;9ХК&quot;,&quot;299.9&quot;)
-				if point = 240 	then ar = Array(&quot;9ХК&quot;,&quot;88.9&quot;)
-		end if
-		if prefix = &quot;м&quot; then
-				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
-				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
-				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
-		end if
-		if prefix = &quot;&quot; then
-				if point = 0.5 	then ar = Array(&quot;163&quot;,&quot;277.4&quot;)
-				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
-				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
-				if point = 40 	then ar = Array(&quot;163&quot;,&quot;32.7&quot;)
-		end if	
-	end if
-	sourceDistanceArray = ar
 end function
 rem=======================================================================================
 function FacilityError(point as double, BDType as string, prefix as string)
