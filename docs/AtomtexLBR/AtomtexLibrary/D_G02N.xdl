@@ -2,19 +2,12 @@
 <!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
 <dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_G02N" dlg:left="23" dlg:top="20" dlg:width="329" dlg:height="229" dlg:closeable="true" dlg:moveable="true" dlg:title="БДКГ-02. Протоколы поверки и сертификаты ">
  <dlg:styles>
-  <dlg:style dlg:style-id="0" dlg:font-height="24"/>
-  <dlg:style dlg:style-id="1" dlg:font-height="12"/>
-  <dlg:style dlg:style-id="2" dlg:font-height="8"/>
+  <dlg:style dlg:style-id="0" dlg:font-height="12"/>
+  <dlg:style dlg:style-id="1" dlg:font-height="8"/>
+  <dlg:style dlg:style-id="2" dlg:font-height="24"/>
+  <dlg:style dlg:style-id="3" dlg:font-height="8"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="0" dlg:left="263" dlg:top="49" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField2" dlg:tab-index="1" dlg:left="263" dlg:top="60" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField3" dlg:tab-index="2" dlg:left="263" dlg:top="71" dlg:width="25" dlg:height="12" dlg:value="70" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField4" dlg:tab-index="3" dlg:left="263" dlg:top="82" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField5" dlg:tab-index="4" dlg:left="263" dlg:top="93" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField6" dlg:tab-index="5" dlg:left="263" dlg:top="104" dlg:width="25" dlg:height="12" dlg:value="70" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField7" dlg:tab-index="6" dlg:left="263" dlg:top="115" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="NumericField8" dlg:tab-index="7" dlg:left="263" dlg:top="126" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
   <dlg:numericfield dlg:id="NumericField10" dlg:tab-index="11" dlg:left="279" dlg:top="153" dlg:width="25" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0" dlg:value="10000"/>
   <dlg:numericfield dlg:id="NumericField11" dlg:tab-index="12" dlg:left="279" dlg:top="164" dlg:width="25" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0" dlg:value="100"/>
   <dlg:button dlg:id="CommandButton1" dlg:tab-index="13" dlg:left="103" dlg:top="163" dlg:width="83" dlg:height="14" dlg:value="Протокол поверки">
@@ -41,31 +34,18 @@
   <dlg:button dlg:id="CommandButton3" dlg:tab-index="29" dlg:left="103" dlg:top="193" dlg:width="83" dlg:height="14" dlg:value="Calibration Sertificate">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02.makeSertificateEN?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton4" dlg:tab-index="30" dlg:left="22" dlg:top="44" dlg:width="55" dlg:height="12" dlg:value="Добавить">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.addNewBD?language=Basic&amp;location=application" script:language="Script"/>
-  </dlg:button>
-  <dlg:text dlg:style-id="0" dlg:id="Label15" dlg:tab-index="32" dlg:left="223" dlg:top="18" dlg:width="75" dlg:height="26" dlg:value="452.002" dlg:align="center"/>
-  <dlg:button dlg:id="CommandButton5" dlg:tab-index="33" dlg:left="22" dlg:top="57" dlg:width="55" dlg:height="12" dlg:value="Удалить последний">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.removeLastBD?language=Basic&amp;location=application" script:language="Script"/>
-  </dlg:button>
-  <dlg:text dlg:style-id="1" dlg:id="Label16" dlg:tab-index="34" dlg:left="40" dlg:top="30" dlg:width="5" dlg:height="10" dlg:value="." dlg:align="center"/>
-  <dlg:button dlg:id="CommandButton6" dlg:tab-index="35" dlg:left="65" dlg:top="27" dlg:width="11" dlg:height="11" dlg:value="+"/>
+  <dlg:text dlg:style-id="0" dlg:id="Label16" dlg:tab-index="34" dlg:left="40" dlg:top="30" dlg:width="5" dlg:height="10" dlg:value="." dlg:align="center"/>
   <dlg:fixedline dlg:id="FixedLine1" dlg:tab-index="36" dlg:left="205" dlg:top="145" dlg:width="109" dlg:height="6"/>
-  <dlg:titledbox dlg:style-id="2" dlg:id="FrameControl1" dlg:tab-index="37" dlg:left="198" dlg:top="6" dlg:width="125" dlg:height="214">
+  <dlg:titledbox dlg:style-id="1" dlg:id="FrameControl1" dlg:tab-index="37" dlg:left="198" dlg:top="6" dlg:width="125" dlg:height="214">
    <dlg:title dlg:value="3. Ввод значений для БД"/>
   </dlg:titledbox>
-  <dlg:button dlg:id="CommandButton7" dlg:tab-index="38" dlg:left="203" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Назад"/>
-  <dlg:button dlg:id="CommandButton8" dlg:tab-index="39" dlg:left="241" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Вперед"/>
-  <dlg:button dlg:id="CommandButton9" dlg:tab-index="40" dlg:left="279" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Готово"/>
-  <dlg:combobox dlg:id="ComboBox2" dlg:tab-index="41" dlg:left="108" dlg:top="101" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:text dlg:id="Label3" dlg:tab-index="42" dlg:left="108" dlg:top="91" dlg:width="71" dlg:height="10" dlg:value="Проверку произвел:" dlg:align="center"/>
-  <dlg:combobox dlg:id="ComboBox3" dlg:tab-index="43" dlg:left="108" dlg:top="126" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:text dlg:id="Label4" dlg:tab-index="44" dlg:left="108" dlg:top="116" dlg:width="71" dlg:height="10" dlg:value="Технический контроль:" dlg:align="center"/>
-  <dlg:titledbox dlg:style-id="2" dlg:id="FrameControl2" dlg:tab-index="45" dlg:left="95" dlg:top="6" dlg:width="100" dlg:height="214">
+  <dlg:titledbox dlg:style-id="1" dlg:id="FrameControl2" dlg:tab-index="45" dlg:left="95" dlg:top="6" dlg:width="100" dlg:height="214">
    <dlg:title dlg:value="2. Общие параметры"/>
   </dlg:titledbox>
   <dlg:text dlg:id="Label17" dlg:tab-index="46" dlg:left="152" dlg:top="28" dlg:width="37" dlg:height="8" dlg:value="Дата поверки"/>
-  <dlg:titledbox dlg:style-id="2" dlg:id="FrameControl3" dlg:tab-index="47" dlg:left="9" dlg:top="6" dlg:width="83" dlg:height="214">
+  <dlg:titledbox dlg:style-id="1" dlg:id="FrameControl3" dlg:tab-index="47" dlg:left="9" dlg:top="6" dlg:width="83" dlg:height="214">
    <dlg:title dlg:value="1. Список блоков"/>
   </dlg:titledbox>
   <dlg:numericfield dlg:id="ActivityField" dlg:tab-index="10" dlg:left="102" dlg:top="54" dlg:width="26" dlg:height="12" dlg:help-text="Данные калибровки фона"/>
@@ -81,8 +61,36 @@
    </dlg:menupopup>
    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:combobox>
-  <dlg:textfield dlg:style-id="1" dlg:id="TextFieldSRK" dlg:tab-index="8" dlg:left="22" dlg:top="26" dlg:width="18" dlg:height="14" dlg:align="center" dlg:value="452"/>
-  <dlg:textfield dlg:style-id="1" dlg:id="TextFieldNUM" dlg:tab-index="9" dlg:left="45" dlg:top="26" dlg:width="18" dlg:height="14" dlg:value="002"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="TextFieldSRK" dlg:tab-index="8" dlg:left="22" dlg:top="26" dlg:width="18" dlg:height="14" dlg:align="center" dlg:value="452"/>
+  <dlg:textfield dlg:style-id="0" dlg:id="TextFieldNUM" dlg:tab-index="9" dlg:left="45" dlg:top="26" dlg:width="18" dlg:height="14" dlg:maxlength="3" dlg:value="002"/>
   <dlg:menulist dlg:id="ListBoxBD" dlg:tab-index="31" dlg:left="22" dlg:top="73" dlg:width="55" dlg:height="131"/>
+  <dlg:combobox dlg:id="ProvCombo" dlg:tab-index="41" dlg:left="108" dlg:top="101" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
+  <dlg:combobox dlg:id="TechCombo" dlg:tab-index="43" dlg:left="108" dlg:top="126" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
+  <dlg:button dlg:id="PlusButton" dlg:tab-index="35" dlg:left="65" dlg:top="27" dlg:width="11" dlg:height="11" dlg:value="+">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.increment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="AddButton" dlg:tab-index="30" dlg:left="22" dlg:top="44" dlg:width="55" dlg:height="12" dlg:value="Добавить">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.addNewBD?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="RemoveButton" dlg:tab-index="33" dlg:left="22" dlg:top="57" dlg:width="55" dlg:height="12" dlg:value="Удалить последний">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.removeLastBD?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:numericfield dlg:id="ValueField8" dlg:tab-index="7" dlg:left="263" dlg:top="126" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField7" dlg:tab-index="6" dlg:left="263" dlg:top="115" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField6" dlg:tab-index="5" dlg:left="263" dlg:top="104" dlg:width="25" dlg:height="12" dlg:value="70" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField5" dlg:tab-index="4" dlg:left="263" dlg:top="93" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField4" dlg:tab-index="3" dlg:left="263" dlg:top="82" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField3" dlg:tab-index="2" dlg:left="263" dlg:top="71" dlg:width="25" dlg:height="12" dlg:value="70" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField2" dlg:tab-index="1" dlg:left="263" dlg:top="60" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="ValueField1" dlg:tab-index="0" dlg:left="263" dlg:top="49" dlg:width="25" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
+  <dlg:text dlg:style-id="2" dlg:id="bdNameText" dlg:tab-index="32" dlg:left="223" dlg:top="18" dlg:width="75" dlg:height="26" dlg:value="452.002" dlg:align="center"/>
+  <dlg:button dlg:id="NextButton" dlg:tab-index="39" dlg:left="241" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Вперед">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.showNextBD?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="PrevButton" dlg:tab-index="38" dlg:left="203" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Назад">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.showPrevBD?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:button dlg:id="DoneButton" dlg:tab-index="40" dlg:left="279" dlg:top="196" dlg:width="38" dlg:height="14" dlg:value="Готово"/>
+  <dlg:text dlg:style-id="3" dlg:id="Label_version" dlg:tab-index="48" dlg:left="300" dlg:top="0" dlg:width="27" dlg:height="8" dlg:align="center"/>
  </dlg:bulletinboard>
 </dlg:window>

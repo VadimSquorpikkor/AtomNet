@@ -28,14 +28,14 @@ rem так не нужны будут ифы и свитч кейсы
 &apos;-------------------------------------------------------------
 function days_left_2910(mdate)
 	&apos;days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17) rem OLD VERSION FOR ENG OFFICE
-	days_left_2910 = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;5/17/2016&quot;))) rem М/Ч/Г
+	days_left_2910 = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;17/5/2016&quot;))) rem Ч/М/Г
 end function
 
 function days_left(mdate)
 	dim count1 as Date
 	dim count2 as Date
 &apos;	days_left = cDate(getDate(mdate)) - DateSerial(2016, 10, 12) rem OLD VERSION  FOR ENG OFFICE
-	days_left = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;10/12/2016&quot;))) rem М/Ч/Г
+	days_left = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;12/10/2016&quot;))) rem Ч/М/Г
 end function
 
 function get_activity(src as double, mdate)

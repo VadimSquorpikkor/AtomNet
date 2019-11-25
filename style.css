@@ -840,6 +840,7 @@ font-size: 22px;
 
 #neutron {
     background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
+    background-size: 65px;
 }
 
 figcaption {
