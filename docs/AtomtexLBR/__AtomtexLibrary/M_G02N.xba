@@ -69,10 +69,6 @@ Sub G02N_Dialog_Show
 	oOptionButtonSe = oDialogG02N.Model.getByName(&quot;OptionSertEng&quot;)
 	oOptionButtonPr.State = 1
 	
-	for i=1 to 8
-		oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(false)
-	next i
-	
 	oDialogMain.endexecute()   
 	oDialogG02N.Execute()
 End Sub
@@ -104,15 +100,9 @@ sub addNewBD
 	dim bdName as string
 	dim nCount as integer
 	
-	if layoutPosition = 0 then
-		for i=1 to 8
-			oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(true)
-		next i 
-	end if
-	
 	&apos;msgbox BDList.count
-	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
-		
+	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count) 
+	
 	oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(true)
 		
 	bdName = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
@@ -208,7 +198,7 @@ rem-----------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
 	dim newValues as new Collection
 	for i=1 to BDList.item(num).valueList.count
-		newValues.add(oDialogG02N.getControl(&quot;ValueField&quot; + i).Value)
+		newValues.add(oDialogG02N.getControl(&quot;ValueField&quot; + i).Text)
 	next i
 	BDList.item(num).setValueList(newValues)
 	BDList.item(num).setGradValue(oDialogG02N.getControl(&quot;GradValueField&quot;).text
@@ -259,7 +249,6 @@ function setButtonVisibility
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
-	MyFormat = &quot;0.0&quot;
 	saveCurentBDValue(layoutPosition)
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;	

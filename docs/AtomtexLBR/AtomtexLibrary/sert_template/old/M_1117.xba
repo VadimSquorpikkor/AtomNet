@@ -42,7 +42,7 @@ function avaragePointsRndArray(point as double, o_percent as double)
 	dim p1 as double
 	dim p2 as double
 	dim p3 as double
-	&apos;dim ar(2) as double 
+	dim ar(2) as double 
 	deviation = o_percent/100*point
 	p1 = randValue(point, deviation)
 	p2 = randValue(point, deviation)
@@ -555,7 +555,7 @@ function prefixWithNumber(i as double)
 end function
 rem=======================================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
-function makeLayout__old(count as integer) 
+function makeLayout(count as integer) 
 
 	typeText.Text = arrayOfBdTypes(count)
 	dim last as integer

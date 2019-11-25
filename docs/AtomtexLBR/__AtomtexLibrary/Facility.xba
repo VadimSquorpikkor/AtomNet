@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Facility" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _Fname As String
+private _maxLimit(5) as double
+private _minLimit(5) as double
+private _isPrintableF(5) as boolean
+private _isPrintableR(5) as boolean
+
+REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
+Private Sub Class_Initialize()
+	dim i as integer
+	for i=0 to 5
+		_isPrintableF(i) = false
+		_isPrintableR(i) = false
+		_minLimit(i) = 0
+		_maxLimit(i) = 0
+	next i
+End Sub
+
+Private Sub Class_Terminate()
+end sub
+
+REM --- CLASS METHODS
+
+public function addTypeAndLimits(bdType as string, min as double, max as double)
+	select case bdType
+	case &quot;gamma&quot; 
+		&apos;msgbox &quot;gamma&quot;
+		_isPrintableR(0) = true
+		if _minLimit(0)=0 or min&lt;_minLimit(0) then _minLimit(0)=min
+		if _maxLimit(0)=0 or max&gt;_maxLimit(0) then _maxLimit(0)=max
+	case &quot;alpha&quot;
+		&apos;msgbox &quot;alpha&quot;
+		_isPrintableR(1) = true
+		if _minLimit(1)=0 or min&lt;_minLimit(1) then _minLimit(1)=min
+		if _maxLimit(1)=0 or max&gt;_maxLimit(1) then _maxLimit(1)=max
+		_isPrintableF(3) = true
+	case &quot;beta&quot;
+		&apos;msgbox &quot;beta&quot;
+		_isPrintableR(2) = true
+		if _minLimit(2)=0 or min&lt;_minLimit(2) then _minLimit(2)=min
+		if _maxLimit(2)=0 or max&gt;_maxLimit(2) then _maxLimit(2)=max
+		_isPrintableF(4) = true
+	case &quot;n-MD&quot;
+		&apos;msgbox &quot;n-MD&quot;
+		_isPrintableR(3) = true
+		if _minLimit(3)=0 or min&lt;_minLimit(3) then _minLimit(3)=min
+		if _maxLimit(3)=0 or max&gt;_maxLimit(3) then _maxLimit(3)=max
+		_isPrintableF(2) = true
+	case &quot;n-PP&quot;
+		&apos;msgbox &quot;n-PP&quot;
+		_isPrintableR(4) = true
+		if _minLimit(4)=0 or min&lt;_minLimit(4) then _minLimit(4)=min
+		if _maxLimit(4)=0 or max&gt;_maxLimit(4) then _maxLimit(4)=max
+		_isPrintableF(2) = true
+	case &quot;gamma-Gy&quot;
+		&apos;msgbox &quot;Gy&quot;
+		_isPrintableR(5) = true
+		if _minLimit(5)=0 or min&lt;_minLimit(5) then _minLimit(5)=min
+		if _maxLimit(5)=0 or max&gt;_maxLimit(5) then _maxLimit(5)=max
+		
+		
+	end select
+	
+end function
+
+public function RadTypeArray as variant
+	RadTypeArray = _isPrintableR
+end function
+
+public function is130necessary as boolean
+	if _maxLimit(5) &gt;= 1 OR _maxLimit(0) &gt;= 1 then 
+		is130necessary = true
+	else		
+		is130necessary = false
+	end if	
+end function
+
+public function is110necessary as boolean
+	if (_minLimit(5) &lt; 1000 and _minLimit(5)&lt;&gt;0) OR (_minLimit(0) &lt; 1000 and _minLimit(0)&lt;&gt;0) then
+		is110necessary = true
+	else	
+		is110necessary = false
+	end if	
+end function
+
+public function FacTypeArray as variant
+	_isPrintableF(0) = is110necessary
+	_isPrintableF(1) = is130necessary
+	FacTypeArray = _isPrintableF
+end function
+
+public function getFacilityText(id as integer) as string
+	select case id
+	case 0
+		getFacilityText = &quot;- образцовая дозиметрическая поверочная установка УДГ-АТ110 №013 с источниками 2-го разряда из радионуклида цезий-137 и с погрешностью аттестации 5%, св. № 210/1426-2018    от    22.10.2018. ФГУП «ВНИИМ им. Д.И. Менделеева»&quot;
+	case 1
+		getFacilityText = &quot;- образцовая дозиметрическая поверочная установка УДГ-АТ130 №015 с источниками 1-го разряда из радионуклида цезий-137 и с погрешностью аттестации  4 %, св. № 210/ 1427-2018   от 23.10.2018. ФГУП «ВНИИМ им. Д.И. Менделеева»&quot;
+	case 2
+		getFacilityText = &quot;- установка УПН-АТ140 №001 с комплектом плутоний-бериллиевых источников быстрых нейтронов: ИБН-8-6 №010, ИБН-8-3 №027 и с погрешностью аттестации ±5%, св.  № 210-1508/18 от 06.11.2018 ВНИИМ&quot;
+	case 3
+		getFacilityText = &quot;- образцовые альфа-источники из радионуклида плутоний-239 типа 4П9, 5П9, 6П9 с    погрешностью аттестации 6%, св.№МН0105687-4818 до 15.08.20, РУП«БелГим»&quot;
+	case 4
+		getFacilityText = &quot;- образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0, 6С0 с погрешностью аттестации 6%, св. №МН0100818-4818 до 18.04.20, РУП «БелГим»&quot;
+	end select
+end function
+
+
+</script:module>

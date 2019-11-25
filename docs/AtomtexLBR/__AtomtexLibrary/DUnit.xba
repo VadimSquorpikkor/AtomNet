@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="DUnit" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _BDname As String
+private _measUnit As String
+private _pointValue as new Collection
+private _pointText as new Collection
+private _BDType as string
+private _measLimit(1) as double
+private _measMinLimit as double
+private _measMaxLimit as double
+private _isPrintable as boolean
+private _measuredValue as new Collection
+private _pointCount as integer
+private _emptyCollection as new Collection
+private _relativeError as new Collection
+private _confidenceLimit as new Collection
+private _gradValue as integer
+
+REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
+Private Sub Class_Initialize()
+	
+End Sub
+
+Private Sub Class_Terminate()
+end sub
+
+REM --- CLASS METHODS
+Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	dim arr(0) as double
+	dim ar2(0) as double
+	dim ar3(1) as double
+	_BDname = BDname
+	_measUnit = measUnit
+	_BDType = BDType
+	arr = pointValue
+	ar2 = pointText
+	ar3 = measLimit
+	_measMinLimit = ar3(0)
+	_measMaxLimit = ar3(1)
+	dim i as integer
+	for i=0 to uBound(arr)
+		_pointValue.add(arr(i))
+		_pointText.add(ar2(i))
+		&apos;_measuredValue.add(-1)
+		_measuredValue.add(arr(i))
+	next i
+	_pointCount = uBound(arr)+1
+	_gradValue = 0
+	&apos;msgbox &quot;adddata - &quot; + BDName
+	rem msgbox _pointValue.item(2)
+End Sub
+
+REM --- CLASS GET/LET/SET PROPERTIES                                                                 
+Public Property Get isPrintable As boolean
+   isPrintable = _isPrintable
+End Property
+
+Public Property Let isPrintable(ByVal pValue As boolean)
+   _isPrintable = pValue
+End property
+
+Public Function BDName As string
+   BDName = _BDName
+   &apos;msgbox &quot;getter - &quot; + BDName
+End Function
+
+Public Function measUnit As string
+   measUnit = _measUnit
+End Function
+
+Public Function BDType As string
+   BDType = _BDType
+End Function
+
+Public Function pointCount As integer
+   pointCount = _pointCount
+End Function
+
+rem Список контрольных точек (0.7, 7, ...)
+Public Function pointList As Collection
+   pointList = _pointValue
+End Function
+
+rem Список префиксов контрольных точек (&quot;мк&quot;, &quot;м&quot;, ...)
+Public Function pointTextList As Collection
+   pointTextList = _pointText
+End Function
+
+public function setValueList(measuredValue as Collection)
+	_measuredValue = measuredValue
+end function
+
+rem список измеренных значений (0.67, 73, ...)
+public function valueList as Collection
+	&apos;dim valueList(8) as double
+	valueList = _measuredValue
+end function
+
+public function minLimit as double
+	minLimit = _measMinLimit
+end function
+
+public function maxLimit as double
+	maxLimit = _measMaxLimit
+end function
+
+public function setGradValue(gradValue as integer)
+	_gradValue = gradValue
+end function
+
+public function getGradValue
+	getGradValue = _gradValue
+end function
+
+
+
+
+
+rem ВСЁ ЧТО ДАЛЬШЕ НЕ НУЖНО
+rem=======================================================================================
+function otn_pogreshnost(meas as double, contr_point as double)
+	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
+end function
+rem=======================================================================================
+function dov_granica(pogr as double, percent as integer)
+	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+rem=======================================================================================
+
+rem относительная погрешность измерения
+public function getRelativeError as Collection
+	dim i as integer
+	for i=1 to _pointValue.count
+		_relativeError.add (otn_pogreshnost(_measuredValue.item(i), _pointValue.item(i)))
+	next i
+	getRelativeError = _relativeError
+end function
+
+rem доверительная граница для 110 и 130 поверочной установки -- только для гамма (для БДКН и БДПА/Б результат не предсказуем)
+public function getConfidenceLimit as Collection
+	dim percent as integer
+	dim i as integer
+	for i=1 to _pointValue.count
+		if AbsoluteValue(_pointValue.item(i), _pointText.item(i))&lt;1000 then
+		percent = 5
+		else
+		percent = 4
+		end if
+		_confidenceLimit.add (dov_granica(_relativeError.item(i), percent))
+	next i
+	getConfidenceLimit = _confidenceLimit
+end function
+
+</script:module>

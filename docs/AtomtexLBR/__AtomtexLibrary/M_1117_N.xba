@@ -260,9 +260,9 @@ function makeLayout(bd as new DUnit)
 		end if
 				
 		if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
-			oDialog1117.getControl(&quot;NumericField&quot; + i).Value = Format(point, MyFormat) 
+			oDialog1117.getControl(&quot;NumericField&quot; + i).Text = Format(point, MyFormat) 
 		else
-			oDialog1117.getControl(&quot;NumericField&quot; + i).Value = value rem если не -1, значит в поле записывалось какое-то значение
+			oDialog1117.getControl(&quot;NumericField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
 		end if	
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
