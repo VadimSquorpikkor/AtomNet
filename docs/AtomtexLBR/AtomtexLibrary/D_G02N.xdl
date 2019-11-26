@@ -11,8 +11,8 @@
  <dlg:bulletinboard>
   <dlg:text dlg:id="Label1" dlg:tab-index="13" dlg:left="213" dlg:top="165" dlg:width="64" dlg:height="8" dlg:value="Фон (нЗв/ч)" dlg:align="right"/>
   <dlg:text dlg:id="Label2" dlg:tab-index="14" dlg:left="213" dlg:top="155" dlg:width="64" dlg:height="8" dlg:help-text="В паспорте настройки" dlg:value="Градуировочное число" dlg:align="right"/>
-  <dlg:text dlg:id="Label5" dlg:tab-index="15" dlg:left="138" dlg:top="43" dlg:width="37" dlg:height="8" dlg:value="№ источника"/>
-  <dlg:text dlg:id="Label6" dlg:tab-index="16" dlg:left="130" dlg:top="59" dlg:width="35" dlg:height="8" dlg:value="Активность"/>
+  <dlg:text dlg:id="Label5" dlg:tab-index="15" dlg:left="138" dlg:top="50" dlg:width="37" dlg:height="8" dlg:value="№ источника"/>
+  <dlg:text dlg:id="Label6" dlg:tab-index="16" dlg:left="130" dlg:top="66" dlg:width="35" dlg:height="8" dlg:value="Активность"/>
   <dlg:text dlg:id="Label7" dlg:tab-index="17" dlg:left="258" dlg:top="50" dlg:width="28" dlg:height="8" dlg:value="0,7 мкЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label8" dlg:tab-index="18" dlg:left="258" dlg:top="61" dlg:width="28" dlg:height="8" dlg:value="7,0 мкЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label9" dlg:tab-index="19" dlg:left="258" dlg:top="72" dlg:width="28" dlg:height="8" dlg:value="70 мкЗв/ч" dlg:align="right"/>
@@ -21,7 +21,7 @@
   <dlg:text dlg:id="Label12" dlg:tab-index="22" dlg:left="258" dlg:top="105" dlg:width="28" dlg:height="8" dlg:value="70 мЗв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label13" dlg:tab-index="23" dlg:left="258" dlg:top="116" dlg:width="28" dlg:height="8" dlg:value="0,7 Зв/ч" dlg:align="right"/>
   <dlg:text dlg:id="Label14" dlg:tab-index="24" dlg:left="258" dlg:top="127" dlg:width="28" dlg:height="8" dlg:value="7,0 Зв/ч" dlg:align="right"/>
-  <dlg:datefield dlg:id="DateField1" dlg:tab-index="26" dlg:left="102" dlg:top="26" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true">
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="26" dlg:left="102" dlg:top="33" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true">
    <script:event script:event-name="on-textchange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:datefield>
   <dlg:text dlg:style-id="0" dlg:id="Label16" dlg:tab-index="31" dlg:left="40" dlg:top="30" dlg:width="5" dlg:height="10" dlg:value="." dlg:align="center"/>
@@ -34,12 +34,12 @@
   <dlg:titledbox dlg:style-id="1" dlg:id="FrameControl2" dlg:tab-index="42" dlg:left="95" dlg:top="6" dlg:width="100" dlg:height="214">
    <dlg:title dlg:value="2. Общие параметры"/>
   </dlg:titledbox>
-  <dlg:text dlg:id="Label17" dlg:tab-index="43" dlg:left="152" dlg:top="28" dlg:width="37" dlg:height="8" dlg:value="Дата поверки"/>
+  <dlg:text dlg:id="Label17" dlg:tab-index="43" dlg:left="152" dlg:top="35" dlg:width="37" dlg:height="8" dlg:value="Дата поверки"/>
   <dlg:titledbox dlg:style-id="1" dlg:id="FrameControl3" dlg:tab-index="44" dlg:left="9" dlg:top="6" dlg:width="83" dlg:height="214">
    <dlg:title dlg:value="1. Список блоков"/>
   </dlg:titledbox>
-  <dlg:numericfield dlg:id="ActivityField" dlg:tab-index="10" dlg:left="102" dlg:top="56" dlg:width="26" dlg:height="12" dlg:help-text="Активность источника на день поверки"/>
-  <dlg:combobox dlg:id="ActivityCombo" dlg:tab-index="25" dlg:left="102" dlg:top="41" dlg:width="35" dlg:height="12" dlg:page="1" dlg:spin="true" dlg:linecount="7">
+  <dlg:numericfield dlg:id="ActivityField" dlg:tab-index="10" dlg:left="102" dlg:top="62" dlg:width="26" dlg:height="12" dlg:help-text="Активность источника на день поверки"/>
+  <dlg:combobox dlg:id="ActivityCombo" dlg:tab-index="25" dlg:left="102" dlg:top="47" dlg:width="35" dlg:height="12" dlg:page="1" dlg:spin="true" dlg:linecount="7">
    <dlg:menupopup>
     <dlg:menuitem dlg:value="516"/>
     <dlg:menuitem dlg:value="517"/>
@@ -53,7 +53,11 @@
   </dlg:combobox>
   <dlg:textfield dlg:style-id="0" dlg:id="TextFieldSRK" dlg:tab-index="8" dlg:left="22" dlg:top="26" dlg:width="18" dlg:height="14" dlg:align="center" dlg:value="452"/>
   <dlg:textfield dlg:style-id="0" dlg:id="TextFieldNUM" dlg:tab-index="9" dlg:left="45" dlg:top="26" dlg:width="18" dlg:height="14" dlg:maxlength="3" dlg:value="002"/>
-  <dlg:menulist dlg:style-id="2" dlg:id="ListBoxBD" dlg:tab-index="28" dlg:left="22" dlg:top="73" dlg:width="55" dlg:height="131"/>
+  <dlg:menulist dlg:style-id="2" dlg:id="ListBoxBD" dlg:tab-index="28" dlg:left="22" dlg:top="73" dlg:width="55" dlg:height="131">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.listBoxListener?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-keydown" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.listBoxListener?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.listBoxListener?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:menulist>
   <dlg:combobox dlg:id="ProvCombo" dlg:tab-index="38" dlg:left="110" dlg:top="169" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:combobox dlg:id="TechCombo" dlg:tab-index="40" dlg:left="110" dlg:top="194" dlg:width="71" dlg:height="12" dlg:help-text="Только для сертификатов" dlg:spin="true"/>
   <dlg:button dlg:id="PlusButton" dlg:tab-index="32" dlg:left="65" dlg:top="27" dlg:width="11" dlg:height="11" dlg:value="+">
@@ -92,5 +96,7 @@
   <dlg:numericfield dlg:id="GradValueField" dlg:tab-index="11" dlg:left="279" dlg:top="153" dlg:width="25" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0" dlg:value="10000"/>
   <dlg:numericfield dlg:id="BGValueField" dlg:tab-index="12" dlg:left="279" dlg:top="164" dlg:width="25" dlg:height="12" dlg:help-text="Данные калибровки фона" dlg:decimal-accuracy="0" dlg:value="100"/>
   <dlg:img dlg:style-id="4" dlg:id="ImageControl1" dlg:tab-index="49" dlg:left="200" dlg:top="41" dlg:width="57" dlg:height="99" dlg:src="file:///C:/Users/Squorpikkor/AppData/Roaming/OpenOffice/4/user/basic/AtomtexLibrary/sert_template/dragon.png"/>
+  <dlg:text dlg:id="Label15" dlg:tab-index="51" dlg:left="152" dlg:top="20" dlg:width="35" dlg:height="8" dlg:value="Номер СРК"/>
+  <dlg:textfield dlg:id="FULL_NUMBER" dlg:tab-index="50" dlg:left="102" dlg:top="18" dlg:width="47" dlg:height="12" dlg:value="000.000"/>
  </dlg:bulletinboard>
 </dlg:window>

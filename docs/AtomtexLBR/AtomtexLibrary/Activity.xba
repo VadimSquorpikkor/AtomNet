@@ -27,27 +27,10 @@ rem так не нужны будут ифы и свитч кейсы
 
 &apos;-------------------------------------------------------------
 function days_left_2910(mdate)
-	&apos;days_left_2910 = cDate(getDate(date)) - DateSerial(2016, 5, 17) rem OLD VERSION FOR ENG OFFICE
-	&apos;days_left_2910 = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;17/5/2016&quot;))) rem Ч/М/Г
-	&apos;days_left_2910 = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;5/17/2016&quot;))) rem М/Ч/Г
-	&apos;days_left_2910 = cdatefromiso(mdate.date) - cdate(&quot;5/17/2016&quot;)
 	days_left_2910 = cdatefromiso(mdate.date) - DateSerial(2016,5,17)
 end function
 
 function days_left(mdate)
-&apos;	days_left = cDate(getDate(mdate)) - DateSerial(2016, 10, 12) rem OLD VERSION  FOR ENG OFFICE
-	&apos;days_left = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;12/10/2016&quot;))) rem Ч/М/Г
-	
-	&apos;msgbox getDateSlash(mdate)
-	&apos;days_left = (cdatefromiso(getDateSlash(mdate)) - cdatefromiso(cdateToISO(&quot;12/10/2016&quot;))) rem Ч/М/Г
-
-	&apos;msgbox cdatefromiso(mdate.date) - cdate(&quot;10/13/2016&quot;)
-	&apos;msgbox cdatefromiso(mdate.date)
-	&apos;msgbox cdatetoiso(&quot;10/13/2016&quot;)
-		
-	&apos;days_left = (cdatefromiso(mdate.date) - cdatefromiso(cdateToISO(&quot;10/13/2016&quot;))) rem М/Ч/Г
-	
-	&apos;days_left = cdatefromiso(mdate.date) - cdate(&quot;10/13/2016&quot;)
 	days_left = cdatefromiso(mdate.date) - DateSerial(2016,10,13)
 end function
 

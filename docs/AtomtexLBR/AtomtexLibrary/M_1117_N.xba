@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.21&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.22&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0

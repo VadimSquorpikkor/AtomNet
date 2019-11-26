@@ -14,6 +14,7 @@ function activityAllDays(a0, pov_date, now_date, t_pol) {
 
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
+const pov_date_800 = new Date(2019,9,17);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_cd_1079 = new Date(2019,0,30);
 const pov_date_cd_1079_version2 = new Date(2019,2,18);  //такое значение давалоотличный результат. Дата была 14 и 22, я взял среднее
 const t_pol_cs = 365.2422*30.17;              //Период полураспада цезия 137 в днях
@@ -27,6 +28,9 @@ const a0_519 = 88.2;
 const a0_520 = 91.3;
 const a0_521 = 93.5;
 const a0_2910 = 67.7;
+const a0_831 = 107;
+const a0_832 = 105;
+const a0_833 = 98;
 
 
 //2016.10.12
@@ -49,6 +53,9 @@ function get_act() {
     document.getElementById('520').value = activity_of_cs137(a0_520);
     document.getElementById('521').value = activity_of_cs137(a0_521);
     document.getElementById('2910').value = activity_of_2910();
+    document.getElementById('831').value = activity_of_cs137(a0_831);
+    document.getElementById('832').value = activity_of_cs137(a0_832);
+    document.getElementById('833').value = activity_of_cs137(a0_833);
     document.getElementById('1079').value = activity(525, new Date(2018,9,15), t_pol_cd);
 }
 

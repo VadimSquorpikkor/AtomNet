@@ -25,7 +25,9 @@ Sub G02N_Dialog_Show
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.00&quot;	
+	oDialogG02N.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
+	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.01&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
@@ -68,6 +70,8 @@ Sub G02N_Dialog_Show
 	oOptionButtonSr = oDialogG02N.Model.getByName(&quot;OptionSertRus&quot;)
 	oOptionButtonSe = oDialogG02N.Model.getByName(&quot;OptionSertEng&quot;)
 	oOptionButtonPr.State = 1
+	
+	oListBox.setEnable(false)
 	
 	for i=1 to 8
 		oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(false)
@@ -116,7 +120,8 @@ sub addNewBD
 	oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(true)
 		
 	bdName = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
-	&apos;msgbox bdname
+	oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
+	
 	dim bd as new DUnit
 	bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;,	Array(0.1,10000)) rem TODO уточнить границы
 	&apos;msgbox oListBox.getItemCount()
@@ -127,19 +132,11 @@ sub addNewBD
 	makeLayoutFromBD(BDList.item(1)) &apos;BDList.count
 	layoutPosition = 1 &apos;BDList.count
 	setButtonVisibility
+
 end sub
 rem---------------------------------------------------------------------------------------------------------
-sub removeLastBD_old
-	if oListBox.getItemCount()=0 then
-		msgbox &quot;Нечего удалять!&quot;
-		&apos;oDialogG02N.Model.getByName(&quot;DateField1&quot;)
-	else
-		oListBox.removeItems(oListBox.getItemCount()-1, 1 )
-		BDList.remove(BDList.count)
-	end if
-end Sub
-rem---------------------------------------------------------------------------------------------------------
 sub removeLastBD
+	if layoutPosition = BDList.count then layoutPosition = layoutPosition - 1
 	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
 	BDList.remove(BDList.count)
 	if oListBox.getItemCount()=0 then
@@ -159,6 +156,15 @@ sub increment as string
 	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
 	oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text = inc
 end sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end function
 rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
 function rightStep(d as double) rem расчет правильного Step-а 
 	if              d&gt;10000 then rightStep = 10
@@ -229,13 +235,16 @@ sub showPrevBD
 end sub
 rem---------------------------------------------------------------------------------------------------------
 function setButtonVisibility
+	oListBox.selectItemPos( layoutPosition-1, True )
 	if BDList.count = 0 then
 		oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
 		oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
 		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
 		oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;&quot;
+		oListBox.setEnable(false)
 	end if
 	if BDList.count &lt;&gt; 0 then
+		oListBox.setEnable(true)
 		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
 	end if
 	if BDList.count &gt; layoutPosition then
@@ -273,10 +282,10 @@ sub insertRecordsToTemplate
 		techName  = rusItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
 		path = &quot;bdkg02_sr.odt&quot;
 	end if
-	if protocolType = &quot;sertEng&quot; then
+	if oOptionButtonSe.State then
 		calibName = engItems1(ComboItemPosition(oDialogG02N.getControl(&quot;ProvCombo&quot;)))
 		techName  = engItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
-		path = &quot;bdkg02.odt_se&quot;		
+		path = &quot;bdkg02_se.odt&quot;		
 	end if
 	
 	OpenTemplate(sertPath &amp; path)
@@ -304,10 +313,10 @@ sub insertRecordsToTemplate
 	dim cont_point as double
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
-		if oOptionButtonPr.State then
+		&apos;if oOptionButtonPr.State then
 			deleteTable(&quot;t&quot; + (k))
 			deleteTable(&quot;tgrad&quot; + (k))
-		end if			
+		&apos;end if			
 	next k
 	
 	for i=1 to BDList.count
@@ -374,7 +383,7 @@ sub insertRecordsToTemplate
 	
 	findAndRename(&quot;$activity&quot;, oDialogG02N.getControl(&quot;ActivityField&quot;).text)
 	findAndRename(&quot;$source&quot;, oDialogG02N.getControl(&quot;ActivityCombo&quot;).text)
-	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text + &quot;.000&quot;)
+	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text)
 	rem ------------------------------------------------------------
 	strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)

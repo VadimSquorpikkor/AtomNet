@@ -52,7 +52,7 @@ Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal point
 		_measuredValue.add(arr(i))
 	next i
 	_pointCount = uBound(arr)+1
-	_gradValue = 0
+	_gradValue = 10000
 	&apos;msgbox &quot;adddata - &quot; + BDName
 	rem msgbox _pointValue.item(2)
 End Sub
