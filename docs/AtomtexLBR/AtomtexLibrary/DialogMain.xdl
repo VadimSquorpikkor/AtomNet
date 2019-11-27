@@ -32,7 +32,7 @@
   <dlg:button dlg:id="CommandButton11" dlg:tab-index="8" dlg:left="71" dlg:top="11" dlg:width="50" dlg:height="16" dlg:value="1121">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M1121.dks1121_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton12" dlg:tab-index="9" dlg:left="21" dlg:top="27" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02">
+  <dlg:button dlg:id="CommandButton12" dlg:tab-index="9" dlg:left="21" dlg:top="27" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02 Старый">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02.G02_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton2" dlg:tab-index="10" dlg:left="71" dlg:top="27" dlg:width="50" dlg:height="16" dlg:value="1117M">
@@ -42,7 +42,7 @@
   <dlg:button dlg:id="CommandButton10" dlg:tab-index="12" dlg:left="14" dlg:top="127" dlg:width="13" dlg:height="10" dlg:value="1">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117.at1117m_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton13" dlg:tab-index="13" dlg:left="71" dlg:top="43" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02 Новый">
+  <dlg:button dlg:id="CommandButton13" dlg:tab-index="13" dlg:left="71" dlg:top="43" dlg:width="50" dlg:height="16" dlg:value="БДКГ-02 / 204">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.G02N_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
  </dlg:bulletinboard>

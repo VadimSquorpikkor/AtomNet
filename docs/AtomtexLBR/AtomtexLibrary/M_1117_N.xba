@@ -88,7 +88,7 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))	rem №12
 	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;&quot;,		Array(74.4,630,5140,35600),				emptyArray,										&quot;alpha&quot;,	Array(0.05,5))
-	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(102,236,6080,53500,154300,383600),emptyArray,										&quot;beta&quot;,		Array(1,50))
+	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		emptyArray,										&quot;beta&quot;,		Array(1,50))
 	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,15))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))	rem №16

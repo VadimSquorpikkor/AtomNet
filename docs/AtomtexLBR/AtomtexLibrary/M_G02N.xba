@@ -10,6 +10,8 @@ dim oListBox as object
 dim oOptionButtonPr as object
 dim oOptionButtonSr as object
 dim oOptionButtonSe as object
+dim oOptionBDKG02 as object
+dim oOptionBDKG204 as object
 dim BDList as new Collection
 dim mainCount as integer
 dim layoutPosition as integer
@@ -27,7 +29,7 @@ Sub G02N_Dialog_Show
 	
 	oDialogG02N.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.01&quot;	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.02&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
@@ -64,17 +66,25 @@ Sub G02N_Dialog_Show
 	oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)	
-	oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;&quot;
+	oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;S/N&quot;
 	
 	oOptionButtonPr = oDialogG02N.Model.getByName(&quot;OptionProtocol&quot;)
 	oOptionButtonSr = oDialogG02N.Model.getByName(&quot;OptionSertRus&quot;)
 	oOptionButtonSe = oDialogG02N.Model.getByName(&quot;OptionSertEng&quot;)
 	oOptionButtonPr.State = 1
 	
+	oOptionBDKG02 = oDialogG02N.Model.getByName(&quot;isBDKG-02&quot;)
+	oOptionBDKG204 = oDialogG02N.Model.getByName(&quot;isBDKG-204&quot;)
+	oOptionBDKG02.State = 1
+	
 	oListBox.setEnable(false)
 	
-	for i=1 to 8
+	for i=1 to 9
 		oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(false)
+	next i
+	
+	for i=1 to 9
+		oDialogG02N.getControl(&quot;Label&quot; + i).text = &quot;к.точка &quot;+i
 	next i
 	
 	oDialogMain.endexecute()   
@@ -112,6 +122,7 @@ sub addNewBD
 		for i=1 to 8
 			oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(true)
 		next i 
+		if oOptionBDKG204.state then oDialogG02N.getControl(&quot;ValueField9&quot;).setEnable(true)
 	end if
 	
 	&apos;msgbox BDList.count
@@ -123,7 +134,8 @@ sub addNewBD
 	oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
 	
 	dim bd as new DUnit
-	bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;,	Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDKG02.state  then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDKG204.state then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
 	&apos;msgbox oListBox.getItemCount()
 	nCount = oListBox.getItemCount()
 	oListBox.addItem( bdName, nCount )
@@ -188,7 +200,9 @@ sub makeLayoutFromBD(bd as new DUnit)
 		nStep = rightStep(point)
 		value = bd.valueList.item(i)
 
-		oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
+		&apos;msgbox &quot;&quot; + bd.valueList.count + &quot;, &quot; + i
+
+		&apos;oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
 		
 		if point &lt; 0.1 and point &gt; 0 then
 			MyFormat = &quot;0.000&quot;
@@ -202,11 +216,13 @@ sub makeLayoutFromBD(bd as new DUnit)
 		if point &gt;= 100 then
 			MyFormat = &quot;0&quot;
 		end if
+		
+		oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat) rem если не -1, значит в поле записывалось какое-то значение
 			
-		oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = value
+		&apos;oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = Format(point, MyFormat)
 		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
 		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		&apos;oDialogG02N.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		oDialogG02N.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
 	next i
 	oDialogG02N.getControl(&quot;GradValueField&quot;).Text = bd.getGradValue
 end sub
@@ -275,17 +291,20 @@ sub insertRecordsToTemplate
 	dim path as string
 	
 	if oOptionButtonPr.State then
-		path = &quot;bdkg02.odt&quot;
+		if oOptionBDKG02.state then path = &quot;bdkg02.odt&quot;
+		if oOptionBDKG204.state then path = &quot;bdkg204.odt&quot;
 	end if
 	if oOptionButtonSr.State then
 		calibName = rusItems1(ComboItemPosition(oDialogG02N.getControl(&quot;ProvCombo&quot;)))
 		techName  = rusItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
-		path = &quot;bdkg02_sr.odt&quot;
+		if oOptionBDKG02.state then path = &quot;bdkg02_sr.odt&quot;
+		if oOptionBDKG204.state then path = &quot;bdkg204_sr.odt&quot;
 	end if
 	if oOptionButtonSe.State then
 		calibName = engItems1(ComboItemPosition(oDialogG02N.getControl(&quot;ProvCombo&quot;)))
 		techName  = engItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
-		path = &quot;bdkg02_se.odt&quot;		
+		if oOptionBDKG02.state then path = &quot;bdkg02_se.odt&quot;
+		if oOptionBDKG204.state then path = &quot;bdkg204_se.odt&quot;
 	end if
 	
 	OpenTemplate(sertPath &amp; path)
@@ -385,7 +404,8 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$source&quot;, oDialogG02N.getControl(&quot;ActivityCombo&quot;).text)
 	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text)
 	rem ------------------------------------------------------------
-	strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG02.state then strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG204.state then strokeForSaving = &quot;БДКГ-204 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
