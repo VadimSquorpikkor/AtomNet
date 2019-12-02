@@ -91,8 +91,6 @@ Sub G02N_Dialog_Show
 	oDialogG02N.Execute()
 End Sub
 rem---------------------------------------------------------------------------------------------------------
-&apos;text = getFacilityText(0) &amp; getFacilityText(1)
-rem---------------------------------------------------------------------------------------------------------
 sub comboChanged
 	select case oDialogG02N.getControl(&quot;ActivityCombo&quot;).text
 		case &quot;№516&quot;
@@ -136,7 +134,6 @@ sub addNewBD
 	dim bd as new DUnit
 	if oOptionBDKG02.state  then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
 	if oOptionBDKG204.state then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
-	&apos;msgbox oListBox.getItemCount()
 	nCount = oListBox.getItemCount()
 	oListBox.addItem( bdName, nCount )
 	BDList.add(bd)
@@ -144,7 +141,6 @@ sub addNewBD
 	makeLayoutFromBD(BDList.item(1)) &apos;BDList.count
 	layoutPosition = 1 &apos;BDList.count
 	setButtonVisibility
-
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub removeLastBD
@@ -199,27 +195,13 @@ sub makeLayoutFromBD(bd as new DUnit)
 		point = bd.pointList.item(i)
 		nStep = rightStep(point)
 		value = bd.valueList.item(i)
-
-		&apos;msgbox &quot;&quot; + bd.valueList.count + &quot;, &quot; + i
-
-		&apos;oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = value rem если не -1, значит в поле записывалось какое-то значение
-		
-		if point &lt; 0.1 and point &gt; 0 then
-			MyFormat = &quot;0.000&quot;
-		end if
-		if point &lt; 1 and point &gt;= 0.1 then
-			MyFormat = &quot;0.00&quot;
-		end if
-		if point &lt; 100 and point &gt;= 1 then
-			MyFormat = &quot;0.0&quot;
-		end if
-		if point &gt;= 100 then
-			MyFormat = &quot;0&quot;
-		end if
+	
+		if point &lt; 0.1 and point &gt; 0  then MyFormat = &quot;0.000&quot;
+		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
+		if point &gt;= 100               then MyFormat = &quot;0&quot;
 		
 		oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat) rem если не -1, значит в поле записывалось какое-то значение
-			
-		&apos;oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = Format(point, MyFormat)
 		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
 		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
 		oDialogG02N.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
@@ -314,105 +296,90 @@ sub insertRecordsToTemplate
 	percentOtk = 7 rem %
 	bground = Format(randValue(95, 5), MyFormat)
 	findAndRename(&quot;$bground&quot;, bground)
-&apos;	findAndRename(&quot;$calibr&quot;, &quot;calibName&quot;)
 	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
-	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
 	findAndRename(&quot;$date&quot;, getDate(oDialogG02N.Model.getByName(&quot;DateField1&quot;)))
-	&apos;serial = oDialogG02N.Model.getByName(&quot;TextField1&quot;).Text
-	&apos;findAndRename(&quot;$serial&quot;, serial)
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
-	findAndRename(&quot;$b_bg&quot;, Format(randValue(13, 2), &quot;0.0&quot;))
-	findAndRename(&quot;$s_bg&quot;, Format(randValue(0.005, 0.005), &quot;0.00&quot;))
-	findAndRename(&quot;$b2_bg&quot;, Format(randValue(17, 2), &quot;0.0&quot;))
 	
 	dim bd as new DUnit
 	dim m_point as double
 	dim cont_point as double
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
-		&apos;if oOptionButtonPr.State then
-			deleteTable(&quot;t&quot; + (k))
-			deleteTable(&quot;tgrad&quot; + (k))
-		&apos;end if			
+		deleteTable(&quot;t&quot; + (k))
+		deleteTable(&quot;tgrad&quot; + (k))
 	next k
 	
 	for i=1 to BDList.count
 		bd = BDList.item(i)
-		
-			strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
-			for j=1 to bd.pointList.count
-				m_point = bd.valueList.item(j)
-				cont_point = bd.pointList.item(j)
-				prefix =  bd.pointTextList.item(j)
-				threePointArray = avaragePointsRndArray(m_point, percentOtk)
+		strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
+		for j=1 to bd.pointList.count
+			m_point = bd.valueList.item(j)
+			cont_point = bd.pointList.item(j)
+			prefix =  bd.pointTextList.item(j)
+			threePointArray = avaragePointsRndArray(m_point, percentOtk)
 				
-				findAndRename((&quot;$&quot; + (i) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
-				findAndRename((&quot;$&quot; + (i) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
+			findAndRename((&quot;$&quot; + (i) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
+			findAndRename((&quot;$&quot; + (i) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
 				
-				rem TODO сделать через select case
-				if m_point &lt; 0.1 and m_point &gt; 0 then
-					MyFormat = &quot;0.000&quot;
-				end if
-				if m_point &lt; 1 and m_point &gt;= 0.1 then
-					MyFormat = &quot;0.00&quot;
-				end if
-				if m_point &lt; 100 and m_point &gt;= 1 then
-					MyFormat = &quot;0.0&quot;
-				end if
-				if m_point &gt;= 100 then
-					MyFormat = &quot;0&quot;
-				end if
-				findAndRename((&quot;$&quot; + (i) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat))
-				findAndRename((&quot;$&quot; + (i) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat))
-				findAndRename((&quot;$&quot; + (i) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat))
-
+			rem TODO сделать через select case
+			if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
+			if m_point &lt; 1 and m_point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+			if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;
+			if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
 				
-				if cont_point&lt;1 and prefix=&quot;мк&quot; then 
-					findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1)), bground)
-				else	
-					findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
-				end if
+			findAndRename((&quot;$&quot; + (i) + &quot;-6&quot; + (j-1)), Format(threePointArray(0), MyFormat)) rem измерение 1
+			findAndRename((&quot;$&quot; + (i) + &quot;-7&quot; + (j-1)), Format(threePointArray(1), MyFormat)) rem измерение 2
+			findAndRename((&quot;$&quot; + (i) + &quot;-8&quot; + (j-1)), Format(threePointArray(2), MyFormat)) rem измерение 3
 				
-				if m_point &lt; 0.1 and m_point &gt; 0 then
-					MyFormat = &quot;0.000&quot;
-					findAndRename((&quot;$&quot; + (i) + &quot;-0&quot; + (j-1)), Format(m_point, MyFormat))
-				else
-					findAndRename((&quot;$&quot; + (i) + &quot;-0&quot; + (j-1)), m_point) &apos;Format(m_point, MyFormat))
-				end if
+			if cont_point&lt;1 and prefix=&quot;мк&quot; then 
+				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1)), bground) rem фон
+			else	
+				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1)), &quot;---&quot;) 
+			end if
 				
-				rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
-				dim percent as integer
-				if AbsoluteValue(m_point, prefix)&lt;1000 then
-					percent = 5
-				else
-					percent = 4
-				end if
+			findAndRename((&quot;$&quot; + (i) + &quot;-0&quot; + (j-1)), Format(m_point, MyFormat)) rem среднее по трем измерениям
 				
-				dim pogr_point as double
-				pogr_point = RelativeError(m_point, cont_point)
-				MyFormat = &quot;0.00&quot;
-				findAndRename((&quot;$&quot; + (i) + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
-				findAndRename((&quot;$&quot; + (i) + &quot;-2&quot; + (j-1)), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
-			next j
-			findAndRename(&quot;$bd_num&quot; + i, bd.BDName)
-			findAndRename(&quot;$grad&quot; + i, bd.getGradValue)
+			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
+			dim percent as integer
+			if AbsoluteValue(m_point, prefix)&lt;1000 then
+				percent = 5
+			else
+				percent = 4
+			end if
+				
+			dim pogr_point as double
+			pogr_point = RelativeError(m_point, cont_point)
+			MyFormat = &quot;0.00&quot;
+			findAndRename((&quot;$&quot; + (i) + &quot;-1&quot; + (j-1)), Format(pogr_point, MyFormat))
+			findAndRename((&quot;$&quot; + (i) + &quot;-2&quot; + (j-1)), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
+		next j
+		findAndRename(&quot;$bd_num&quot; + i, bd.BDName)
+		findAndRename(&quot;$grad&quot; + i, bd.getGradValue)
 	next i
 	
 	findAndRename(&quot;$activity&quot;, oDialogG02N.getControl(&quot;ActivityField&quot;).text)
 	findAndRename(&quot;$source&quot;, oDialogG02N.getControl(&quot;ActivityCombo&quot;).text)
 	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text)
-	rem ------------------------------------------------------------
+
 	if oOptionBDKG02.state then strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	if oOptionBDKG204.state then strokeForSaving = &quot;БДКГ-204 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
-
-
-
-
-
-
+rem---------------------------------------------------------------------------------------------------------
+function insertDataToLayout
+	RangeData = FillArrayFromSelection()
+   	dim i as integer
+	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
+	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
+   	for i=3 to 8
+   		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = RangeData(i-2, 0)
+   	next i
+end function   	
+rem---------------------------------------------------------------------------------------------------------
+function ParseData(data as double) as double
+	ParseData = data rem TODO сделать парсер -- должен убирать значения в скобках, если есть, и вместо запятой ставить точку
+end function
 </script:module>

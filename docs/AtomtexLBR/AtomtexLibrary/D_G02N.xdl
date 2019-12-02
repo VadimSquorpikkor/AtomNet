@@ -7,6 +7,7 @@
   <dlg:style dlg:style-id="2" dlg:font-height="11"/>
   <dlg:style dlg:style-id="3" dlg:font-height="24"/>
   <dlg:style dlg:style-id="4" dlg:border="none" dlg:font-height="10"/>
+  <dlg:style dlg:style-id="5" dlg:font-height="8"/>
  </dlg:styles>
  <dlg:bulletinboard>
   <dlg:datefield dlg:id="DateField1" dlg:tab-index="26" dlg:left="102" dlg:top="33" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true">
@@ -104,5 +105,8 @@
   <dlg:text dlg:id="Label7" dlg:tab-index="23" dlg:left="258" dlg:top="116" dlg:width="28" dlg:height="8" dlg:align="right"/>
   <dlg:text dlg:id="Label8" dlg:tab-index="24" dlg:left="258" dlg:top="127" dlg:width="28" dlg:height="8" dlg:align="right"/>
   <dlg:text dlg:id="Label9" dlg:tab-index="55" dlg:left="258" dlg:top="138" dlg:width="28" dlg:height="8" dlg:align="right"/>
+  <dlg:button dlg:style-id="5" dlg:id="insertButton" dlg:tab-index="56" dlg:left="288" dlg:top="41" dlg:width="24" dlg:height="9" dlg:value="Вставить">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.insertDataToLayout?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>
