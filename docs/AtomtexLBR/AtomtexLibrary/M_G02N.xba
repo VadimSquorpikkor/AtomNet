@@ -12,6 +12,7 @@ dim oOptionButtonSr as object
 dim oOptionButtonSe as object
 dim oOptionBDKG02 as object
 dim oOptionBDKG204 as object
+dim oOptionBDMG as object
 dim BDList as new Collection
 dim mainCount as integer
 dim layoutPosition as integer
@@ -27,9 +28,9 @@ Sub G02N_Dialog_Show
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	
-	oDialogG02N.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
+	oDialogG02N.Model.getByName(&quot;dragonLogo&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.02&quot;	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.03&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
@@ -65,8 +66,10 @@ Sub G02N_Dialog_Show
 	oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
-	oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)	
+	oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)
+	oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(false)	
 	oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;S/N&quot;
+	oDialogG02N.getControl(&quot;bdType&quot;).visible = false
 	
 	oOptionButtonPr = oDialogG02N.Model.getByName(&quot;OptionProtocol&quot;)
 	oOptionButtonSr = oDialogG02N.Model.getByName(&quot;OptionSertRus&quot;)
@@ -75,21 +78,36 @@ Sub G02N_Dialog_Show
 	
 	oOptionBDKG02 = oDialogG02N.Model.getByName(&quot;isBDKG-02&quot;)
 	oOptionBDKG204 = oDialogG02N.Model.getByName(&quot;isBDKG-204&quot;)
-	oOptionBDKG02.State = 1
+	oOptionBDMG = oDialogG02N.Model.getByName(&quot;isBDMG&quot;)
+	oOptionBDKG02.State = 0
+	oOptionBDKG204.State = 0
+	oOptionBDMG.State = 0
 	
 	oListBox.setEnable(false)
 	
-	for i=1 to 9
+	for i=1 to 11
 		oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(false)
 	next i
 	
-	for i=1 to 9
-		oDialogG02N.getControl(&quot;Label&quot; + i).text = &quot;к.точка &quot;+i
+	for i=1 to 11
+		oDialogG02N.getControl(&quot;Label&quot; + i).text = &quot;к. т. &quot;+i
+	next i
+
+	for i=1 to 8
+		oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = false
+	next i
+	
+	for i=1 to 8
+		oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = false
 	next i
 	
 	oDialogMain.endexecute()   
 	oDialogG02N.Execute()
 End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
+end sub	
 rem---------------------------------------------------------------------------------------------------------
 sub comboChanged
 	select case oDialogG02N.getControl(&quot;ActivityCombo&quot;).text
@@ -117,10 +135,27 @@ sub addNewBD
 	dim nCount as integer
 	
 	if layoutPosition = 0 then
-		for i=1 to 8
+		for i=1 to 9
 			oDialogG02N.getControl(&quot;ValueField&quot; + i).setEnable(true)
 		next i 
-		if oOptionBDKG204.state then oDialogG02N.getControl(&quot;ValueField9&quot;).setEnable(true)
+		if oOptionBDKG204.state then
+			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = true
+			oDialogG02N.getControl(&quot;Label9&quot;).visible = true
+			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДКГ-204&quot;
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)
+		end if
+		if oOptionBDKG02.state then
+			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = false
+			oDialogG02N.getControl(&quot;Label9&quot;).visible = false
+			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДКГ-02&quot;
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(true)						
+		end if
+		if oOptionBDMG.state then
+			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = false
+			oDialogG02N.getControl(&quot;Label9&quot;).visible = false
+			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДМГ-2343&quot;
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(true)						
+		end if	
 	end if
 	
 	&apos;msgbox BDList.count
@@ -134,6 +169,7 @@ sub addNewBD
 	dim bd as new DUnit
 	if oOptionBDKG02.state  then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
 	if oOptionBDKG204.state then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDMG.state 	then bd.addData(bdName , &quot;Гр/ч&quot;, Array(0.075,0.75,7.5,75,0.5,0.75,7.5,75,200,0.75,7.5), Array(&quot;н&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
 	nCount = oListBox.getItemCount()
 	oListBox.addItem( bdName, nCount )
 	BDList.add(bd)
@@ -238,12 +274,18 @@ function setButtonVisibility
 		oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
 		oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
 		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
-		oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;&quot;
+		oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;S/N&quot;
 		oListBox.setEnable(false)
+		oDialogG02N.getControl(&quot;isBDKG-02&quot;).visible = true
+		oDialogG02N.getControl(&quot;isBDKG-204&quot;).visible = true
+		oDialogG02N.getControl(&quot;bdType&quot;).visible = false
 	end if
 	if BDList.count &lt;&gt; 0 then
 		oListBox.setEnable(true)
 		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
+		oDialogG02N.getControl(&quot;isBDKG-02&quot;).visible = false
+		oDialogG02N.getControl(&quot;isBDKG-204&quot;).visible = false
+		oDialogG02N.getControl(&quot;bdType&quot;).visible = true
 	end if
 	if BDList.count &gt; layoutPosition then
 		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
