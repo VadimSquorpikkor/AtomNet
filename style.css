@@ -1,5 +1,43 @@
 /*todo Переписать CSS*/
 
+.activity_block {
+    background-color: white;
+    box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.55);
+    border-radius: 5px;
+    display: inline-block;
+    font-size: 14px;
+    /*line-height: 18px;*/
+    padding: 2px;
+    margin: 2px;
+
+}
+.activity_block div {
+    /*background-color: inherit;*/
+    text-indent: 0;
+    text-align: center;
+    font-size: 12px;
+    line-height: 18px;
+}
+.activity_block div:nth-child(2) {
+    /*background-color: orange;*/
+    /*color: white;*/
+
+    color: blue;
+    text-indent: 0;
+    text-align: center;
+    font-size: 14px;
+}
+.activity_block div:last-child {
+    line-height: 10px;
+}
+.activity_block span {
+
+    font-size: 18px;
+    color: #ff3333;
+    padding: 3px;
+    /*text-shadow: 0 2px 1px #666666;*/
+}
+
 .logo_div {
     background: #333333 url("logo2.png") no-repeat center;
     height: 80px;

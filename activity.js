@@ -47,6 +47,7 @@ function get_act() {
     set_num();
     // document.getElementById('516').value = days_left();
     document.getElementById('516').value = activity_of_cs137(a0_516);
+    document.getElementById('516').textContent = activity_of_cs137(a0_516);
     document.getElementById('517').value = activity_of_cs137(a0_517);
     document.getElementById('518').value = activity_of_cs137(a0_518);
     document.getElementById('519').value = activity_of_cs137(a0_519);
