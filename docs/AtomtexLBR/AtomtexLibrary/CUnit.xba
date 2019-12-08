@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="CUnit" script:language="StarBasic">REM  *****  BASIC  *****
+rem ╔╗╚╝║═▄▌▀▌
+rem ╔═══════════════════════════════════════════════════════════════════════════════╗
+rem ║	Класс блоков детектирования для МРП и Портальных мониторов: в отличии		║▌
+rem	║	от DUnit здесь нет контрольных точек, есть только 5 измерений скорости		║▌
+rem	║	счета на фоне и от источника. Также для каждого типа БД свой коэффициент  	║▌
+rem	╚═══════════════════════════════════════════════════════════════════════════════╝▌
+rem	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _BDname As String
+private _pointBGValue as new Collection
+private _pointSrcValue as new Collection
+private delta as double
+
+REM --- CLASS METHODS
+Public Sub setAsBDKG11
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 330
+	SrcValue = 10000
+	delta = 110.1 
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+end sub
+
+Public Sub setAsBDKG19
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 660
+	SrcValue = 13000
+	delta = 147.8
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+end sub
+
+Public Sub setAsBDKG35
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 200
+	SrcValue = 5000
+	delta = 55
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+end sub
+
+Public Sub setAsBDRM05
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 1700
+	SrcValue = 13000
+	delta = 110.1
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+end sub
+
+
+
+public function setBGValue(measuredBGValue as Collection)
+	_pointBGValue = measuredBGValue
+end function
+
+public function BGvalueList as Collection
+	BGvalueList = _pointBGValue
+end function
+
+public function setSrcValue(measuredSrcValue as Collection)
+	_pointSrcValue = measuredSrcValue
+end function
+
+public function SrcValueList as Collection
+	SrcValueList = _pointSrcValue
+end function
+
+</script:module>
