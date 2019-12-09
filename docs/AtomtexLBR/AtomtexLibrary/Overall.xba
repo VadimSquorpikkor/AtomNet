@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Overall" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+sub comboChanged(Combo as object, NumericField as object, DateField as object)
+	select case Combo.text
+		case &quot;№516&quot;
+		NumericField.value = get_activity(act516, DateField)
+		case &quot;№517&quot;
+		NumericField.value = get_activity(act517, DateField)
+		case &quot;№518&quot;
+		NumericField.value = get_activity(act518, DateField)
+		case &quot;№519&quot;
+		NumericField.value = get_activity(act519, DateField)
+		case &quot;№520&quot;
+		NumericField.value = get_activity(act520, DateField)
+		case &quot;№521&quot;
+		NumericField.value = get_activity(act521, DateField)
+		case &quot;№2910&quot;
+		NumericField.value = get_activity2910(oDateFieldModel)
+	end select
+	&apos;msgbox &quot;Works!&quot;	
+end sub
+
+sub increment(TField as object) as string
+	dim inc as string
+	dim value as integer
+	value = TField.text
+	if value &lt; 9 then inc = (&quot;00&quot; &amp; (value + 1))
+	if value &lt; 99 and value &gt; 8 then inc = &quot;0&quot; &amp; (value + 1)
+	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
+	TField.text = inc
+end sub
+</script:module>

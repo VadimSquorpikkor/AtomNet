@@ -15,15 +15,16 @@ Sub MainDialog_Show
 
 	rem user_name = &quot;Tarasenko_VV&quot;  	
 	rem user_name = &quot;Kurbatova&quot;
-	rem user_name = &quot;Serikov_VA&quot;
+	user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Rusakevich_AV&quot;
-	user_name = &quot;Squorpikkor&quot;
+	rem user_name = &quot;Squorpikkor&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
 	
    DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
+   &apos;msgbox oDialogMain.url
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
    oDialogMain.Execute()
 End Sub
@@ -149,7 +150,59 @@ sub testpath
 &apos;s = oDialogMain.getURL()
 &apos;dim s as string
  &apos;s=DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
-msgbox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).geturl
+&apos;msgbox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).geturl
+&apos;msgbox oDialogMain.getURL()
+
+&apos;GlobalScope.BasicLibraries.loadLibrary(&quot;Tools&quot;)
+&apos;path=DirectoryNameoutofPath(ThisComponent.getURL(),&quot;\&quot;)
+&apos;msgbox path
+
+&apos;MsgBox ConvertFromURL(ThisComponent.getURL())
+MsgBox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
+
 end sub
+
+sub sharpFunction
+	testpath
+end sub
+
+rem================standard methods from oo=====================
+&apos;Retrieves the mere filename out of a whole path
+Function FileNameoutofPath(ByVal Path as String, Optional Separator as String) as String
+Dim i as Integer
+Dim SepList() as String
+	If IsMissing(Separator) Then
+		Path = ConvertFromUrl(Path)
+		Separator = GetPathSeparator()		
+	End If
+	SepList() = ArrayoutofString(Path, Separator,i)
+	FileNameoutofPath = SepList(i)
+End Function
+
+
+Function GetFileNameExtension(ByVal FileName as String)
+Dim MaxIndex as Integer
+Dim SepList() as String
+	SepList() = ArrayoutofString(FileName,&quot;.&quot;, MaxIndex)
+	GetFileNameExtension = SepList(MaxIndex)
+End Function
+
+
+Function GetFileNameWithoutExtension(ByVal FileName as String, Optional Separator as String)
+Dim MaxIndex as Integer
+Dim SepList() as String
+	If not IsMissing(Separator) Then
+		FileName = FileNameoutofPath(FileName, Separator)
+	End If
+	SepList() = ArrayoutofString(FileName,&quot;.&quot;, MaxIndex)
+	GetFileNameWithoutExtension = RTrimStr(FileName, &quot;.&quot; &amp; SepList(MaxIndex)
+End Function
+
+
+Function DirectoryNameoutofPath(sPath as String, Separator as String) as String
+Dim LocFileName as String
+	LocFileName = FileNameoutofPath(sPath, Separator)
+	DirectoryNameoutofPath = RTrimStr(sPath, Separator &amp; LocFileName)
+End Function
 
 </script:module>

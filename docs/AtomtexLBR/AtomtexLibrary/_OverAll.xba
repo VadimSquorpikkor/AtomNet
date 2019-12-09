@@ -72,6 +72,28 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	end if
 	sourceDistanceArray = ar
 end function
+
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged(oEvent As Object)
+	Dim oCheckbox As Object
+    oComboBox = oEvent.source.model
+	select case oComboBox.text
+		case &quot;№516&quot;
+		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
+		case &quot;№517&quot;
+		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
+		case &quot;№518&quot;
+		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
+		case &quot;№519&quot;
+		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
+		case &quot;№520&quot;
+		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
+		case &quot;№521&quot;
+		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
+		case &quot;№2910&quot;
+		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
+	end select	
+end sub
 rem------метод для сортировки столбцов в calc-------------------------------------------------
 sub sortColumns 
 	rem Сортировка выделенных столбцов в Calc 

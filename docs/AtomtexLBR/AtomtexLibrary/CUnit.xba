@@ -14,22 +14,40 @@ Option ClassModule
 Option Explicit
 
 REM --- Internal Variables                                                                           
-private _BDname As String
-private _pointBGValue as new Collection
-private _pointSrcValue as new Collection
-private delta as double
+private _BDnumber As String					rem 452.000
+private _pointBGValue as new Collection		rem 330
+private _pointSrcValue as new Collection	rem 10000
+private _delta as double					rem 110.1
+private _bdtype as string					rem &quot;БДКГ-11/1&quot;
 
 REM --- CLASS METHODS
+public function getDelta	rem 110.1
+	getDelta = _delta
+end function
+
+public function getType	rem &quot;БДКГ-11/1&quot;
+	getType = _bdtype
+end function
+
+public function getSerial	rem &quot;452.000&quot;
+	getSerial = _BDnumber
+end function
+
+public function setSerial(serial as string)	rem &quot;452.000&quot;
+	_BDnumber = serial
+end function
+
 Public Sub setAsBDKG11
 	dim i as integer
 	dim BgValue, SrcValue as double
 	BgValue = 330
 	SrcValue = 10000
-	delta = 110.1 
+	_delta = 110.1 
 	for i=1 to 5
 		_pointBGValue.add(BgValue)
 		_pointSrcValue.add(SrcValue)
 	next i
+	_bdtype = &quot;БДКГ-11/1&quot;
 end sub
 
 Public Sub setAsBDKG19
@@ -37,11 +55,12 @@ Public Sub setAsBDKG19
 	dim BgValue, SrcValue as double
 	BgValue = 660
 	SrcValue = 13000
-	delta = 147.8
+	_delta = 147.8
 	for i=1 to 5
 		_pointBGValue.add(BgValue)
 		_pointSrcValue.add(SrcValue)
 	next i
+	_bdtype = &quot;БДКГ-19&quot;	
 end sub
 
 Public Sub setAsBDKG35
@@ -49,11 +68,12 @@ Public Sub setAsBDKG35
 	dim BgValue, SrcValue as double
 	BgValue = 200
 	SrcValue = 5000
-	delta = 55
+	_delta = 55
 	for i=1 to 5
 		_pointBGValue.add(BgValue)
 		_pointSrcValue.add(SrcValue)
 	next i
+	_bdtype = &quot;БДКГ-35&quot;	
 end sub
 
 Public Sub setAsBDRM05
@@ -61,29 +81,49 @@ Public Sub setAsBDRM05
 	dim BgValue, SrcValue as double
 	BgValue = 1700
 	SrcValue = 13000
-	delta = 110.1
+	_delta = 110.1
 	for i=1 to 5
 		_pointBGValue.add(BgValue)
 		_pointSrcValue.add(SrcValue)
 	next i
+	_bdtype = &quot;БДРМ-05&quot;	
 end sub
 
 
 
-public function setBGValue(measuredBGValue as Collection)
+public function setBGList(measuredBGValue as Collection)
 	_pointBGValue = measuredBGValue
 end function
 
-public function BGvalueList as Collection
-	BGvalueList = _pointBGValue
+public function getBGList as Collection
+	getBGList = _pointBGValue
 end function
 
-public function setSrcValue(measuredSrcValue as Collection)
+public function setSrcList(measuredSrcValue as Collection)
 	_pointSrcValue = measuredSrcValue
 end function
 
-public function SrcValueList as Collection
-	SrcValueList = _pointSrcValue
+public function getSrcList as Collection
+	getSrcList = _pointSrcValue
 end function
 
+public function getBgAverage
+	dim i as integer
+	dim avr as double
+	avr = 0
+	for i=1 to _pointBGValue.count
+		avr = avr + _pointBGValue.item(i)
+	next i
+	getBgAverage = avr/_pointBGValue.count
+end function
+
+public function getSrcAverage
+	dim i as integer
+	dim avr as double
+	avr = 0
+	for i=1 to _pointSrcValue.count
+		avr = avr + _pointSrcValue.item(i)
+	next i
+	getSrcAverage = avr/_pointSrcValue.count
+end function
 </script:module>
