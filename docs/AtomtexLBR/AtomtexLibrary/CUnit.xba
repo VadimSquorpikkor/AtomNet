@@ -126,4 +126,12 @@ public function getSrcAverage
 	next i
 	getSrcAverage = avr/_pointSrcValue.count
 end function
+
+public function getSensitivity(activity as double) as double
+	getSensitivity = (getSrcAverage - getBgAverage)/activity
+end function
+
+&apos;public function getSensitivity(activity as double)
+&apos;	getSensitivity = (getSrcAverage - getBgAverage)/activity
+&apos;end function
 </script:module>

@@ -270,13 +270,13 @@ sub insertRecordsToTemplate
 		dim bgAverage, srcAverage, sensitivity, activity as double
 		activity = oDialogPortal.getControl(&quot;ActivityField&quot;).value
 		
-		bgAverage = bd.getBgAverage
-		srcAverage = bd.getSrcAverage
+		&apos;bgAverage = bd.getBgAverage
+		&apos;srcAverage = bd.getSrcAverage
 		findAndRename(&quot;$bg_avr&quot; + i, Format(bgAverage, &quot;0.0&quot;))
 		findAndRename(&quot;$sr_avr&quot; + i, Format(srcAverage, &quot;0.0&quot;))
 		
-		sensitivity = (srcAverage - bgAverage)/activity
-		findAndRename(&quot;$sence&quot; + i, Format(sensitivity, &quot;0.00&quot;))
+		&apos;sensitivity = (srcAverage - bgAverage)/activity
+		findAndRename(&quot;$sence&quot; + i, Format(bd.getSensitivity(activity), &quot;0.00&quot;))
 		
 		findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - sensitivity, &quot;0.00&quot;))
 		&apos;findAndRename(&quot;$type&quot; + i, bd.getType)
