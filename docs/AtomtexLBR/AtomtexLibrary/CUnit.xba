@@ -19,6 +19,7 @@ private _pointBGValue as new Collection		rem 330
 private _pointSrcValue as new Collection	rem 10000
 private _delta as double					rem 110.1
 private _bdtype as string					rem &quot;БДКГ-11/1&quot;
+&apos;&apos;&apos;&apos;private _MEASUREMENT_NUMBER as integer		rem 5
 
 REM --- CLASS METHODS
 public function getDelta	rem 110.1

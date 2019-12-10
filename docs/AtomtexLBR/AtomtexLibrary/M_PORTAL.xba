@@ -20,14 +20,11 @@ rem-----------------------------------------------------------------------------
 Sub Portal_Dialog_Show
 	maxBDCount = 4
 
-	&apos;OverallClass as new Overall
-
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialogPortal = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_PORTAL )
 	oDateFieldModel = oDialogPortal.Model.getByName(&quot;DateField1&quot;)
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
-	&apos;oActivityCombo = oDialogPortal.getControl(&quot;SourceCombo&quot;)
 	
 	oDialogPortal.Model.getByName(&quot;Fura&quot;).ImageURL = sertPath &amp; &quot;fura_transp.png&quot;
 	
@@ -35,13 +32,7 @@ Sub Portal_Dialog_Show
 	oListBox = oDialogPortal.getControl(&quot;ListBoxBD&quot;)
 	
 	oActivityCombo = oDialogPortal.getControl(&quot;SourceCombo&quot;)
-	REM first remove all old items from the list
-	nCount = oActivityCombo.getItemCount()
-	oActivityCombo.removeItems( 0, nCount )
-	REM add new items to the list
-	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
-	oActivityCombo.addItems( sItems, 0 )
-	oActivityCombo.text = &quot;№516&quot;
+	Overall.initializeActivityCombo(oActivityCombo)
 	
 	oNumericFieldModel = oDialogPortal.Model.getByName(&quot;ActivityField&quot;)
 	oNumericFieldModel.DECIMALACCURACY = 2
@@ -51,11 +42,9 @@ Sub Portal_Dialog_Show
 	oDialogPortal.getControl(&quot;NextButton&quot;).setEnable(false)
 	oDialogPortal.getControl(&quot;PrevButton&quot;).setEnable(false)
 	oDialogPortal.getControl(&quot;DoneButton&quot;).setEnable(false)
-	&apos;oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)
 	oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(false)	
 	oDialogPortal.getControl(&quot;Serial&quot;).Text = &quot;S/N&quot;
 	oDialogPortal.getControl(&quot;BDtype&quot;).Text = &quot;type&quot;
-	&apos;oDialogG02N.getControl(&quot;bdType&quot;).visible = false
 	
 	oOptionBDKG11 = oDialogPortal.Model.getByName(&quot;isBDKG11&quot;)
 	oOptionBDKG19 = oDialogPortal.Model.getByName(&quot;isBDKG19&quot;)
@@ -86,8 +75,6 @@ sub incValue
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub addNewBD
-	rem добавляю в коллекцию несколько БДКГ-02 (до ввода значений: у всех значения по-умолчанию)
-	rem в переменную имени БД сохраняю номер (&quot;452.002&quot;)
 	dim serial as string
 	dim nCount as integer
 	
@@ -117,10 +104,6 @@ sub addNewBD
 	makeLayoutFromBD(BDList.item(1)) &apos;BDList.count
 	layoutPosition = 1 &apos;BDList.count
 	setButtonVisibility
-	&apos;if BDList.count = 1 then msgbox BDList.item(1).getType
-	&apos;if BDList.count = 2 then msgbox BDList.item(1).getType + BDList.item(2).getType
-	&apos;if BDList.count = 3 then msgbox BDList.item(1).getType + BDList.item(2).getType + BDList.item(3).getType
-	&apos;if BDList.count = 4 then msgbox BDList.item(1).getType + BDList.item(2).getType + BDList.item(3).getType + BDList.item(4).getType
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
@@ -220,75 +203,48 @@ sub removeLastBD
 end Sub
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
-	MyFormat = &quot;0.0&quot;
+	dim srk_serial, strokeForSaving, path as string
+	srk_serial = oDialogPortal.getControl(&quot;FULL_NUM&quot;).text
+	dim bgAverage, srcAverage, sensitivity, activity as double
+	activity = oDialogPortal.getControl(&quot;ActivityField&quot;).value
+	dim bd as new CUnit
 	saveCurentBDValue(layoutPosition)
-	dim strokeForSaving as string
-	strokeForSaving = &quot;&quot;	
-	dim path as string
 	path = &quot;portal.odt&quot;
-	&apos;if oOptionBDKG11.state then path = &quot;portal-bdkg11.odt&quot;
-	&apos;if oOptionBDKG19.state then path = &quot;portal-bdkg19.odt&quot;
-	&apos;if oOptionBDKG35.state then path = &quot;portal-bdkg35.odt&quot;
-	&apos;if oOptionBDRM05.state then path = &quot;portal-bdrm05.odt&quot;
 	
 	OpenTemplate(sertPath &amp; path)
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
-	dim bground as double
 	percentOtk = 7 rem %
-	bground = Format(randValue(95, 5), MyFormat)
-	findAndRename(&quot;$bground&quot;, bground)
-	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
-	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
+	 
+	findAndRename(&quot;$bground&quot;, Format(randValue(95, 5), &quot;0.0&quot;))
+	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2),  &quot;0.0&quot;))
+	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5),  &quot;0.0&quot;))
 	findAndRename(&quot;$date&quot;, getDate(oDialogPortal.Model.getByName(&quot;DateField1&quot;)))
-	
-
-	
-	dim bd as new CUnit
-	&apos;dim m_point as double
-	&apos;dim cont_point as double
+	findAndRename(&quot;$activity&quot;, Format(activity, &quot;0.00&quot;))
+	findAndRename(&quot;$source&quot;, oActivityCombo.text)
+	findAndRename(&quot;$srk_serial&quot;, srk_serial)
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		deleteTable(&quot;t&quot; + (k))
 	next k
-	
-	
-	
+		
 	for i=1 to BDList.count
 		bd = BDList.item(i)
 		findAndRename(&quot;$type&quot;, bd.getType)
-		strokeForSaving = strokeForSaving &amp; bd.getSerial &amp; &quot; &quot;
 		for j=1 to bd.getBGList.count
 			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), bd.getBGList.item(j))
 			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j), bd.getSRCList.item(j))
-			
-
 		next j
 		findAndRename(&quot;$delt&quot; + i, bd.getDelta)
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 		findAndRename(&quot;$type&quot; + i, bd.getType)
-		
-		dim bgAverage, srcAverage, sensitivity, activity as double
-		activity = oDialogPortal.getControl(&quot;ActivityField&quot;).value
-		
-		&apos;bgAverage = bd.getBgAverage
-		&apos;srcAverage = bd.getSrcAverage
-		findAndRename(&quot;$bg_avr&quot; + i, Format(bgAverage, &quot;0.0&quot;))
-		findAndRename(&quot;$sr_avr&quot; + i, Format(srcAverage, &quot;0.0&quot;))
-		
-		&apos;sensitivity = (srcAverage - bgAverage)/activity
+		findAndRename(&quot;$bg_avr&quot; + i, Format(bd.getBgAverage, &quot;0.0&quot;))
+		findAndRename(&quot;$sr_avr&quot; + i, Format(bd.getSrcAverage, &quot;0.0&quot;))
 		findAndRename(&quot;$sence&quot; + i, Format(bd.getSensitivity(activity), &quot;0.00&quot;))
-		
 		findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - sensitivity, &quot;0.00&quot;))
-		&apos;findAndRename(&quot;$type&quot; + i, bd.getType)
 	next i
-	
-	findAndRename(&quot;$activity&quot;, Format(activity, &quot;0.00&quot;))
-	findAndRename(&quot;$source&quot;, oActivityCombo.text)
-	findAndRename(&quot;$serial&quot;, oDialogPortal.getControl(&quot;FULL_NUM&quot;).text)
 
-	&apos;if oOptionBDKG02.state then strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
-	&apos;if oOptionBDKG204.state then strokeForSaving = &quot;БДКГ-204 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
-	&apos;CopyVariableToClipboard(strokeForSaving)
+	strokeForSaving = &quot;&quot; + srk_serial &amp; &quot; (&quot; &amp; bd.getType &amp; &quot;)&quot;
+	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
 rem---------------------------------------------------------------------------------------------------------

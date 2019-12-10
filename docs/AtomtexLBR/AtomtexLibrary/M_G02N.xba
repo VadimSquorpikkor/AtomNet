@@ -30,7 +30,7 @@ Sub G02N_Dialog_Show
 	
 	oDialogG02N.Model.getByName(&quot;dragonLogo&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.05&quot;	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.06&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)

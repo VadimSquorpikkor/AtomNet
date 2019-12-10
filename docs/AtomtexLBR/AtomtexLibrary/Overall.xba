@@ -21,9 +21,8 @@ sub comboChanged(Combo as object, NumericField as object, DateField as object)
 		case &quot;№521&quot;
 		NumericField.value = get_activity(act521, DateField)
 		case &quot;№2910&quot;
-		NumericField.value = get_activity2910(oDateFieldModel)
-	end select
-	&apos;msgbox &quot;Works!&quot;	
+		NumericField.value = get_activity2910(DateField)
+	end select	
 end sub
 
 sub increment(TField as object) as string
@@ -35,4 +34,16 @@ sub increment(TField as object) as string
 	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
 	TField.text = inc
 end sub
+
+sub initializeActivityCombo(oActivityCombo as object)
+	REM first remove all old items from the list
+	dim nCount as integer
+	dim sItems As Variant
+	nCount = oActivityCombo.getItemCount()
+	oActivityCombo.removeItems( 0, nCount )
+	REM add new items to the list
+	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+	oActivityCombo.addItems( sItems, 0 )
+	oActivityCombo.text = &quot;№516&quot;
+end sub	
 </script:module>
