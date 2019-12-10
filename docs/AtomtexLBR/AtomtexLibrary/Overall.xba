@@ -45,5 +45,27 @@ sub initializeActivityCombo(oActivityCombo as object)
 	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
 	oActivityCombo.addItems( sItems, 0 )
 	oActivityCombo.text = &quot;№516&quot;
-end sub	
+end sub
+
+sub initializeSertificateCombo(oComboBox1 as object, oComboBox2 as object)
+	REM first remove all old items from the list
+  	oComboBox1.removeItems( 0, oComboBox1.getItemCount() )
+  	oComboBox2.removeItems( 0, oComboBox2.getItemCount() )  	
+  	REM add new items to the list
+  	rusItems1 = Array( &quot;В. Писаренко&quot;, &quot;С. Кульчинский&quot;, &quot;Д. Кульчинский&quot; )
+  	engItems1 = Array( &quot;V. Pisarenko&quot;, &quot;S. Kulchinsky&quot;, &quot;D. Kulchinsky&quot; )
+  	oComboBox1.addItems( rusItems1, 0 )
+	oComboBox1.text = rusItems1(0)
+	&apos;msgbox oComboBox1.SELECTION
+  	rusItems2 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
+  	engItems2 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
+  	oComboBox2.addItems( rusItems2, 0 )
+	oComboBox2.text = rusItems2(0)
+end sub
+
+
+
+
+
+
 </script:module>

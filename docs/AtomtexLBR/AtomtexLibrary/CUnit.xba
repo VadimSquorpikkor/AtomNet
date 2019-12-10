@@ -38,6 +38,10 @@ public function setSerial(serial as string)	rem &quot;452.000&quot;
 	_BDnumber = serial
 end function
 
+rem Каждый БД может устанавливаться как в контейнере (со свинцовой защитой), так и без него,
+rem соответственно есть два разных набора параметров для каждого блока
+
+rem Тип БД -- БДКГ-11/1 (для МРП, например)
 Public Sub setAsBDKG11
 	dim i as integer
 	dim BgValue, SrcValue as double
@@ -51,6 +55,21 @@ Public Sub setAsBDKG11
 	_bdtype = &quot;БДКГ-11/1&quot;
 end sub
 
+rem Тип БД -- БДКГ-11/1 в контейнере (для портального, например)
+Public Sub setAsBDKG11container
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 160
+	SrcValue = 5200
+	_delta = 60.8 
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+	_bdtype = &quot;БДКГ-11/1&quot;
+end sub
+
+rem Тип БД -- БДКГ-11/1 (для МРП, например)
 Public Sub setAsBDKG19
 	dim i as integer
 	dim BgValue, SrcValue as double
@@ -64,7 +83,36 @@ Public Sub setAsBDKG19
 	_bdtype = &quot;БДКГ-19&quot;	
 end sub
 
+rem Тип БД -- БДКГ-19 в контейнере (для портального, например)
+Public Sub setAsBDKG19container
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 300
+	SrcValue = 9000
+	_delta = 106.1
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+	_bdtype = &quot;БДКГ-19&quot;	
+end sub
+
+rem Тип БД -- БДКГ-35 (для МРП, например)
 Public Sub setAsBDKG35
+	dim i as integer
+	dim BgValue, SrcValue as double
+	BgValue = 400
+	SrcValue = 9000
+	_delta = 100
+	for i=1 to 5
+		_pointBGValue.add(BgValue)
+		_pointSrcValue.add(SrcValue)
+	next i
+	_bdtype = &quot;БДКГ-35&quot;	
+end sub
+
+rem Тип БД -- БДКГ-35 в контейнере (для портального, например)
+Public Sub setAsBDKG35container
 	dim i as integer
 	dim BgValue, SrcValue as double
 	BgValue = 200
@@ -82,15 +130,13 @@ Public Sub setAsBDRM05
 	dim BgValue, SrcValue as double
 	BgValue = 1700
 	SrcValue = 13000
-	_delta = 110.1
+	_delta = 125
 	for i=1 to 5
 		_pointBGValue.add(BgValue)
 		_pointSrcValue.add(SrcValue)
 	next i
 	_bdtype = &quot;БДРМ-05&quot;	
 end sub
-
-
 
 public function setBGList(measuredBGValue as Collection)
 	_pointBGValue = measuredBGValue

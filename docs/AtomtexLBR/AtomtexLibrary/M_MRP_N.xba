@@ -19,7 +19,7 @@ Sub MRP920_Dialog_Show
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	
-	oDialogMRP.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.01&quot;	
+	oDialogMRP.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.02&quot;	
 	
 	oActivityCombo = oDialogMRP.getControl(&quot;SourceCombo&quot;)
 	Overall.initializeActivityCombo(oActivityCombo)
@@ -59,10 +59,11 @@ sub addNewBD
 	
 	if oOptionBDKG11.state  then oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text = &quot;AT920&quot;
 	if oOptionBDKG19.state  then oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text = &quot;AT920B&quot;
-	if oOptionBDKG35.state  then oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text = &quot;AT920???&quot;
+	if oOptionBDKG35.state  then oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text = &quot;AT920P&quot;
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
+	saveCurentBDValue
 	dim srk_serial, mrp_serial, bd_serial, strokeForSaving, path as string
 	srk_serial = oDialogMRP.getControl(&quot;srkSerial&quot;).text
 	mrp_serial = oDialogMRP.getControl(&quot;mrpSerial&quot;).text
@@ -96,11 +97,22 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$bg_avr&quot; + i, Format(bd.getBgAverage, &quot;0.0&quot;))
 	findAndRename(&quot;$sr_avr&quot; + i, Format(bd.getSrcAverage, &quot;0.0&quot;))
 	findAndRename(&quot;$sence&quot; + i, Format(bd.getSensitivity(activity), &quot;0.00&quot;))
-	findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - sensitivity, &quot;0.00&quot;))
+	findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - bd.getSensitivity(activity), &quot;0.00&quot;))
 
 	strokeForSaving = &quot;&quot; + srk_serial &amp; &quot; (МРП-&quot; &amp; oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue
+	dim newBGValues as new Collection
+	dim newSRCValues as new Collection
+	for i=1 to bd.getBGList.count
+		newBGValues.add(oDialogMRP.getControl(&quot;bgField&quot; + i).value)
+		newSRCValues.add(oDialogMRP.getControl(&quot;srcField&quot; + i).value)
+	next i
+	bd.setBGList(newBGValues)
+	bd.setSRCList(newSRCValues)
 end sub
 
 </script:module>

@@ -28,7 +28,7 @@ Sub Portal_Dialog_Show
 	
 	oDialogPortal.Model.getByName(&quot;Fura&quot;).ImageURL = sertPath &amp; &quot;fura_transp.png&quot;
 	
-	oDialogPortal.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.01&quot;	
+	oDialogPortal.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.02&quot;	
 	oListBox = oDialogPortal.getControl(&quot;ListBoxBD&quot;)
 	
 	oActivityCombo = oDialogPortal.getControl(&quot;SourceCombo&quot;)
@@ -91,9 +91,9 @@ sub addNewBD
 	oDialogPortal.getControl(&quot;FULL_NUM&quot;).text = oDialogPortal.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogPortal.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
 	
 	dim bd as new CUnit
-	if oOptionBDKG11.state  then bd.setAsBDKG11
-	if oOptionBDKG19.state  then bd.setAsBDKG19
-	if oOptionBDKG35.state  then bd.setAsBDKG35
+	if oOptionBDKG11.state  then bd.setAsBDKG11container
+	if oOptionBDKG19.state  then bd.setAsBDKG19container
+	if oOptionBDKG35.state  then bd.setAsBDKG35container
 	if oOptionBDRM05.state  then bd.setAsBDRM05
 	
 	bd.setSerial(serial)
@@ -240,7 +240,7 @@ sub insertRecordsToTemplate
 		findAndRename(&quot;$bg_avr&quot; + i, Format(bd.getBgAverage, &quot;0.0&quot;))
 		findAndRename(&quot;$sr_avr&quot; + i, Format(bd.getSrcAverage, &quot;0.0&quot;))
 		findAndRename(&quot;$sence&quot; + i, Format(bd.getSensitivity(activity), &quot;0.00&quot;))
-		findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - sensitivity, &quot;0.00&quot;))
+		findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - bd.getSensitivity(activity), &quot;0.00&quot;))
 	next i
 
 	strokeForSaving = &quot;&quot; + srk_serial &amp; &quot; (&quot; &amp; bd.getType &amp; &quot;)&quot;
