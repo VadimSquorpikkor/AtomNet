@@ -22,6 +22,7 @@ private _emptyCollection as new Collection
 private _relativeError as new Collection
 private _confidenceLimit as new Collection
 private _gradValue as integer
+private _serial as string
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -69,6 +70,18 @@ End property
 Public Function BDName As string
    BDName = _BDName
    &apos;msgbox &quot;getter - &quot; + BDName
+End Function
+
+Public Function getName As string &apos;то же самое, но с нормальным именем
+   getName = _BDName
+End Function
+
+Public Function getSerial As string
+   getSerial = _serial
+End Function
+
+Public Function setSerial(serial As string)
+   _serial = serial
 End Function
 
 Public Function measUnit As string

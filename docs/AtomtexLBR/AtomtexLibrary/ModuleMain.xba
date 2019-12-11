@@ -26,6 +26,7 @@ Sub MainDialog_Show
    oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    &apos;msgbox oDialogMain.url
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
+   	oDialogMain.Model.getByName(&quot;ImageControl2&quot;).ImageURL = sertPath &amp; &quot;elkaHalf.png&quot;
    oDialogMain.Execute()
 End Sub
 

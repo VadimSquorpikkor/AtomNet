@@ -4,7 +4,7 @@
 
 rem---------------------------------------------------------------------------------------------------------
 dim Overall as new Overall
-dim oDialogG23 as object
+dim oDialogG23N as object
 dim oDateFieldModel as object
 dim oListBox as object
 dim oOptionButtonPr as object
@@ -28,7 +28,7 @@ Sub G23N_Dialog_Show
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	
-	oDialogG23N.getControl(&quot;versionLabel&quot;).text = &quot;Версия 3.00&quot;	
+	oDialogG23N.getControl(&quot;versionLabel&quot;).text = &quot;Версия 3.00 &quot;	
 	
 	oListBox = oDialogG23N.getControl(&quot;bdListBox&quot;)
 	
@@ -42,128 +42,69 @@ Sub G23N_Dialog_Show
 	oDialogG23N.getControl(&quot;prevButton&quot;).setEnable(false)
 	oDialogG23N.getControl(&quot;doneButton&quot;).setEnable(false)
 	&apos;oDialogG23N.getControl(&quot;BGValueField&quot;).setEnable(false)
-	oDialogG23N.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
-	oDialogG23N.getControl(&quot;typeLabel&quot;).visible = false
+	oDialogG23N.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
+	oDialogG23N.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
 	
 	oOptionButtonPr = oDialogG23N.Model.getByName(&quot;isProtocol&quot;)
 	oOptionButtonSr = oDialogG23N.Model.getByName(&quot;isSertificateRus&quot;)
-	oOptionButtonSe = oDialogG23N.Model.getByName(&quot;Calibration Sertificate&quot;)
+	oOptionButtonSe = oDialogG23N.Model.getByName(&quot;isSertificateEng&quot;)
 	oOptionButtonPr.State = 1
 	
 	oOptionBDKG22 = oDialogG23N.Model.getByName(&quot;isBDKG22&quot;)
 	oOptionBDKG23 = oDialogG23N.Model.getByName(&quot;isBDKG23&quot;)
 	oOptionBDKG231 = oDialogG23N.Model.getByName(&quot;isBDKG231&quot;)
-	oOptionBDKG02.State = 1
+	oOptionBDKG22.State = 0
 	
 	oListBox.setEnable(false)
 	
 	for i=1 to 9
 		oDialogG23N.getControl(&quot;ValueField&quot; + i).setEnable(false)
 	next i
-
+	oDialogG23N.getControl(&quot;addButton&quot;).setEnable(false)
+	
 	oDialogMain.endexecute()   
 	oDialogG23N.Execute()
 End Sub
 rem---------------------------------------------------------------------------------------------------------
 sub setButtonEnabled
-	oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-end sub	
-rem---------------------------------------------------------------------------------------------------------
-sub comboChanged
-	select case oDialogG02N.getControl(&quot;ActivityCombo&quot;).text
-		case &quot;№516&quot;
-		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
-		case &quot;№517&quot;
-		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
-		case &quot;№518&quot;
-		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
-		case &quot;№519&quot;
-		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
-		case &quot;№520&quot;
-		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
-		case &quot;№521&quot;
-		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
-		case &quot;№2910&quot;
-		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
-	end select	
+	oDialogG23N.getControl(&quot;addButton&quot;).setEnable(true)
 end sub
 rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogG23N.getControl(&quot;bdSerial&quot;))
+end sub	
+rem---------------------------------------------------------------------------------------------------------
 sub addNewBD
-	rem добавляю в коллекцию несколько БДКГ-02 (до ввода значений: у всех значения по-умолчанию)
-	rem в переменную имени БД сохраняю номер (&quot;452.002&quot;)
 	dim bdName as string
 	dim nCount as integer
-	
+	dim bd as new DUnit
+
 	if layoutPosition = 0 then
-		for i=1 to 11
-			oDialogG02N.getControl(&quot;ValueField&quot; + i).visible = true
-		next i 
-		if oOptionBDKG204.state then
-			if BDList.count &lt;&gt; maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = true
+		if oOptionBDKG22.state then
 			for i=1 to 8
-				oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = false
-				oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = false
+				oDialogG23N.getControl(&quot;ValueField&quot; + i).setEnable(true)
 			next i
-			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = true
-			oDialogG02N.getControl(&quot;ValueField10&quot;).visible = false
-			oDialogG02N.getControl(&quot;ValueField11&quot;).visible = false
-			oDialogG02N.getControl(&quot;Label9&quot;).visible = true
-			oDialogG02N.getControl(&quot;Label10&quot;).visible = false
-			oDialogG02N.getControl(&quot;Label11&quot;).visible = false
-			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДКГ-204&quot;
-			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)
+			oDialogG23N.getControl(&quot;ValueField9&quot;).setEnable(false)
 		end if
-		if oOptionBDKG02.state then
-			if BDList.count &lt;&gt; maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = true
-			for i=1 to 8
-				oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = false
-				oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = false
+		if oOptionBDKG23.state OR oOptionBDKG231.state then
+			for i=1 to 9
+				oDialogG23N.getControl(&quot;ValueField&quot; + i).setEnable(true)
 			next i
-			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = false
-			oDialogG02N.getControl(&quot;ValueField10&quot;).visible = false
-			oDialogG02N.getControl(&quot;ValueField11&quot;).visible = false
-			oDialogG02N.getControl(&quot;Label9&quot;).visible = false
-			oDialogG02N.getControl(&quot;Label10&quot;).visible = false
-			oDialogG02N.getControl(&quot;Label11&quot;).visible = false			
-			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДКГ-02&quot;
-			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(true)						
 		end if
-		if oOptionBDMG.state then
-			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = false
-			for i=1 to 8
-				oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = true
-				oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = true
-			next i
-			oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(false)
-			oDialogG02N.getControl(&quot;ValueField9&quot;).visible = true
-			oDialogG02N.getControl(&quot;ValueField10&quot;).visible = true
-			oDialogG02N.getControl(&quot;ValueField11&quot;).visible = true
-			oDialogG02N.getControl(&quot;Label9&quot;).visible = true
-			oDialogG02N.getControl(&quot;Label10&quot;).visible = true
-			oDialogG02N.getControl(&quot;Label11&quot;).visible = true			
-			oDialogG02N.getControl(&quot;bdType&quot;).text = &quot;БДМГ-2343&quot;
-			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)						
-		end if	
 	end if
 	
-	&apos;msgbox BDList.count
 	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
-		
-	oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(true)
-		
-	bdName = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
-	oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
+	if oOptionBDKG22.state then bd.addData(&quot;БДКГ-22&quot; , 	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, 		Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDKG23.state then bd.addData(&quot;БДКГ-23&quot; , 	&quot;Гр/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7,40),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma-Gy&quot;, 	Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDKG231.state then bd.addData(&quot;БДКГ-23/1&quot;, &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7,40),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;,	Array(0.1,10000)) rem TODO уточнить границы
 	
-	dim bd as new DUnit
-	if oOptionBDKG02.state  then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
-	if oOptionBDKG204.state then bd.addData(bdName , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
-	if oOptionBDMG.state 	then bd.addData(bdName , &quot;Гр/ч&quot;, Array(75,0.75,7.5,75,0.5,0.75,7.5,75,200,0.75,7.5), Array(&quot;н&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma-Gy&quot;, Array(0.1,10000)) rem TODO уточнить границы
+	oDialogG23N.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialogG23N.getControl(&quot;bdSerial&quot;).text)
+	
 	nCount = oListBox.getItemCount()
-	oListBox.addItem( bdName, nCount )
+	oListBox.addItem( bd.getSerial, nCount )
 	BDList.add(bd)
-	increment
+	Overall.increment(oDialogG23N.getControl(&quot;bdSerial&quot;))
 	makeLayoutFromBD(BDList.item(1)) &apos;BDList.count
 	layoutPosition = 1 &apos;BDList.count
 	setButtonVisibility
@@ -174,22 +115,12 @@ sub removeLastBD
 	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
 	BDList.remove(BDList.count)
 	if oListBox.getItemCount()=0 then
-		oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;removeButton&quot;).setEnable(false)
 	else 
 		makeLayoutFromBD(BDList.item(BDList.count))
 	end if
 	setButtonVisibility
 end Sub
-rem---------------------------------------------------------------------------------------------------------
-sub increment as string
-	dim inc as string
-	dim value as integer
-	value = oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
-	if value &lt; 9 then inc = (&quot;00&quot; &amp; (value + 1))
-	if value &lt; 99 and value &gt; 8 then inc = &quot;0&quot; &amp; (value + 1)
-	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
-	oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text = inc
-end sub
 rem---------------------------------------------------------------------------------------------------------
 function listBoxListener
 	Dim selectPos As Integer
@@ -216,7 +147,8 @@ function rightDecimalAccuracy(nStep as double) rem сколько знаков �
 end function
 rem-------метод из 1117_N упрощен------------------------------------------------------------------------------------
 sub makeLayoutFromBD(bd as new DUnit)
-	oDialogG02N.getControl(&quot;bdNameText&quot;).Text = bd.BDName
+	oDialogG23N.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
+	oDialogG23N.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
 	for i=1 to bd.valueList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
 		point = bd.pointList.item(i)
 		nStep = rightStep(point)
@@ -227,21 +159,19 @@ sub makeLayoutFromBD(bd as new DUnit)
 		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
 		if point &gt;= 100               then MyFormat = &quot;0&quot;
 		
-		oDialogG02N.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat) rem если не -1, значит в поле записывалось какое-то значение
-		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
-		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		oDialogG02N.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		oDialogG23N.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
+		oDialogG23N.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
+		oDialogG23N.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
+		oDialogG23N.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
 	next i
-	oDialogG02N.getControl(&quot;GradValueField&quot;).Text = bd.getGradValue
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
 	dim newValues as new Collection
 	for i=1 to BDList.item(num).valueList.count
-		newValues.add(oDialogG02N.getControl(&quot;ValueField&quot; + i).Value)
+		newValues.add(oDialogG23N.getControl(&quot;ValueField&quot; + i).Value)
 	next i
 	BDList.item(num).setValueList(newValues)
-	BDList.item(num).setGradValue(oDialogG02N.getControl(&quot;GradValueField&quot;).text
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub showNextBD
@@ -261,45 +191,42 @@ rem-----------------------------------------------------------------------------
 function setButtonVisibility
 	oListBox.selectItemPos( layoutPosition-1, True )
 	if BDList.count = 0 then
-		oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
-		oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
-		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
-		oDialogG02N.getControl(&quot;bdNameText&quot;).Text = &quot;S/N&quot;
+		oDialogG23N.getControl(&quot;nextButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;prevButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;doneButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
 		oListBox.setEnable(false)
-		oDialogG02N.getControl(&quot;isBDKG-02&quot;).visible = true
-		oDialogG02N.getControl(&quot;isBDKG-204&quot;).visible = true
-		oDialogG02N.getControl(&quot;isBDMG&quot;).visible = true		
-		oDialogG02N.getControl(&quot;bdType&quot;).visible = false
+		oDialogG23N.getControl(&quot;isBDKG22&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;isBDKG23&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;isBDKG231&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
 	end if
 	if BDList.count &lt;&gt; 0 then
 		oListBox.setEnable(true)
-		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
-		oDialogG02N.getControl(&quot;isBDKG-02&quot;).visible = false
-		oDialogG02N.getControl(&quot;isBDKG-204&quot;).visible = false
-		oDialogG02N.getControl(&quot;isBDMG&quot;).visible = false
-		oDialogG02N.getControl(&quot;bdType&quot;).visible = true
+		oDialogG23N.getControl(&quot;doneButton&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;isBDKG22&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;isBDKG23&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;isBDKG231&quot;).setEnable(false)
 	end if
 	if BDList.count &gt; layoutPosition then
-		oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;doneButton&quot;).setEnable(false)
 	end if
 	if layoutPosition = BDList.count then
-		oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;nextButton&quot;).setEnable(false)
 		&apos;oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
 	end if
 	if layoutPosition &lt; BDList.count AND BDList.count &lt;&gt; 0 then
-		oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;nextButton&quot;).setEnable(true)
 	end if
 	if BDList.count &gt; 1 then
-		oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(true)
+		oDialogG23N.getControl(&quot;prevButton&quot;).setEnable(true)
 	end if
 	if layoutPosition = 1 then
-		oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
+		oDialogG23N.getControl(&quot;prevButton&quot;).setEnable(false)
 	end if
-	if BDList.count = maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(false)
+	if BDList.count = maxBDCount then oDialogG23N.getControl(&quot;addButton&quot;).setEnable(false)
 	&apos;if BDList.count &lt;&gt; maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-	if BDList.count = 0 then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-		
-		
+	if BDList.count = 0 then oDialogG23N.getControl(&quot;addButton&quot;).setEnable(true)
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
@@ -308,29 +235,28 @@ sub insertRecordsToTemplate
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;	
 	dim path as string
-	&apos;msgbox oOptionButtonPr.State
+	
 	if oOptionButtonPr.State then
-		if oOptionBDKG02.state then path = &quot;bdkg02.odt&quot;
-		if oOptionBDKG204.state then path = &quot;bdkg204.odt&quot;
-		if oOptionBDMG.state then path = &quot;bdmg2343.odt&quot;
+		if oOptionBDKG22.state then path = &quot;bdkg22.odt&quot;
+		if oOptionBDKG23.state then path = &quot;bdkg23.odt&quot;
+		if oOptionBDKG231.state then path = &quot;bdkg231.odt&quot;
 	end if
 	if oOptionButtonSr.State then
-		calibName = rusItems1(ComboItemPosition(oDialogG02N.getControl(&quot;ProvCombo&quot;)))
-		techName  = rusItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
-		if oOptionBDKG02.state then path = &quot;bdkg02_sr.odt&quot;
-		if oOptionBDKG204.state then path = &quot;bdkg204_sr.odt&quot;
-		if oOptionBDMG.state then path = &quot;bdmg2343.odt&quot;
+		calibName = rusItems1(ComboItemPosition(oDialogG23N.getControl(&quot;provCombo&quot;)))
+		techName  = rusItems2(ComboItemPosition(oDialogG23N.getControl(&quot;techCombo&quot;)))
+		if oOptionBDKG22.state then path = &quot;bdkg22_sr.odt&quot;
+		if oOptionBDKG23.state then path = &quot;bdkg23_sr.odt&quot;
+		if oOptionBDKG231.state then path = &quot;bdkg231_sr.odt&quot;
 	end if
 	if oOptionButtonSe.State then
-		calibName = engItems1(ComboItemPosition(oDialogG02N.getControl(&quot;ProvCombo&quot;)))
-		techName  = engItems2(ComboItemPosition(oDialogG02N.getControl(&quot;TechCombo&quot;)))
-		if oOptionBDKG02.state then path = &quot;bdkg02_se.odt&quot;
-		if oOptionBDKG204.state then path = &quot;bdkg204_se.odt&quot;
-		if oOptionBDMG.state then path = &quot;bdmg2343.odt&quot;
+		calibName = engItems1(ComboItemPosition(oDialogG23N.getControl(&quot;provCombo&quot;)))
+		techName  = engItems2(ComboItemPosition(oDialogG23N.getControl(&quot;techCombo&quot;)))
+		if oOptionBDKG22.state then path = &quot;bdkg22_se.odt&quot;
+		if oOptionBDKG23.state then path = &quot;bdkg23_se.odt&quot;
+		if oOptionBDKG231.state then path = &quot;bdkg231_se.odt&quot;
 	end if
-	&apos;msgbox path
 	
-	OpenTemplate(sertPath &amp; path)
+	OpenTemplate(sertPath &amp; &quot;bdkg22-23\&quot; &amp; path)
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
 	dim threePointArray(2) as double
 	dim bground as double
@@ -339,7 +265,7 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$bground&quot;, bground)
 	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
-	findAndRename(&quot;$date&quot;, getDate(oDialogG02N.Model.getByName(&quot;DateField1&quot;)))
+	findAndRename(&quot;$date&quot;, getDate(oDialogG23N.Model.getByName(&quot;DateField1&quot;)))
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
 	
@@ -349,20 +275,19 @@ sub insertRecordsToTemplate
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		deleteTable(&quot;t&quot; + (k))
-		deleteTable(&quot;tgrad&quot; + (k))
 	next k
 	
 	for i=1 to BDList.count
 		bd = BDList.item(i)
-		strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
-		for j=1 to bd.pointList.count
-			m_point = bd.valueList.item(j)
-			cont_point = bd.pointList.item(j)
-			prefix =  bd.pointTextList.item(j)
+		strokeForSaving = strokeForSaving &amp; bd.getSerial &amp; &quot; &quot;
+		for j=0 to bd.pointList.count-1
+			m_point = bd.valueList.item(j+1)
+			cont_point = bd.pointList.item(j+1)
+			prefix =  bd.pointTextList.item(j+1)
 			threePointArray = avaragePointsRndArray(m_point, percentOtk)
-				
-			findAndRename((&quot;$&quot; + (i) + &quot;-3&quot; + (j-1) + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
-			findAndRename((&quot;$&quot; + (i) + &quot;-4&quot; + (j-1) + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
+			
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
 				
 			rem TODO сделать через select case
 			if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
@@ -370,18 +295,18 @@ sub insertRecordsToTemplate
 			if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;
 			if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
 				
-			findAndRename((&quot;$&quot; + (i) + &quot;-6&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(0), MyFormat)) rem измерение 1
-			findAndRename((&quot;$&quot; + (i) + &quot;-7&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(1), MyFormat)) rem измерение 2
-			findAndRename((&quot;$&quot; + (i) + &quot;-8&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(2), MyFormat)) rem измерение 3
+			findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+			findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+			findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
 				
 			&apos;if cont_point&lt;1 and prefix=&quot;мк&quot; then
 			if AbsoluteValue(cont_point, prefix)&lt;0.001 then 
-				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1) + &quot;.&quot;), bground) rem фон
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), bground) rem фон
 			else	
-				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1) + &quot;.&quot;), &quot;---&quot;) 
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), &quot;---&quot;) 
 			end if
 				
-			findAndRename((&quot;$&quot; + (i) + &quot;-0&quot; + (j-1) + &quot;.&quot;), Format(m_point, MyFormat)) rem среднее по трем измерениям
+			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
 				
 			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
 			dim percent as integer
@@ -394,34 +319,15 @@ sub insertRecordsToTemplate
 			dim pogr_point as double
 			pogr_point = RelativeError(m_point, cont_point)
 			MyFormat = &quot;0.00&quot;
-			findAndRename((&quot;$&quot; + (i) + &quot;-1&quot; + (j-1) + &quot;.&quot;), Format(pogr_point, MyFormat))
-			findAndRename((&quot;$&quot; + (i) + &quot;-2&quot; + (j-1) + &quot;.&quot;), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), Format(pogr_point, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
 		next j
-		findAndRename(&quot;$bd_num&quot; + i, bd.BDName)
-		findAndRename(&quot;$grad&quot; + i, bd.getGradValue)
+		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 	next i
 	
-	if oOptionBDMG.state then
-		dim bgFormat as string
-		for k=1 to 8
-			mg_point = oDialogG02N.getControl(&quot;ValueBDMG&quot; + k).value
-			if mg_point &gt;= 100 					then bgFormat = &quot;0&quot;
-			if mg_point &lt; 100    then bgFormat = &quot;0.0&quot;
-			if mg_point &lt; 10 					then bgFormat = &quot;0.00&quot;
-			
-			&apos;msgbox bgformat
-			findAndRename(&quot;$bdmg&quot; + k, Format(mg_point, bgFormat(mg_point))
-		next k
-		&apos;findAndRename(&quot;$sum_act&quot;, get_activity(act_all, oDateFieldModel)
-		findAndRename(&quot;$sum_act&quot;, oDialogG02N.getControl(&quot;ActivityAll&quot;).text)
-	end if
-	
-	findAndRename(&quot;$activity&quot;, oDialogG02N.getControl(&quot;ActivityField&quot;).text)
-	findAndRename(&quot;$source&quot;, oDialogG02N.getControl(&quot;ActivityCombo&quot;).text)
-	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text)
-
-	if oOptionBDKG02.state then strokeForSaving = &quot;БДКГ-02 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
-	if oOptionBDKG204.state then strokeForSaving = &quot;БДКГ-204 &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG22.state then strokeForSaving = &quot;БДКГ-22 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG23.state then strokeForSaving = &quot;БДКГ-23 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG231.state then strokeForSaving = &quot;БДКГ-23/1 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
@@ -433,15 +339,15 @@ sub rightFormat(point as double) as string
 	if point &gt;= 100 				then rightFormat = &quot;0&quot;
 end sub
 rem---------------------------------------------------------------------------------------------------------
-function insertDataToLayout
-	RangeData = FillArrayFromSelection()
-   	dim i as integer
-	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
-	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
-   	for i=3 to 8
-   		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = RangeData(i-2, 0)
-   	next i
-end function   	
+&apos;function insertDataToLayout
+&apos;	RangeData = FillArrayFromSelection()
+&apos;  	dim i as integer
+&apos;	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
+&apos;	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
+&apos;  	for i=3 to 8
+&apos;   		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = RangeData(i-2, 0)
+&apos;   	next i
+&apos;end function   	
 rem---------------------------------------------------------------------------------------------------------
 function ParseData(data as double) as double
 	ParseData = data rem TODO сделать парсер -- должен убирать значения в скобках, если есть, и вместо запятой ставить точку

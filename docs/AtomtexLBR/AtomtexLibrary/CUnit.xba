@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="CUnit" script:language="StarBasic">REM  *****  BASIC  *****
-rem ╔╗╚╝║═▄▌▀▌
-rem ╔═══════════════════════════════════════════════════════════════════════════════╗
-rem ║	Класс блоков детектирования для МРП и Портальных мониторов: в отличии		║▌
-rem	║	от DUnit здесь нет контрольных точек, есть только 5 измерений скорости		║▌
-rem	║	счета на фоне и от источника. Также для каждого типа БД свой коэффициент  	║▌
-rem	╚═══════════════════════════════════════════════════════════════════════════════╝▌
-rem	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+rem 	╔═══════════════════════════════════════════════════════════════════════════════╗
+rem		║	Класс блоков детектирования для МРП и Портальных мониторов: в отличии		║▌
+rem		║	от DUnit здесь нет контрольных точек, есть только 5 измерений скорости		║▌
+rem		║	счета на фоне и от источника. Также для каждого типа БД свой коэффициент 	║▌
+rem		║	Методы расчета среднего, инициализация блоков и т.д.						║▌
+rem		╚═══════════════════════════════════════════════════════════════════════════════╝▌
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
 Option Compatible
 Option ClassModule
 Option Explicit
 
 REM --- Internal Variables                                                                           
-private _BDnumber As String					rem 452.000
-private _pointBGValue as new Collection		rem 330
-private _pointSrcValue as new Collection	rem 10000
-private _delta as double					rem 110.1
-private _bdtype as string					rem &quot;БДКГ-11/1&quot;
-&apos;&apos;&apos;&apos;private _MEASUREMENT_NUMBER as integer		rem 5
+private _BDnumber As String					rem 452.000 -- номер блока
+private _pointBGValue as new Collection		rem 330 -- скорость счета на фоне
+private _pointSrcValue as new Collection	rem 10000 -- скорость счета от источника
+private _delta as double					rem 110.1 -- дельта
+private _bdtype as string					rem &quot;БДКГ-11/1&quot; -- тип блока, как будет написан в протоколе
+&apos;&apos;private _MEASUREMENT_NUMBER as integer		rem 5
 
 REM --- CLASS METHODS
 public function getDelta	rem 110.1
@@ -41,108 +42,50 @@ end function
 rem Каждый БД может устанавливаться как в контейнере (со свинцовой защитой), так и без него,
 rem соответственно есть два разных набора параметров для каждого блока
 
-rem Тип БД -- БДКГ-11/1 (для МРП, например)
+private function setBdType(bdName as string, bgRate as double, srcRate as double, delta as double)
+	dim i as integer
+	_delta = delta 
+	for i=1 to 5
+		_pointBGValue.add(BgRate)
+		_pointSrcValue.add(SrcRate)
+	next i
+	_bdtype = bdName
+end function
+
+&apos;БДКГ-11/1 (для МРП, например)
 Public Sub setAsBDKG11
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 330
-	SrcValue = 10000
-	_delta = 110.1 
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-11/1&quot;
+	setBdType(&quot;БДКГ-11/1&quot;, 330, 10000, 110.1)
 end sub
-
-rem Тип БД -- БДКГ-11/1 в контейнере (для портального, например)
+&apos;БДКГ-11/1 в контейнере (для портального, например)
 Public Sub setAsBDKG11container
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 160
-	SrcValue = 5200
-	_delta = 60.8 
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-11/1&quot;
+	setBdType(&quot;БДКГ-11/1&quot;, 160, 5200, 60.8)
 end sub
-
-rem Тип БД -- БДКГ-11/1 (для МРП, например)
+&apos;БДКГ-19 (для МРП, например)
 Public Sub setAsBDKG19
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 660
-	SrcValue = 13000
-	_delta = 147.8
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-19&quot;	
+	setBdType(&quot;БДКГ-19&quot;, 660, 13000, 147.8)
 end sub
-
-rem Тип БД -- БДКГ-19 в контейнере (для портального, например)
+&apos;БДКГ-19 в контейнере (для портального, например)
 Public Sub setAsBDKG19container
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 300
-	SrcValue = 9000
-	_delta = 106.1
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-19&quot;	
+	setBdType(&quot;БДКГ-19&quot;, 300, 9000, 106.1)
 end sub
-
-rem Тип БД -- БДКГ-35 (для МРП, например)
+&apos;БДКГ-35 (для МРП, например)
 Public Sub setAsBDKG35
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 400
-	SrcValue = 9000
-	_delta = 100
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-35&quot;	
+	setBdType(&quot;БДКГ-35&quot;, 400, 9000, 100)
 end sub
-
-rem Тип БД -- БДКГ-35 в контейнере (для портального, например)
+&apos;БДКГ-35 в контейнере (для портального, например)
 Public Sub setAsBDKG35container
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 200
-	SrcValue = 5000
-	_delta = 55
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДКГ-35&quot;	
+	setBdType(&quot;БДКГ-35&quot;, 200, 5000, 55)
 end sub
 
 Public Sub setAsBDRM05
-	dim i as integer
-	dim BgValue, SrcValue as double
-	BgValue = 1700
-	SrcValue = 13000
-	_delta = 125
-	for i=1 to 5
-		_pointBGValue.add(BgValue)
-		_pointSrcValue.add(SrcValue)
-	next i
-	_bdtype = &quot;БДРМ-05&quot;	
+	setBdType(&quot;БДРМ-05&quot;, 1700, 13000, 125)
 end sub
 
 public function setBGList(measuredBGValue as Collection)
 	_pointBGValue = measuredBGValue
 end function
 
-public function getBGList as Collection
+public function getBGList as Collection rem 300, 299, ...
 	getBGList = _pointBGValue
 end function
 
@@ -150,7 +93,7 @@ public function setSrcList(measuredSrcValue as Collection)
 	_pointSrcValue = measuredSrcValue
 end function
 
-public function getSrcList as Collection
+public function getSrcList as Collection rem 9800, 10050, ...
 	getSrcList = _pointSrcValue
 end function
 
@@ -178,7 +121,4 @@ public function getSensitivity(activity as double) as double
 	getSensitivity = (getSrcAverage - getBgAverage)/activity
 end function
 
-&apos;public function getSensitivity(activity as double)
-&apos;	getSensitivity = (getSrcAverage - getBgAverage)/activity
-&apos;end function
 </script:module>

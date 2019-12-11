@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="_OverAll" script:language="StarBasic">REM  *****  BASIC  *****
-
+rem ╔╗╚╝║═▄▌▀▌
 rem----------------------------------------------------------------
 rem			ВСЕ ОБЩИЕ МЕТОДЫ БУДУТ ХРАНИТЬСЯ ЗДЕСЬ
 rem----------------------------------------------------------------
@@ -36,7 +36,7 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	rem если это гамма блок:
 	if bdType = &quot;gamma&quot; OR bdType = &quot;gamma-Gy&quot; then
 		if prefix = &quot;н&quot; then
-			if point = 75		then ar = Array(&quot;263&quot;,&quot;176.5&quot;)
+				if point = 75	then ar = Array(&quot;263&quot;,&quot;176.5&quot;)
 		end if
 		if prefix = &quot;мк&quot; then
 				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;304.7&quot;)

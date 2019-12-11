@@ -53,29 +53,29 @@ function avaragePointsRndArray(point as double, o_percent as double)
 	avaragePointsRndArray = ar	
 end function
 rem=======================================================================================
-function sourceDistanceArray(point as double, prefix as string, bdType as string)
-	dim ar(1) as variant
-	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
-	rem если это гамма блок:
-	if bdType = &quot;gamma&quot; then
-		if prefix = &quot;мк&quot; then
-				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
-				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
-				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
-				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
-		end if
-		if prefix = &quot;м&quot; then
-				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
-				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
-				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
-		end if
-		if prefix = &quot;&quot; then
-				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
-				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
-		end if	
-	end if
-	sourceDistanceArray = ar
-end function
+&apos;function sourceDistanceArray(point as double, prefix as string, bdType as string)
+&apos;	dim ar(1) as variant
+&apos;	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+&apos;	rem если это гамма блок:
+&apos;	if bdType = &quot;gamma&quot; then
+&apos;		if prefix = &quot;мк&quot; then
+&apos;				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
+&apos;				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
+&apos;				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
+&apos;				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
+&apos;		end if
+&apos;		if prefix = &quot;м&quot; then
+&apos;				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
+&apos;				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
+&apos;				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
+&apos;		end if
+&apos;		if prefix = &quot;&quot; then
+&apos;				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
+&apos;				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
+&apos;		end if	
+&apos;	end if
+&apos;	sourceDistanceArray = ar
+&apos;end function
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	emptyArray = Array(&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;)
