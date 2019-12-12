@@ -6,6 +6,7 @@ rem-----------------------------------------------------------------------------
 dim oDialogG02N as object
 dim oDateFieldModel as object
 dim oNumericFieldModel as object
+dim oNumericFieldModelAll as object
 dim oListBox as object
 dim oOptionButtonPr as object
 dim oOptionButtonSr as object
@@ -30,7 +31,7 @@ Sub G02N_Dialog_Show
 	
 	oDialogG02N.Model.getByName(&quot;dragonLogo&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.06&quot;	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.09&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
@@ -46,9 +47,9 @@ Sub G02N_Dialog_Show
 	oNumericFieldModel.DECIMALACCURACY = 2
 	oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
 
-	oNumericFieldModel = oDialogG02N.Model.getByName(&quot;ActivityAll&quot;)
-	oNumericFieldModel.DECIMALACCURACY = 2
-	oNumericFieldModel.value = get_activity(act_all, oDateFieldModel)
+	oNumericFieldModelAll = oDialogG02N.Model.getByName(&quot;ActivityAll&quot;)
+	oNumericFieldModelAll.DECIMALACCURACY = 2
+	oNumericFieldModelAll.value = get_activity(act_all, oDateFieldModel)
 	
 	oComboBox1 = oDialogG02N.getControl(&quot;ProvCombo&quot;)
 	oComboBox2 = oDialogG02N.getControl(&quot;TechCombo&quot;)

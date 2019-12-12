@@ -77,7 +77,7 @@ function pogreshnost(num as double, contr_point as double)
 	pogreshnost = ((num - contr_point) / contr_point) * 100
 end function
 rem=======================================================================================
-function dov_granica(pogr as double)
+function dov_granica_old(pogr as double)
 	dov_granica = 1.1 * sqr(16 + pogr*pogr + 0.36)
 end function	
 rem=======================================================================================

@@ -21,7 +21,7 @@ Sub at1117m_Dialog_Show
 	typeText = oDialog1117.getControl(&quot;type_text&quot;)
 	oDialogMain.endexecute()  
 	
-	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.22&quot;
+	oDialog1117.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.23&quot;
 	initialize1117
 	checkedCount = 0
 	count = 0
@@ -88,8 +88,9 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))	rem №12
 	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;&quot;,		Array(74.4,630,5140,35600),				emptyArray,										&quot;alpha&quot;,	Array(0.05,5))
-	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		emptyArray,										&quot;beta&quot;,		Array(1,50))
-	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		emptyArray,										&quot;beta&quot;,		Array(0.5,15))
+	&apos;addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		emptyArray,										&quot;beta&quot;,		Array(1,50))
+	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;15014&quot;),		&quot;beta&quot;,		Array(1,50))  &apos; для беты 	Array(96,228,5591,51010,370350) НЕ ИСПОЛЬЗУЕТСЯ
+	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		Array(&quot;0663&quot;,&quot;0664&quot;,&quot;0665&quot;,&quot;0661&quot;,&quot;0666&quot;),										&quot;beta&quot;,		Array(0.5,15))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))	rem №16
 	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))
@@ -144,6 +145,7 @@ sub start
 end sub
 rem=======================================================================================
 sub onPrevButton
+	insertDataToList(BDList.item(count))&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;
 	prevChecked
 	oDialog1117.getControl(&quot;bNext&quot;).setEnable(true)
 	oDialog1117.getControl(&quot;bDone&quot;).setEnable(false)
@@ -235,43 +237,53 @@ Sub checkBoxListener(oEvent As Object)
     	oDialog1117.getControl(&quot;ser_rus&quot;).setEnable(false)
     end if	
 End Sub
+
+&apos;sub insertDataToList(bd as DUnit)
+&apos;	dim list as new Collection
+&apos;	for i=1 to bd.pointCount
+&apos;		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Value)
+&apos;		&apos;msgbox list.item(list.count)
+&apos;	next i
+&apos;	bd.setValueList(list)
+&apos;end sub
 rem=======================================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(bd as new DUnit)
  	typeText.Text = bd.BDName
+ 	dim list as new Collection
 	for i=1 to bd.pointList.count
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = true
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
 		point = bd.pointList.item(i)
 		nStep = rightStep(point)
 		value = bd.valueList.item(i)
-		
-		if point &lt; 0.1 and point &gt; 0 then
-			MyFormat = &quot;0.000&quot;
+		if bd.getType = &quot;beta&quot; then
+			value = get_activity_Sr(bd.pointTextList.item(i), oDateFieldModel)
+			list.add(value)
+			&apos;bd.pointList.item(i) = value
 		end if
-		if point &lt; 1 and point &gt;= 0.1 then
-			MyFormat = &quot;0.00&quot;
-		end if
-		if point &lt; 100 and point &gt;= 1 then
-			MyFormat = &quot;0.0&quot;
-		end if
-		if point &gt;= 100 then
-			MyFormat = &quot;0&quot;
-		end if
+		if point &lt; 0.1 and point &gt; 0 then  MyFormat = &quot;0.000&quot;
+		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
+		if point &gt;= 100 then MyFormat = &quot;0&quot;
 				
-		if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
-			oDialog1117.getControl(&quot;NumericField&quot; + i).Value = Format(point, MyFormat) 
-		else
+		&apos;if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
+		&apos;	oDialog1117.getControl(&quot;NumericField&quot; + i).Value = Format(point, MyFormat) 
+		&apos;else
 			oDialog1117.getControl(&quot;NumericField&quot; + i).Value = value rem если не -1, значит в поле записывалось какое-то значение
-		end if	
+		&apos;end if	
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		
+		if bd.getType = &quot;beta&quot; then oDialog1117.getControl(&quot;Label&quot; + i).Text = Format(get_activity_Sr(bd.pointTextList.item(i), oDateFieldModel), MyFormat)
 	next i
 	for i=bd.pointList.count+1 to 9
 		oDialog1117.getControl(&quot;NumericField&quot; + i).Visible = false rem скрыть все ненужные
 		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
-	next i	 	
+	next i
+	if bd.getType = &quot;beta&quot; then bd.setPointList(list)
+	
 end function
 rem======================================================================================= 
 function rightStep(d as double) rem расчет правильного Step-а 
@@ -519,7 +531,8 @@ sub insertRecordsToTemplate
 				BDtype = bd.BDType
 				threePointArray = avaragePointsRndArray(m_point, percentOtk)
 				
-				findAndRename((&quot;$&quot; + (i-1) + &quot;-9&quot; + (j-1)), cont_point) rem активность источника источника для альфа/бета (то же контрольная точка), 
+				
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-9&quot; + (j-1)), Format(cont_point, &quot;0&quot;) rem активность источника источника для альфа/бета (то же контрольная точка), 
 				
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1))	rem расстояние до источника
@@ -560,7 +573,7 @@ sub insertRecordsToTemplate
 					MyFormat = &quot;0.000&quot;
 					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), Format(m_point, MyFormat))
 				else
-					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), m_point) &apos;Format(m_point, MyFormat))
+					findAndRename((&quot;$&quot; + (i-1) + &quot;-0&quot; + (j-1)), Format(m_point, MyFormat)) &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;m_point) &apos;
 				end if
 				
 				MyFormat = &quot;0.00&quot;
@@ -669,33 +682,26 @@ rem=============================================================================
 function randValue(num as double, otklonenie as double)
 	randValue = (num - otklonenie) + rnd()*otklonenie*2
 end function
-rem=======================================================================================
+rem======================================================================================
 function FacilityError(point as double, BDType as string, prefix as string)
+	&apos;msgbox &quot;&quot; + point + &quot; &quot; + BDType + &quot; &quot; + prefix
 	select case BDType
-	case &quot;gamma&quot;
-		dim koef as double
-		dim realPoint as double
-		if prefix = &quot;мк&quot; then koef = 0.001
-		if prefix = &quot;м&quot;  then koef = 1
-		if prefix = &quot;&quot;   then koef = 1000
-		realPoint = point * koef
-		if realPoint&lt;1 then
-			FacilityError = 4 rem `110
+	case &quot;gamma&quot;, &quot;gamma-Gy&quot;
+	&apos;	dim koef, realPoint as double
+	&apos;	if prefix = &quot;мк&quot; then realPoint = point/1000 	&apos;koef = 0.001
+	&apos;	if prefix = &quot;м&quot;  then realPoint = point 		&apos;koef = 1
+	&apos;	if prefix = &quot;&quot;   then realPoint = point * 1000 	&apos;koef = 1000
+	&apos;	&apos;realPoint = point * koef
+	&apos;	if realPoint&lt;1 then
+	&apos;		FacilityError = 4 rem `110
+	&apos;	else
+	&apos;		FacilityError = 5 rem `130
+	&apos;	end if
+		if AbsoluteValue(point, prefix)&lt;1 then
+			FacilityError = 5
 		else
-			FacilityError = 5 rem `130
+			FacilityError = 4
 		end if
-	case &quot;gamma-Gy&quot;
-		dim koef2 as double
-		dim realPoint2 as double
-		if prefix = &quot;мк&quot; then koef2 = 0.001
-		if prefix = &quot;м&quot;  then koef2 = 1
-		if prefix = &quot;&quot;   then koef2 = 1000
-		realPoint = point2 * koef2
-		if realPoint&lt;1 then
-			FacilityError = 4 rem `110
-		else
-			FacilityError = 5 rem `130
-		end if	
 	case &quot;n-PP&quot;
 			FacilityError = 5 rem `140
 	case &quot;n-MD&quot;

@@ -208,14 +208,14 @@ sub deleteUselessMeasLimits
 	next i
 end sub
 rem=======================================================================================
-function FacilityError(i as integer)
-	rem чтобы выдавалось максимальное число, нужно располагать все &quot;FacilityError&quot; в возрастающем порядке, тогда последний сработавший триггер будет с самым большим значением
-	if i\10000 = 1 		 then FacilityError = 4 rem `110
-	if i\1000 mod 10 = 1 then FacilityError = 5 rem `130
-	if i\100 mod 10 = 1  then FacilityError = 5 rem `140
-	if i\10 mod 10 = 1   then FacilityError = 6 rem `alpha
-	if i mod 10 = 1      then FacilityError = 6 rem `beta
-end function	
+&apos;function FacilityError(i as integer)
+&apos;	rem чтобы выдавалось максимальное число, нужно располагать все &quot;FacilityError&quot; в возрастающем порядке, тогда последний сработавший триггер будет с самым большим значением
+&apos;	if i\10000 = 1 		 then FacilityError = 4 rem `110
+&apos;	if i\1000 mod 10 = 1 then FacilityError = 5 rem `130
+&apos;	if i\100 mod 10 = 1  then FacilityError = 5 rem `140
+&apos;	if i\10 mod 10 = 1   then FacilityError = 6 rem `alpha
+&apos;	if i mod 10 = 1      then FacilityError = 6 rem `beta
+&apos;end function	
 rem=======================================================================================
 function FacilityErrorSmart(i as integer, num as double)
 	rem метод проверяет ещё и каждую точку, если она меньше 1 мЗв/ч, то это погрешность 110-ой, если больше, то погрешность 130-й линейки 

@@ -84,6 +84,10 @@ Public Function setSerial(serial As string)
    _serial = serial
 End Function
 
+Public Function getType As string &apos;то же самое, но с нормальным именем
+   getType = _BDType
+End Function
+
 Public Function measUnit As string
    measUnit = _measUnit
 End Function
@@ -108,6 +112,10 @@ End Function
 
 public function setValueList(measuredValue as Collection)
 	_measuredValue = measuredValue
+end function
+
+public function setPointList(pointValue as Collection)
+	_pointValue = pointValue
 end function
 
 rem список измеренных значений (0.67, 73, ...)
@@ -142,9 +150,9 @@ function otn_pogreshnost(meas as double, contr_point as double)
 	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
 end function
 rem=======================================================================================
-function dov_granica(pogr as double, percent as integer)
-	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
-end function
+&apos;function dov_granica(pogr as double, percent as integer)
+&apos;	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+&apos;end function
 rem=======================================================================================
 
 rem относительная погрешность измерения
