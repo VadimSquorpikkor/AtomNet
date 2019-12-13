@@ -12,7 +12,6 @@ dim maxCheckedCount as integer
 dim rusItems1, engItems1, rusItems2, engItems2 as variant
 dim protocolType as String
 dim measLimitsArray(11) as double rem 6 типов, каждого по два (min, max) = 12
-
 rem=======================================================================================
 Sub at1117m_Dialog_Show
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
@@ -43,13 +42,10 @@ Sub at1117m_Dialog_Show
 	oDialog1117.getControl(&quot;bDone&quot;).setVisible(false)
 	oDialog1117.getControl(&quot;type_text&quot;).setVisible(false)
 	
-	
 	for i=1 to 9
 		oDialog1117.getControl(&quot;NumericField&quot; + i).setVisible(false)
 		oDialog1117.getControl(&quot;Label&quot; + i).setVisible(false)
 	next i
-	
-	
 	
 	oComboBox1 = oDialog1117.getControl(&quot;ComboBox1&quot;)
 	oComboBox2 = oDialog1117.getControl(&quot;ComboBox2&quot;)
@@ -88,9 +84,8 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;&quot;,		Array(78.3,743,6300,62100),				emptyArray,										&quot;alpha&quot;,	Array(0.1,10))	rem №12
 	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;&quot;,		Array(74.4,630,5140,35600),				emptyArray,										&quot;alpha&quot;,	Array(0.05,5))
-	&apos;addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		emptyArray,										&quot;beta&quot;,		Array(1,50))
 	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;15014&quot;),		&quot;beta&quot;,		Array(1,50))  &apos; для беты 	Array(96,228,5591,51010,370350) НЕ ИСПОЛЬЗУЕТСЯ
-	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		Array(&quot;0663&quot;,&quot;0664&quot;,&quot;0665&quot;,&quot;0661&quot;,&quot;0666&quot;),										&quot;beta&quot;,		Array(0.5,15))
+	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		Array(&quot;0663&quot;,&quot;0664&quot;,&quot;0665&quot;,&quot;0666&quot;,&quot;0667&quot;),		&quot;beta&quot;,		Array(0.5,15))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БОИ-1&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))	rem №16
 	addBDtoCollection(&quot;БОИ-2&quot;,		&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10))
@@ -99,7 +94,7 @@ sub initialize1117							rem  	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md n
 	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma&quot;,	Array(0.05,0.1))
 	rem-------------------------------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(53.8,727,6300,62100,186000),		emptyArray,										&quot;alpha&quot;,	Array(2.4,100))
-	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		emptyArray,										&quot;beta&quot;,		Array(6,100))
+	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),		Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;15014&quot;),		&quot;beta&quot;,		Array(6,100))
 	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				&quot;gamma&quot;,	Array(0.1,30))
 	rem-------старые БОИ с сбм--------------------------------------------------------------------------------------------------------------------------------------
 	addBDtoCollection(&quot;БОИ-1 сбм&quot;,	&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100))
@@ -237,15 +232,6 @@ Sub checkBoxListener(oEvent As Object)
     	oDialog1117.getControl(&quot;ser_rus&quot;).setEnable(false)
     end if	
 End Sub
-
-&apos;sub insertDataToList(bd as DUnit)
-&apos;	dim list as new Collection
-&apos;	for i=1 to bd.pointCount
-&apos;		list.add(oDialog1117.getControl(&quot;NumericField&quot; + i).Value)
-&apos;		&apos;msgbox list.item(list.count)
-&apos;	next i
-&apos;	bd.setValueList(list)
-&apos;end sub
 rem=======================================================================================
 rem настройка отображения виджета под каждый конкретный тип БД 
 function makeLayout(bd as new DUnit)
@@ -260,18 +246,13 @@ function makeLayout(bd as new DUnit)
 		if bd.getType = &quot;beta&quot; then
 			value = get_activity_Sr(bd.pointTextList.item(i), oDateFieldModel)
 			list.add(value)
-			&apos;bd.pointList.item(i) = value
 		end if
 		if point &lt; 0.1 and point &gt; 0 then  MyFormat = &quot;0.000&quot;
 		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
 		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
 		if point &gt;= 100 then MyFormat = &quot;0&quot;
 				
-		&apos;if value = -1 then rem для восстановления записанных значений (будут загружаться, например, при нажатии кнопки &quot;назад&quot;), по умолчанию поля равны -1
-		&apos;	oDialog1117.getControl(&quot;NumericField&quot; + i).Value = Format(point, MyFormat) 
-		&apos;else
-			oDialog1117.getControl(&quot;NumericField&quot; + i).Value = value rem если не -1, значит в поле записывалось какое-то значение
-		&apos;end if	
+		oDialog1117.getControl(&quot;NumericField&quot; + i).Value = value rem если не -1, значит в поле записывалось какое-то значение
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).valueStep = nStep
 		oDialog1117.Model.getByName(&quot;NumericField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
 		oDialog1117.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
@@ -288,8 +269,8 @@ end function
 rem======================================================================================= 
 function rightStep(d as double) rem расчет правильного Step-а 
 	if              d&gt;10000 then rightStep = 10
-	if d&lt;=10000 and d&gt;10	then rightStep = 1
-	if d&lt;=10    and d&gt;1     then rightStep = 0.1
+	if d&lt;=10000 and d&gt;100	then rightStep = 1
+	if d&lt;=100    and d&gt;1     then rightStep = 0.1
 	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
 	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
 end function
@@ -310,42 +291,6 @@ sub insertDataToList(bd as DUnit)
 	bd.setValueList(list)
 	&apos;msgbox &quot;&quot;+list.count+&quot;, &quot;+bd.BDName
 	&apos;msgbox &quot;&quot; + count + &quot;, &quot; + bd.valueList.item(3)
-end sub
-rem=======================================================================================
-sub deleteTable22222(name as string)
-	&apos;on error  Goto ErrorHandler
-		dim oTable as object
-   		oTable = ThisComponent.getTextTables().getByName(name)
-   		&apos;if Not IsEmpty(oTable) then 
-   		oTable.dispose()
-   	&apos;ErrorHandler:	
-   	&apos;resume
-end sub
-rem=======================================================================================
-sub deleteTable2(name as string)
-	Dim oSDescr As Variant
-	Dim oResults As Variant
-	oSDescr = ThisComponent.createSearchDescriptor()
-	oSDescr.setSearchString(name)
-	oResults = ThisComponent.findAll(oSDescr)
-	msgbox &quot;&quot; + name + oResults.count
-	If oResults.count = 0 Then
-		Exit Sub   &apos; Nothing to do...
-	else
-		dim oTable as object
-    	oTable = ThisComponent.getTextTables().getByName(name)
-    	oTable.dispose()
-    end if	
-end sub
-rem=======================================================================================
-sub deleteTable3(name as string)
-dim g as variant
-tables = ThisComponent.getTextTables()
-     For i = tables.Count-1 to 0 step -1
-       &apos;g = go.getByIndex(i)
-       &apos;if g.name = name then g.dispose
-       msgbox tables.getByIndex(i)
-     next i
 end sub
 rem=======================================================================================
 function limitComparator(min as double, max as double, position as integer)
@@ -467,36 +412,12 @@ sub insertRecordsToTemplate
 		techName  = engItems2(ComboItemPosition(oDialog1117.getControl(&quot;ComboBox2&quot;)))
 		path = &quot;1117_se.odt&quot;		
 	end if
-	
+
+	dim bd as new DUnit
 	dim facilities as new Facility rem ссылка локальная, так при создании нового протокола не нужно будет обнулять лимиты и списки установок
 	MyFormat = &quot;0.0&quot;
 	OpenTemplate(sertPath &amp; path)
-	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
-	rem TODO сделать по Гауссу!!!
-	dim threePointArray(2) as double
-	dim bground as double
-	percentOtk = 7 rem %
-	bground = Format(randValue(95, 5), MyFormat)
-	findAndRename(&quot;$bground&quot;, bground)
-&apos;	findAndRename(&quot;$calibr&quot;, &quot;calibName&quot;)
-	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
-	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
-	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
-	findAndRename(&quot;$date&quot;, getDate(oDialog1117.Model.getByName(&quot;DateField1&quot;)))
-	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
-	findAndRename(&quot;$serial&quot;, serial)
-	findAndRename(&quot;$calibratedBy&quot;, calibName)
-	findAndRename(&quot;$controlledBy&quot;, techName)
-	findAndRename(&quot;$b_bg&quot;, Format(randValue(13, 2), &quot;0.0&quot;))
-	findAndRename(&quot;$s_bg&quot;, Format(randValue(0.005, 0.005), &quot;0.00&quot;))
-	findAndRename(&quot;$b2_bg&quot;, Format(randValue(17, 2), &quot;0.0&quot;))
-	dim bd as new DUnit
-	dim m_point as double
-	dim isEmpty as boolean
-	isEmpty = true
-	
-	
-	for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+		for i=1 to BDList.count rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		bd = BDList.item(i)
 		if bd.isPrintable = false then
 			if protocolType = &quot;protRus&quot; then
@@ -508,6 +429,27 @@ sub insertRecordsToTemplate
 			end if			
 		end if	
 	next i
+	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
+	dim threePointArray(2) as double
+	dim bground as double
+	percentOtk = 7 rem %
+	bground = Format(randValue(95, 5), MyFormat)
+	findAndRename(&quot;$bground&quot;, bground)
+	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
+	rem findAndRename(&quot;$pres&quot;, Format(randValue(760, 10), MyFormat))
+	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
+	findAndRename(&quot;$date&quot;, getDate(oDialog1117.Model.getByName(&quot;DateField1&quot;)))
+	serial = oDialog1117.Model.getByName(&quot;TextField1&quot;).Text
+	findAndRename(&quot;$serial&quot;, serial)
+	findAndRename(&quot;$calibratedBy&quot;, calibName)
+	findAndRename(&quot;$controlledBy&quot;, techName)
+	findAndRename(&quot;$b_bg&quot;, Format(randValue(13, 2), &quot;0.0&quot;))
+	findAndRename(&quot;$s_bg&quot;, Format(randValue(0.005, 0.005), &quot;0.00&quot;))
+	findAndRename(&quot;$b2_bg&quot;, Format(randValue(17, 2), &quot;0.0&quot;))
+
+	dim m_point as double
+	dim isEmpty as boolean
+	isEmpty = true
 	
 	for i=1 to BDList.count
 		bd = BDList.item(i)
@@ -530,9 +472,11 @@ sub insertRecordsToTemplate
 				prefix =  bd.pointTextList.item(j)
 				BDtype = bd.BDType
 				threePointArray = avaragePointsRndArray(m_point, percentOtk)
+				&apos;msgbox cont_point
 				
-				
-				findAndRename((&quot;$&quot; + (i-1) + &quot;-9&quot; + (j-1)), Format(cont_point, &quot;0&quot;) rem активность источника источника для альфа/бета (то же контрольная точка), 
+				if cont_point &lt; 100 then MyFormat = &quot;0.0&quot;
+				if cont_point &gt;= 100 then MyFormat = &quot;0&quot;
+				findAndRename((&quot;$&quot; + (i-1) + &quot;-9&quot; + (j-1)), Format(cont_point, MyFormat) rem активность источника источника для альфа/бета (то же контрольная точка), 
 				
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-3&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
 				findAndRename((&quot;$&quot; + (i-1) + &quot;-4&quot; + (j-1)), sourceDistanceArray(cont_point, prefix, bd.bdType)(1))	rem расстояние до источника
@@ -687,16 +631,6 @@ function FacilityError(point as double, BDType as string, prefix as string)
 	&apos;msgbox &quot;&quot; + point + &quot; &quot; + BDType + &quot; &quot; + prefix
 	select case BDType
 	case &quot;gamma&quot;, &quot;gamma-Gy&quot;
-	&apos;	dim koef, realPoint as double
-	&apos;	if prefix = &quot;мк&quot; then realPoint = point/1000 	&apos;koef = 0.001
-	&apos;	if prefix = &quot;м&quot;  then realPoint = point 		&apos;koef = 1
-	&apos;	if prefix = &quot;&quot;   then realPoint = point * 1000 	&apos;koef = 1000
-	&apos;	&apos;realPoint = point * koef
-	&apos;	if realPoint&lt;1 then
-	&apos;		FacilityError = 4 rem `110
-	&apos;	else
-	&apos;		FacilityError = 5 rem `130
-	&apos;	end if
 		if AbsoluteValue(point, prefix)&lt;1 then
 			FacilityError = 5
 		else
@@ -712,4 +646,5 @@ function FacilityError(point as double, BDType as string, prefix as string)
 			FacilityError = 6 rem `beta
 	end select
 end function
+
 </script:module>

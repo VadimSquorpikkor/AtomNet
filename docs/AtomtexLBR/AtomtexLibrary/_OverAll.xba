@@ -30,7 +30,6 @@ tables = ThisComponent.TextTables()
      end if
 end sub
 
-
 rem---------------------------------------------------------------------------------------------------------
 sub comboChanged(oEvent As Object)
 	Dim oCheckbox As Object

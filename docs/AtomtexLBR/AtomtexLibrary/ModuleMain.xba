@@ -2,38 +2,27 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleMain" script:language="StarBasic">REM  *****  BASIC  *****
 
-
 dim oDialogMain as object 
-&apos;dim sertPath as String
 global sertPath as String
-
-
 rem-------------------------------------------------------------------------
 Sub MainDialog_Show
-	rem sertPath = &quot;file:///f:\sert_template\&quot;
 	dim user_name as String
 
-	rem user_name = &quot;Tarasenko_VV&quot;  	
+	user_name = &quot;Tarasenko_VV&quot;  	
 	rem user_name = &quot;Kurbatova&quot;
-	user_name = &quot;Serikov_VA&quot;
+	rem user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Rusakevich_AV&quot;
 	rem user_name = &quot;Squorpikkor&quot;
+	rem user_name = &quot;Leshkevich_SV&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
-	
-   DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
-   oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
-   &apos;msgbox oDialogMain.url
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
    	oDialogMain.Model.getByName(&quot;ImageControl2&quot;).ImageURL = sertPath &amp; &quot;elkaHalf.png&quot;
-   oDialogMain.Execute()
+	oDialogMain.Execute()
 End Sub
-
-rem --- ВСЕ ОБЩИЕ МЕТОДЫ ЗДЕСЬ ---
-
-
-
 &apos;--------------------------------------------------------------------	
 function insertZero(number)
 	if number &gt; 9 then
@@ -61,31 +50,6 @@ Function ComboItemPosition(ComboBox as variant)
       end if
    next x
 end Function
-rem-------------------------------------------------------------------------
-Sub collection2()
-   Dim oColl As New Collection, i As Integer
-   oColl.Add(&quot;First&quot;)
-   oColl.Add(&quot;Second&quot;)
-   oColl.Add(&quot;Third&quot;)
-   Print oColl.Count &amp; &quot;/&quot;;
-   For i = 1 To oColl.Count
-      Print oColl.Item(i) &amp; &quot;/&quot;;
-   Next i
-   Print
-End Sub
-Sub collection3()   
-   &apos;Dim du As New DUnit
-   &apos;du.addData(&quot;БДКГ-01&quot;,&quot;Зв/ч&quot;, Array(20,70,0.7,7,70), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(1,5))
-   &apos;du.printBDType
-End Sub 
-Sub collection()
-   dim bd1 as new DUnit
-   dim BDList as new collection
-	bd1.addData(&quot;БДКГ-01&quot;,&quot;Зв/ч&quot;, Array(20,70,0.7,7,70), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(1,5))
-	BDList.add(bd1)
-	msgbox BDList.item(1).BDName
-   
-End Sub
 rem-------------------------------------------------------------------------
 Sub coll()
    Dim oColl As New Collection, i As Integer

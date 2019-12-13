@@ -49,7 +49,6 @@ Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal point
 	for i=0 to uBound(arr)
 		_pointValue.add(arr(i))
 		_pointText.add(ar2(i))
-		&apos;_measuredValue.add(-1)
 		_measuredValue.add(arr(i))
 	next i
 	_pointCount = uBound(arr)+1

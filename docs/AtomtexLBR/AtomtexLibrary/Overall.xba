@@ -63,8 +63,11 @@ sub initializeSertificateCombo(oComboBox1 as object, oComboBox2 as object)
 	oComboBox2.text = rusItems2(0)
 end sub
 
-
-
+sub initializeDateField(oDateFieldModel as object, oDialog as object)
+	oDateFieldModel = oDialog.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+end sub
 
 
 

@@ -338,16 +338,7 @@ sub rightFormat(point as double) as string
 	if point &lt; 100 and point &gt;= 1   then rightFormat = &quot;0.0&quot;
 	if point &gt;= 100 				then rightFormat = &quot;0&quot;
 end sub
-rem---------------------------------------------------------------------------------------------------------
-&apos;function insertDataToLayout
-&apos;	RangeData = FillArrayFromSelection()
-&apos;  	dim i as integer
-&apos;	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
-&apos;	oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = Format(randValue(7, 0.2), &quot;0.00&quot;)
-&apos;  	for i=3 to 8
-&apos;   		oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).value = RangeData(i-2, 0)
-&apos;   	next i
-&apos;end function   	
+	
 rem---------------------------------------------------------------------------------------------------------
 function ParseData(data as double) as double
 	ParseData = data rem TODO сделать парсер -- должен убирать значения в скобках, если есть, и вместо запятой ставить точку

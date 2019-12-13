@@ -123,14 +123,14 @@
   <dlg:numericfield dlg:id="ValueBDMG6" dlg:tab-index="66" dlg:left="230" dlg:top="103" dlg:width="25" dlg:height="12" dlg:value="7" dlg:spin="true"/>
   <dlg:numericfield dlg:id="ValueBDMG7" dlg:tab-index="67" dlg:left="230" dlg:top="114" dlg:width="25" dlg:height="12" dlg:decimal-accuracy="1" dlg:value="15" dlg:spin="true"/>
   <dlg:numericfield dlg:id="ValueBDMG8" dlg:tab-index="75" dlg:left="230" dlg:top="125" dlg:width="25" dlg:height="12" dlg:decimal-accuracy="1" dlg:value="15" dlg:spin="true"/>
-  <dlg:text dlg:id="LabelBDMG1" dlg:tab-index="68" dlg:left="200" dlg:top="50" dlg:width="28" dlg:height="8" dlg:value="300±3" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG2" dlg:tab-index="69" dlg:left="200" dlg:top="61" dlg:width="28" dlg:height="8" dlg:value="1500±15" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG3" dlg:tab-index="70" dlg:left="200" dlg:top="72" dlg:width="28" dlg:height="8" dlg:value="1000±10" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG4" dlg:tab-index="71" dlg:left="200" dlg:top="83" dlg:width="28" dlg:height="8" dlg:value="5000±50" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG5" dlg:tab-index="72" dlg:left="200" dlg:top="94" dlg:width="28" dlg:height="8" dlg:value="300±3" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG6" dlg:tab-index="73" dlg:left="200" dlg:top="105" dlg:width="28" dlg:height="8" dlg:value="1750±18" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG7" dlg:tab-index="74" dlg:left="200" dlg:top="116" dlg:width="28" dlg:height="8" dlg:value="IБ" dlg:align="right"/>
-  <dlg:text dlg:id="LabelBDMG8" dlg:tab-index="76" dlg:left="200" dlg:top="127" dlg:width="28" dlg:height="8" dlg:value="IIМ" dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG1" dlg:tab-index="68" dlg:left="200" dlg:top="50" dlg:width="28" dlg:height="8" dlg:value="300±3 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG2" dlg:tab-index="69" dlg:left="200" dlg:top="61" dlg:width="28" dlg:height="8" dlg:value="1500±15 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG3" dlg:tab-index="70" dlg:left="200" dlg:top="72" dlg:width="28" dlg:height="8" dlg:value="1000±10 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG4" dlg:tab-index="71" dlg:left="200" dlg:top="83" dlg:width="28" dlg:height="8" dlg:value="5000±50 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG5" dlg:tab-index="72" dlg:left="200" dlg:top="94" dlg:width="28" dlg:height="8" dlg:value="300±3 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG6" dlg:tab-index="73" dlg:left="200" dlg:top="105" dlg:width="28" dlg:height="8" dlg:value="1750±18 " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG7" dlg:tab-index="74" dlg:left="200" dlg:top="116" dlg:width="28" dlg:height="8" dlg:value="IБ " dlg:align="right"/>
+  <dlg:text dlg:id="LabelBDMG8" dlg:tab-index="76" dlg:left="200" dlg:top="127" dlg:width="28" dlg:height="8" dlg:value="IIМ " dlg:align="right"/>
   <dlg:radiogroup>
    <dlg:radio dlg:style-id="4" dlg:id="isBDMG" dlg:tab-index="42" dlg:left="29" dlg:top="32" dlg:width="43" dlg:height="8" dlg:value="БДМГ-2343">
     <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G02N.setButtonEnabled?language=Basic&amp;location=application" script:language="Script"/>

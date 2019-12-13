@@ -3,6 +3,7 @@
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G02N" script:language="StarBasic">REM  *****  BASIC  *****
 
 rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
 dim oDialogG02N as object
 dim oDateFieldModel as object
 dim oNumericFieldModel as object
@@ -17,8 +18,9 @@ dim oOptionBDMG as object
 dim BDList as new Collection
 dim mainCount as integer
 dim layoutPosition as integer
-dim rusItems1, engItems1, rusItems2, engItems2 as variant
+&apos;dim rusItems1, engItems1, rusItems2, engItems2 as variant
 dim maxBDCount as integer
+dim oComboBox, oComboBox1, oComboBox2 as object
 rem---------------------------------------------------------------------------------------------------------
 Sub G02N_Dialog_Show
 	maxBDCount = 10
@@ -35,13 +37,7 @@ Sub G02N_Dialog_Show
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
-	REM first remove all old items from the list
-	nCount = oComboBox.getItemCount()
-	oComboBox.removeItems( 0, nCount )
-	REM add new items to the list
-	sItems = Array( &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
-	oComboBox.addItems( sItems, 0 )
-	oComboBox.text = &quot;№516&quot;
+	Overall.initializeActivityCombo(oComboBox)
 	
 	oNumericFieldModel = oDialogG02N.Model.getByName(&quot;ActivityField&quot;)
 	oNumericFieldModel.DECIMALACCURACY = 2
@@ -53,20 +49,8 @@ Sub G02N_Dialog_Show
 	
 	oComboBox1 = oDialogG02N.getControl(&quot;ProvCombo&quot;)
 	oComboBox2 = oDialogG02N.getControl(&quot;TechCombo&quot;)
-	REM first remove all old items from the list
-  	oComboBox1.removeItems( 0, oComboBox1.getItemCount() )
-  	oComboBox2.removeItems( 0, oComboBox2.getItemCount() )  	
-  	REM add new items to the list
-  	rusItems1 = Array( &quot;В. Писаренко&quot;, &quot;С. Кульчинский&quot;, &quot;Д. Кульчинский&quot; )
-  	engItems1 = Array( &quot;V. Pisarenko&quot;, &quot;S. Kulchinsky&quot;, &quot;D. Kulchinsky&quot; )
-  	oComboBox1.addItems( rusItems1, 0 )
-	oComboBox1.text = rusItems1(0)
-	&apos;msgbox oComboBox1.SELECTION
-  	rusItems2 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
-  	engItems2 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
-  	oComboBox2.addItems( rusItems2, 0 )
-	oComboBox2.text = rusItems2(0)
-	
+	Overall.initializeSertificateCombo(oComboBox1, oComboBox2)
+		
 	oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;NextButton&quot;).setEnable(false)
 	oDialogG02N.getControl(&quot;PrevButton&quot;).setEnable(false)
@@ -134,22 +118,8 @@ sub setButtonEnabled
 end sub	
 rem---------------------------------------------------------------------------------------------------------
 sub comboChanged
-	select case oDialogG02N.getControl(&quot;ActivityCombo&quot;).text
-		case &quot;№516&quot;
-		oNumericFieldModel.value = get_activity(act516, oDateFieldModel)
-		case &quot;№517&quot;
-		oNumericFieldModel.value = get_activity(act517, oDateFieldModel)
-		case &quot;№518&quot;
-		oNumericFieldModel.value = get_activity(act518, oDateFieldModel)
-		case &quot;№519&quot;
-		oNumericFieldModel.value = get_activity(act519, oDateFieldModel)
-		case &quot;№520&quot;
-		oNumericFieldModel.value = get_activity(act520, oDateFieldModel)
-		case &quot;№521&quot;
-		oNumericFieldModel.value = get_activity(act521, oDateFieldModel)
-		case &quot;№2910&quot;
-		oNumericFieldModel.value = get_activity2910(oDateFieldModel)
-	end select	
+	Overall.comboChanged(oComboBox, oNumericFieldModel, oDateFieldModel)
+	oNumericFieldModelAll.value = get_activity(act_all, oDateFieldModel)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub addNewBD
@@ -372,7 +342,6 @@ sub insertRecordsToTemplate
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;	
 	dim path as string
-	&apos;msgbox oOptionButtonPr.State
 	if oOptionButtonPr.State then
 		if oOptionBDKG02.state then path = &quot;bdkg02.odt&quot;
 		if oOptionBDKG204.state then path = &quot;bdkg204.odt&quot;
@@ -392,9 +361,16 @@ sub insertRecordsToTemplate
 		if oOptionBDKG204.state then path = &quot;bdkg204_se.odt&quot;
 		if oOptionBDMG.state then path = &quot;bdmg2343.odt&quot;
 	end if
-	&apos;msgbox path
-	
+
+	dim bd as new DUnit
+	dim m_point as double
+	dim cont_point as double
+		
 	OpenTemplate(sertPath &amp; path)
+	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+		deleteTable(&quot;t&quot; + (k))
+		deleteTable(&quot;tgrad&quot; + (k))
+	next k
 	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
 	dim threePointArray(2) as double
 	dim bground as double
@@ -406,27 +382,18 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$date&quot;, getDate(oDialogG02N.Model.getByName(&quot;DateField1&quot;)))
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
-	
-	dim bd as new DUnit
-	dim m_point as double
-	dim cont_point as double
-	
-	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
-		deleteTable(&quot;t&quot; + (k))
-		deleteTable(&quot;tgrad&quot; + (k))
-	next k
-	
+		
 	for i=1 to BDList.count
 		bd = BDList.item(i)
 		strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
-		for j=1 to bd.pointList.count
-			m_point = bd.valueList.item(j)
-			cont_point = bd.pointList.item(j)
-			prefix =  bd.pointTextList.item(j)
+		for j=0 to bd.pointList.count-1
+			m_point = bd.valueList.item(j+1)
+			cont_point = bd.pointList.item(j+1)
+			prefix =  bd.pointTextList.item(j+1)
 			threePointArray = avaragePointsRndArray(m_point, percentOtk)
 				
-			findAndRename((&quot;$&quot; + (i) + &quot;-3&quot; + (j-1) + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
-			findAndRename((&quot;$&quot; + (i) + &quot;-4&quot; + (j-1) + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + j + &quot;.&quot;), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
 				
 			rem TODO сделать через select case
 			if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
@@ -434,18 +401,18 @@ sub insertRecordsToTemplate
 			if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;
 			if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
 				
-			findAndRename((&quot;$&quot; + (i) + &quot;-6&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(0), MyFormat)) rem измерение 1
-			findAndRename((&quot;$&quot; + (i) + &quot;-7&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(1), MyFormat)) rem измерение 2
-			findAndRename((&quot;$&quot; + (i) + &quot;-8&quot; + (j-1) + &quot;.&quot;), Format(threePointArray(2), MyFormat)) rem измерение 3
+			findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j + &quot;.&quot;), Format(threePointArray(0), MyFormat)) rem измерение 1
+			findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j + &quot;.&quot;), Format(threePointArray(1), MyFormat)) rem измерение 2
+			findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j + &quot;.&quot;), Format(threePointArray(2), MyFormat)) rem измерение 3
 				
 			&apos;if cont_point&lt;1 and prefix=&quot;мк&quot; then
 			if AbsoluteValue(cont_point, prefix)&lt;0.001 then 
-				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1) + &quot;.&quot;), bground) rem фон
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + &quot;.&quot;), bground) rem фон
 			else	
-				findAndRename((&quot;$&quot; + (i) + &quot;-5&quot; + (j-1) + &quot;.&quot;), &quot;---&quot;) 
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + &quot;.&quot;), &quot;---&quot;) 
 			end if
 				
-			findAndRename((&quot;$&quot; + (i) + &quot;-0&quot; + (j-1) + &quot;.&quot;), Format(m_point, MyFormat)) rem среднее по трем измерениям
+			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j + &quot;.&quot;), Format(m_point, MyFormat)) rem среднее по трем измерениям
 				
 			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
 			dim percent as integer
@@ -458,8 +425,8 @@ sub insertRecordsToTemplate
 			dim pogr_point as double
 			pogr_point = RelativeError(m_point, cont_point)
 			MyFormat = &quot;0.00&quot;
-			findAndRename((&quot;$&quot; + (i) + &quot;-1&quot; + (j-1) + &quot;.&quot;), Format(pogr_point, MyFormat))
-			findAndRename((&quot;$&quot; + (i) + &quot;-2&quot; + (j-1) + &quot;.&quot;), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j + &quot;.&quot;), Format(pogr_point, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j + &quot;.&quot;), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
 		next j
 		findAndRename(&quot;$bd_num&quot; + i, bd.BDName)
 		findAndRename(&quot;$grad&quot; + i, bd.getGradValue)
@@ -469,14 +436,13 @@ sub insertRecordsToTemplate
 		dim bgFormat as string
 		for k=1 to 8
 			mg_point = oDialogG02N.getControl(&quot;ValueBDMG&quot; + k).value
-			if mg_point &gt;= 100 					then bgFormat = &quot;0&quot;
-			if mg_point &lt; 100    then bgFormat = &quot;0.0&quot;
-			if mg_point &lt; 10 					then bgFormat = &quot;0.00&quot;
+			if mg_point &gt;= 100 	then bgFormat = &quot;0&quot;
+			if mg_point &lt; 100   then bgFormat = &quot;0.0&quot;
+			if mg_point &lt; 10 	then bgFormat = &quot;0.00&quot;
 			
 			&apos;msgbox bgformat
 			findAndRename(&quot;$bdmg&quot; + k, Format(mg_point, bgFormat(mg_point))
 		next k
-		&apos;findAndRename(&quot;$sum_act&quot;, get_activity(act_all, oDateFieldModel)
 		findAndRename(&quot;$sum_act&quot;, oDialogG02N.getControl(&quot;ActivityAll&quot;).text)
 	end if
 	

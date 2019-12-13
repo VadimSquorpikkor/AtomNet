@@ -2,7 +2,15 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Activity" script:language="StarBasic">REM  *****  BASIC  *****
 
-&apos;-------------------------------------------------------------
+&apos; 	╔═══════════════════════════════════════════════════════════════╗
+&apos;	║			АКТИВНОСТЬ ИСТОЧНИКОВ								║▌
+&apos;	║	_________________________________________________________	║▌
+&apos;	║																║▌
+&apos;	║	Методы расчета, константы начальных значений фктивностей, 	║▌
+&apos;	║	периоды полураспада, даты поверок и т.д.					║▌
+&apos;	╚═══════════════════════════════════════════════════════════════╝▌
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
 public const ACT516 as double  = 91.3
 public const ACT517 as double  = 88.8
 public const ACT518 as double  = 94.6
@@ -16,33 +24,26 @@ public const BETA_0660 as double  = 96
 public const BETA_6905 as double  = 228
 public const BETA_0661 as double  = 5591
 public const BETA_0662 as double  = 51010
-public const BETA_15014 as double = 370350
-public const BETA_0663 as double  = 14.2
-public const BETA_0664 as double  = 74.4
-public const BETA_0665 as double  = 514
-public const BETA_0666 as double  = 56800
+public const BETA_15014 as double = 370348
+public const BETA_0663 as double  = 13.1
+public const BETA_0664 as double  = 68.8
+public const BETA_0665 as double  = 474
+public const BETA_0666 as double  = 5801
+public const BETA_0667 as double  = 52373
+
+public const BETA_16437 as double  = 149288
 &apos;-------------------------------------------------------------
 public const CS_137_HALF_LIFE as double = 365.25 * 30.17
 public const SR_90_HALF_LIFE as double = 365.25 * 28.796 &apos;Стронций-90
 &apos;-------------------------------------------------------------
-function days_left_2910(mdate)
-	days_left_2910 = cdatefromiso(mdate.date) - DateSerial(2016,5,17)
-end function
-
-function days_left(mdate)
-	days_left = cdatefromiso(mdate.date) - DateSerial(2016,10,13)
-end function
-
-function days_left_Sr(mdate)
-	days_left_Sr = cdatefromiso(mdate.date) - DateSerial(2019,12,13)
-end function
-
 function get_activity(src as double, mdate)
-	get_activity = src * exp(-0.693147/CS_137_HALF_LIFE * days_left(mdate))
+	daysLeft = cdatefromiso(mdate.date) - DateSerial(2016,10,13)
+	get_activity = src * exp(-0.693147/CS_137_HALF_LIFE * daysLeft)
 end function
 
 function get_activity2910(mdate)
-	get_activity2910 = act2910 * exp(-0.693147/(365.25 * 30.17) * days_left_2910(mdate))
+	daysLeft = cdatefromiso(mdate.date) - DateSerial(2016,5,17)
+	get_activity2910 = act2910 * exp(-0.693147/CS_137_HALF_LIFE * daysLeft)
 end function
 
 function get_activity_Sr(src as string, mdate)
@@ -65,9 +66,12 @@ function get_activity_Sr(src as string, mdate)
 	case &quot;0665&quot;
 		activity_0 = BETA_0665
 	case &quot;0666&quot;
-		activity_0 = BETA_0666	
-	end select	
-	get_activity_Sr = activity_0 * exp(-0.693147/SR_90_HALF_LIFE * days_left_Sr(mdate))
+		activity_0 = BETA_0666
+	case &quot;0667&quot;
+		activity_0 = BETA_0667		
+	end select
+	daysLeft = cdatefromiso(mdate.date) - DateSerial(2019,12,1) rem 1 декабря
+	get_activity_Sr = activity_0 * exp(-0.693147/SR_90_HALF_LIFE * daysLeft)
 end function
 rem----------------------------------------------------------------
 function sourceDistanceArray(point as double, prefix as string, bdType as string)
@@ -75,34 +79,33 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
 	rem если это гамма блок:
 	if bdType = &quot;gamma&quot; then
-		if prefix = &quot;мк&quot; then
-				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
-				if point = 0.07	then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
-				if point = 0.7 	then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
-				if point = 7 	then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
-				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
-				if point = 20 	then ar = Array(&quot;9ХК&quot;,&quot;299.9&quot;)
-				if point = 240 	then ar = Array(&quot;9ХК&quot;,&quot;88.9&quot;)
-		end if
-		if prefix = &quot;м&quot; then
+		select case prefix
+		case &quot;мк&quot;
+				if point =  0.03 then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
+				if point = 0.07 then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
+				if point = 0.7 then ar = Array(&quot;0НА&quot;,&quot;236&quot;)
+				if point = 7 then ar = Array(&quot;0НА&quot;,&quot;76&quot;)
+				if point = 70 then ar = Array(&quot;К/С Г3&quot;,&quot;257&quot;)
+				if point = 20 then ar = Array(&quot;9ХК&quot;,&quot;299.9&quot;)
+				if point = 240 then ar = Array(&quot;9ХК&quot;,&quot;88.9&quot;)
+		case &quot;м&quot;
 				if point = 0.5 	then ar = Array(&quot;9TH&quot;,&quot;214.9&quot;)
 				if point = 0.7 	then ar = Array(&quot;К/С Г3&quot;,&quot;82&quot;)
 				if point = 7 	then ar = Array(&quot;043&quot;,&quot;357&quot;)
 				if point = 70 	then ar = Array(&quot;043&quot;,&quot;114&quot;)
 				if point = 200 	then ar = Array(&quot;043&quot;,&quot;67.7&quot;)
-		end if
-		if prefix = &quot;&quot; then
+		case &quot;&quot;
 				if point = 0.5 	then ar = Array(&quot;163&quot;,&quot;276.9&quot;)
 				if point = 0.7 	then ar = Array(&quot;163&quot;,&quot;235&quot;)
 				if point = 7 	then ar = Array(&quot;163&quot;,&quot;76&quot;)
 				if point = 40 	then ar = Array(&quot;163&quot;,&quot;32.7&quot;)
-		end if	
+		end select	
 	end if
 	if bdType = &quot;gamma-Gy&quot; then
-		if prefix = &quot;н&quot; then
+		select case prefix
+		case &quot;н&quot;
 				if point = 75	then ar = Array(&quot;263&quot;,&quot;176.5&quot;)
-		end if
-		if prefix = &quot;мк&quot; then
+		case &quot;мк&quot;
 				if point = 0.03	then ar = Array(&quot;263&quot;,&quot;277.8&quot;)
 				if point = 0.075 then ar = Array(&quot;263&quot;,&quot;176.5&quot;)
 				if point = 0.7	then ar = Array(&quot;УП4&quot;,&quot;304.7&quot;)
@@ -111,8 +114,7 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 				if point = 7.5 	then ar = Array(&quot;0НА&quot;,&quot;66.6&quot;)
 				if point = 70 	then ar = Array(&quot;К/С Г3&quot;,&quot;233.5&quot;)
 				if point = 75 	then ar = Array(&quot;9ХК&quot;,&quot;144.1&quot;)
-		end if
-		if prefix = &quot;м&quot; then
+		case &quot;м&quot;
 				if point = 0.5 	then ar = Array(&quot;9XK&quot;,&quot;56.6&quot;)
 				if point = 0.7	then ar = Array(&quot;9TH&quot;, &quot;166.1&quot;)				
 				if point = 0.75	then ar = Array(&quot;9XK&quot;, &quot;46.2&quot;)
@@ -121,14 +123,13 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 				if point = 70	then ar = Array(&quot;043&quot;, &quot;103.6&quot;)
 				if point = 75 	then ar = Array(&quot;043&quot;,&quot;100.1&quot;)
 				if point = 200 	then ar = Array(&quot;043&quot;,&quot;61.7&quot;)
-		end if
-		if prefix = &quot;&quot; then
+		case &quot;&quot;
 				if point = 0.7	then ar = Array(&quot;163&quot;, &quot;213.9&quot;)
 				if point = 0.75	then ar = Array(&quot;163&quot;,&quot;206.7&quot;)
 				if point = 7	then ar = Array(&quot;163&quot;, &quot;68.8&quot;)
 				if point = 7.5 	then ar = Array(&quot;163&quot;,&quot;66.5&quot;)
 				if point = 40 	then ar = Array(&quot;163&quot;,&quot;30.7&quot;) &apos;Чуть завышено
-		end if	
+		end select
 	end if
 	&apos;if bdType = &quot;beta&quot; then 
 	&apos;			if prefix = &quot;0660&quot;	then ar = Array(&quot;0660&quot;, &quot;12345&quot;)
@@ -136,25 +137,4 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	sourceDistanceArray = ar
 end function
 
-
-&apos;=======================================================================================================
-private function getActivity(activity_0 as double, halfLafeDays as double, povDate as Date, nowDate)
-	days_left = nowDate.date - povDate
-	getActivity = activity_0 * exp(-0.693147/halfLafeDays * daysLeft)
-end function
-
-private function get516povDate
-	get516povDate = DateSerial(2016,10,13)
-end function
-private function get2910povDate
-	get2910povDate = DateSerial(2016,5,17)
-end function
-&apos;-------------------------------------------------------------
-&apos;&apos;&apos;&apos;&apos;public const CS_516_POV_DATE as date = &quot;2016,10,13&quot;
-&apos;MyDate = DateSerial(2016,10,13)
-&apos;&apos;&apos;&apos;&apos;public const CS_2910_POV_DATE as date = DateSerial(2016,5,17)
-
-&apos;dim CS_516_POV_DATE, CS_2910_POV_DATE as date
-&apos;CS_516_POV_DATE = DateSerial(2016,10,13)
-&apos;CS_2910_POV_DATE = DateSerial(2016,5,17)
 </script:module>

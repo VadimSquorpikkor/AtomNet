@@ -23,8 +23,8 @@
   <dlg:button dlg:id="CommandButton9" dlg:tab-index="10" dlg:left="62" dlg:top="139" dlg:width="44" dlg:height="10" dlg:value="InsertDate">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.ModuleMain.insertDate?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton11" dlg:tab-index="5" dlg:left="40" dlg:top="86" dlg:width="70" dlg:height="16" dlg:value="1121">
-   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M1121.dks1121_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
+  <dlg:button dlg:id="CommandButton11" dlg:tab-index="5" dlg:left="40" dlg:top="86" dlg:width="70" dlg:height="16" dlg:value="AT1121 / AT1123">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M1121.AT1121_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton2" dlg:tab-index="0" dlg:left="40" dlg:top="6" dlg:width="70" dlg:height="16" dlg:value="1117M">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_1117_N.at1117m_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
