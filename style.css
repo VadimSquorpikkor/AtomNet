@@ -1,7 +1,7 @@
 /*todo Переписать CSS*/
 
 .activity_block {
-    background-color: darkorange;
+    background-color: #f57506;
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.55);
     border-radius: 5px;
     display: inline-block;
@@ -9,6 +9,7 @@
     /*line-height: 18px;*/
     padding: 2px;
     margin: 2px;
+    /*color: white;*/
 
 }
 .activity_block div {
@@ -24,7 +25,7 @@
     /*background-color: orange;*/
     /*color: white;*/
 
-    color: blue;
+    color: darkslateblue;
     text-indent: 0;
     text-align: center;
     font-size: 14px;
@@ -57,12 +58,27 @@
     content: "в работе";
 }
 
+/*.red_light_title {
+    font-size: 20px;
+    color: #FF6633;
+    text-shadow: 1px 1px 2px #000000;
+    background-color: #333333;
+    !*text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;*!
+}*/
+
 .red_light_title {
     font-size: 20px;
     color: #FF6633;
     text-shadow: 1px 4px 5px #aba8a8;
     /*text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;*/
 }
+
+/*.red_light_title {
+    font-size: 20px;
+    color: orange;
+    !*background: #999999;*!
+    text-shadow: 0 0 15px rgba(3, 3, 3, 1), 0 0 15px rgba(2, 2, 2, 1), 0 0 15px rgba(2, 2, 2, 1), 0 0 15px rgba(2, 2, 2, 1);
+}*/
 
 .under_construction:hover:before {
     color: #ffffff;
@@ -440,7 +456,8 @@ p {
 }
 
 .yellow_back_index_right {
-    /*background-image: url("imgs/lava2.jpg");*/
+    /*background-image: url("imgs/lava.jpg");*/
+
     /*margin: 5px auto 5px; !*так было до лого*!*/
     margin: 5px;
     /*margin-top: 10px;*/
