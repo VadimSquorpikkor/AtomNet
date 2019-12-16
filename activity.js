@@ -46,18 +46,18 @@ function activity_of_2910() {
 function get_act() {
     set_num();
     // document.getElementById('516').value = days_left();
-    document.getElementById('516').value = activity_of_cs137(a0_516);
+    //document.getElementById('516').value = activity_of_cs137(a0_516);
     document.getElementById('516').textContent = activity_of_cs137(a0_516);
-    document.getElementById('517').value = activity_of_cs137(a0_517);
-    document.getElementById('518').value = activity_of_cs137(a0_518);
-    document.getElementById('519').value = activity_of_cs137(a0_519);
-    document.getElementById('520').value = activity_of_cs137(a0_520);
-    document.getElementById('521').value = activity_of_cs137(a0_521);
-    document.getElementById('2910').value = activity_of_2910();
-    document.getElementById('831').value = activity_of_cs137(a0_831);
-    document.getElementById('832').value = activity_of_cs137(a0_832);
-    document.getElementById('833').value = activity_of_cs137(a0_833);
-    document.getElementById('1079').value = activity(525, new Date(2018,9,15), t_pol_cd);
+    document.getElementById('517').textContent = activity_of_cs137(a0_517);
+    document.getElementById('518').textContent = activity_of_cs137(a0_518);
+    document.getElementById('519').textContent = activity_of_cs137(a0_519);
+    document.getElementById('520').textContent = activity_of_cs137(a0_520);
+    document.getElementById('521').textContent = activity_of_cs137(a0_521);
+    document.getElementById('2910').textContent = activity_of_2910();
+    document.getElementById('831').textContent = activity_of_cs137(a0_831);
+    document.getElementById('832').textContent = activity_of_cs137(a0_832);
+    document.getElementById('833').textContent = activity_of_cs137(a0_833);
+    document.getElementById('1079').textContent = activity(525, new Date(2018,9,15), t_pol_cd);
 }
 
 //Сумарная активность всех источников

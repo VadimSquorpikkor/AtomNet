@@ -1,7 +1,7 @@
 /*todo Переписать CSS*/
 
 .activity_block {
-    background-color: white;
+    background-color: darkorange;
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.55);
     border-radius: 5px;
     display: inline-block;
@@ -12,6 +12,8 @@
 
 }
 .activity_block div {
+    background-color: antiquewhite;
+    border-radius: 3px;
     /*background-color: inherit;*/
     text-indent: 0;
     text-align: center;
@@ -39,6 +41,7 @@
 }
 
 .logo_div {
+    /*background-image: url("imgs/lava.jpg");*/
     background: #333333 url("logo2.png") no-repeat center;
     height: 80px;
     margin: 0;
@@ -437,6 +440,7 @@ p {
 }
 
 .yellow_back_index_right {
+    /*background-image: url("imgs/lava2.jpg");*/
     /*margin: 5px auto 5px; !*так было до лого*!*/
     margin: 5px;
     /*margin-top: 10px;*/
