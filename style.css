@@ -43,7 +43,10 @@
 
 .logo_div {
     /*background-image: url("imgs/lava.jpg");*/
-    background: #333333 url("logo2.png") no-repeat center;
+    background: #333333;
+    background-image: url("logo2.png");
+    background-position: center;
+    background-repeat: no-repeat;
     height: 80px;
     margin: 0;
     margin-bottom: 10px;
@@ -100,6 +103,11 @@
     padding-left: 30px;
     box-shadow: none;
     margin-left: 10px;
+}
+
+.main_div{
+    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;
 }
 
 body>div>ul>li, body>div>ol>li {
@@ -207,7 +215,7 @@ img {
     position: fixed;
     /*width: 100%;*/
     box-shadow: none;
-
+    text-align: left;
 }
 
 .header_div_2 > a, .header_div_2 > a:hover {
@@ -455,8 +463,12 @@ p {
     text-align: right;
 }
 
+.yellow_back_index_right>div>span{
+    background: #000000;
+}
 .yellow_back_index_right {
     /*background-image: url("imgs/lava.jpg");*/
+    background-image: url("imgs/ng.jpg");
 
     /*margin: 5px auto 5px; !*так было до лого*!*/
     margin: 5px;
@@ -598,7 +610,7 @@ a:hover {
     border-radius: 9px;
     padding: 2px 4px;
     transition-property: all;
-    transition-duration: 450ms;
+    transition-duration: 250ms;
 }
 
 a[href$='.ods'] {
@@ -633,16 +645,20 @@ a[href$='.zip'] {
 a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'], a[href$='.zip'] {
     background-size: 20px;
     padding-left: 25px;
+    transition-duration: 150ms;
+    /*transition-property: none;*/
 }
 
 a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
     padding-left: 25px;
     background-color: darkorange;
+    /*transform: scale(1.3);*/
 }
 
-table a[href$='.ods']:hover, table a[href$='.odt']:hover, table a[href$='.docx']:hover, table a[href$='.xlsx']:hover, table a[href$='.pdf']:hover, table a[href$='.doc']:hover {
-    padding-left: 22px;
-    background-color: white;
+table a[href$='.ods']:hover, table a[href$='.odt']:hover, table a[href$='.docx']:hover, table a[href$='.xlsx']:hover, table a[href$='.xls']:hover, table a[href$='.pdf']:hover, table a[href$='.doc']:hover {
+    /*padding-left: 22px;*/
+    background-size: 22px;
+    background-color: unset;
 }
 
 summary {

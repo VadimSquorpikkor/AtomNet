@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
 
 <html>
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>МРП</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -9,7 +10,7 @@
     <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <style>
-        .bground{
+        .main_div {
             background: white url("../imgs/mrp/4.png") no-repeat 30px 20px;
             background-size: 90px;
         }
@@ -42,7 +43,7 @@
 </div>
 
 
-<div class="bground">
+<div class="main_div">
 
     <h1>Монитор радиационный пешеходный<br> (МРП-АТ920)</h1>
 
@@ -61,7 +62,8 @@
 
                 <img src="../imgs/mrp/5.jpg" width="600"/>
                 <li>Шить через <b>Flip</b></li>
-                <li><span class="attention">Если не шьется: проверить ток потребления &mdash; должно быть не более 50mA</span>
+                <li><span
+                        class="attention">Если не шьется: проверить ток потребления &mdash; должно быть не более 50mA</span>
                 </li>
                 <li><img src="">Выбрать AT89C51ED2</li>
                 <li>RS232 &rArr; Выбрать порт &rArr; 115200 &rArr; Connect</li>
@@ -105,22 +107,65 @@
 
                 <img src="../imgs/mrp/1.jpg" width="600"/>
                 <ul>
-                    <li>Проверить счет. Cнять показания скорости счета (5 раз), <a
-                            href="../docs/mrp-420/расчет%20погрешности%203.xls">рассчитать
-                        погрешность</a></li>
-                    <li>Полученные данные внести в <a
-                            href="../docs/mrp-420/Протокол%20поверки429.000%20(МРП-АТ920).doc">протокол
-                        поверки</a></li>
-                    <span class="attention">В состав МРП-920В входит другой БД (БДКГ-19),
-            для него применяется другой расчет погрешности и другой протокол поверки:</span>
-                    <li><a href="../docs/mrp-420/mrp920B/raschet_2.xls">рассчитать
-                        погрешность для МРП-920В</a></li>
-                    <li><a href="../docs/mrp-420/mrp920B/protokol.doc">протокол
-                        поверки для МРП-920В</a></li>
-                    <li>Записать идентификационные данные</li>
-                    <li>Проверить пороги: должны быть раб. &mdash; 1, авар. &mdash; 8</li>
-                    <li><span class="attention">На МРП-920В(с БДКГ-19) пороги: раб. &mdash; 3, авар. &mdash; 8</span>
+                    <li>Проверить счет. Снять показания скорости счета (5 раз), рассчитать погрешность (см. таблицу)
                     </li>
+                    <li>Полученные данные внести в протокол поверки (см. туда же)</li>
+
+                    <div class="yellow_back">
+                        Есть 3 типа МРП, с тремя разными БД в составе, поэтому для каждого типа МРП свой рассчет
+                        погрешности и свой протокол поверки:
+                    </div>
+
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>AT920</th>
+                            <th>AT920B</th>
+                            <th>AT920P</th>
+                        </tr>
+                        <tr>
+                            <td>Тип блока</td>
+                            <td>БДКГ-11/1</td>
+                            <td>БДКГ-19</td>
+                            <td>БДКГ-35</td>
+                        </tr>
+                        <tr>
+                            <td>Дельта</td>
+                            <td>110,1</td>
+                            <td>147,8</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>Расчет погрешности</td>
+                            <td><a href="../docs/mrp-420/raschet_1.xls"></a></td>
+                            <td><a href="../docs/mrp-420/raschet_2.xls"></a></td>
+                            <td><a href="../docs/mrp-420/raschet_3.xls"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Протокол поверки</td>
+                            <td><a href="../docs/mrp-420/protocol_1.odt"></a></td>
+                            <td><a href="../docs/mrp-420/protocol_2.odt"></a></td>
+                            <td><a href="../docs/mrp-420/protocol_3.odt"></a></td>
+                        </tr>
+                        <tr>
+                            <td>Рабочий порог</td>
+                            <td>1</td>
+                            <td>3</td>
+                            <td>?</td>
+                        </tr>
+                        <tr>
+                            <td>Аварийный порог</td>
+                            <td>8</td>
+                            <td>8</td>
+                            <td>?</td>
+                        </tr>
+                    </table>
+
+                    <div class="tips_and_tricks">
+                        Чтобы не рассчитывать вручную, и не заморачиваться с протоколом поверки, можно (и нужно!)
+                        воспользоваться <a href="../sertif_prosh/macro.html">макросом</a>
+                    </div>
+
                 </ul>
                 <li>Работа красного сигнализатора</li>
                 <li>При наличии УС проверить сигнал блокировки и функционирование светодиодов при при подаче питания и
