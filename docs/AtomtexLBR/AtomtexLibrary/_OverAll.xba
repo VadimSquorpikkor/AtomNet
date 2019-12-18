@@ -2,6 +2,9 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="_OverAll" script:language="StarBasic">REM  *****  BASIC  *****
 rem ╔╗╚╝║═▄▌▀▌
+
+&apos;═══╝█
+&apos;  ▀▀▀
 rem----------------------------------------------------------------
 rem			ВСЕ ОБЩИЕ МЕТОДЫ БУДУТ ХРАНИТЬСЯ ЗДЕСЬ
 rem----------------------------------------------------------------
@@ -29,6 +32,34 @@ tables = ThisComponent.TextTables()
      ThisComponent.Text.removeTextContent(tables.getByName(name))
      end if
 end sub
+
+rem ----------------------------------------------------------------------
+sub insertStuff
+dim document   as object
+dim dispatcher as object
+dim arrr as object
+rem get access to the document
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+
+rem ----------------------------------------------------------------------
+dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
+
+
+msgbox array.size
+
+
+dispatcher.executeDispatch(document, &quot;.uno:InsertText&quot;, &quot;&quot;, 0, args2())
+
+rem ----------------------------------------------------------------------
+dispatcher.executeDispatch(document, &quot;.uno:InsertPara&quot;, &quot;&quot;, 0, Array())
+
+rem ----------------------------------------------------------------------
+dispatcher.executeDispatch(document, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+
+
+end sub
+
 
 rem---------------------------------------------------------------------------------------------------------
 sub comboChanged(oEvent As Object)

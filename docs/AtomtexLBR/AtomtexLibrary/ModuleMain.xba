@@ -8,11 +8,12 @@ rem-------------------------------------------------------------------------
 Sub MainDialog_Show
 	dim user_name as String
 
+	rem user_name = &quot;Krechko_AI&quot;
 	rem user_name = &quot;Tarasenko_VV&quot;  	
 	rem user_name = &quot;Kurbatova&quot;
-	rem user_name = &quot;Serikov_VA&quot;
+	user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Rusakevich_AV&quot;
-	user_name = &quot;Squorpikkor&quot;
+	rem user_name = &quot;Squorpikkor&quot;
 	rem user_name = &quot;Leshkevich_SV&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
@@ -128,8 +129,9 @@ MsgBox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
 end sub
 
 sub sharpFunction
-	testpath
+	insertStuff
 end sub
+
 
 rem================standard methods from oo=====================
 &apos;Retrieves the mere filename out of a whole path

@@ -3,13 +3,13 @@
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Activity" script:language="StarBasic">REM  *****  BASIC  *****
 
 &apos; 	╔═══════════════════════════════════════════════════════════════╗
-&apos;	║			АКТИВНОСТЬ ИСТОЧНИКОВ								║▌
-&apos;	║	_________________________________________________________	║▌
-&apos;	║																║▌
-&apos;	║	Методы расчета, константы начальных значений фктивностей, 	║▌
-&apos;	║	периоды полураспада, даты поверок и т.д.					║▌
-&apos;	╚═══════════════════════════════════════════════════════════════╝▌
-&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+&apos;	║			АКТИВНОСТЬ ИСТОЧНИКОВ								║█
+&apos;	║	_________________________________________________________	║█
+&apos;	║																║█
+&apos;	║	Методы расчета, константы начальных значений фктивностей, 	║█
+&apos;	║	периоды полураспада, даты поверок и т.д.					║█
+&apos;	╚═══════════════════════════════════════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
 public const ACT516 as double  = 91.3
 public const ACT517 as double  = 88.8
@@ -81,6 +81,7 @@ function sourceDistanceArray(point as double, prefix as string, bdType as string
 	if bdType = &quot;gamma&quot; then
 		select case prefix
 		case &quot;мк&quot;
+				if point =  0.06 then ar = Array(&quot;263&quot;,&quot;215.9&quot;)
 				if point =  0.03 then ar = Array(&quot;263&quot;,&quot;304.7&quot;)
 				if point = 0.07 then ar = Array(&quot;263&quot;,&quot;200.7&quot;)
 				if point = 0.7 then ar = Array(&quot;0НА&quot;,&quot;236&quot;)

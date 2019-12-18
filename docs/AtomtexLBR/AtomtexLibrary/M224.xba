@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M1121" script:language="StarBasic">REM  *****  BASIC  *****
-
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M224" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔═══════════════════════════════════════════════════════════════════════════════╗
+rem		║	Класс для 		║█
+rem		║	от DUnit здесь нет контрольных точек, есть только 5 измерений скорости		║█
+rem		║	счета на фоне и от источника. Также для каждого типа БД свой коэффициент 	║█
+rem		║	Методы расчета среднего, инициализация блоков и т.д.						║█
+rem		╚═══════════════════════════════════════════════════════════════════════════════╝█
+rem	
 rem---------------------------------------------------------------------------------------------------------
 dim Overall as new Overall
-dim oDialog1121 as object
+dim oDialogG224 as object
 dim oDateFieldModel as object
 dim oListBox as object
 dim oOptionButtonPr as object
 dim oOptionButtonSr as object
 dim oOptionButtonSe as object
-dim oOption1121 as object
-dim oOption1123 as object
+dim oOptionBDKG224 as object
 dim BDList as new Collection
 dim layoutPosition as integer
 dim maxBDCount as integer
 rem---------------------------------------------------------------------------------------------------------
-Sub AT1121_Dialog_Show
-	maxBDCount = 10
+Sub G224_Dialog_Show
+	maxBDCount = 12
 
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
-	oDialog1121 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1121 )
+	oDialogG224 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D224 )
 
-	Overall.dialogShowInitialize(oDialog1121, oDateFieldModel, &quot;Версия 2.01 &quot;, oListBox, oOptionButtonPr, oOptionButtonSr, oOptionButtonSe, 9)
+	Overall.dialogShowInitialize(oDialogG224, oDateFieldModel, &quot;Версия 1.02 &quot;, oListBox, oOptionButtonPr, oOptionButtonSr, oOptionButtonSe, 8)
 
-	oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121_bg.png&quot;
+	oOptionBDKG224 = oDialogG224.Model.getByName(&quot;isBDKG224&quot;)
+	oOptionBDKG224.State = 1
 	
-	oOption1121 = oDialog1121.Model.getByName(&quot;is1121&quot;)
-	oOption1123 = oDialog1121.Model.getByName(&quot;is1123&quot;)
-	oOption1121.State = 0
-
+	oDialogG224.getControl(&quot;isBDKG224&quot;).setVisible(false)
+	oDialogG224.getControl(&quot;addButton&quot;).setEnable(true)
+	
 	oDialogMain.endexecute()   
-	oDialog1121.Execute()
+	oDialogG224.Execute()
 End Sub
 rem---------------------------------------------------------------------------------------------------------
 sub setButtonEnabled
-	oDialog1121.getControl(&quot;addButton&quot;).setEnable(true)
+	oDialogG224.getControl(&quot;addButton&quot;).setEnable(true)
 end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogG224.getControl(&quot;bdSerial&quot;))
+end sub	
 rem---------------------------------------------------------------------------------------------------------
 sub addNewBD
 	dim bdName as string
 	dim nCount as integer
 	dim bd as new DUnit
 
-	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
-	if oOption1121.state then bd.addData(&quot;AT1121&quot; , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, 	Array(0.1,10000)) rem TODO уточнить границы
-	if oOption1123.state then bd.addData(&quot;AT1123&quot; , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, 	Array(0.1,10000)) rem TODO уточнить границы
-
-	for i=1 to 9
-		oDialog1121.getControl(&quot;ValueField&quot; + i).setEnable(true)
+	for i=1 to 8
+		oDialogG224.getControl(&quot;ValueField&quot; + i).setEnable(true)
 	next i
 	
-	oDialog1121.getControl(&quot;removeButton&quot;).setEnable(true)
-	bd.setSerial(oDialog1121.getControl(&quot;bdSerial&quot;).text)
+	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if oOptionBDKG224.state then bd.addData(&quot;БДКГ-224&quot; , 	&quot;Зв/ч&quot;, Array(0.06,0.7,7,70,0.7,7,70,0.7),	  	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), &quot;gamma&quot;, 		Array(0.1,10000)) rem TODO уточнить границы
+	
+	oDialogG224.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialogG224.getControl(&quot;bdSerial&quot;).text)
 	
 	nCount = oListBox.getItemCount()
 	oListBox.addItem( bd.getSerial, nCount )
 	BDList.add(bd)
-	&apos;Overall.increment(oDialog1121.getControl(&quot;bdSerial&quot;))
-	oDialog1121.getControl(&quot;bdSerial&quot;).value = oDialog1121.getControl(&quot;bdSerial&quot;).value + 1
-	makeLayoutFromBD(BDList.item(1)) &apos;BDList.count
+	Overall.increment(oDialogG224.getControl(&quot;bdSerial&quot;))
+	Overall.makeLayoutFromBD(BDList.item(1), oDialogG224) &apos;BDList.count
 	layoutPosition = 1 &apos;BDList.count
 	setButtonVisibility
 end sub
@@ -69,9 +76,9 @@ sub removeLastBD
 	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
 	BDList.remove(BDList.count)
 	if oListBox.getItemCount()=0 then
-		oDialog1121.getControl(&quot;removeButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;removeButton&quot;).setEnable(false)
 	else 
-		makeLayoutFromBD(BDList.item(BDList.count))
+		Overall.makeLayoutFromBD(BDList.item(BDList.count), oDialogG224)
 	end if
 	setButtonVisibility
 end Sub
@@ -81,50 +88,14 @@ function listBoxListener
 	saveCurentBDValue(layoutPosition)
 	selectPos = oListBox.getSelectedItemPos()
 	layoutPosition = selectPos + 1
-	makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition), oDialogG224)
 	setButtonVisibility
 end function
-rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
-function rightStep(d as double) rem расчет правильного Step-а 
-	if              d&gt;10000 then rightStep = 10
-	if d&lt;=10000 and d&gt;10	then rightStep = 1
-	if d&lt;=10    and d&gt;1     then rightStep = 0.1
-	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
-	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
-end function
-rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
-function rightDecimalAccuracy(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
-	if nStep = 0.001 then rightDecimalAccuracy = 3
-	if nStep = 0.01  then rightDecimalAccuracy = 2
-	if nStep = 0.1 	 then rightDecimalAccuracy = 1
-	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
-end function
-rem-------метод из 1117_N упрощен------------------------------------------------------------------------------------
-sub makeLayoutFromBD(bd as new DUnit)
-	oDialog1121.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;AT-1121&quot;
-	oDialog1121.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
-	for i=1 to bd.valueList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
-		point = bd.pointList.item(i)
-		nStep = rightStep(point)
-		value = bd.valueList.item(i)
-	
-	
-		if point &lt; 0.1 and point &gt; 0  then MyFormat = &quot;0.000&quot;
-		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
-		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
-		if point &gt;= 100               then MyFormat = &quot;0&quot;
-		
-		oDialog1121.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
-		oDialog1121.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
-		oDialog1121.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		oDialog1121.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
-	next i
-end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
 	dim newValues as new Collection
 	for i=1 to BDList.item(num).valueList.count
-		newValues.add(oDialog1121.getControl(&quot;ValueField&quot; + i).Value)
+		newValues.add(oDialogG224.getControl(&quot;ValueField&quot; + i).Value)
 	next i
 	BDList.item(num).setValueList(newValues)
 end sub
@@ -133,53 +104,55 @@ sub showNextBD
 	saveCurentBDValue(layoutPosition)
 	layoutPosition = layoutPosition + 1
 	setButtonVisibility	
-	makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition), oDialogG224)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub showPrevBD
 	saveCurentBDValue(layoutPosition)
 	layoutPosition = layoutPosition - 1
 	setButtonVisibility
-	makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition), oDialogG224)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 function setButtonVisibility
 	oListBox.selectItemPos( layoutPosition-1, True )
 	if BDList.count = 0 then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
+		oDialogG224.getControl(&quot;nextButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;prevButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;doneButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
 		oListBox.setEnable(false)
-		oDialog1121.getControl(&quot;is1121&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;is1123&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
+		oDialogG224.getControl(&quot;isBDKG224&quot;).setEnable(true)
+		&apos;oDialogG224.getControl(&quot;isBDKG23&quot;).setEnable(true)
+		&apos;oDialogG224.getControl(&quot;isBDKG231&quot;).setEnable(true)
+		oDialogG224.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
 	end if
 	if BDList.count &lt;&gt; 0 then
 		oListBox.setEnable(true)
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;is1121&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;is1123&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;doneButton&quot;).setEnable(true)
+		oDialogG224.getControl(&quot;isBDKG224&quot;).setEnable(false)
+		&apos;oDialogG224.getControl(&quot;isBDKG23&quot;).setEnable(false)
+		&apos;oDialogG224.getControl(&quot;isBDKG231&quot;).setEnable(false)
 	end if
 	if BDList.count &gt; layoutPosition then
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;doneButton&quot;).setEnable(false)
 	end if
 	if layoutPosition = BDList.count then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;nextButton&quot;).setEnable(false)
 		&apos;oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
 	end if
 	if layoutPosition &lt; BDList.count AND BDList.count &lt;&gt; 0 then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(true)
+		oDialogG224.getControl(&quot;nextButton&quot;).setEnable(true)
 	end if
 	if BDList.count &gt; 1 then
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(true)
+		oDialogG224.getControl(&quot;prevButton&quot;).setEnable(true)
 	end if
 	if layoutPosition = 1 then
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(false)
+		oDialogG224.getControl(&quot;prevButton&quot;).setEnable(false)
 	end if
-	if BDList.count = maxBDCount then oDialog1121.getControl(&quot;addButton&quot;).setEnable(false)
+	if BDList.count = maxBDCount then oDialogG224.getControl(&quot;addButton&quot;).setEnable(false)
 	&apos;if BDList.count &lt;&gt; maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-	if BDList.count = 0 then oDialog1121.getControl(&quot;addButton&quot;).setEnable(true)
+	if BDList.count = 0 then oDialogG224.getControl(&quot;addButton&quot;).setEnable(true)
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
@@ -190,17 +163,17 @@ sub insertRecordsToTemplate
 	dim path as string
 	
 	if oOptionButtonPr.State then
-		path = &quot;1121.odt&quot;
+		path = &quot;bdkg224.odt&quot;
 	end if
 	if oOptionButtonSr.State then
-		calibName = rusItems1(ComboItemPosition(oDialog1121.getControl(&quot;provCombo&quot;)))
-		techName  = rusItems2(ComboItemPosition(oDialog1121.getControl(&quot;techCombo&quot;)))
-		path = &quot;1121_sr.odt&quot;
+		calibName = rusItems1(ComboItemPosition(oDialogG224.getControl(&quot;provCombo&quot;)))
+		techName  = rusItems2(ComboItemPosition(oDialogG224.getControl(&quot;techCombo&quot;)))
+		path = &quot;bdkg224_sr.odt&quot;
 	end if
 	if oOptionButtonSe.State then
-		calibName = engItems1(ComboItemPosition(oDialog1121.getControl(&quot;provCombo&quot;)))
-		techName  = engItems2(ComboItemPosition(oDialog1121.getControl(&quot;techCombo&quot;)))
-		path = &quot;1121_se.odt&quot;
+		calibName = engItems1(ComboItemPosition(oDialogG224.getControl(&quot;provCombo&quot;)))
+		techName  = engItems2(ComboItemPosition(oDialogG224.getControl(&quot;techCombo&quot;)))
+		path = &quot;bdkg224_se.odt&quot;
 	end if
 	
 	OpenTemplate(sertPath &amp; path)
@@ -212,7 +185,7 @@ sub insertRecordsToTemplate
 	findAndRename(&quot;$bground&quot;, bground)
 	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
 	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
-	findAndRename(&quot;$date&quot;, getDate(oDialog1121.Model.getByName(&quot;DateField1&quot;)))
+	findAndRename(&quot;$date&quot;, getDate(oDialogG224.Model.getByName(&quot;DateField1&quot;)))
 	findAndRename(&quot;$calibratedBy&quot;, calibName)
 	findAndRename(&quot;$controlledBy&quot;, techName)
 	
@@ -272,18 +245,9 @@ sub insertRecordsToTemplate
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 	next i
 	
-	findAndRename(&quot;$type&quot;, bd.getName)
-	if oOption1121.state then strokeForSaving = &quot;AT1121 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
-	if oOption1123.state then strokeForSaving = &quot;AT1123 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOptionBDKG224.state then strokeForSaving = &quot;БДКГ-224 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
-end sub
-rem---------------------------------------------------------------------------------------------------------
-sub rightFormat(point as double) as string
-	if point &lt; 0.1 and point &gt; 0    then rightFormat = &quot;0.000&quot;
-	if point &lt; 1   and point &gt;= 0.1 then rightFormat = &quot;0.00&quot;
-	if point &lt; 100 and point &gt;= 1   then rightFormat = &quot;0.0&quot;
-	if point &gt;= 100 				then rightFormat = &quot;0&quot;
 end sub
 
 </script:module>

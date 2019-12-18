@@ -69,6 +69,79 @@ sub initializeDateField(oDateFieldModel as object, oDialog as object)
 	oDateFieldModel.Date = cDateToIso(Now)
 end sub
 
+sub dialogShowInitialize(oDialog as object, oDateFieldModel as object, version as string, oListBox as object, oOptionButtonPr as object, oOptionButtonSr as object, oOptionButtonSe as object, pointCount as integer)
+		
+	initializeDateField(oDateFieldModel, oDialog)	
+	
+	oDialog.getControl(&quot;versionLabel&quot;).text = version	
+	
+	oListBox = oDialog.getControl(&quot;bdListBox&quot;)
+	
+	oComboBox1 = oDialog.getControl(&quot;provCombo&quot;)
+	oComboBox2 = oDialog.getControl(&quot;techCombo&quot;)
 
+	initializeSertificateCombo(oComboBox1, oComboBox2)
+
+	oDialog.getControl(&quot;addButton&quot;).setEnable(false)	
+	oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+	oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	oDialog.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
+	oDialog.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
+	
+	oOptionButtonPr = oDialog.Model.getByName(&quot;isProtocol&quot;)
+	oOptionButtonSr = oDialog.Model.getByName(&quot;isSertificateRus&quot;)
+	oOptionButtonSe = oDialog.Model.getByName(&quot;isSertificateEng&quot;)
+	oOptionButtonPr.State = 1
+		
+	oListBox.setEnable(false)
+	
+	dim i as integer
+	for i=1 to pointCount
+		oDialog.getControl(&quot;ValueField&quot; + i).setEnable(false)
+		oDialog.getControl(&quot;ValueField&quot; + i).value = 0
+	next i
+	oDialog.getControl(&quot;addButton&quot;).setEnable(false)
+end sub
+
+rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
+function rightStep(d as double) rem расчет правильного Step-а 
+	if              d&gt;10000 then rightStep = 10
+	if d&lt;=10000 and d&gt;10	then rightStep = 1
+	if d&lt;=10    and d&gt;1     then rightStep = 0.1
+	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
+	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
+end function
+rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
+function rightDecimalAccuracy(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
+	if nStep = 0.001 then rightDecimalAccuracy = 3
+	if nStep = 0.01  then rightDecimalAccuracy = 2
+	if nStep = 0.1 	 then rightDecimalAccuracy = 1
+	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
+end function
+rem-------метод из 1117_N упрощен------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit, oDialog as object)
+	oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
+	oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
+	dim i as integer
+	dim point, nStep, value as double
+	dim MyFormat as string
+	for i=1 to bd.valueList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
+		point = bd.pointList.item(i)
+		nStep = rightStep(point)
+		value = bd.valueList.item(i)
+	
+		if point &lt; 0.1 and point &gt; 0  then MyFormat = &quot;0.000&quot;
+		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
+		if point &gt;= 100               then MyFormat = &quot;0&quot;
+		
+		oDialog.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
+		oDialog.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
+		oDialog.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
+		oDialog.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+	next i
+end sub
 
 </script:module>
