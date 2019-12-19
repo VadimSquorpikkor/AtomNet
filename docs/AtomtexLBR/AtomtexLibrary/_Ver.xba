@@ -163,9 +163,12 @@ rem				Вывод протокола поверки, либо сертифика
 rem				расчет доверительной границы (в зависимости от контрольной точки), генерация случайных значений показаний результатов трех 
 rem,			измерения по заданному их среднему, номер каждого БД, номирация страниц, колонтитулы
 rem				Возможность формировать таблицы с данными для нескольких БД (от 1 до 12)
-rem				Автосохранение значений при переходе между БД				
-rem
-rem
+rem				Автосохранение значений при переходе между БД
+rem ---------------------------------- 19/12/19------------------------------------------------------------------------------
+rem		Overall	В класс Overall добавлены классы: initializeParameters, dialogShowInitialize, rightStep, rightDecimalAccuracy, makeLayoutFromBD, makeLayoutFromBD,
+rem				PathForProtocol, insertParametersToTemplate, insertParametersToTemplate, insertToTemplateStep, setButtonVisibility, saveCurentBDValue, removeLastBD,
+rem				showNextBD, showPrevBD 
+rem 
 rem
 
 </script:module>

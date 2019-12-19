@@ -325,6 +325,7 @@ sub insertRecordsToTemplate
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 	next i
 	
+	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
 	if oOptionBDKG22.state then strokeForSaving = &quot;БДКГ-22 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	if oOptionBDKG23.state then strokeForSaving = &quot;БДКГ-23 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	if oOptionBDKG231.state then strokeForSaving = &quot;БДКГ-23/1 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;

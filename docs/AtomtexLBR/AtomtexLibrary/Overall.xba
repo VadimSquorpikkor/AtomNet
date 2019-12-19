@@ -2,10 +2,38 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Overall" script:language="StarBasic">REM  *****  BASIC  *****
 
+rem 	╔═══════════════════════════════════════════════════════════════╗
+rem		║	Глобальный класс для работы с протоколами и БД				║█
+rem		║	Собранны основные методы, все остальные классы работают		║█
+rem		║ 	с использованием методов этого класса						║█
+rem		║ 	В перспективе -- основной класс для работы 					║█
+rem		║ 	с любыми типами протоколов/устройствами 					║█
+rem		╚═══════════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
 Option Compatible
 Option ClassModule
 Option Explicit
 
+dim _oDialog as object
+dim _oListBox as object
+dim _BDList as Collection
+dim _isComboCollection as Collection
+dim _maxBDCount as integer
+dim _isComboCollection as Collection
+dim _layoutPosition as integer
+dim _oOptionButtonPr as object
+dim _oOptionButtonSe as object
+dim _oOptionButtonSr as object
+dim _calibName, _techName as string
+rem---------------------------------------------------------------------------------------------------------
+dim m_point, cont_point as double 
+dim prefix, MyFormat as string
+dim threePointArray(2) as double
+
+dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
+dim bground as double
+rem---------------------------------------------------------------------------------------------------------
 sub comboChanged(Combo as object, NumericField as object, DateField as object)
 	select case Combo.text
 		case &quot;№516&quot;
@@ -24,7 +52,7 @@ sub comboChanged(Combo as object, NumericField as object, DateField as object)
 		NumericField.value = get_activity2910(DateField)
 	end select	
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
 sub increment(TField as object) as string
 	dim inc as string
 	dim value as integer
@@ -34,7 +62,7 @@ sub increment(TField as object) as string
 	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
 	TField.text = inc
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
 sub initializeActivityCombo(oActivityCombo as object)
 	REM first remove all old items from the list
 	dim nCount as integer
@@ -46,7 +74,7 @@ sub initializeActivityCombo(oActivityCombo as object)
 	oActivityCombo.addItems( sItems, 0 )
 	oActivityCombo.text = &quot;№516&quot;
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
 sub initializeSertificateCombo(oComboBox1 as object, oComboBox2 as object)
 	REM first remove all old items from the list
   	oComboBox1.removeItems( 0, oComboBox1.getItemCount() )
@@ -62,49 +90,53 @@ sub initializeSertificateCombo(oComboBox1 as object, oComboBox2 as object)
   	oComboBox2.addItems( rusItems2, 0 )
 	oComboBox2.text = rusItems2(0)
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
 sub initializeDateField(oDateFieldModel as object, oDialog as object)
 	oDateFieldModel = oDialog.Model.getByName(&quot;DateField1&quot;)
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 end sub
-
-sub dialogShowInitialize(oDialog as object, oDateFieldModel as object, version as string, oListBox as object, oOptionButtonPr as object, oOptionButtonSr as object, oOptionButtonSe as object, pointCount as integer)
-		
-	initializeDateField(oDateFieldModel, oDialog)	
+rem---------------------------------------------------------------------------------------------------------
+sub initializeParameters(layoutPosition as integer, BDList as Collection, isComboCollection as Collection)
+	_layoutPosition = layoutPosition
+	_BDList = BDList
+	_isComboCollection = isComboCollection
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub dialogShowInitialize(maxBDCount as integer, oDialog as object, oDateFieldModel as object, version as string, oListBox as object, pointCount as integer)
+	_oDialog = oDialog
+	_maxBDCount = maxBDCount
+	_oListBox = oListBox
+	initializeDateField(oDateFieldModel, _oDialog)	
+	_oDialog.getControl(&quot;versionLabel&quot;).text = version	
 	
-	oDialog.getControl(&quot;versionLabel&quot;).text = version	
-	
-	oListBox = oDialog.getControl(&quot;bdListBox&quot;)
-	
-	oComboBox1 = oDialog.getControl(&quot;provCombo&quot;)
-	oComboBox2 = oDialog.getControl(&quot;techCombo&quot;)
+	oComboBox1 = _oDialog.getControl(&quot;provCombo&quot;)
+	oComboBox2 = _oDialog.getControl(&quot;techCombo&quot;)
 
 	initializeSertificateCombo(oComboBox1, oComboBox2)
 
-	oDialog.getControl(&quot;addButton&quot;).setEnable(false)	
-	oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
-	oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
-	oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
-	oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
-	oDialog.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
-	oDialog.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
+	_oDialog.getControl(&quot;addButton&quot;).setEnable(false)	
+	_oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
+	_oDialog.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
 	
-	oOptionButtonPr = oDialog.Model.getByName(&quot;isProtocol&quot;)
-	oOptionButtonSr = oDialog.Model.getByName(&quot;isSertificateRus&quot;)
-	oOptionButtonSe = oDialog.Model.getByName(&quot;isSertificateEng&quot;)
-	oOptionButtonPr.State = 1
+	_oOptionButtonPr = _oDialog.Model.getByName(&quot;isProtocol&quot;)
+	_oOptionButtonSr = _oDialog.Model.getByName(&quot;isSertificateRus&quot;)
+	_oOptionButtonSe = _oDialog.Model.getByName(&quot;isSertificateEng&quot;)
+	_oOptionButtonPr.State = 1
 		
-	oListBox.setEnable(false)
+	_oListBox.setEnable(false)
 	
 	dim i as integer
 	for i=1 to pointCount
-		oDialog.getControl(&quot;ValueField&quot; + i).setEnable(false)
-		oDialog.getControl(&quot;ValueField&quot; + i).value = 0
+		_oDialog.getControl(&quot;ValueField&quot; + i).setEnable(false)
+		_oDialog.getControl(&quot;ValueField&quot; + i).value = 0
 	next i
-	oDialog.getControl(&quot;addButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;addButton&quot;).setEnable(false)
 end sub
-
 rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
 function rightStep(d as double) rem расчет правильного Step-а 
 	if              d&gt;10000 then rightStep = 10
@@ -121,9 +153,9 @@ function rightDecimalAccuracy(nStep as double) rem сколько знаков �
 	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
 end function
 rem-------метод из 1117_N упрощен------------------------------------------------------------------------------------
-sub makeLayoutFromBD(bd as new DUnit, oDialog as object)
-	oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
-	oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
+sub makeLayoutFromBD(bd as new DUnit)
+	_oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
+	_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
 	dim i as integer
 	dim point, nStep, value as double
 	dim MyFormat as string
@@ -137,11 +169,159 @@ sub makeLayoutFromBD(bd as new DUnit, oDialog as object)
 		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
 		if point &gt;= 100               then MyFormat = &quot;0&quot;
 		
-		oDialog.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
-		oDialog.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
-		oDialog.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		oDialog.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		_oDialog.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
+		_oDialog.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
+		_oDialog.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
+		_oDialog.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
 	next i
 end sub
 
+rem---------------------------------------------------------------------------------------------------------
+function PathForProtocol(bdName as string)
+	if _oOptionButtonPr.State then
+		PathForProtocol = bdName &amp; &quot;.odt&quot;
+	end if
+	if _oOptionButtonSr.State then
+		calibName = rusItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+		techName  = rusItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+		PathForProtocol = bdName &amp; &quot;_sr.odt&quot;
+	end if
+	if _oOptionButtonSe.State then
+		calibName = engItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+		techName  = engItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+		PathForProtocol = bdName &amp; &quot;_se.odt&quot;
+	end if
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub insertParametersToTemplate(bdName as string)
+	percentOtk = 7 rem %
+	bground = Format(randValue(95, 5), &quot;0.0&quot;)
+	findAndRename(&quot;$bground&quot;, bground)
+	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), &quot;0.0&quot;))
+	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), &quot;0.0&quot;))
+	findAndRename(&quot;$date&quot;, getDate(_oDialog.Model.getByName(&quot;DateField1&quot;)))
+	findAndRename(&quot;$calibratedBy&quot;, calibName)
+	findAndRename(&quot;$controlledBy&quot;, techName)
+end sub	
+rem---------------------------------------------------------------------------------------------------------
+sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i as integer, percentOtk as double, bground as double)
+		&apos;dim m_point, cont_point as double 
+		&apos;dim prefix, MyFormat as string
+		&apos;dim threePointArray(2) as double
+		dim bd as new DUnit 
+		bd = _BDList.item(i)
+		dim j as integer
+		&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;strokeForSaving = strokeForSaving &amp; bd.getSerial &amp; &quot; &quot;
+		for j=0 to bd.pointList.count-1
+			m_point = bd.valueList.item(j+1)
+			cont_point = bd.pointList.item(j+1)
+			prefix =  bd.pointTextList.item(j+1)
+			threePointArray = avaragePointsRndArray(m_point, percentOtk)
+			
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
+				
+			rem TODO сделать через select case
+			if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
+			if m_point &lt; 1 and m_point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+			if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;
+			if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
+				
+			findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+			findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+			findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
+				
+			&apos;if cont_point&lt;1 and prefix=&quot;мк&quot; then
+			if AbsoluteValue(cont_point, prefix)&lt;0.001 then 
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), bground) rem фон
+			else	
+				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), &quot;---&quot;) 
+			end if
+				
+			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
+				
+			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
+			dim percent as integer
+			if AbsoluteValue(m_point, prefix)&lt;1 then
+				percent = 5
+			else
+				percent = 4
+			end if
+				
+			dim pogr_point as double
+			pogr_point = RelativeError(m_point, cont_point)
+			MyFormat = &quot;0.00&quot;
+			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), Format(pogr_point, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
+		next j
+		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility(layoutPosition as integer)  &apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	_oListBox.selectItemPos( layoutPosition-1, True )
+	dim i as integer
+	if _BDList.count = 0 then
+		_oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
+		_oListBox.setEnable(false)
+		for i=1 to _isComboCollection.count
+			_isComboCollection.item(i).setEnable(true)	
+		next i
+		_oDialog.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
+	end if
+	if _BDList.count &lt;&gt; 0 then
+		_oListBox.setEnable(true)
+		_oDialog.getControl(&quot;doneButton&quot;).setEnable(true)
+		for i=1 to _isComboCollection.count
+			_isComboCollection.item(i).setEnable(false)	
+		next i
+	end if
+	if _BDList.count &gt; layoutPosition then _oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	if layoutPosition = _BDList.count then _oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	if layoutPosition &lt; _BDList.count AND _BDList.count &lt;&gt; 0 then	_oDialog.getControl(&quot;nextButton&quot;).setEnable(true)
+	if _BDList.count &gt; 1 then _oDialog.getControl(&quot;prevButton&quot;).setEnable(true)
+	if layoutPosition = 1 then _oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	if _BDList.count = _maxBDCount then _oDialog.getControl(&quot;addButton&quot;).setEnable(false)
+	if _BDList.count = 0 then _oDialog.getControl(&quot;addButton&quot;).setEnable(true)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	dim newValues as new Collection
+	dim i as integer
+	for i=1 to _BDList.item(num).valueList.count
+		newValues.add(_oDialog.getControl(&quot;ValueField&quot; + i).Value)
+	next i
+	_BDList.item(num).setValueList(newValues)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;, BDList as Collection, oDialog as object, oListBox as object, isComboCollection as Collection, maxBDCount as integer)
+	if layoutPosition = _BDList.count then layoutPosition = layoutPosition - 1
+	_oListBox.removeItems(_oListBox.getItemCount()-1, 1 )
+	_BDList.remove(_BDList.count)
+	if _oListBox.getItemCount()=0 then
+		_oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+	else 
+		makeLayoutFromBD(_BDList.item(_BDList.count))
+	end if
+	setButtonVisibility(layoutPosition)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility(layoutPosition)&apos;&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)	
+	makeLayoutFromBD(_BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility(layoutPosition)&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)
+	makeLayoutFromBD(_BDList.item(layoutPosition))
+end sub
+
+
+	
 </script:module>

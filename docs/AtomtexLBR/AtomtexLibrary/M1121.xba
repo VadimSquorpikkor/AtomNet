@@ -15,19 +15,22 @@ dim oOption1123 as object
 dim BDList as new Collection
 dim layoutPosition as integer
 dim maxBDCount as integer
+dim path, calibName, techName as string
 rem---------------------------------------------------------------------------------------------------------
 Sub AT1121_Dialog_Show
 	maxBDCount = 10
 
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog1121 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1121 )
-
-	Overall.dialogShowInitialize(oDialog1121, oDateFieldModel, &quot;Версия 2.01 &quot;, oListBox, oOptionButtonPr, oOptionButtonSr, oOptionButtonSe, 9)
-
+	oListBox = oDialog1121.getControl(&quot;bdListBox&quot;)
+	Overall.dialogShowInitialize(maxBDCount, oDialog1121, oDateFieldModel, &quot;Версия 2.11 &quot;, oListBox, 9)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
 	oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121_bg.png&quot;
 	
-	oOption1121 = oDialog1121.Model.getByName(&quot;is1121&quot;)
-	oOption1123 = oDialog1121.Model.getByName(&quot;is1123&quot;)
+	oOption1121 = oDialog1121.getControl(&quot;is1121&quot;)
+	oOption1123 = oDialog1121.getControl(&quot;is1123&quot;)
+	isComboCollection.add(oOption1121)
+	isComboCollection.add(oOption1123)
 	oOption1121.State = 0
 
 	oDialogMain.endexecute()   
@@ -84,41 +87,9 @@ function listBoxListener
 	makeLayoutFromBD(BDList.item(layoutPosition))
 	setButtonVisibility
 end function
-rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
-function rightStep(d as double) rem расчет правильного Step-а 
-	if              d&gt;10000 then rightStep = 10
-	if d&lt;=10000 and d&gt;10	then rightStep = 1
-	if d&lt;=10    and d&gt;1     then rightStep = 0.1
-	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
-	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
-end function
-rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
-function rightDecimalAccuracy(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
-	if nStep = 0.001 then rightDecimalAccuracy = 3
-	if nStep = 0.01  then rightDecimalAccuracy = 2
-	if nStep = 0.1 	 then rightDecimalAccuracy = 1
-	if nStep &gt;= 1 	 then rightDecimalAccuracy = 0
-end function
-rem-------метод из 1117_N упрощен------------------------------------------------------------------------------------
+rem---------------------------------------------------------------------------------------------------------
 sub makeLayoutFromBD(bd as new DUnit)
-	oDialog1121.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;AT-1121&quot;
-	oDialog1121.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
-	for i=1 to bd.valueList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
-		point = bd.pointList.item(i)
-		nStep = rightStep(point)
-		value = bd.valueList.item(i)
-	
-	
-		if point &lt; 0.1 and point &gt; 0  then MyFormat = &quot;0.000&quot;
-		if point &lt; 1 and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
-		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
-		if point &gt;= 100               then MyFormat = &quot;0&quot;
-		
-		oDialog1121.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
-		oDialog1121.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
-		oDialog1121.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		oDialog1121.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
-	next i
+	Overall.makeLayoutFromBD(bd)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
@@ -144,146 +115,36 @@ sub showPrevBD
 end sub
 rem---------------------------------------------------------------------------------------------------------
 function setButtonVisibility
-	oListBox.selectItemPos( layoutPosition-1, True )
-	if BDList.count = 0 then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
-		oListBox.setEnable(false)
-		oDialog1121.getControl(&quot;is1121&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;is1123&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
-	end if
-	if BDList.count &lt;&gt; 0 then
-		oListBox.setEnable(true)
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(true)
-		oDialog1121.getControl(&quot;is1121&quot;).setEnable(false)
-		oDialog1121.getControl(&quot;is1123&quot;).setEnable(false)
-	end if
-	if BDList.count &gt; layoutPosition then
-		oDialog1121.getControl(&quot;doneButton&quot;).setEnable(false)
-	end if
-	if layoutPosition = BDList.count then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(false)
-		&apos;oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
-	end if
-	if layoutPosition &lt; BDList.count AND BDList.count &lt;&gt; 0 then
-		oDialog1121.getControl(&quot;nextButton&quot;).setEnable(true)
-	end if
-	if BDList.count &gt; 1 then
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(true)
-	end if
-	if layoutPosition = 1 then
-		oDialog1121.getControl(&quot;prevButton&quot;).setEnable(false)
-	end if
-	if BDList.count = maxBDCount then oDialog1121.getControl(&quot;addButton&quot;).setEnable(false)
-	&apos;if BDList.count &lt;&gt; maxBDCount then oDialogG02N.getControl(&quot;AddButton&quot;).setEnable(true)
-	if BDList.count = 0 then oDialog1121.getControl(&quot;addButton&quot;).setEnable(true)
+	Overall.setButtonVisibility(layoutPosition)
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
-	MyFormat = &quot;0.0&quot;
 	saveCurentBDValue(layoutPosition)
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;	
-	dim path as string
 	
-	if oOptionButtonPr.State then
-		path = &quot;1121.odt&quot;
-	end if
-	if oOptionButtonSr.State then
-		calibName = rusItems1(ComboItemPosition(oDialog1121.getControl(&quot;provCombo&quot;)))
-		techName  = rusItems2(ComboItemPosition(oDialog1121.getControl(&quot;techCombo&quot;)))
-		path = &quot;1121_sr.odt&quot;
-	end if
-	if oOptionButtonSe.State then
-		calibName = engItems1(ComboItemPosition(oDialog1121.getControl(&quot;provCombo&quot;)))
-		techName  = engItems2(ComboItemPosition(oDialog1121.getControl(&quot;techCombo&quot;)))
-		path = &quot;1121_se.odt&quot;
-	end if
-	
+	path = Overall.PathForProtocol(&quot;1121&quot;, calibName, techName)
+		
 	OpenTemplate(sertPath &amp; path)
-	dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
-	dim threePointArray(2) as double
-	dim bground as double
-	percentOtk = 7 rem %
-	bground = Format(randValue(95, 5), MyFormat)
-	findAndRename(&quot;$bground&quot;, bground)
-	findAndRename(&quot;$temp&quot;, Format(randValue(21, 2), MyFormat))
-	findAndRename(&quot;$vlag&quot;, Format(randValue(70, 5), MyFormat))
-	findAndRename(&quot;$date&quot;, getDate(oDialog1121.Model.getByName(&quot;DateField1&quot;)))
-	findAndRename(&quot;$calibratedBy&quot;, calibName)
-	findAndRename(&quot;$controlledBy&quot;, techName)
-	
+	Overall.insertParametersToTemplate (calibName, techName)
 	dim bd as new DUnit
-	dim m_point as double
-	dim cont_point as double
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
 		deleteTable(&quot;t&quot; + (k))
 	next k
 	
 	for i=1 to BDList.count
-		bd = BDList.item(i)
-		strokeForSaving = strokeForSaving &amp; bd.getSerial &amp; &quot; &quot;
-		for j=0 to bd.pointList.count-1
-			m_point = bd.valueList.item(j+1)
-			cont_point = bd.pointList.item(j+1)
-			prefix =  bd.pointTextList.item(j+1)
-			threePointArray = avaragePointsRndArray(m_point, percentOtk)
-			
-			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(0)) rem название источника
-			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + j), sourceDistanceArray(cont_point, prefix, bd.bdType)(1)) rem расстояние до источника
-				
-			rem TODO сделать через select case
-			if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
-			if m_point &lt; 1 and m_point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
-			if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;
-			if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
-				
-			findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
-			findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
-			findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
-				
-			&apos;if cont_point&lt;1 and prefix=&quot;мк&quot; then
-			if AbsoluteValue(cont_point, prefix)&lt;0.001 then 
-				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), bground) rem фон
-			else	
-				findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), &quot;---&quot;) 
-			end if
-				
-			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
-				
-			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
-			dim percent as integer
-			if AbsoluteValue(m_point, prefix)&lt;1 then
-				percent = 5
-			else
-				percent = 4
-			end if
-				
-			dim pogr_point as double
-			pogr_point = RelativeError(m_point, cont_point)
-			MyFormat = &quot;0.00&quot;
-			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), Format(pogr_point, MyFormat))
-			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
-		next j
-		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
+		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
+		Overall.insertToTemplateStep(i) &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i, percentOtk, bground)
 	next i
 	
 	findAndRename(&quot;$type&quot;, bd.getName)
+	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
 	if oOption1121.state then strokeForSaving = &quot;AT1121 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	if oOption1123.state then strokeForSaving = &quot;AT1123 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub
 rem---------------------------------------------------------------------------------------------------------
-sub rightFormat(point as double) as string
-	if point &lt; 0.1 and point &gt; 0    then rightFormat = &quot;0.000&quot;
-	if point &lt; 1   and point &gt;= 0.1 then rightFormat = &quot;0.00&quot;
-	if point &lt; 100 and point &gt;= 1   then rightFormat = &quot;0.0&quot;
-	if point &gt;= 100 				then rightFormat = &quot;0&quot;
-end sub
 
 </script:module>
