@@ -23,6 +23,7 @@ private _relativeError as new Collection
 private _confidenceLimit as new Collection
 private _gradValue as integer
 private _serial as string
+private _betaSources as new Collection
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -30,6 +31,16 @@ Private Sub Class_Initialize()
 End Sub
 
 Private Sub Class_Terminate()
+end sub
+
+public sub add6130Data(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant)
+	addData(BDname, measUnit, pointValue, pointText, BDType, measLimit)
+	dim arr(0) as double
+	arr = betaSources
+	dim i as integer
+	for i=0 to uBound(arr)
+		_betaSources.add(arr(i))
+	next i
 end sub
 
 REM --- CLASS METHODS

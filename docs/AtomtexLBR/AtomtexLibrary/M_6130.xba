@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_6130" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔═══════════════╗
+rem		║	AT6130		║█
+rem		╚═══════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialog6130 as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+
+dim oOption6130pp  as object
+dim oOption6130cps  as object
+dim oOption6130bq  as object
+dim oOption6130a  as object
+dim oOption6130c  as object
+dim oOption6130d  as object
+
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+rem---------------------------------------------------------------------------------------------------------
+Sub AT6130_Dialog_Show
+	maxBDCount = 10
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog6130 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6130 )
+	oListBox = oDialog6130.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.00 &quot;, oListBox, 6)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	
+	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
+	oOption6130pp  = oDialog6130.getControl(&quot;is6130pp&quot;)
+	oOption6130cps = oDialog6130.getControl(&quot;is6130cps&quot;)
+	oOption6130bq  = oDialog6130.getControl(&quot;is6130bq&quot;)
+	oOption6130a   = oDialog6130.getControl(&quot;is6130a&quot;)
+	oOption6130c   = oDialog6130.getControl(&quot;is6130c&quot;)
+	oOption6130d   = oDialog6130.getControl(&quot;is6130d&quot;)
+	oOption6130pp.State = 1
+	isComboCollection.add(oOption6130pp)
+	isComboCollection.add(oOption6130cps)
+	isComboCollection.add(oOption6130bq)
+	isComboCollection.add(oOption6130a)
+	isComboCollection.add(oOption6130c)
+	isComboCollection.add(oOption6130d)
+	oDialog6130.getControl(&quot;addButton&quot;).setEnable(true)
+
+	&apos;oDialog6130.getControl(&quot;is6130&quot;).setVisible(false)&apos;&apos;&apos;&apos;&apos;&apos;ЭТО НЕСТАНДАРТНАЯ ОПЕРАЦИЯ В ДРУГИХ МЕТОДАХ НЕ БУДЕТ
+		
+	oDialogMain.endexecute()   
+	oDialog6130.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	if oOption6130c.State = true then oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130c.png&quot;
+	if oOption6130c.State = false then oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialog6130.getControl(&quot;bdSerial&quot;))
+end sub	
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	for i=1 to 6
+		oDialog6130.getControl(&quot;ValueField&quot; + i).setEnable(true)
+	next i
+	
+	if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count)
+	if oOption6130pp.state then bd.add6130Data(&quot;6130&quot; ,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;source1&quot;,&quot;source2&quot;,&quot;source3&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	
+	oDialog6130.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialog6130.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialog6130.getControl(&quot;bdSerial&quot;))
+	Overall.makeLayoutFromBD(BDList.item(1))
+	layoutPosition = 1
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition, BDList, oDialog6130, oListBox, isComboCollection, maxBDCount)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	Overall.saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.showNextBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.showPrevBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	Overall.saveCurentBDValue(layoutPosition)  &apos;(oDialog6130, layoutPosition, BDList)
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;
+	path = Overall.PathForProtocol(&quot;6130&quot;, calibName, techName)
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertParametersToTemplate(calibName, techName)
+	dim bd as new DUnit
+	
+	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+		deleteTable(&quot;t&quot; + (k))
+	next k
+	
+	for i=1 to BDList.count
+		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
+		Overall.insertToTemplateStep(i) &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i, percentOtk, bground)
+	next i
+	
+	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
+	if oOption6130pp.state then strokeForSaving = &quot;6130 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	CopyVariableToClipboard(strokeForSaving)
+	msgbox &quot;Готово!&quot;
+end sub
+
+</script:module>
