@@ -10,7 +10,9 @@
   <dlg:style dlg:style-id="5" dlg:border="none"/>
  </dlg:styles>
  <dlg:bulletinboard>
-  <dlg:datefield dlg:id="DateField1" dlg:tab-index="16" dlg:left="23" dlg:top="121" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="16" dlg:left="23" dlg:top="121" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true">
+   <script:event script:event-name="on-textchange" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_6130.comboChanged?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:datefield>
   <dlg:text dlg:id="Label7" dlg:tab-index="22" dlg:left="10" dlg:top="174" dlg:width="57" dlg:height="10" dlg:value="Проверку произвел:" dlg:align="center"/>
   <dlg:text dlg:id="Label8" dlg:tab-index="24" dlg:left="69" dlg:top="174" dlg:width="57" dlg:height="10" dlg:value="Технический контроль:" dlg:align="center"/>
   <dlg:text dlg:id="Label9" dlg:tab-index="25" dlg:left="73" dlg:top="124" dlg:width="37" dlg:height="8" dlg:value="Дата поверки"/>
@@ -91,5 +93,8 @@
     <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_6130.setButtonEnabled?language=Basic&amp;location=application" script:language="Script"/>
    </dlg:radio>
   </dlg:radiogroup>
+  <dlg:button dlg:id="insertBetaButton" dlg:tab-index="51" dlg:left="287" dlg:top="133" dlg:width="9" dlg:height="33" dlg:value="&lt;-">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_6130.insertBeta?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
  </dlg:bulletinboard>
 </dlg:window>

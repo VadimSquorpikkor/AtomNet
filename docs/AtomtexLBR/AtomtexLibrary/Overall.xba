@@ -205,13 +205,9 @@ sub insertParametersToTemplate(bdName as string)
 end sub	
 rem---------------------------------------------------------------------------------------------------------
 sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i as integer, percentOtk as double, bground as double)
-		&apos;dim m_point, cont_point as double 
-		&apos;dim prefix, MyFormat as string
-		&apos;dim threePointArray(2) as double
 		dim bd as new DUnit 
 		bd = _BDList.item(i)
 		dim j as integer
-		&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;strokeForSaving = strokeForSaving &amp; bd.getSerial &amp; &quot; &quot;
 		for j=0 to bd.pointList.count-1
 			m_point = bd.valueList.item(j+1)
 			cont_point = bd.pointList.item(j+1)
@@ -257,6 +253,47 @@ sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&ap
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 end sub
 rem---------------------------------------------------------------------------------------------------------
+sub insertBetaToTemplateStep(i)
+	
+	dim bd as new DUnit 
+	bd = _BDList.item(i)
+	dim j as integer
+	for j=0 to bd.getBetaValues.count-1
+		m_point = bd.getBetaValues.item(j+1)
+		cont_point = bd.getBetaPoints.item(j+1)
+		threePointArray = avaragePointsRndArray(m_point, percentOtk)
+			
+		findAndRename((&quot;β&quot; + i + &quot;-3&quot; + j), bd.getBetaSources.item(j+1)) rem название источника
+		findAndRename((&quot;β&quot; + i + &quot;-9&quot; + j), Format(cont_point, &quot;0.0&quot;)) rem активность источника
+				
+		rem TODO сделать через select case
+		if m_point &lt; 200 and m_point &gt; 0  then MyFormat = &quot;0.0&quot;
+		if m_point &gt;= 200 				  then MyFormat = &quot;0&quot;
+				
+		findAndRename((&quot;β&quot; + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+		findAndRename((&quot;β&quot; + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+		findAndRename((&quot;β&quot; + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
+				
+		if cont_point&lt;150 then 
+			findAndRename((&quot;β&quot; + i + &quot;-5&quot; + j), Activity.BETA_BG) rem фон
+		else	
+			findAndRename((&quot;β&quot; + i + &quot;-5&quot; + j), &quot;---&quot;) 
+		end if
+				
+		findAndRename((&quot;β&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
+				
+		dim percent as integer
+		percent = 6
+			
+		dim pogr_point as double
+		pogr_point = RelativeError(m_point, cont_point)
+		MyFormat = &quot;0.00&quot;
+		findAndRename((&quot;β&quot; + i + &quot;-1&quot; + j), Format(pogr_point, MyFormat))
+		findAndRename((&quot;β&quot; + i + &quot;-2&quot; + j), Format(ConfidenceLimit(percent, pogr_point), MyFormat))
+	next j
+	&apos;findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
+end sub
+rem---------------------------------------------------------------------------------------------------------
 function setButtonVisibility(layoutPosition as integer)  &apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
 	_oListBox.selectItemPos( layoutPosition-1, True )
 	dim i as integer
@@ -294,6 +331,15 @@ sub saveCurentBDValue(num as integer)
 		newValues.add(_oDialog.getControl(&quot;ValueField&quot; + i).Value)
 	next i
 	_BDList.item(num).setValueList(newValues)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDBetaValues(num as integer)
+	dim newValues as new Collection
+	dim i as integer
+	for i=1 to _BDList.item(num).getBetaValues.count
+		newValues.add(_oDialog.getControl(&quot;betaField&quot; + i).Value)
+	next i
+	_BDList.item(num).setBetaValues(newValues)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub removeLastBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;, BDList as Collection, oDialog as object, oListBox as object, isComboCollection as Collection, maxBDCount as integer)

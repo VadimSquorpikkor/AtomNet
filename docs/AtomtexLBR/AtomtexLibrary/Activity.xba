@@ -32,6 +32,8 @@ public const BETA_0666 as double  = 5801
 public const BETA_0667 as double  = 52373
 
 public const BETA_16437 as double  = 149288
+
+public const BETA_BG as double  = 11.9
 &apos;-------------------------------------------------------------
 public const CS_137_HALF_LIFE as double = 365.25 * 30.17
 public const SR_90_HALF_LIFE as double = 365.25 * 28.796 &apos;Стронций-90
@@ -48,6 +50,7 @@ end function
 
 function get_activity_Sr(src as string, mdate)
 	dim activity_0 as double
+	
 	select case src
 	case &quot;0660&quot;
 		activity_0 = BETA_0660
@@ -70,6 +73,7 @@ function get_activity_Sr(src as string, mdate)
 	case &quot;0667&quot;
 		activity_0 = BETA_0667		
 	end select
+&apos;	msgbox activity_0
 	daysLeft = cdatefromiso(mdate.date) - DateSerial(2019,12,1) rem 1 декабря
 	get_activity_Sr = activity_0 * exp(-0.693147/SR_90_HALF_LIFE * daysLeft)
 end function

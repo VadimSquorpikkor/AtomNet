@@ -26,14 +26,17 @@ dim layoutPosition as integer
 dim maxBDCount as integer
 dim isComboCollection as new Collection
 dim path, calibName, techName as string
+
+dim maxPointCount as integer
 rem---------------------------------------------------------------------------------------------------------
 Sub AT6130_Dialog_Show
 	maxBDCount = 10
+	maxPointCount = 6
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialog6130 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6130 )
 	oListBox = oDialog6130.getControl(&quot;bdListBox&quot;)
 
-	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.00 &quot;, oListBox, 6)
+	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.00 &quot;, oListBox, maxPointCount)
 	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
 	
 	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
@@ -51,12 +54,17 @@ Sub AT6130_Dialog_Show
 	isComboCollection.add(oOption6130c)
 	isComboCollection.add(oOption6130d)
 	oDialog6130.getControl(&quot;addButton&quot;).setEnable(true)
-
-	&apos;oDialog6130.getControl(&quot;is6130&quot;).setVisible(false)&apos;&apos;&apos;&apos;&apos;&apos;ЭТО НЕСТАНДАРТНАЯ ОПЕРАЦИЯ В ДРУГИХ МЕТОДАХ НЕ БУДЕТ
-		
+	oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(false)
+	
 	oDialogMain.endexecute()   
 	oDialog6130.Execute()
 End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	for i=1 to BDList.item(layoutPosition).getBetaValues.count
+		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(Activity.get_activity_Sr(BDList.item(layoutPosition).getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;
+	next i
+end sub
 rem---------------------------------------------------------------------------------------------------------
 sub setButtonEnabled
 	if oOption6130c.State = true then oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130c.png&quot;
@@ -76,8 +84,15 @@ sub addNewBD
 		oDialog6130.getControl(&quot;ValueField&quot; + i).setEnable(true)
 	next i
 	
+	&apos;для МКС-АТ6130– от 100 нЗв/ч до 10 мЗв/ч;
+	&apos;для МКС-АТ6130 – от 10 ч/см2*мин до 1*104 ч/см2*мин.
+	&apos;для МКС-АТ6130А– от 0,1 мкЗв/ч до 10 мЗв/ч;
+	&apos;для МКС-АТ6130C– от 100 нЗв/ч до 1 мЗв/ч;
+	&apos;для МКС-АТ6130D – от 100 нЗв/ч до 100 мЗв/ч;
+	
 	if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count)
-	if oOption6130pp.state then bd.add6130Data(&quot;6130&quot; ,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;source1&quot;,&quot;source2&quot;,&quot;source3&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	if oOption6130pp.state then bd.add6130Data(&quot;6130 п/п&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;), oDialog6130) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	if oOption6130cps.state then bd.add6130Data(&quot;6130 cps&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,9), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;0660&quot;,&quot;0660&quot;), oDialog6130) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
 	
 	oDialog6130.getControl(&quot;removeButton&quot;).setEnable(true)
 	bd.setSerial(oDialog6130.getControl(&quot;bdSerial&quot;).text)
@@ -86,37 +101,103 @@ sub addNewBD
 	oListBox.addItem( bd.getSerial, nCount )
 	BDList.add(bd)
 	Overall.increment(oDialog6130.getControl(&quot;bdSerial&quot;))
-	Overall.makeLayoutFromBD(BDList.item(1))
+	makeLayoutFromBD(BDList.item(1))
 	layoutPosition = 1
-	Overall.setButtonVisibility(layoutPosition)
+	setButtonVisibility(layoutPosition)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub removeLastBD
-	Overall.removeLastBD(layoutPosition, BDList, oDialog6130, oListBox, isComboCollection, maxBDCount)
+	if layoutPosition = BDList.count then layoutPosition = layoutPosition - 1
+	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
+	BDList.remove(BDList.count)
+	if oListBox.getItemCount()=0 then
+		oDialog6130.getControl(&quot;removeButton&quot;).setEnable(false)
+	else 
+		makeLayoutFromBD(BDList.item(BDList.count))
+	end if
+	setButtonVisibility
 end Sub
 rem---------------------------------------------------------------------------------------------------------
 function listBoxListener
 	Dim selectPos As Integer
-	Overall.saveCurentBDValue(layoutPosition)
+	saveCurentBDValue(layoutPosition)
 	selectPos = oListBox.getSelectedItemPos()
 	layoutPosition = selectPos + 1
-	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
-	Overall.setButtonVisibility(layoutPosition)
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
 end function
 rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	dim pointList as new collection
+	dim point as double
+	Overall.makeLayoutFromBD(bd)
+	for i=1 to bd.getBetaSources.count
+		point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
+		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+		oDialog6130.getControl(&quot;betaField&quot; + i).value = bd.getBetaValues.item(i)  &apos;Format(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;)
+		pointList.add(point)
+	next i
+	bd.setBetaPoints(pointList)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertBeta
+	for i=1 to BDList.item(layoutPosition).getBetaSources.count
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+		oDialog6130.getControl(&quot;betaField&quot; + i).value = oDialog6130.getControl(&quot;betaLabel&quot; + i).Text
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	Overall.saveCurentBDValue(num)
+	Overall.saveCurentBDBetaValues(num)
+end sub
+rem---------------------------------------------------------------------------------------------------------
 sub showNextBD
-	Overall.showNextBD(layoutPosition)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility	
+	makeLayoutFromBD(BDList.item(layoutPosition))
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub showPrevBD
-	Overall.showPrevBD(layoutPosition)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
 end sub
 rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	Overall.setButtonVisibility(layoutPosition)
+	if oDialog6130.getControl(&quot;is6130pp&quot;).state then
+		for i=1 to 3
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(true) 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).setEnable(true)
+		next i
+	ELSE	
+		for i=1 to 3
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false) 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).setEnable(false)
+		next i
+	end if
+	if BDList.count&gt;0 then
+		oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(true)
+		for j=BDList.item(layoutPosition).valueList.count+1 to maxPointCount
+			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = false
+		next j
+	else
+		oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(false)
+	end if
+	
+end function
+rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
-	Overall.saveCurentBDValue(layoutPosition)  &apos;(oDialog6130, layoutPosition, BDList)
+	saveCurentBDValue(layoutPosition)  &apos;(oDialog6130, layoutPosition, BDList)
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;
-	path = Overall.PathForProtocol(&quot;6130&quot;, calibName, techName)
+	path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
 
 	OpenTemplate(sertPath &amp; path)
 	Overall.insertParametersToTemplate(calibName, techName)
@@ -129,6 +210,7 @@ sub insertRecordsToTemplate
 	for i=1 to BDList.count
 		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
 		Overall.insertToTemplateStep(i) &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i, percentOtk, bground)
+		Overall.insertBetaToTemplateStep(i)
 	next i
 	
 	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
