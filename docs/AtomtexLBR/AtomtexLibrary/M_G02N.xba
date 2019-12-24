@@ -33,7 +33,7 @@ Sub G02N_Dialog_Show
 	
 	oDialogG02N.Model.getByName(&quot;dragonLogo&quot;).ImageURL = sertPath &amp; &quot;dragon.png&quot;
 	
-	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.09&quot;	
+	oDialogG02N.getControl(&quot;Label_version&quot;).text = &quot;Версия 3.10&quot;	
 	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
 	
 	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
@@ -183,7 +183,8 @@ sub addNewBD
 	end if
 	
 	&apos;msgbox BDList.count
-	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	&apos;if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
 		
 	oDialogG02N.getControl(&quot;RemoveButton&quot;).setEnable(true)
 		

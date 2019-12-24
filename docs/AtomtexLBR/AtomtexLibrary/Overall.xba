@@ -325,6 +325,7 @@ function setButtonVisibility(layoutPosition as integer)  &apos;&apos;&apos;&apos
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
+	&apos;msgbox &quot;saving: &quot; + num + &quot; &quot; + _BDList.count
 	dim newValues as new Collection
 	dim i as integer
 	for i=1 to _BDList.item(num).valueList.count
@@ -367,7 +368,16 @@ sub showPrevBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;&apos;&ap
 	setButtonVisibility(layoutPosition)&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)
 	makeLayoutFromBD(_BDList.item(layoutPosition))
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
+sub insertFacilitiesText
+	dim Facility as new Facility
+	findAndRename(&quot;$facility_110&quot;, Facility.getFacilityText(&quot;110&quot;))
+	findAndRename(&quot;$facility_130&quot;, Facility.getFacilityText(&quot;130&quot;))
+	findAndRename(&quot;$facility_140&quot;, Facility.getFacilityText(&quot;140&quot;))
+	findAndRename(&quot;$facility_alpha&quot;, Facility.getFacilityText(&quot;alpha&quot;))
+	findAndRename(&quot;$facility_beta&quot;, Facility.getFacilityText(&quot;beta&quot;))
+	findAndRename(&quot;$facility_6130beta&quot;, Facility.getFacilityText(&quot;beta6130&quot;))
+end sub	
 
 	
 </script:module>

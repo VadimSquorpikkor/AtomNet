@@ -78,7 +78,8 @@ sub addNewBD
 	dim serial as string
 	dim nCount as integer
 	
-	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	&apos;if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
 	
 	for i=1 to 5
 		oDialogPortal.getControl(&quot;BGField&quot; + i).setEnable(true)

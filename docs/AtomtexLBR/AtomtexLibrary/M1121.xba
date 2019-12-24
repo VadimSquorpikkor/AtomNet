@@ -46,7 +46,7 @@ sub addNewBD
 	dim nCount as integer
 	dim bd as new DUnit
 
-	if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
 	if oOption1121.state then bd.addData(&quot;AT1121&quot; , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, 	Array(0.1,10000)) rem TODO уточнить границы
 	if oOption1123.state then bd.addData(&quot;AT1123&quot; , &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;, 	Array(0.1,10000)) rem TODO уточнить границы
 

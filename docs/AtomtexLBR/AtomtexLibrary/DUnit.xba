@@ -27,6 +27,7 @@ private _betaSources as new Collection
 private _betaValues as new Collection
 private _betaPoints as new Collection
 
+
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
 	
@@ -35,20 +36,14 @@ End Sub
 Private Sub Class_Terminate()
 end sub
 
-public sub add6130Data(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant, oDialog as object)
+public sub add6130Data(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant)
 	addData(BDname, measUnit, pointValue, pointText, BDType, measLimit)
-	&apos;dim oDateFieldModel as object
-	&apos;oDateFieldModel = oDialog.Model.getByName(&quot;DateField1&quot;)
-	&apos;oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
-	&apos;oDateFieldModel.Date = cDateToIso(Now)
-	&apos;msgbox (Activity.get_activity_Sr(_betaSources.item(1), oDateFieldModel)
 	dim arr(0) as double
 	arr = betaSources
 	dim i as integer
 	for i=0 to uBound(arr)
 		_betaSources.add(arr(i))
 		_betaValues.add(0)
-		&apos;_betaValues.add(Activity.get_activity_Sr(_betaSources.item(i), cDateToIso(Now))     &apos;oDateFieldModel) 
 	next i
 end sub
 

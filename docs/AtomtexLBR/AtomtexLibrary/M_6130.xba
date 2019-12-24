@@ -40,6 +40,7 @@ Sub AT6130_Dialog_Show
 	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
 	
 	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
+	oDialog6130.Model.getByName(&quot;catImage&quot;).ImageURL = sertPath &amp; &quot;blackcat.png&quot;
 	oOption6130pp  = oDialog6130.getControl(&quot;is6130pp&quot;)
 	oOption6130cps = oDialog6130.getControl(&quot;is6130cps&quot;)
 	oOption6130bq  = oDialog6130.getControl(&quot;is6130bq&quot;)
@@ -54,8 +55,12 @@ Sub AT6130_Dialog_Show
 	isComboCollection.add(oOption6130c)
 	isComboCollection.add(oOption6130d)
 	oDialog6130.getControl(&quot;addButton&quot;).setEnable(true)
-	oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(false)
 	
+	for i=1 to 4
+		oDialog6130.getControl(&quot;betaField&quot; + i).visible = true
+		oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false)
+	next i
+		
 	oDialogMain.endexecute()   
 	oDialog6130.Execute()
 End Sub
@@ -67,8 +72,38 @@ sub comboChanged
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub setButtonEnabled
-	if oOption6130c.State = true then oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130c.png&quot;
+	if oDialog6130.getControl(&quot;is6130a&quot;).state then
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isProtocol&quot;).state = 1
+	end if
+	if oDialog6130.getControl(&quot;is6130d&quot;).state then
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isProtocol&quot;).state = 1
+	end if
+	if oOption6130c.State = true then
+		oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130c.png&quot;
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isProtocol&quot;).state = 1
+	end if	
 	if oOption6130c.State = false then oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
+	if oDialog6130.getControl(&quot;is6130pp&quot;).state then
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isProtocol&quot;).state = 1
+	end if
+	if oDialog6130.getControl(&quot;is6130cps&quot;).state then
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(false)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(true)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).state = 1
+	end if
+	if oDialog6130.getControl(&quot;is6130bq&quot;).state then
+		oDialog6130.getControl(&quot;isProtocol&quot;).setEnable(false)
+		oDialog6130.getControl(&quot;isSertificateRus&quot;).setEnable(false)
+		oDialog6130.getControl(&quot;isSertificateEng&quot;).state = 1
+	end if
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub incValue
@@ -80,6 +115,9 @@ sub addNewBD
 	dim nCount as integer
 	dim bd as new DUnit
 
+	&apos;msgbox layoutPosition
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+
 	for i=1 to 6
 		oDialog6130.getControl(&quot;ValueField&quot; + i).setEnable(true)
 	next i
@@ -90,9 +128,21 @@ sub addNewBD
 	&apos;для МКС-АТ6130C– от 100 нЗв/ч до 1 мЗв/ч;
 	&apos;для МКС-АТ6130D – от 100 нЗв/ч до 100 мЗв/ч;
 	
-	if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count)
-	if oOption6130pp.state then bd.add6130Data(&quot;6130 п/п&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;), oDialog6130) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
-	if oOption6130cps.state then bd.add6130Data(&quot;6130 cps&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,9), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;0660&quot;,&quot;0660&quot;), oDialog6130) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	&apos;if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count) rem !!!!!НЕ использовать!!! сохраняет значение первого во втором ИСПОЛЬЗОВАТЬ: if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition)
+	if oOption6130pp.state  then bd.add6130Data(&quot;6130 п/п&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	if oOption6130cps.state then bd.add6130Data(&quot;6130 cps&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;))
+	if oOption6130bq.state  then bd.add6130Data(&quot;6130 Бк&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;))
+	if oOption6130a.state   then bd.add6130Data(&quot;6130A&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array())
+	if oOption6130c.state   then bd.add6130Data(&quot;6130C&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;), 			&quot;gamma&quot;, Array(0.1,10000), Array())
+	if oOption6130d.state   then bd.add6130Data(&quot;6130D&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),	&quot;gamma&quot;, Array(0.1,10000), Array())
+	
+	if oOption6130pp.state OR oOption6130cps.state OR oOption6130bq.state then
+		dim list as new Collection
+		for i=1 to bd.getBetaValues.count
+			list.add(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
+		next i	
+		bd.setBetaValues(list)
+	end if
 	
 	oDialog6130.getControl(&quot;removeButton&quot;).setEnable(true)
 	bd.setSerial(oDialog6130.getControl(&quot;bdSerial&quot;).text)
@@ -133,21 +183,13 @@ sub makeLayoutFromBD(bd as new DUnit)
 	Overall.makeLayoutFromBD(bd)
 	for i=1 to bd.getBetaSources.count
 		point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
-		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;
+		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; &quot;
 		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
 		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
 		oDialog6130.getControl(&quot;betaField&quot; + i).value = bd.getBetaValues.item(i)  &apos;Format(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;)
 		pointList.add(point)
 	next i
 	bd.setBetaPoints(pointList)
-end sub
-rem---------------------------------------------------------------------------------------------------------
-sub insertBeta
-	for i=1 to BDList.item(layoutPosition).getBetaSources.count
-		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
-		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
-		oDialog6130.getControl(&quot;betaField&quot; + i).value = oDialog6130.getControl(&quot;betaLabel&quot; + i).Text
-	next i
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
@@ -171,50 +213,89 @@ end sub
 rem---------------------------------------------------------------------------------------------------------
 function setButtonVisibility
 	Overall.setButtonVisibility(layoutPosition)
-	if oDialog6130.getControl(&quot;is6130pp&quot;).state then
+	oDialog6130.getControl(&quot;betaField4&quot;).visible = false
+	oDialog6130.getControl(&quot;betaLabel4&quot;).visible = false
+	if oDialog6130.getControl(&quot;is6130pp&quot;).state OR oDialog6130.getControl(&quot;is6130bq&quot;).state then
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = true
 		for i=1 to 3
-			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(true) 
-			oDialog6130.getControl(&quot;betaLabel&quot; + i).setEnable(true)
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = true
 		next i
-	ELSE	
-		for i=1 to 3
-			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false) 
-			oDialog6130.getControl(&quot;betaLabel&quot; + i).setEnable(false)
+	end if	
+	if oDialog6130.getControl(&quot;is6130cps&quot;).state then	
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = true
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = true
 		next i
 	end if
-	if BDList.count&gt;0 then
-		oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(true)
-		for j=BDList.item(layoutPosition).valueList.count+1 to maxPointCount
-			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = false
-		next j
-	else
-		oDialog6130.getControl(&quot;insertBetaButton&quot;).setEnable(false)
+	if oDialog6130.getControl(&quot;is6130a&quot;).state OR oDialog6130.getControl(&quot;is6130c&quot;).state OR oDialog6130.getControl(&quot;is6130d&quot;).state then	
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = false
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = false
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = false
+		next i
 	end if
 	
+	if BDList.count&gt;0 then
+		for j=1 to BDList.item(layoutPosition).valueList.count
+			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = true
+			oDialog6130.getControl(&quot;Label&quot; + j).visible = true
+		next j
+		for j=BDList.item(layoutPosition).valueList.count+1 to maxPointCount
+			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = false
+			oDialog6130.getControl(&quot;Label&quot; + j).visible = false
+		next j
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(true)
+		next i
+	end if
+	
+	if BDList.count=0 then
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false)
+		next i
+	end if	
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
 	saveCurentBDValue(layoutPosition)  &apos;(oDialog6130, layoutPosition, BDList)
 	dim strokeForSaving as string
 	strokeForSaving = &quot;&quot;
-	path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	
+	&apos;for i=1 to isComboCollection.count
+	&apos;	if isComboCollection.item(i).state then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	if oOption6130pp.state  then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	if oOption6130cps.state then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	if oOption6130bq.state  then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	if oOption6130a.state   then path = Overall.PathForProtocol(&quot;6130\6130a&quot;, calibName, techName)
+	if oOption6130c.state   then path = Overall.PathForProtocol(&quot;6130\6130c&quot;, calibName, techName)
+	if oOption6130d.state   then path = Overall.PathForProtocol(&quot;6130\6130d&quot;, calibName, techName)
+
 
 	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
 	Overall.insertParametersToTemplate(calibName, techName)
 	dim bd as new DUnit
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
-		deleteTable(&quot;t&quot; + (k))
+		deleteTable(&quot;t&quot; + k)
+		deleteTable(&quot;b&quot; + k)
 	next k
 	
 	for i=1 to BDList.count
 		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
-		Overall.insertToTemplateStep(i) &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i, percentOtk, bground)
+		Overall.insertToTemplateStep(i)
 		Overall.insertBetaToTemplateStep(i)
 	next i
 	
 	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
-	if oOption6130pp.state then strokeForSaving = &quot;6130 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130pp.state then strokeForSaving = &quot;6130 пп&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130cps.state then strokeForSaving = &quot;6130 cps&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130bq.state then strokeForSaving = &quot;6130 Бк&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130a.state then strokeForSaving = &quot;6130A&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130c.state then strokeForSaving = &quot;6130C&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	if oOption6130d.state then strokeForSaving = &quot;6130D&quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
 	CopyVariableToClipboard(strokeForSaving)
 	msgbox &quot;Готово!&quot;
 end sub

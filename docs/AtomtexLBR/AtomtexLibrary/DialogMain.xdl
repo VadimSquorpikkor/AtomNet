@@ -11,10 +11,10 @@
   <dlg:button dlg:id="CommandButton4" dlg:tab-index="4" dlg:left="40" dlg:top="70" dlg:width="70" dlg:height="16" dlg:value="БДКГ-22/23">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_G23N.G23N_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton6" dlg:tab-index="6" dlg:left="40" dlg:top="118" dlg:width="70" dlg:height="16" dlg:value="6130">
+  <dlg:button dlg:id="CommandButton6" dlg:tab-index="6" dlg:left="40" dlg:top="118" dlg:width="70" dlg:height="16" dlg:value="МКС-АТ6130">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_6130.AT6130_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
-  <dlg:button dlg:id="CommandButton7" dlg:tab-index="7" dlg:left="40" dlg:top="134" dlg:width="70" dlg:height="16" dlg:value="БДКН">
+  <dlg:button dlg:id="CommandButton7" dlg:tab-index="7" dlg:disabled="true" dlg:left="40" dlg:top="134" dlg:width="70" dlg:height="16" dlg:value="БДКН">
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_bdkn.bdkn_Dialog_Show?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:button dlg:id="CommandButton8" dlg:tab-index="9" dlg:left="17" dlg:top="163" dlg:width="44" dlg:height="10" dlg:value="Sort Columns">
