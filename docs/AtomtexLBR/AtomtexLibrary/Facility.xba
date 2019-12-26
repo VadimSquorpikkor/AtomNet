@@ -23,12 +23,12 @@ Private Sub Class_Initialize()
 		_maxLimit(i) = 0
 	next i
 End Sub
-
+&apos;-------------------------------------------------------------
 Private Sub Class_Terminate()
 end sub
-
+&apos;-------------------------------------------------------------
 REM --- CLASS METHODS
-
+&apos;-------------------------------------------------------------
 public function addTypeAndLimits(bdType as string, min as double, max as double)
 	select case bdType
 	case &quot;gamma&quot; 
@@ -68,13 +68,12 @@ public function addTypeAndLimits(bdType as string, min as double, max as double)
 		
 		
 	end select
-	
 end function
-
+&apos;-------------------------------------------------------------
 public function RadTypeArray as variant
 	RadTypeArray = _isPrintableR
 end function
-
+&apos;-------------------------------------------------------------
 public function is130necessary as boolean
 	if _maxLimit(5) &gt;= 1 OR _maxLimit(0) &gt;= 1 then 
 		is130necessary = true
@@ -82,7 +81,7 @@ public function is130necessary as boolean
 		is130necessary = false
 	end if	
 end function
-
+&apos;-------------------------------------------------------------
 public function is110necessary as boolean
 	if (_minLimit(5) &lt; 1000 and _minLimit(5)&lt;&gt;0) OR (_minLimit(0) &lt; 1000 and _minLimit(0)&lt;&gt;0) then
 		is110necessary = true
@@ -90,15 +89,14 @@ public function is110necessary as boolean
 		is110necessary = false
 	end if	
 end function
-
+&apos;-------------------------------------------------------------
 public function FacTypeArray as variant
 	_isPrintableF(0) = is110necessary
 	_isPrintableF(1) = is130necessary
 	FacTypeArray = _isPrintableF
 end function
-
+&apos;-------------------------------------------------------------
 public function getFacilityText(id as string) as string
-	&apos;msgbox &quot;&quot; + id
 	dim stroke as string
 	select case id
 	case &quot;110&quot;
@@ -113,9 +111,17 @@ public function getFacilityText(id as string) as string
 		stroke = &quot; образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0, 6С0 с погрешностью аттестации 6%, св. №МН0100818-4818 до 18.04.20, РУП «БелГим»&quot;
 	case &quot;beta6130&quot;
 		stroke = &quot; образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0,   6С0 с погрешностью аттестации 6% , св. №48-482377/1 от 20.10.14, РУП «БелГим»&quot;
+	case &quot;130+110&quot;
+		stroke = &quot;Прибор калибруется на дозиметрической поверочной установке УДГ-130, з/н № 015, погрешность ± 4 % (сертификат о поверке №210-1427/18 от 23.10.2018 г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия ), дозиметрической поверочной установке УДГ-110, з/н № 013, погрешность ± 5 % (сертификат о поверке №210-1426/18 от 22.10.2018 г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия )&quot; 
+	case &quot;130+110eng&quot;
+		stroke = &quot;The instrument is calibrated on AT-130 standard dosimetry facility, No. 015, error ±4% (Certificate of Compliance No. 210-1427/18 as of 23.10.2018 issued by FGUP «D.I.Mendeleyev VNIIM», St. Petersburg, Russia); the instrument is calibrated on AT-110 standard dosimetry facility, No.013, error ±5% (Certificate of Compliance No.210-1426/18 as of 22.10.2018 issued by FGUP «D.I.Mendeleyev VNIIM», St.Petersburg, Russia).&quot; 
+	case &quot;6130_130+110+beta&quot;
+		stroke = &quot;Прибор калибруется на дозиметрической поверочной установке УДГ-130, з/н № 015, погрешность ± 4 % (сертификат о поверке № 210/1427-2018, выданное 23.10.2018г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия ), и дозиметрической поверочной установке УДГ-110, з/н № 013, погрешность ± 5 % (сертификат о поверке № 210/1426-2018, выданное 22.10.2018г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия ); плоском образцовом источнике 6С0 Sr-90+Y-90, погрешность ± 6 % (свидетельство N 48-482377/1, выданное РУП «БелГИМ», г.Минск, Республика Беларусь).&quot;
+	case &quot;6130_130+110+beta_eng&quot;
+		stroke = &quot;The instrument is calibrated on the standard dosimetry facility AT-130, N 015, error ±4% (the Certificate of Compliance  N 210-1099/15 on 23.10.2015 issued by FGUP «D.I.Mendeleyev VNIIM», St. Petersburg, Russia); AT-110, N 013, error ±5% (the Certificate of Compliance N 210-1098/15 on   23.10.2015 issued  by FGUP «D.I.Mendeleyev VNIIM», St. Petersburg, Russia)  and on the beta radiation source of  Sr-90+Y-90, error of ± 6 % (the certificate N 48-482377/1 issued by BelGIM, Minsk, the Republic of Belarus).&quot;
 	end select
 	getFacilityText = stroke
 end function
-
+&apos;-------------------------------------------------------------
 
 </script:module>

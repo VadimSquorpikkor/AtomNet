@@ -7,6 +7,7 @@ rem		╚═══════════════╝█
 rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
 rem---------------------------------------------------------------------------------------------------------
 dim Overall as new Overall
+dim Facility as new Facility
 dim oDialog6130 as object
 dim oDateFieldModel as object
 dim oListBox as object
@@ -36,7 +37,7 @@ Sub AT6130_Dialog_Show
 	oDialog6130 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6130 )
 	oListBox = oDialog6130.getControl(&quot;bdListBox&quot;)
 
-	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.00 &quot;, oListBox, maxPointCount)
+	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.01 &quot;, oListBox, maxPointCount)
 	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
 	
 	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
@@ -272,10 +273,12 @@ sub insertRecordsToTemplate
 	if oOption6130c.state   then path = Overall.PathForProtocol(&quot;6130\6130c&quot;, calibName, techName)
 	if oOption6130d.state   then path = Overall.PathForProtocol(&quot;6130\6130d&quot;, calibName, techName)
 
-
 	OpenTemplate(sertPath &amp; path)
 	Overall.insertFacilitiesText
 	Overall.insertParametersToTemplate(calibName, techName)
+	findAndRename(&quot;$facility_6130beta&quot;, Facility.getFacilityText(&quot;beta6130&quot;))
+	findAndRename(&quot;$facility_6130r_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta&quot;))
+	findAndRename(&quot;$facility_6130e_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta_eng&quot;))
 	dim bd as new DUnit
 	
 	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы

@@ -204,6 +204,27 @@ sub insertParametersToTemplate(bdName as string)
 	findAndRename(&quot;$controlledBy&quot;, techName)
 end sub	
 rem---------------------------------------------------------------------------------------------------------
+function randValue(num as double, otklonenie as double)
+	randValue = (num - otklonenie) + rnd()*otklonenie*2
+end function
+rem---------------------------------------------------------------------------------------------------------
+function avaragePointsRndArray(point as double, o_percent as double)
+	rem TODO сделать по Гауссу!!!
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim ar(2) as double 
+	deviation = o_percent/100*point
+	p1 = randValue(point, deviation)
+	p2 = randValue(point, deviation)
+	p3 = point*3 - p1 - p2
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
+	avaragePointsRndArray = ar	
+end function
+rem---------------------------------------------------------------------------------------------------------
 sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i as integer, percentOtk as double, bground as double)
 		dim bd as new DUnit 
 		bd = _BDList.item(i)
@@ -252,6 +273,7 @@ sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&ap
 		next j
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 end sub
+
 rem---------------------------------------------------------------------------------------------------------
 sub insertBetaToTemplateStep(i)
 	
@@ -376,7 +398,9 @@ sub insertFacilitiesText
 	findAndRename(&quot;$facility_140&quot;, Facility.getFacilityText(&quot;140&quot;))
 	findAndRename(&quot;$facility_alpha&quot;, Facility.getFacilityText(&quot;alpha&quot;))
 	findAndRename(&quot;$facility_beta&quot;, Facility.getFacilityText(&quot;beta&quot;))
-	findAndRename(&quot;$facility_6130beta&quot;, Facility.getFacilityText(&quot;beta6130&quot;))
+	findAndRename(&quot;$facility_13+11rus&quot;, Facility.getFacilityText(&quot;130+110&quot;))
+	findAndRename(&quot;$facility_13+11eng&quot;, Facility.getFacilityText(&quot;130+110eng&quot;))
+
 end sub	
 
 	

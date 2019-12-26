@@ -20,6 +20,7 @@ Sub MainDialog_Show
 	
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
 	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
+	oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.32&quot;	
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
    	oDialogMain.Model.getByName(&quot;ImageControl2&quot;).ImageURL = sertPath &amp; &quot;elkaHalf.png&quot;
 	oDialogMain.Execute()
