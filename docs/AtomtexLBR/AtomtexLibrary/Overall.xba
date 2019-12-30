@@ -402,6 +402,17 @@ sub insertFacilitiesText
 	findAndRename(&quot;$facility_13+11eng&quot;, Facility.getFacilityText(&quot;130+110eng&quot;))
 
 end sub	
+rem---------------------------------------------------------------------------------------------------------
+function makeSRKNumber(value as long)
+	dim first, second as integer
+	dim stroke as string
+	first = value \ 1000
+	second = value mod 1000
+	if second &lt; 10 then stroke = &quot;&quot; + first + &quot;.00&quot; + second 
+	if second &lt; 100 AND second &gt; 9 then stroke = &quot;&quot; + first + &quot;.0&quot; + second
+	if second &gt; 99 then stroke = &quot;&quot; + first + &quot;.&quot; + second
+	makeSRKNumber = stroke
+end function
+rem---------------------------------------------------------------------------------------------------------
 
-	
 </script:module>

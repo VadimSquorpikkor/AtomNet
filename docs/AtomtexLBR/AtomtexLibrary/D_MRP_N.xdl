@@ -61,8 +61,8 @@
    <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary.M_MRP_N.insertRecordsToTemplate?language=Basic&amp;location=application" script:language="Script"/>
   </dlg:button>
   <dlg:text dlg:style-id="2" dlg:id="mrpTypeLabel" dlg:tab-index="33" dlg:left="27" dlg:top="106" dlg:width="75" dlg:height="20" dlg:value="452.002" dlg:align="center"/>
-  <dlg:numericfield dlg:id="srkSerial" dlg:tab-index="29" dlg:left="51" dlg:top="9" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="3" dlg:value="452" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="mrpSerial" dlg:tab-index="30" dlg:left="51" dlg:top="21" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="3" dlg:value="452.001" dlg:spin="true"/>
-  <dlg:numericfield dlg:id="bdSerial" dlg:tab-index="31" dlg:left="51" dlg:top="33" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="3" dlg:value="452.002" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="srkSerial" dlg:tab-index="29" dlg:left="51" dlg:top="9" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="0" dlg:thousands-separator="true" dlg:value="452000" dlg:value-step="1000" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="mrpSerial" dlg:tab-index="30" dlg:left="51" dlg:top="21" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="0" dlg:thousands-separator="true" dlg:value="452001" dlg:value-step="1000" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="bdSerial" dlg:tab-index="31" dlg:left="51" dlg:top="33" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="0" dlg:thousands-separator="true" dlg:value="452002" dlg:value-step="1000" dlg:spin="true"/>
  </dlg:bulletinboard>
 </dlg:window>

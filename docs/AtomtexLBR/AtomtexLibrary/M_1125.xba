@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1125" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔═════════════════════════════════════════════════════╗
+rem		║	Класс для МКС-АТ1125/МКС-АТ1125А		          ║█
+rem		║	В отличии от большинства других классов, 	      ║█	
+rem		║	в протоколе выводится всегда только один прибор   ║█ 
+rem		╚═════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialog1125 as object
+dim oDateFieldModel as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOption1125 as object
+dim oOption1125A as object
+dim path, calibName, techName as string
+dim oComboBox1, oComboBox2 as object
+dim oCheckBoxBZ, oCheckBoxBDPS as object 
+dim mainImage as object
+
+dim alphaCount, betaCount, gammaCount as integer
+
+dim BDList as new collection
+rem---------------------------------------------------------------------------------------------------------
+Sub AT1125_Dialog_Show
+	alphaCount = 5
+	betaCount = 5
+	gammaCount = 6
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog1125 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1125 )
+	mainImage = oDialog1125.Model.getByName(&quot;1125Logo&quot;)
+	mainImage.ImageURL = sertPath &amp; &quot;1125/1125_wide.png&quot;
+	oDialog1125.getControl(&quot;versionLabel&quot;).text = &quot;Версия 1.0 &quot;	
+
+	dim oOption1125 as object
+	dim oOption1125A as object
+
+	oComboBox1 = oDialog1125.getControl(&quot;provCombo&quot;)
+	oComboBox2 = oDialog1125.getControl(&quot;techCombo&quot;)
+
+	oCheckBoxBZ = oDialog1125.getControl(&quot;isUA&quot;)
+	&apos;oCheckBoxBZ = oDialog1125.getModel.getByName(&quot;isUA&quot;)
+	oCheckBoxBDPS = oDialog1125.getControl(&quot;isBDPS&quot;)
+	&apos;msgbox oCheckBoxBZ.state
+
+	Overall.initializeSertificateCombo(oComboBox1, oComboBox2)
+	Overall.initializeDateField(oDateFieldModel, oDialog1125)
+	
+	oOption1125 = oDialog1125.getControl(&quot;is1125&quot;)
+	oOption1125A = oDialog1125.getControl(&quot;is1125A&quot;)
+	oOption1125A.State = 1
+	
+	enableBDPS(false)
+	
+	
+
+	oDialogMain.endexecute()   
+	oDialog1125.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub initializeBD
+	addBDtoCollection(&quot;AT1125&quot;,	&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 			 &quot;gamma&quot;,	Array(0.3,0.3))
+	addBDtoCollection(&quot;AT1125A&quot;,&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240,0.7,7,70),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;,	Array(0.3,100))
+	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(58.3,727,6300,62100,186000),	emptyArray,									 &quot;alpha&quot;,	Array(2.4,100))
+	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),	Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;15014&quot;),	 &quot;beta&quot;,		Array(6,100))
+	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),			 &quot;gamma&quot;,	Array(0.1,30))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addBDtoCollection(ByVal bname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	rem обертка для добавления БД в коллекцию, чтобы не плодить лишних (больше 20) объектов BDUnit (точнее их инициализации и добавления в коллекцию -- уже 60 строк)
+	dim bd as new DUnit
+	bd.addData(bname, measUnit, pointValue, pointText, BDType, measLimit)
+	BDList.add(bd)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enableBDPS(visibility as boolean)
+	for i=1 to alphaCount
+			oDialog1125.getControl(&quot;alphaField&quot; + i).setEnable(visibility)
+			oDialog1125.getControl(&quot;alphaLabel&quot; + i).setEnable(visibility)
+		next i
+		for i=1 to betaCount
+			oDialog1125.getControl(&quot;betaField&quot; + i).setEnable(visibility)
+			oDialog1125.getControl(&quot;betaLabel&quot; + i).setEnable(visibility)
+		next i
+		for i=1 to gammaCount
+			oDialog1125.getControl(&quot;gammaField&quot; + i).setEnable(visibility)
+			oDialog1125.getControl(&quot;gammaLabel&quot; + i).setEnable(visibility)
+		next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enable1125A(visibility as boolean)
+	for i=6 to 8 
+		oDialog1125.getControl(&quot;ValueField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;valueLabel&quot; + i).setEnable(visibility)		
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setVisibility
+	rem ТОЛЬКО 1125
+	if oCheckBoxBZ.state = 0 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_wide.png&quot;
+		enableBDPS(false)
+	end if
+	rem 1125 + БДПС
+	if oCheckBoxBZ.state = 0 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bdps_wide.png&quot;
+		enableBDPS(true)
+	end if
+	rem 1125 + УА
+	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bz_wide.png&quot;
+		enableBDPS(false)
+	end if	
+	rem 1125 + БДПС + УА
+	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_b_bz.png&quot;
+		enableBDPS(true)
+	end if
+	if oDialog1125.getControl(&quot;is1125&quot;).state then enable1125A(false)
+	if oDialog1125.getControl(&quot;is1125A&quot;).state then enable1125A(true)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setLayout
+	
+end sub
+
+
+</script:module>

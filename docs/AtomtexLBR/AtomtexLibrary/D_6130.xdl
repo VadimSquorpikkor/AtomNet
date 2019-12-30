@@ -32,7 +32,7 @@
   <dlg:numericfield dlg:id="betaField1" dlg:tab-index="10" dlg:left="251" dlg:top="125" dlg:width="33" dlg:height="12" dlg:value="0.7" dlg:spin="true"/>
   <dlg:numericfield dlg:id="betaField2" dlg:tab-index="11" dlg:left="251" dlg:top="136" dlg:width="33" dlg:height="12" dlg:value="7" dlg:spin="true"/>
   <dlg:numericfield dlg:id="betaField3" dlg:tab-index="30" dlg:left="251" dlg:top="147" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="1" dlg:value="40" dlg:spin="true"/>
-  <dlg:text dlg:style-id="0" dlg:id="versionLabel" dlg:tab-index="35" dlg:left="256" dlg:top="4" dlg:width="36" dlg:height="8" dlg:value="версия" dlg:align="right"/>
+  <dlg:text dlg:style-id="0" dlg:id="versionLabel" dlg:tab-index="35" dlg:left="271" dlg:top="4" dlg:width="36" dlg:height="8" dlg:value="версия" dlg:align="right"/>
   <dlg:text dlg:style-id="1" dlg:id="typeLabel" dlg:tab-index="3" dlg:left="225" dlg:top="16" dlg:width="66" dlg:height="12" dlg:value="TYPE" dlg:align="center"/>
   <dlg:text dlg:style-id="2" dlg:id="serialLabel" dlg:tab-index="17" dlg:left="220" dlg:top="26" dlg:width="75" dlg:height="22" dlg:value="123" dlg:align="center"/>
   <dlg:button dlg:id="prevButton" dlg:tab-index="18" dlg:left="215" dlg:top="178" dlg:width="30" dlg:height="14" dlg:value="Назад">
@@ -98,7 +98,7 @@
   </dlg:radiogroup>
   <dlg:numericfield dlg:id="betaField4" dlg:tab-index="51" dlg:left="251" dlg:top="158" dlg:width="33" dlg:height="12" dlg:decimal-accuracy="1" dlg:value="40" dlg:spin="true"/>
   <dlg:text dlg:id="betaLabel4" dlg:tab-index="52" dlg:left="221" dlg:top="160" dlg:width="28" dlg:height="8" dlg:align="right"/>
-  <dlg:text dlg:style-id="6" dlg:id="Label10" dlg:tab-index="53" dlg:left="75" dlg:top="0" dlg:width="183" dlg:height="14" dlg:value="6130 ПОЛНЫЙ ПОКА БЕЗ CPS И Бк!!!"/>
+  <dlg:text dlg:style-id="6" dlg:id="Label10" dlg:tab-index="53" dlg:left="75" dlg:top="0" dlg:width="183" dlg:height="14" dlg:value="6130 ПОЛНЫЙ ПОКА БЕЗ CPS!!!"/>
   <dlg:img dlg:style-id="5" dlg:id="catImage" dlg:tab-index="54" dlg:left="97" dlg:top="121" dlg:width="32" dlg:height="49"/>
   <dlg:text dlg:style-id="7" dlg:id="betaLabel" dlg:tab-index="56" dlg:left="284" dlg:top="129" dlg:width="15" dlg:height="34" dlg:value="β" dlg:align="center"/>
   <dlg:text dlg:style-id="8" dlg:id="gammaLabel" dlg:tab-index="55" dlg:left="284" dlg:top="59" dlg:width="15" dlg:height="34" dlg:value="γ" dlg:align="center"/>

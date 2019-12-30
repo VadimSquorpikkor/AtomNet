@@ -92,10 +92,12 @@ function includeHTML(mode_1) {
         '                    <li><a href="../bdkg22/bdkg22diap.html">Как принудительно переключать диапазоны</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22newfon.html">Как настраивать фон</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22serial.html">Как записать серийный номер в память БД</a></li>' +
-        '                    <li><a href="../docs/sertificate/bdkg22_pov.odt">Протокол поверки</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_prot.odt">Протокол поверки 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_sr.odt">Калибровочный сертификат 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_se.odt">Calibration Sertificate 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg-23.1_raschet.ods">Расчет протокола 23/1</a></li>' +
         '                    <li><a href="../docs/bdkg22/bdkg-23-bg.ods">Таблица записи фона</a></li>' +
         '                    <li><a href="../docs/bdkg22/perechen_bdkg22.odt">Перечень</a></li>' +
-        '                    <li><a href="../templates/bdkg-23.1_calibr_rus.doc">Калибровочный сертификат</a></li>' +
         '                    <li>' +
         '                        <a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал' +
         '                            градуировок БДКГ-22</a></li>' +
@@ -147,10 +149,10 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка нейтронного детектора</a></li>' +
-        '        <li><a href="../bdkn/bdkn-01.html">Проверка плат БДКН-01/04<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../bdkn/bdkn-01.html">Проверка плат БДКН-01 / 04<span class="under_construction"></span></a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
-        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01/БДКН-03<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01 / БДКН-03<span class="under_construction"></span></a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
@@ -258,7 +260,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для протоколов</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки <span style="color: #ff3333">2.32</span></a></li>' +
+        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки <span class="version_label">2.34</span></a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +

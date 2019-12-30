@@ -61,6 +61,18 @@
     margin-bottom: 10px;
 }
 
+.version_label {
+    font-size: 14px;
+    color: #ff3333;
+    padding: 3px 20px;
+    text-shadow: 0 3px 2px #000000;
+    font-style: italic;
+}
+
+.version_label:hover {
+    color: #ffffff;
+}
+
 .under_construction:before, .under_construction:hover:before {
     font-size: 14px;
     color: #ff3333;

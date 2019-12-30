@@ -19,7 +19,7 @@ Sub MRP920_Dialog_Show
 	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
 	oDateFieldModel.Date = cDateToIso(Now)
 	
-	oDialogMRP.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.02&quot;	
+	oDialogMRP.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.03&quot;	
 	
 	oActivityCombo = oDialogMRP.getControl(&quot;SourceCombo&quot;)
 	Overall.initializeActivityCombo(oActivityCombo)
@@ -62,12 +62,24 @@ sub addNewBD
 	if oOptionBDKG35.state  then oDialogMRP.getControl(&quot;mrpTypeLabel&quot;).text = &quot;AT920P&quot;
 end sub
 rem---------------------------------------------------------------------------------------------------------
+function makeSRKNumber(value as long)
+	dim first, second as integer
+	dim stroke as string
+	first = value \ 1000
+	second = value mod 1000
+	if second &lt; 10 then stroke = &quot;&quot; + first + &quot;.00&quot; + second 
+	if second &lt; 100 AND second &gt; 9 then stroke = &quot;&quot; + first + &quot;.0&quot; + second
+	if second &gt; 99 then stroke = &quot;&quot; + first + &quot;.&quot; + second
+	makeSRKNumber = stroke
+end function
+rem---------------------------------------------------------------------------------------------------------
 sub insertRecordsToTemplate
 	saveCurentBDValue
 	dim srk_serial, mrp_serial, bd_serial, strokeForSaving, path as string
-	srk_serial = oDialogMRP.getControl(&quot;srkSerial&quot;).text
-	mrp_serial = oDialogMRP.getControl(&quot;mrpSerial&quot;).text
-	bd_serial = oDialogMRP.getControl(&quot;bdSerial&quot;).text
+	&apos;	msgbox makeSRKNumber(oDialogMRP.getControl(&quot;srkSerial&quot;).value)
+	srk_serial = makeSRKNumber(oDialogMRP.getControl(&quot;srkSerial&quot;).value) 
+	mrp_serial = makeSRKNumber(oDialogMRP.getControl(&quot;mrpSerial&quot;).value)
+	bd_serial  = makeSRKNumber(oDialogMRP.getControl(&quot;bdSerial&quot;).value)
 	dim bgAverage, srcAverage, sensitivity, activity as double
 	activity = oDialogMRP.getControl(&quot;ActivityField&quot;).value
 	path = &quot;mrp920.odt&quot;

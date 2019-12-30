@@ -37,7 +37,7 @@ Sub AT6130_Dialog_Show
 	oDialog6130 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6130 )
 	oListBox = oDialog6130.getControl(&quot;bdListBox&quot;)
 
-	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.01 &quot;, oListBox, maxPointCount)
+	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.02 &quot;, oListBox, maxPointCount)
 	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
 	
 	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130.png&quot;
@@ -67,9 +67,12 @@ Sub AT6130_Dialog_Show
 End Sub
 rem---------------------------------------------------------------------------------------------------------
 sub comboChanged
-	for i=1 to BDList.item(layoutPosition).getBetaValues.count
-		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(Activity.get_activity_Sr(BDList.item(layoutPosition).getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;
-	next i
+	if BDList.count&lt;&gt;0 then
+		&apos;for i=1 to BDList.item(layoutPosition).getBetaValues.count
+		&apos;	oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(Activity.get_activity_Sr(BDList.item(layoutPosition).getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;
+		&apos;next i
+		setBetaLayout(BDList.item(layoutPosition))
+	end if	
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub setButtonEnabled
@@ -132,7 +135,7 @@ sub addNewBD
 	&apos;if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count) rem !!!!!НЕ использовать!!! сохраняет значение первого во втором ИСПОЛЬЗОВАТЬ: if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition)
 	if oOption6130pp.state  then bd.add6130Data(&quot;6130 п/п&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
 	if oOption6130cps.state then bd.add6130Data(&quot;6130 cps&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;,&quot;0662&quot;))
-	if oOption6130bq.state  then bd.add6130Data(&quot;6130 Бк&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;6905&quot;,&quot;0661&quot;))
+	if oOption6130bq.state  then bd.add6130Data(&quot;6130 Бк&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660Bq&quot;,&quot;6905Bq&quot;,&quot;0661Bq&quot;))
 	if oOption6130a.state   then bd.add6130Data(&quot;6130A&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array())
 	if oOption6130c.state   then bd.add6130Data(&quot;6130C&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;), 			&quot;gamma&quot;, Array(0.1,10000), Array())
 	if oOption6130d.state   then bd.add6130Data(&quot;6130D&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),	&quot;gamma&quot;, Array(0.1,10000), Array())
@@ -178,19 +181,27 @@ function listBoxListener
 	setButtonVisibility
 end function
 rem---------------------------------------------------------------------------------------------------------
-sub makeLayoutFromBD(bd as new DUnit)
+sub setBetaLayout(bd as new DUnit)
 	dim pointList as new collection
 	dim point as double
-	Overall.makeLayoutFromBD(bd)
 	for i=1 to bd.getBetaSources.count
 		point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
-		oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; &quot;
+		if oOption6130bq.state then
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; Бк &quot;
+		else
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; &quot;
+		end if	
 		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
 		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
 		oDialog6130.getControl(&quot;betaField&quot; + i).value = bd.getBetaValues.item(i)  &apos;Format(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;)
 		pointList.add(point)
 	next i
 	bd.setBetaPoints(pointList)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	Overall.makeLayoutFromBD(bd)
+	setBetaLayout(bd)
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub saveCurentBDValue(num as integer)
@@ -268,7 +279,7 @@ sub insertRecordsToTemplate
 	&apos;	if isComboCollection.item(i).state then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
 	if oOption6130pp.state  then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
 	if oOption6130cps.state then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
-	if oOption6130bq.state  then path = Overall.PathForProtocol(&quot;6130\6130&quot;, calibName, techName)
+	if oOption6130bq.state  then path = Overall.PathForProtocol(&quot;6130\6130bq&quot;, calibName, techName)
 	if oOption6130a.state   then path = Overall.PathForProtocol(&quot;6130\6130a&quot;, calibName, techName)
 	if oOption6130c.state   then path = Overall.PathForProtocol(&quot;6130\6130c&quot;, calibName, techName)
 	if oOption6130d.state   then path = Overall.PathForProtocol(&quot;6130\6130d&quot;, calibName, techName)

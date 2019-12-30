@@ -19,8 +19,11 @@ Sub MainDialog_Show
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	&apos;dom olib as object
+	&apos;olib = GlobalScope.BasicLibraries.getbyname(&quot;AtomtexLibrary&quot;)
+	&apos;msgbox olib.getLibraryLinkUrl(&quot;AtomtexLibrary&quot;)
 	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
-	oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.32&quot;	
+	oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.35&quot;	
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;
    	oDialogMain.Model.getByName(&quot;ImageControl2&quot;).ImageURL = sertPath &amp; &quot;elkaHalf.png&quot;
 	oDialogMain.Execute()
@@ -125,12 +128,15 @@ sub testpath
 &apos;msgbox path
 
 &apos;MsgBox ConvertFromURL(ThisComponent.getURL())
-MsgBox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
+dim vDoc as object
+&apos;vDoc = StarDesktop.getComponents().createEnumeration().getUrl()
+MsgBox StarDesktop.getComponents().createEnumeration().getUrl()
+&apos;MsgBox DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; ).url
 
 end sub
 
 sub sharpFunction
-	insertStuff
+	MsgBox getLibraryLinkUrl(&quot;AtomtexLibrary&quot;)
 end sub
 
 

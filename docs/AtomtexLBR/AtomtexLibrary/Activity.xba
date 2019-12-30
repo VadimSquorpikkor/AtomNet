@@ -30,10 +30,12 @@ public const BETA_0664 as double  = 68.8
 public const BETA_0665 as double  = 474
 public const BETA_0666 as double  = 5801
 public const BETA_0667 as double  = 52373
-
 public const BETA_16437 as double  = 149288
-
 public const BETA_BG as double  = 11.9
+&apos;-------------------------------------------------------------
+public const BETA_0660_BQ as double  = 4.23
+public const BETA_6905_BQ as double  = 10.1
+public const BETA_0661_BQ as double  = 247
 &apos;-------------------------------------------------------------
 public const CS_137_HALF_LIFE as double = 365.25 * 30.17
 public const SR_90_HALF_LIFE as double = 365.25 * 28.796 &apos;Стронций-90
@@ -71,7 +73,13 @@ function get_activity_Sr(src as string, mdate)
 	case &quot;0666&quot;
 		activity_0 = BETA_0666
 	case &quot;0667&quot;
-		activity_0 = BETA_0667		
+		activity_0 = BETA_0667
+	case &quot;0660Bq&quot;
+		activity_0 = BETA_0660_BQ
+	case &quot;6905Bq&quot;
+		activity_0 = BETA_6905_BQ
+	case &quot;0661Bq&quot;
+		activity_0 = BETA_0661_BQ		
 	end select
 &apos;	msgbox activity_0
 	daysLeft = cdatefromiso(mdate.date) - DateSerial(2019,12,1) rem 1 декабря
