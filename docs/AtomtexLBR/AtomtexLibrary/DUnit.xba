@@ -26,7 +26,7 @@ private _serial as string
 private _betaSources as new Collection
 private _betaValues as new Collection
 private _betaPoints as new Collection
-
+&apos;private _sourceNameList as new Collection
 
 REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
 Private Sub Class_Initialize()
@@ -36,7 +36,7 @@ End Sub
 Private Sub Class_Terminate()
 end sub
 
-public sub add6130Data(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant)
+public sub addDataWithSrc(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant)
 	addData(BDname, measUnit, pointValue, pointText, BDType, measLimit)
 	dim arr(0) as double
 	arr = betaSources
@@ -138,10 +138,16 @@ rem Список контрольных точек (0.7, 7, ...)
 Public Function pointList As Collection
    pointList = _pointValue
 End Function
+Public Function getPointList As Collection
+   getPointList = _pointValue
+End Function
 
 rem Список префиксов контрольных точек (&quot;мк&quot;, &quot;м&quot;, ...)
 Public Function pointTextList As Collection
    pointTextList = _pointText
+End Function
+Public Function getPointTextList As Collection
+   getPointTextList = _pointText
 End Function
 
 public function setValueList(measuredValue as Collection)
@@ -156,6 +162,9 @@ rem список измеренных значений (0.67, 73, ...)
 public function valueList as Collection
 	&apos;dim valueList(8) as double
 	valueList = _measuredValue
+end function
+public function getValueList as Collection
+	getValueList = _measuredValue
 end function
 
 public function minLimit as double

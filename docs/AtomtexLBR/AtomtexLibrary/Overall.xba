@@ -137,6 +137,23 @@ sub dialogShowInitialize(maxBDCount as integer, oDialog as object, oDateFieldMod
 	next i
 	_oDialog.getControl(&quot;addButton&quot;).setEnable(false)
 end sub
+rem---------------------------------------------------------------------------------------------------------
+sub dialogSimpleInitialize(oDialog as object, oDateFieldModel as object, version as string, pointCount as integer, isComboCollection as Collection, BDList as Collection)
+	_BDList = BDList
+	_isComboCollection = isComboCollection
+	_oDialog = oDialog
+	initializeDateField(oDateFieldModel, _oDialog)	
+	_oDialog.getControl(&quot;versionLabel&quot;).text = version
+	
+	oComboBox1 = _oDialog.getControl(&quot;provCombo&quot;)
+	oComboBox2 = _oDialog.getControl(&quot;techCombo&quot;)
+	initializeSertificateCombo(oComboBox1, oComboBox2)
+	
+	_oOptionButtonPr = _oDialog.Model.getByName(&quot;isProtocol&quot;)
+	_oOptionButtonSr = _oDialog.Model.getByName(&quot;isSertificateRus&quot;)
+	_oOptionButtonSe = _oDialog.Model.getByName(&quot;isSertificateEng&quot;)
+	_oOptionButtonPr.State = 1
+end sub	
 rem-------метод из 1117_N--------------------------------------------------------------------------------------------------
 function rightStep(d as double) rem расчет правильного Step-а 
 	if              d&gt;10000 then rightStep = 10
@@ -156,6 +173,10 @@ rem-------метод из 1117_N упрощен---------------------------------
 sub makeLayoutFromBD(bd as new DUnit)
 	_oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
 	_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
+	makeSimpleLayoutFromBD(bd, &quot;ValueField&quot;, &quot;Label&quot;)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeSimpleLayoutFromBD(bd as new DUnit, valueField as string, labelField as string)
 	dim i as integer
 	dim point, nStep, value as double
 	dim MyFormat as string
@@ -169,13 +190,12 @@ sub makeLayoutFromBD(bd as new DUnit)
 		if point &lt; 100 and point &gt;= 1 then MyFormat = &quot;0.0&quot;
 		if point &gt;= 100               then MyFormat = &quot;0&quot;
 		
-		_oDialog.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
-		_oDialog.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
-		_oDialog.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
-		_oDialog.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		_oDialog.getControl(valueField + i).Text = Format(value, MyFormat)
+		_oDialog.Model.getByName(valueField + i).valueStep = nStep
+		_oDialog.Model.getByName(valueField + i).DecimalAccuracy = rightDecimalAccuracy(nStep)
+		_oDialog.getControl(labelField + i).Text = &quot; &quot; + Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
 	next i
 end sub
-
 rem---------------------------------------------------------------------------------------------------------
 function PathForProtocol(bdName as string)
 	if _oOptionButtonPr.State then
@@ -226,10 +246,14 @@ function avaragePointsRndArray(point as double, o_percent as double)
 end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(i as integer, percentOtk as double, bground as double)
-		dim bd as new DUnit 
+		dim src_name as string
+		dim bd as new DUnit
+		dim BDtype as string 
 		bd = _BDList.item(i)
+		BDtype = bd.BDType
 		dim j as integer
 		for j=0 to bd.pointList.count-1
+			src_name = bd.getPointTextList.item(j+1)
 			m_point = bd.valueList.item(j+1)
 			cont_point = bd.pointList.item(j+1)
 			prefix =  bd.pointTextList.item(j+1)
@@ -256,14 +280,13 @@ sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&ap
 			end if
 				
 			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
-				
-			rem проверка: если точка меньше 1 мЗв, значит 110-я установка, погрешность которой - 5%, иначе -- 130, где 4% (сравнивается значение точки в микрозивертах)
+		
+			findAndRename((&quot;$&quot; + i + &quot;-9&quot; + j), Format(cont_point, MyFormat)) rem активность источника
+			findAndRename((&quot;$&quot; + i + &quot;-A&quot; + j), src_name) rem название источника
+			
 			dim percent as integer
-			if AbsoluteValue(m_point, prefix)&lt;1 then
-				percent = 5
-			else
-				percent = 4
-			end if
+			
+			percent = FacilityError(m_point, BDType, prefix)
 				
 			dim pogr_point as double
 			pogr_point = RelativeError(m_point, cont_point)
@@ -273,7 +296,28 @@ sub insertToTemplateStep(i)  &apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&ap
 		next j
 		findAndRename(&quot;$bd_num&quot; + i, bd.getSerial)
 end sub
-
+rem---------------------------------------------------------------------------------------------------------
+function FacilityError(point as double, BDType as string, prefix as string)
+	&apos;msgbox &quot;&quot; + point + &quot; &quot; + BDType + &quot; &quot; + prefix
+	select case BDType
+	case &quot;gamma&quot;, &quot;gamma-Gy&quot;
+		if AbsoluteValue(point, prefix)&lt;1 then
+			FacilityError = 5
+		else
+			FacilityError = 4
+		end if
+	case &quot;n-PP&quot;
+			FacilityError = 5 rem `140
+	case &quot;n-MD&quot;
+			FacilityError = 5 rem `140				
+	case &quot;alpha&quot;
+			FacilityError = 6 rem `alpha
+	case &quot;beta&quot;
+			FacilityError = 6 rem `beta
+	case &quot;gamma-Src&quot;
+			FacilityError = 10 rem `beta		
+	end select
+end function
 rem---------------------------------------------------------------------------------------------------------
 sub insertBetaToTemplateStep(i)
 	
@@ -400,6 +444,12 @@ sub insertFacilitiesText
 	findAndRename(&quot;$facility_beta&quot;, Facility.getFacilityText(&quot;beta&quot;))
 	findAndRename(&quot;$facility_13+11rus&quot;, Facility.getFacilityText(&quot;130+110&quot;))
 	findAndRename(&quot;$facility_13+11eng&quot;, Facility.getFacilityText(&quot;130+110eng&quot;))
+	
+	findAndRename(&quot;$eng_facility_110&quot;, Facility.getFacilityText(&quot;110_eng&quot;))
+	findAndRename(&quot;$eng_facility_130&quot;, Facility.getFacilityText(&quot;130_eng&quot;))
+	findAndRename(&quot;$eng_facility_140&quot;, Facility.getFacilityText(&quot;140_eng&quot;))
+	findAndRename(&quot;$eng_facility_alpha&quot;, Facility.getFacilityText(&quot;alpha_eng&quot;))
+	findAndRename(&quot;$eng_facility_beta&quot;, Facility.getFacilityText(&quot;beta_eng&quot;))
 
 end sub	
 rem---------------------------------------------------------------------------------------------------------

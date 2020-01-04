@@ -95,22 +95,32 @@ public function FacTypeArray as variant
 	_isPrintableF(1) = is130necessary
 	FacTypeArray = _isPrintableF
 end function
-&apos;-------------------------------------------------------------
+&apos;-------------------------------------------------------------«»
 public function getFacilityText(id as string) as string
 	dim stroke as string
 	select case id
 	case &quot;110&quot;
 		stroke = &quot; образцовая дозиметрическая поверочная установка УДГ-АТ110 №013 с источниками 2-го разряда из радионуклида цезий-137 и с погрешностью аттестации 5%, св. № 210/1426-2018 от 22.10.2018. ФГУП «ВНИИМ им. Д.И. Менделеева»&quot;
+	case &quot;110_eng&quot;
+		stroke = &quot; standard dosimetry facility AT-110, N 013, Cs-137, error 5%, the Certificate of Compliance  N210/1426-2018 on 22.10.2018 issued by FGUP «D.I.Mendeleyev VNIIM», St. Petersburg, Russia)&quot;	
 	case &quot;130&quot;
 		stroke = &quot; образцовая дозиметрическая поверочная установка УДГ-АТ130 №015 с источниками 1-го разряда из радионуклида цезий-137 и с погрешностью аттестации 4 %, св. № 210/ 1427-2018 от 23.10.2018. ФГУП «ВНИИМ им. Д.И. Менделеева»&quot;
+	case &quot;130_eng&quot;
+		stroke = &quot; standard dosimetry facility AT-130, N 015, Cs-137-137, error 4 %, the Certificate of Compliance  N210/ 1427-2018 on 23.10.2018 issued by FGUP «D.I.Mendeleyev VNIIM», St. Petersburg, Russia)&quot;
 	case &quot;140&quot;
 		stroke = &quot; установка УПН-АТ140 №001 с комплектом плутоний-бериллиевых источников быстрых нейтронов: ИБН-8-6 №010, ИБН-8-3 №027 и с погрешностью аттестации ±5%, св. № 210-1508/18 от 06.11.2018 ВНИИМ&quot;
+	case &quot;140_eng&quot;
+		stroke = &quot; collimated beams of neutrons on the standard facility UPN-AT140 №001 with the set of Pu -  - Be neutron radiation sources (certificates of Compliance N210-1508/18 issued by VNIIM, St. Petersburg, Russia), error of ± 5 %&quot;	
 	case &quot;alpha&quot;
 		stroke = &quot; образцовые альфа-источники из радионуклида плутоний-239 типа 4П9, 5П9, 6П9 с погрешностью аттестации 6%, св.№МН0105687-4818 до 15.08.20, РУП«БелГим»&quot;
+	case &quot;alpha_eng&quot;
+		stroke = &quot; alpha radiation source of Pu-239: 4П9, 5П9, 6П9, error of ± 6 %, the certificateN МН0105687-4818  issued by BelGIM, Minsk, the Republic of Belarus&quot;	
 	case &quot;beta&quot;
 		stroke = &quot; образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0, 6С0 с погрешностью аттестации 6%, св. №МН0100818-4818 до 18.04.20, РУП «БелГим»&quot;
+	case &quot;beta_eng&quot;
+		stroke = &quot; beta radiation source of  Sr-90+Y-90: 4С0, 5С0, 6С0, error of 6%, the certificate N МН0100818-4818 issued by BelGIM, Minsk, the Republic of Belarus&quot;	
 	case &quot;beta6130&quot;
-		stroke = &quot; образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0,   6С0 с погрешностью аттестации 6% , св. №48-482377/1 от 20.10.14, РУП «БелГим»&quot;
+		stroke = &quot; образцовые бета-источники из радионуклида стронций-90 + иттрий-90 типа 4С0, 5С0, 6С0 с погрешностью аттестации 6%, св. №48-482377/1 от 20.10.14, РУП «БелГим»&quot;
 	case &quot;130+110&quot;
 		stroke = &quot;Прибор калибруется на дозиметрической поверочной установке УДГ-130, з/н № 015, погрешность ± 4 % (сертификат о поверке №210-1427/18 от 23.10.2018 г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия ), дозиметрической поверочной установке УДГ-110, з/н № 013, погрешность ± 5 % (сертификат о поверке №210-1426/18 от 22.10.2018 г. ФГУП «ВНИИМ им. Д.И.Менделеева», г. Санкт-Петербург, Россия )&quot; 
 	case &quot;130+110eng&quot;
