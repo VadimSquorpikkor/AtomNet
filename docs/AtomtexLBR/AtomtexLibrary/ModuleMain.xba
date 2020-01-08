@@ -11,17 +11,20 @@ Sub MainDialog_Show
 	rem user_name = &quot;Krechko_AI&quot;
 	rem user_name = &quot;Tarasenko_VV&quot;  	
 	rem user_name = &quot;Kurbatova&quot;
-	user_name = &quot;Serikov_VA&quot;
+	rem user_name = &quot;Serikov_VA&quot;
 	rem user_name = &quot;Rusakevich_AV&quot;
-	rem user_name = &quot;Squorpikkor&quot;
+	user_name = &quot;Squorpikkor&quot;
 	rem user_name = &quot;Leshkevich_SV&quot;
 	sertPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
 	rem sertPath = &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
 	
 	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
-	&apos;dom olib as object
-	&apos;olib = GlobalScope.BasicLibraries.getbyname(&quot;AtomtexLibrary&quot;)
-	&apos;msgbox olib.getLibraryLinkUrl(&quot;AtomtexLibrary&quot;)
+	
+&apos;	dim olib as object
+&apos;	GlobalScope.BasicLibraries.loadLibrary(&quot;AtomtexLibrary&quot;)
+&apos;	olib = GlobalScope.BasicLibraries.getbyname(&quot;AtomtexLibrary&quot;)
+&apos;	msgbox olib.getLibraryLinkUrl(&quot;AtomtexLibrary&quot;)
+	
 	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
 	oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия 2.35&quot;	
    	oDialogMain.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;АТОМТЕХ.png&quot;

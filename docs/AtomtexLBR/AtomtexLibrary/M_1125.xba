@@ -20,7 +20,7 @@ dim oOption1125 as object
 dim oOption1125A as object
 dim path, calibName, techName as string
 dim oComboBox1, oComboBox2 as object
-dim oCheckBoxBZ, oCheckBoxBDPS as object 
+dim oCheckBoxBZ, oCheckBoxBDPS, oCheckBoxSM as object 
 dim mainImage as object
 dim	isComboCollection as new Collection
 dim alphaCount, betaCount, gammaCount, gammaCount1125a as integer
@@ -47,6 +47,7 @@ Sub AT1125_Dialog_Show
 
 	oCheckBoxBZ = oDialog1125.getControl(&quot;isUA&quot;)
 	oCheckBoxBDPS = oDialog1125.getControl(&quot;isBDPS&quot;)
+	oCheckBoxSM = oDialog1125.getControl(&quot;isMarin&quot;)
 	
 	enableBDPS(false)
 	enableUA(false)
@@ -168,31 +169,55 @@ sub enableUA(visibility as boolean)
 		oDialog1125.getControl(&quot;uaLabel&quot; + i).setEnable(visibility)		
 	next i
 	oDialog1125.getControl(&quot;uaLabel&quot;).setEnable(visibility)
-	oDialog1125.getControl(&quot;uaLabelSec&quot;).setEnable(visibility)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Зачем я заморачивался с созданием метода setBZ и setSM, а не подвязал все три чекбокса к одному методу setVisibility?
+&apos;Дело в режиме работы чекБоксов -- SM и BZ это такие чекБоксы, которые могут быть либо включены либо выключены, но 
+&apos;не могут быть включены ОДНОВРЕМЕННО. RadioButton не подходит (есть вариант, когда не выбран не один из чекбоксов)
+sub setBZ
+	if oCheckBoxSM.state = 1 then oCheckBoxSM.state = 0
+	setVisibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setSM
+	if oCheckBoxBZ.state = 1 then oCheckBoxBZ.state = 0
+	setVisibility
 end sub
 rem---------------------------------------------------------------------------------------------------------
 sub setVisibility
 	rem ТОЛЬКО 1125
-	if oCheckBoxBZ.state = 0 AND oCheckBoxBDPS.state = 0 then
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 AND oCheckBoxBDPS.state = 0 then
 		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_wide.png&quot;
 		enableBDPS(false)
 		enableUA(false)
 	end if
 	rem 1125 + БДПС
-	if oCheckBoxBZ.state = 0 AND oCheckBoxBDPS.state = 1 then
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 AND oCheckBoxBDPS.state = 1 then
 		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bdps_wide.png&quot;
 		enableBDPS(true)
 		enableUA(false)
 	end if
-	rem 1125 + УА
+	rem 1125 + УА БЗ
 	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 0 then
 		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bz_wide.png&quot;
 		enableBDPS(false)
 		enableUA(true)
+	end if
+	rem 1125 + УА СМ
+	if oCheckBoxSM.state = 1 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_sm_wide.png&quot;
+		enableBDPS(false)
+		enableUA(true)
 	end if	
-	rem 1125 + БДПС + УА
+	rem 1125 + БДПС + УА БЗ
 	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 1 then
 		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_b_bz.png&quot;
+		enableBDPS(true)
+		enableUA(true)
+	end if
+	rem 1125 + БДПС + УА СМ
+	if oCheckBoxSM.state = 1 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_b_sm.png&quot;
 		enableBDPS(true)
 		enableUA(true)
 	end if
@@ -231,6 +256,9 @@ sub insertRecordsToTemplate
 	dim bd as new DUnit
 	dim min, max as double
 	
+	if oCheckBoxSM.state = 1 then findAndRename(&quot;$ua_min&quot;, 50)
+	if oCheckBoxBZ.state = 1 then findAndRename(&quot;$ua_min&quot;, 100)
+		
 	if oOption1125.state then
 		deleteTable(&quot;1125A&quot;)
 		deleteTable(&quot;lim_1125a&quot;)
@@ -245,7 +273,7 @@ sub insertRecordsToTemplate
 		deleteTable(&quot;lim_1125&quot;)
 		deleteTable(&quot;perc_1125&quot;)
 	end if	
-	if oCheckBoxBZ.state = 0 then
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 then
 		deleteTable(&quot;BZ&quot;)
 		deleteTable(&quot;lim_ua&quot;)
 		deleteTable(&quot;perc_ua&quot;)
