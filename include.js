@@ -158,7 +158,7 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>11ХХ</span>' +
+        '        <span>1103M / 1121 / 1123</span>' +
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../1103/1103.html">ДКР-АТ1103М</a>' +
@@ -260,7 +260,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для протоколов</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки <span class="version_label">2.34</span></a></li>' +
+        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.53</a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +

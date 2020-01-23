@@ -127,8 +127,9 @@
 }
 
 .main_div{
-    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
-    background-size: 250px;
+    /*ДЛЯ НОВОГО ГОДА*/
+    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;*/
 }
 
 body>div>ul>li, body>div>ol>li {
@@ -485,11 +486,13 @@ p {
 }
 
 .yellow_back_index_right>div>span{
-    background: #000000;
+    /*ДЛЯ НОВОГО ГОДА*/
+    /*background: #000000;*/
 }
 .yellow_back_index_right {
+    /*ДЛЯ НОВОГО ГОДА*/
     /*background-image: url("imgs/lava.jpg");*/
-    background-image: url("imgs/ng.jpg");
+    /*background-image: url("imgs/ng.jpg");*/
 
     /*margin: 5px auto 5px; !*так было до лого*!*/
     margin: 5px;
