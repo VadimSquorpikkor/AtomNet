@@ -257,6 +257,7 @@ function includeHTML(mode_1) {
         '        <span>Файлы, документы</span>' +
         '    </summary>' +
         '    <ul>' +
+        '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Как установить макрос для протоколов</a></li>' +
