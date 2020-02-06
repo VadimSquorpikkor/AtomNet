@@ -15,3 +15,5 @@ Device Settings Instructions
 * БОИ
 * Проверка ПКИ
 * и другое
+
+[Список версий](VERSION.md)

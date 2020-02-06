@@ -197,6 +197,16 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/signalizator.html">Устройство сигнализации 1121,1123</a></li>' +
         '    </ul>' +
         '</details>' +
+        '' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
+        '        <span>Адаптеры</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../adapter/dtdu3.html">Настройка БТ-ДУ3</a></li>' +
+        '   </ul>' +
+        '</details>' +
+        '' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Умножители / делители</span>' +
