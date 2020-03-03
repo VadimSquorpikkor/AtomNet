@@ -2,7 +2,6 @@
 <html lang="RU">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <title>Содержание</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../activity.js"></script>
@@ -14,44 +13,13 @@
 
 <div class="logo_div"></div>
 
-<!--
-
-<div class="yellow_back_small" style="margin-left: 0; margin-right: 0">
-    ghkghg
-</div>
--->
-
-<div id="index_menu" class="spoiler_menu"> <!-- style="float: left; width: 450px; margin-right: 10px"--></div>
-
+<div id="index_menu" class="spoiler_menu"></div>
 
 <script>
     includeHTML('index');
 </script>
 
-
-<!--<div class="yellow_back_index_right">  &lt;!&ndash;style="margin-left: 460px"&ndash;&gt;
-    <img src="../imgs/radiation.png" width="100" style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 10px">
-    <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7">
-        <span class="red_light_title">Активность источников:</span><br><br>
-        &lt;!&ndash;        <hr color="ff6633">&ndash;&gt;
-        <sup>139</sup>Cs №516: <input id="516" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №517: <input id="517" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №518: <input id="518" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №519: <input id="519" type="text" value="0" title="k1" size="4"><br><br>
-        <sup>139</sup>Cs №520: <input id="520" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №521: <input id="521" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №2910: <input id="2910" type="text" value="0" title="k1" size="4">
-        <sup>109</sup>Cd №1079: <input id="1079" type="text" value="0" title="k1" size="5"><br>
-        <hr color="ff6633">
-        <span class="red_light_title">Без периодической поверки:</span><br><br>
-        <sup>139</sup>Cs №831: <input id="831" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №832: <input id="832" type="text" value="0" title="k1" size="4">
-        <sup>139</sup>Cs №833: <input id="833" type="text" value="0" title="k1" size="4">
-    </div>
-</div>-->
-
-
-<div class="yellow_back_index_right">  <!--style="margin-left: 460px"-->
+<div class="yellow_back_index_right">
     <img src="../imgs/radiation.png" width="100"
                                   style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">
     <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7; text-align: left">
@@ -114,23 +82,6 @@
                 <div>кБк</div>
             </div>
         </div>
-<!--        <div class="activity_block">
-            <div>
-                <div><sup>109</sup>Cd</div>
-                <div>№1079</div>
-                <div><span id="1079">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>-->
-
-        <!--        &lt;!&ndash;<sup>139</sup>Cs №516: <input id="516" type="text" value="0" title="k1" size="4">&ndash;&gt;
-                <sup>139</sup>Cs №517: <input id="517" type="text" value="0" title="k1" size="4">
-                <sup>139</sup>Cs №518: <input id="518" type="text" value="0" title="k1" size="4">
-                <sup>139</sup>Cs №519: <input id="519" type="text" value="0" title="k1" size="4"><br><br>
-                <sup>139</sup>Cs №520: <input id="520" type="text" value="0" title="k1" size="4">
-                <sup>139</sup>Cs №521: <input id="521" type="text" value="0" title="k1" size="4">
-                <sup>139</sup>Cs №2910: <input id="2910" type="text" value="0" title="k1" size="4">
-                <sup>109</sup>Cd №1079: <input id="1079" type="text" value="0" title="k1" size="5"><br>-->
 
         <hr color="ff6633">
         <span class="red_light_title">Без периодической поверки:</span><br><br>
@@ -159,16 +110,10 @@
                 <div>кБк</div>
             </div>
         </div>
-
-        <!--<sup>139</sup>Cs №831: <input id="831" type="text" value="0" title="k1" size="4">-->
-        <!--<sup>139</sup>Cs №832: <input id="832" type="text" value="0" title="k1" size="4">-->
-        <!--<sup>139</sup>Cs №833: <input id="833" type="text" value="0" title="k1" size="4">-->
-
-
     </div>
 </div>
 
-<div class="activity_calculator">  <!--style="margin-left: 460px"-->
+<div class="activity_calculator">
 
     <div style="float: left">
         <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
@@ -192,10 +137,14 @@
     </div>
 </div>
 
-<div class="yellow_back_index_right">
+<div class="blue_back_index_right">
+    <span class="red_light_title">Что нового?</span><br>
     Вышла новая версия макросов для протоколов поверки и сертификатов &mdash; 2.63. Кому надо, обновляемся <a style="color: #ff3333; background: none" href="../sertif_prosh/macro.html">здесь</a>
-<!--    Вышла новая версия макросов для протоколов поверки и сертификатов &mdash; 2.60. Кому надо, обновляемся <a style="color: #ff3333; background: none" href="file://////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/">здесь</a>-->
-    или <a style="color: #ff3333; background: none" href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь</a>
+    или <a style="color: #ff3333; background: none" href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь</a><br>
+    Изменены значения для настройки по <sup>109</sup>Cd для 1121 &mdash; 40 мкЗв/ч<br>
+    Изменены значения для настройки по <sup>109</sup>Cd для 1123 &mdash; 50 мкЗв/ч<br>
+    Изменены значения для настройки по <sup>109</sup>Cd для БДКГ-04 &mdash; 60 мкЗв/ч<br>
+    Изменены значения для настройки по <sup>109</sup>Cd для БДКГ-204 &mdash; 35 мкЗв/ч
 </div>
 
 <div class="div_for_menu_block" style="visibility: hidden; padding: 0"><!-- style="visibility: hidden; padding: 0-->

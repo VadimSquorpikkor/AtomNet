@@ -15,7 +15,8 @@ function activityAllDays(a0, pov_date, now_date, t_pol) {
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_800 = new Date(2019,9,17);    //yyyy.mm.dd  месяц начинается с 0
-const pov_date_cd_1079 = new Date(2019,0,30);
+const pov_date_cd_1079 = new Date(2020,2,3);
+const pov_date_cs_1121_23_04 = new Date(2019,0,30);
 const pov_date_cd_1079_version2 = new Date(2019,2,18);  //такое значение давалоотличный результат. Дата была 14 и 22, я взял среднее
 const t_pol_cs = 365.2422*30.17;              //Период полураспада цезия 137 в днях
 const t_pol_cd = 461.4;
@@ -71,44 +72,47 @@ function get_all_activities() {
         // 10;
 }
 
-function get_cd_1123() {
-    document.getElementById('cd').value = activity(81, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cd_1079, t_pol_cs);
-    document.getElementById('cs_1123_516').value = activity(45, pov_date_cd_1079, t_pol_cs);
 
+
+//----------------------------------------------------------------------------------------------------------------------
+function get_cd_1123() {
+    document.getElementById('cd').value = activity(50, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
 }
 
 function get_cs_bdkg04() {
-    // document.getElementById('cd').value = activity(81, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cd').value = activity(85, pov_date_cd_1079_version2, t_pol_cd);
-    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cd_1079, t_pol_cs);
-    document.getElementById('cs_1123_516').value = activity(45, pov_date_cd_1079, t_pol_cs);
-    document.getElementById('cs_1123_516_2').value = activity(45, pov_date_cd_1079, t_pol_cs);
-    document.getElementById('cs_1123_2910_2').value = activity(33, pov_date_cd_1079, t_pol_cs);
-    // document.getElementById('cd_2').value = activity(81, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cd_2').value = activity(85, pov_date_cd_1079_version2, t_pol_cd);
-
+    document.getElementById('cd').value = activity(60, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cd_2').value = activity(60, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516_2').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_2910_2').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
 }
-
+// подправь показания настройки по cd для 1121 40мкЗв
+// 1123 50 мкЗв
+// 04 - 60
+// 204 - 35
 function get_cd_1121() {
-    document.getElementById('cd').value = activity(61, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cs_1121_2910').value = activity(23, pov_date_cd_1079, t_pol_cs);
-    document.getElementById('cs_1121_516').value = activity(32, pov_date_cd_1079, t_pol_cs);
-
+    document.getElementById('cd').value = activity(40, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cs_1121_2910').value = activity(23, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1121_516').value = activity(32, pov_date_cs_1121_23_04, t_pol_cs);
 }
 
 function get_act_204() {
-    document.getElementById('cd').value = activity(63, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    document.getElementById('cd').value = activity(35, pov_date_cd_1079, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cd2').value = activity(3.3, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cs').value = activity(23, new Date(2018,12,15), t_pol_cs);
-
 }
+//----------------------------------------------------------------------------------------------------------------------
 
 function get_cs_1121() {
         let res = parseFloat(document.getElementById('cs_1121').value);
         let ans = (res-12)*9/7;
         document.getElementById('res_cs_1121').value = ans.toFixed(2);
 }
+
+
 
 function resistor_bdkn_03() {
     let res37 = parseInt(document.getElementById('r_37').value);

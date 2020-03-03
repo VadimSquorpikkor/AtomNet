@@ -1,39 +1,55 @@
 /*todo Переписать CSS*/
 
+/*Таблицы------------------------------------------------------------------*/
 .table_two_colors {
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
-
 }
-
 .table_two_colors tr:nth-child(odd){
     background-color: #ffe4c4;
 }
+table a[href$='.ods']:hover, table a[href$='.odt']:hover, table a[href$='.docx']:hover, table a[href$='.xlsx']:hover, table a[href$='.xls']:hover, table a[href$='.pdf']:hover, table a[href$='.doc']:hover {
+    /*padding-left: 22px;*/
+    background-size: 22px;
+    background-color: unset;
+}
+table {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+}
+.small_table {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 300px;
+}
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
 
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+/*Блок с активностью на главной странице-------------------------------------*/
 .activity_block {
     background-color: #f57506;
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.55);
     border-radius: 5px;
     display: inline-block;
     font-size: 14px;
-    /*line-height: 18px;*/
     padding: 2px;
     margin: 2px;
-    /*color: white;*/
-
 }
 .activity_block div {
     background-color: antiquewhite;
     border-radius: 3px;
-    /*background-color: inherit;*/
     text-indent: 0;
     text-align: center;
     font-size: 12px;
     line-height: 18px;
 }
 .activity_block div:nth-child(2) {
-    /*background-color: orange;*/
-    /*color: white;*/
-
     color: darkslateblue;
     text-indent: 0;
     text-align: center;
@@ -43,12 +59,12 @@
     line-height: 10px;
 }
 .activity_block span {
-
     font-size: 18px;
     color: #ff3333;
     padding: 3px;
-    /*text-shadow: 0 2px 1px #666666;*/
 }
+
+
 
 .logo_div {
     /*background-image: url("imgs/lava.jpg");*/
@@ -82,37 +98,15 @@
     content: "в работе";
 }
 
-/*.red_light_title {
-    font-size: 20px;
-    color: #FF6633;
-    text-shadow: 1px 1px 2px #000000;
-    background-color: #333333;
-    !*text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;*!
-}*/
-
 .red_light_title {
     font-size: 20px;
     color: #FF6633;
     text-shadow: 1px 4px 5px #aba8a8;
-    /*text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;*/
 }
-
-/*.red_light_title {
-    font-size: 20px;
-    color: orange;
-    !*background: #999999;*!
-    text-shadow: 0 0 15px rgba(3, 3, 3, 1), 0 0 15px rgba(2, 2, 2, 1), 0 0 15px rgba(2, 2, 2, 1), 0 0 15px rgba(2, 2, 2, 1);
-}*/
 
 .under_construction:hover:before {
     color: #ffffff;
 }
-
-/*ol ul li{
-    list-style-type: none;
-    margin-left: 15px;
-    padding-left: 15px;
-}*/
 
 .no_markers {
     list-style-type: none;
@@ -485,29 +479,58 @@ p {
     text-align: right;
 }
 
+.activity_calculator div {
+    background-color: antiquewhite;
+    text-indent: 0;
+}
+
+.activity_calculator span {
+    font-size: 14px;
+    display: inline-block;
+}
+
+.activity_calculator div:first-child span {
+    width: 150px;
+    padding: 2px 12px;
+    text-align: right;
+}
+
+/*
+.new_div {
+    background: #555555;
+    margin-top: 0;
+    float: left;
+    width: auto;
+    margin-left: 5px;
+    padding: 0
+}
+*/
+
 .yellow_back_index_right>div>span{
     /*ДЛЯ НОВОГО ГОДА*/
     /*background: #000000;*/
 }
-.yellow_back_index_right {
-    /*ДЛЯ НОВОГО ГОДА*/
+.blue_back_index_right, .yellow_back_index_right, .activity_calculator {
+    /*ДЛЯ НОВОГО ГОДА (отсоединить калькулятор)*/
     /*background-image: url("imgs/lava.jpg");*/
     /*background-image: url("imgs/ng.jpg");*/
 
-    /*margin: 5px auto 5px; !*так было до лого*!*/
     margin: 5px;
-    /*margin-top: 10px;*/
-    /*margin-left: 5px;*/
-    /*margin-bottom: 5px;*/
     font-size: 14px;
     background-color: antiquewhite;
     align-self: center;
     text-align: center;
     padding: 10px;
     text-indent: 0;
-    border-radius: 20px;
-
+    border-radius: 10px;
 }
+.blue_back_index_right {
+    text-align: left;
+    padding-left: 40px;
+    background-color: #ffdddd;
+}
+
+
 
 .yellow_back, .yellow_back_small, .tips_and_tricks {
     margin: 10px 0 10px;
@@ -558,32 +581,7 @@ p {
     margin: 5px;
 }
 
-.activity_calculator {
-    /*max-width: 1200px;*/
-    background-color: antiquewhite;
-    border-radius: 20px;
-    margin-top: 0;
-    margin-bottom: 0;
-    /*margin: 0 auto 5px;  до лого*/
-    padding: 5px 10px 5px 10px;
-    text-align: center;
-}
 
-.activity_calculator div {
-    background-color: antiquewhite;
-    text-indent: 0;
-}
-
-.activity_calculator span {
-    font-size: 14px;
-    display: inline-block;
-}
-
-.activity_calculator div:first-child span {
-    width: 150px;
-    padding: 2px 12px;
-    text-align: right;
-}
 
 .yellow_back p {
     margin: 10px;
@@ -679,11 +677,7 @@ a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.
     /*transform: scale(1.3);*/
 }
 
-table a[href$='.ods']:hover, table a[href$='.odt']:hover, table a[href$='.docx']:hover, table a[href$='.xlsx']:hover, table a[href$='.xls']:hover, table a[href$='.pdf']:hover, table a[href$='.doc']:hover {
-    /*padding-left: 22px;*/
-    background-size: 22px;
-    background-color: unset;
-}
+
 
 summary {
     cursor: pointer;
@@ -765,32 +759,14 @@ ol {
     font-size: 18px;
 }
 
-table {
-    font-size: 14px;
-    border-collapse: collapse;
-    width: 100%;
-}
 
-.small_table {
-    font-size: 14px;
-    border-collapse: collapse;
-    width: 300px;
-}
 
 .space {
     margin-left: 20px;
 }
 
 
-table, th, td {
-    border: 1px solid black;
-    text-align: center;
-}
 
-th {
-    background-color: #4CAF50;
-    color: white;
-}
 
 .left_side {
     float: left;
@@ -981,8 +957,13 @@ figcaption {
     margin-top: 2px;
 }
 
+/*для всех страниц, кроме главной*/
 @media (min-width: 1300px){
-    body>div {
+/*    body>div {
+        margin-left: 460px;
+        margin-right: 5px;
+    }*/
+    .main_div {
         margin-left: 460px;
         margin-right: 5px;
     }
@@ -1004,73 +985,27 @@ figcaption {
         float: none;
     }
 }
+/*@media (max-width: 800px) {
+    #index_menu {
+        float: none;
+        width: auto;
+    }
+    #new_div {
+        float: none;
+    }
+}*/
+/*для главной страницы*/
 @media (min-width: 800px) {
     #index_menu {
         float: left;
         width: 420px;
+
     }
-    .yellow_back_index_right, .activity_calculator, .div_for_menu_block {
+
+    .blue_back_index_right, .yellow_back_index_right, .activity_calculator, .div_for_menu_block {
         margin-left: 430px;
     }
     .div_for_menu_block {
         margin-top: 2px;
     }
 }
-
-
-/*.spoiler_menu details[open] > ul {
-    animation-name: slideDown;
-    animation-duration: 400ms;
-    !*animation-timing-function:cubic-bezier(0, 0, 1, 0);*!
-    !*overflow:hidden;*!
-    !*padding-left: 18px;*!
-}*/
-
-/*
-details[open] > div, details[open] {
-    animation-name: slideDown;
-    animation-duration: 400ms;
-    !*animation-timing-function:cubic-bezier(0, 0, 1, 0);*!
-    !*overflow:hidden;*!
-    !*padding-left: 18px;*!
-}*/
-
-/*
-@media (min-width: 950px) {
-    #main_menu {
-        max-width: 100%;
-        display: block;
-        float: left;
-        position: static;
-    }
-
-    .header_div_2 {
-        padding-left: 10px;
-        text-indent: 0;
-        font-size: 14px;
-        padding-right: 10px;
-        float: left;
-        width: 400px;
-        position: static;
-        background-color: rgba(0,0,0,1);
-        box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-
-    }
-    .header_div_2 div, .header_div_2 a {
-        !*padding-left: 10px;*!
-        text-indent: 0;
-        margin-left: 0;
-    }
-    #menu_button {
-        display: none;
-    }
-
-    .spoiler_menu a:hover {
-        width: 95%;
-    }
-
-    body > div {
-        margin-left: 450px;
-    }
-
-}*/
