@@ -78,15 +78,15 @@ function get_all_activities() {
 function get_cd_1123() {
     document.getElementById('cd').value = activity(50, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_516').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
 }
 
 function get_cs_bdkg04() {
-    document.getElementById('cd').value = activity(60, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cd').value   = activity(60, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cd_2').value = activity(60, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_516').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_516_2').value = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_2910').value   = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516').value    = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1123_516_2').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
     document.getElementById('cs_1123_2910_2').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
 }
 // подправь показания настройки по cd для 1121 40мкЗв
@@ -96,13 +96,13 @@ function get_cs_bdkg04() {
 function get_cd_1121() {
     document.getElementById('cd').value = activity(40, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cs_1121_2910').value = activity(23, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1121_516').value = activity(32, pov_date_cs_1121_23_04, t_pol_cs);
+    document.getElementById('cs_1121_516').value  = activity(32, pov_date_cs_1121_23_04, t_pol_cs);
 }
 
 function get_act_204() {
-    document.getElementById('cd').value = activity(35, pov_date_cd_1079, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    document.getElementById('cd').value  = activity(35, pov_date_cd_1079, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cd2').value = activity(3.3, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
-    document.getElementById('cs').value = activity(23, new Date(2018,12,15), t_pol_cs);
+    document.getElementById('cs').value  = activity(23, new Date(2018,12,15), t_pol_cs);
 }
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -111,8 +111,6 @@ function get_cs_1121() {
         let ans = (res-12)*9/7;
         document.getElementById('res_cs_1121').value = ans.toFixed(2);
 }
-
-
 
 function resistor_bdkn_03() {
     let res37 = parseInt(document.getElementById('r_37').value);
