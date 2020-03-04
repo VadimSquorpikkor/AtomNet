@@ -57,6 +57,7 @@ th {
 }
 .activity_block div:last-child {
     line-height: 10px;
+    padding-bottom: 2px;
 }
 .activity_block span {
     font-size: 18px;
