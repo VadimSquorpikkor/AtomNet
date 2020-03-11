@@ -372,7 +372,7 @@ body > div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
-    border-radius: 15px;
+    border-radius: 10px;
     /*max-width: 1200px;*/
 }
 
@@ -542,7 +542,7 @@ p {
     align-self: center;
 
     text-indent: 0;
-    border-radius: 20px;
+    border-radius: 5px;
 
     /*box-shadow: none;*/
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
@@ -745,7 +745,7 @@ body > div > .left_align {
     background-color: lemonchiffon;
     text-indent: 0;
     padding: 10px 20px;
-    border-radius: 25px;
+    border-radius: 10px;
     box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.23);
 }
 
