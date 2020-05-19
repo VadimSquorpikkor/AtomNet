@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta charset="UTF-8">
+    <title>БДКН-05. Проверка плат</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">БДКН-05. Проверка плат</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+
+</div>
+
+<div class="left_side_menu">
+
+    <div id="menu_left" class="spoiler_menu"></div>
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+    <h1>БДКН-05. Проверка плат</h1>
+
+    <p>Берем плату для проверки плат БДКН</p>
+
+    <img src="../imgs/bdkn-05/01.jpg" width="600">
+
+    <h3>Проверка плат преобразователя напряжения 436121.017</h3>
+
+    <ul>
+        <li>Подключить</li>
+        <ul>
+            <li>4 - Земля (черный)</li>
+            <li>5 - +5В (красный)</li>
+            <li>3 - +3,3В (желтый)</li>
+            <li>2 - +3,3В (желтый)</li>
+        </ul>
+        <img src="../imgs/bdkn-05/02.jpg" width="900">
+
+        <li>Проверяем напряжение на транзисторе VT1-VD2. Должна быть такая амплитуда и форма</li>
+
+        <img src="../imgs/bdkn-05/03.jpg" width="600">
+
+        <li>Проверяем напряжение на делителе. Должно быть около 18В</li>
+    </ul>
+
+    <h3>Проверка плат преобразователя импульсов 468741.022</h3>
+
+    <ul>
+        <li>Подключить</li>
+        <ul>
+            <li>5 - Земля</li>
+            <li>7 - +3,3В</li>
+            <li>6 - +5В</li>
+        </ul>
+
+        <img src="../imgs/bdkn-05/04.jpg" width="600">
+
+        <li>Проверяем напряжения в точках. Удобнее использовать осциллограф</li>
+    </ul>
+
+    <table style="max-width: 300px; margin: auto">
+        <tr>
+            <th>Точка</th>
+            <th>Напряжение</th>
+        </tr>
+        <tr>
+            <td>D2.3</td>
+            <td>2.66</td>
+        </tr>
+        <tr>
+            <td>VT3 C17</td>
+            <td>-2.66</td>
+        </tr>
+        <tr>
+            <td>T.10 D4.7</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>D9.3</td>
+            <td>1.88</td>
+        </tr>
+        <tr>
+            <td>D8.7</td>
+            <td>0.09</td>
+        </tr>
+        <tr>
+            <td>D5.1</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>D7.1</td>
+            <td>-5</td>
+        </tr>
+    </table>
+
+    <img src="../imgs/bdkn-05/05.jpg" width="600">
+
+    <h3>Проверка плат устройства обработки 468154.036</h3>
+
+    <ul>
+        <li>Подключить</li>
+        <ul>
+            <li>5 - +6В</li>
+            <li>4 - Земля</li>
+            <li>3 - +3.3В</li>
+        </ul>
+
+        <img src="../imgs/bdkn-05/06.jpg" width="600">
+
+        <li>в точке D6.8 осциллографом смотрим сигнал, при подаче на точку 9 сигнала, должен появиться импульс 25мкС
+        </li>
+
+        <img src="../imgs/bdkn-05/07.jpg" width="600">
+
+    </ul>
+
+</div>
+
+</body>
+</html>
