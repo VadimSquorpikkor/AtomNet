@@ -256,6 +256,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../other/bdrm-05m.html">БДРМ-05М. Настройка</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
+        '        <li><a href="../other/6130_prosh.html">АТ6130 Прошивка</a></li>' +
         '        <li><a href="../other/pdu.html">ПДУ</a></li>' +
         '        <li><a href="../other/flip.html">Flip. Как шить</a></li>' +
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
