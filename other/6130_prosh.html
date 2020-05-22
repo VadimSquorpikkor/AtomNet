@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta charset="UTF-8">
@@ -44,11 +45,114 @@
         <li>Выбрать прошивку в соответствии с заданием, смотрим в таблице с перечнем (rem, cps, Bq, плотность потока,
             наличие блютуза — определяем код прибора, например: 6130 плотность потока без БТ, код будет 00 (рус) или
             06(англ), будет соответствовать прошивка AT6130 (-00,06) (0x6cb6).a43)
+
+            <table style="max-width: 600px; margin: auto">
+                <tr>
+                    <th style="width: 40px" rowspan="2">Исп.</th>
+                    <th style="width: 40px" rowspan="2">Код</th>
+                    <th style="width: 120px" rowspan="2">Наименование</th>
+                    <th style="width: 80px" rowspan="2"><img src="../imgs/bt.png" width="40"></th>
+                    <th colspan="2">χ и γ</th>
+                    <th colspan="3">β</th>
+                </tr>
+                <tr>
+                    <th style="width: 80px">Sv</th>
+                    <th style="width: 80px">Rem</th>
+                    <th style="width: 80px">min<sup>-1</sup>&middot;cm<sup>-2</sup></th>
+                    <th style="width: 80px">cps</th>
+                    <th style="width: 80px">Bq/cm<sup>2</sup></th>
+                </tr>
+
+                <tr>
+                    <td rowspan="6">Рус</td><td>00</td><td>AT6130</td> <td></td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>01</td><td>AT6130</td> <td>●</td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>02</td><td>AT6130А</td> <td></td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>03</td><td>AT6130А</td> <td>●</td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>04</td><td>AT6130Д</td> <td></td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>05</td><td>AT6130Д</td> <td>●</td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+
+                <tr>
+                    <td rowspan="6">Eng</td><td>06</td><td>AT6130</td> <td></td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>07</td><td>AT6130</td> <td>●</td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>08</td><td>AT6130А</td> <td></td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>09</td><td>AT6130А</td> <td>●</td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>10</td><td>AT6130D</td> <td></td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>11</td><td>AT6130D</td> <td>●</td> <td>●</td> <td></td> <td></td> <td></td> <td></td>
+                </tr>
+
+                <tr>
+                    <td rowspan="14">Eng</td><td>12</td><td>AT6130</td> <td></td> <td>●</td> <td></td> <td></td> <td>●</td> <td></td>
+                </tr>
+                <tr>
+                    <td>13</td><td>AT6130</td> <td>●</td> <td>●</td> <td></td> <td></td> <td>●</td> <td></td>
+                </tr>
+                <tr>
+                    <td>14</td><td>AT6130</td> <td></td> <td></td> <td>●</td> <td></td> <td>●</td> <td></td>
+                </tr>
+                <tr>
+                    <td>15</td><td>AT6130</td> <td>●</td> <td></td> <td>●</td> <td></td> <td>●</td> <td></td>
+                </tr>
+                <tr>
+                    <td>16</td><td>AT6130</td> <td></td> <td></td> <td>●</td> <td>●</td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>17</td><td>AT6130</td> <td>●</td> <td></td> <td>●</td> <td>●</td> <td></td> <td></td>
+                </tr>
+
+                <tr>
+                    <td>18</td><td>AT6130А</td> <td></td> <td></td> <td>●</td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>19</td><td>AT6130А</td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>20</td><td>AT6130D</td> <td></td> <td></td> <td>●</td> <td></td> <td></td> <td></td>
+                </tr>
+                <tr>
+                    <td>21</td><td>AT6130D</td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td> <td></td>
+                </tr>
+
+                <tr>
+                    <td>22</td><td>AT6130</td> <td></td> <td>●</td> <td></td> <td></td> <td></td> <td>●</td>
+                </tr>
+                <tr>
+                    <td>23</td><td>AT6130</td> <td>●</td> <td>●</td> <td></td> <td></td> <td></td> <td>●</td>
+                </tr>
+                <tr>
+                    <td>24</td><td>AT6130</td> <td></td> <td></td> <td>●</td> <td></td> <td></td> <td>●</td>
+                </tr>
+                <tr>
+                    <td>25</td><td>AT6130</td> <td>●</td> <td></td> <td>●</td> <td></td> <td></td> <td>●</td>
+                </tr>
+            </table>
+
         <li>выбрать микроконтроллер (MSP430F249)</li>
         <li>установить бит Blow Security Fuse в enable<br>
 
         </li>
-            <span class="attention" style="margin: 5px auto">ВНИМАНИЕ!!</span> после этого прошить другую прошивку невозможно.
+        <span class="attention" style="margin: 5px auto">ВНИМАНИЕ!!</span> после этого прошить другую прошивку
+        невозможно.
 
 
         <img src="../imgs/6130_prosh/01.jpg" width="659">
