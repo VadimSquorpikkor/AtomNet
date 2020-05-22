@@ -42,21 +42,22 @@
     <ul>
         <li>Изначально прошита от БДКН-1, надо прошить на БДКН-3</li>
         <li>Припаять ножку pls разъема к точке КТ1</li>
-        <img src="../imgs/bdkn-03_2/kt1.jpg" width="600">
+        <img src="../imgs/bdkn-03_2/kt1.jpg" width="700">
         <li>Подключить вход ацп к припаяному разъему PLS (КТ1), подключить бдкн через разъем ODU к БОИ (требуется
             именно батарейное питание, при запитывании от USB-COM проникает оч сильная помеха)
         </li>
-        <img src="../imgs/bdkn-03_2/acp.jpg" width="600">
+        <img src="../imgs/bdkn-03_2/acp.jpg" width="700">
         <li>Экран установить на БД</li>
         <li>Устанавливаем источник</li>
-        <img src="../imgs/bdkn-03_2/source.jpg" width="600">
+        <img src="../imgs/bdkn-03_2/source.jpg" width="700">
         <li>Включаем БОИ , запускаем ATAS, спектр долчен быть как на рисунке
             (259 канал +5%-3% т.е. диапазон 255-270канал)
             <img src="../imgs/bdkn-03_2/spectr_atas.jpg" width="900">
             если канал не соответствует &mdash; регулируем усиление подбором резистором R36, R37
             расчет в <a href="../imgs/bdkn-03_2/bdkn_raschet_resistora.xlsx">файле</a> или воспользоваться формой:
         </li>
-        <form class="yellow_back">
+
+        <form class="yellow_back" style="max-width: 800px; margin: auto">
             <i>Проверяем номиналы запаяных резисторов, если отличаются от табличных, меняем табличные
                 значения</i><br><br>
             R37: <input id="r_37" type="text" value="560" title="res">
@@ -73,7 +74,9 @@
                 R36: <input id="r_36_calc" type="text" title="res">
             </div>
         </form>
-        <img src="../imgs/bdkn-03_2/R36_R37.jpg" width="600">
+        <br>
+
+        <img src="../imgs/bdkn-03_2/R36_R37.jpg" width="700">
         <li>Записываем серийный номер при помощи Background calibration</li>
         <li>Проверяем фон- подключаем к бои , ставим вдали от источников, за час должен набрать не более 40нЗ при 5%
         </li>

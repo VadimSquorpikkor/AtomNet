@@ -149,7 +149,8 @@ function includeHTML(mode_1) {
         '        <span>БД нейтронного излучения</span>' +
         '    </summary>' +
         '    <ul id="neutron">' +
-        '        <li><a href="../bdkn/6102.html">6102. Настройка нейтронного детектора</a></li>' +
+        '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +
+        '        <li><a href="../bdkn/6102_new.html">6102. Настройка <i>-n</i> детектора<span class="under_construction"></span></a></li>' +
         '        <li><a href="../bdkn/bdkn-01.html">Проверка плат БДКН-01 / 04<span class="under_construction"></span></a></li>' +
         '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01 / БДКН-03<span class="under_construction"></span></a></li>' +
         '        <li><a href="../bdkn/bdkn-01_03_plat.html">БДКН-01 / БДКН-03. Проверка плат</a></li>' +
