@@ -547,6 +547,19 @@ p {
     /*box-shadow: none;*/
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
 }
+
+.yellow_back_tight {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: antiquewhite;
+    text-indent: 0;
+    border-radius: 5px;
+    box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
+
+    max-width: 500px;
+    margin: 20px auto;
+}
+
 .yellow_back_small {
     padding: 1px 20px;
 }

@@ -139,6 +139,7 @@ function includeHTML(mode_1) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
+        '        <li><a href="../bdkg/bdks-07.html">БДКС-07</a>' +
         '' +
         '        <li><a href="../bdkg/bdkg_m_prosh.html">Программирование плат для -М блоков</a>' +
         '    </ul>' +
