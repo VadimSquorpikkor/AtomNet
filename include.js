@@ -267,7 +267,7 @@ function includeHTML(mode_1) {
         '' +
         '    </ul>' +
         '</details>' +
-
+        '' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Файлы, документы</span>' +
@@ -284,5 +284,27 @@ function includeHTML(mode_1) {
         '' +
         '    </ul><br>' +
         '</details>';
+
+
+    document.getElementById("index_menu_2").innerHTML =
+        '<span>Градуировка</span>' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
+        '        <span>Новый 1</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
+        '    </ul>' +
+        '</details>' +
+        '' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
+        '        <span>Новый 2</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
+        '    </ul>' +
+        '</details>';
+
 
 }

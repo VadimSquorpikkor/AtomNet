@@ -793,6 +793,7 @@ h1, h3 {
     text-align: center;
     font-family: "Book Antiqua", "Garamond", "Traditional Arabic", "Times New Roman", sans-serif;
     text-transform: uppercase;
+    text-indent: 0;
 }
 
 h3 {
@@ -836,7 +837,8 @@ font-size: 22px;
 
 .spoiler_menu ul {
     list-style-type: none;
-    padding-left: 60px;
+    /*отступ выделенного пункта меню*/
+    /*padding-left: 60px;*/
     margin: 0;
     position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
 }
@@ -1011,7 +1013,8 @@ figcaption {
 /*для главной страницы*/
 @media (min-width: 800px) {
     #index_menu {
-        float: left;
+        /*для дива в диве (для двух блоков меню в диве) это не актуально*/
+        /*float: left;*/
         width: 420px;
 
     }
