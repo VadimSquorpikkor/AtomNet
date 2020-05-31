@@ -12,6 +12,7 @@ function includeHTML(mode_1) {
         mode = '';
     }
     document.getElementById(id).innerHTML =
+        '<span id="title">Участок регулировки</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -287,22 +288,15 @@ function includeHTML(mode_1) {
 
 
     document.getElementById("index_menu_2").innerHTML =
-        '<span>Градуировка</span>' +
-        '<details ' + mode + '>' +
+        '<span id="title">Градуировка</span>' +
+        '<details open' +  '>' +
         '    <summary>' +
-        '        <span>Новый 1</span>' +
+        '        <span>БОИ</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
-        '    </ul>' +
-        '</details>' +
-        '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Новый 2</span>' +
-        '    </summary>' +
-        '    <ul>' +
-        '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
+        '        <li><a href="../grad/boi_1.html">Градуировка БОИ</a></li>' +
+        '        <li><a href="../grad/boi_2.html">Градуировка БОИ2</a></li>' +
+        '        <li><a href="../grad/boi_4.html">Градуировка БОИ4</a></li>' +
         '    </ul>' +
         '</details>';
 

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка БОИ2</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка БОИ2</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0; visibility: hidden">
+
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible"></div>
+    <br>
+    <div id="menu_left" class="spoiler_menu" style="visibility: visible"></div>
+
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+    <h1>Градуировка БОИ2</h1>
+
+    <div class="left_align">
+        <a href="#lineinost">Линейность</a><br>
+        <a href="#energetica">Энергетика</a><br>
+    </div>
+
+
+    <h3 id="lineinost">ЛИНЕЙНОСТЬ</h3>
+
+    <p>Установить 3 шт. БОИ 2 в держателе на поверочную дозиметрическую установку УДГ-АТ130 таким образом, чтобы
+        центральная ось коллимированного пучка гамма-излучения установки была перпендикулярна задней стенке, а
+        расстояние от источника до центра детектора было выставлено по красной метке на верхней поверхности БОИ 2.</p>
+
+    <div class="attention_block">Важно! БОИ 2 с СБМ-21,СИ19 и М07BY оцифровываются по-разному</span><br>
+        Во избежание ошибки градуируйте только один тип счетчика!
+    </div>
+
+    <div class="tips_and_tricks">Подсказка:<br>
+        - до 2012 года БОИ 2 имели в составе СБМ-21;<br>
+        - с 2012 по 2019 - СИ19;<br>
+        - с 2019 - М07BY.<br>
+        Следите за метками на корпусе и скоростями счета в 4 режиме (СБМ-21 и М07BY &mdash; 0,05с<sup>-1</sup>, СИ19
+        &mdash; 0,20с<sup>-1</sup>)
+    </div>
+
+    <img src="../imgs/grad/boi_2/01.jpg" width="700">
+    <img src="../imgs/grad/boi_2/02.jpg" width="700">
+    <img src="../imgs/grad/boi_2/03.jpg" width="700">
+
+    <p>На пульте управления КС-АТ130 нажать <span class="like_a_button">ЗАДАТЬ</span> оцифровку в окне Х оцифровки</p>
+
+    <img src="../imgs/grad/boi_2/04.jpg" width="700">
+
+    <p>Далее нажать <span class="like_a_button">Р1</span> и <span class="like_a_button">ОЦИФРОВКА</span></p>
+
+    <img src="../imgs/grad/boi_2/05.jpg" width="700">
+
+    <ul>
+        <li>Подключить БОИ к ПК</li>
+        <li>Запустить ПО <i>АТ1117М_Utility</i></li>
+        <li>Нажать <i>Поиск</i></li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/06.jpg" width="700">
+
+    <ul>
+        <li>Выбрать нужные для калибровки БОИ <i>галочками</i> в разделе использовать</li>
+        <li>Выбрать <i>Калибровка</i></li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/07.jpg" width="700">
+
+    <ul>
+        <li>Выбрать тип БОИ</li>
+        <li>Выбрать тип счетчика</li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/08.jpg" width="700">
+
+    Выбрать устройства (одно из БОИ)
+
+    <img src="../imgs/grad/boi_2/09.jpg" width="700">
+
+    <ul>
+        <li>Нажать <i>Произвести измерение</i></li>
+        <li>В появившемся окне выбрать Тип точки – <i>Градуировочная точка</i></li>
+        <li>Выбрать первую (точка 20мкЗв/ч или 100 мкЗв/ч) градуировочную точку</li>
+        <li><i>Нажать</i> Начать в окне Параметры автонастройки</li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/10.jpg" width="700">
+
+    <p>Нажать <i>Начать</i> в меню окна расчет коэффициентов</p>
+
+    <img src="../imgs/grad/boi_2/11.jpg" width="700">
+
+    <ul>
+        <li>Запустить ПО <i>CalculationSources</i>
+        <li>Рассчитать расстояние для H*(10)</li>
+        <li>Установить источник <sup>137</sup>Cs и расстояние согласно расчету программы</li>
+        <li>Градуировать показания выставив коэф 3U ≈100</li>
+        <li>Дождаться хорошей статистики 2-5 %</li>
+        <li>Нажать <i>Записать коэффициенты</i></li>
+        <li>Выбрать вторую (точка 7 мЗв/ч или 70 мЗв/ч) градуировочную точку</li>
+        <li>Нажать Начать в окне Параметры автонастройки</li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/12.jpg" width="700">
+
+    <p>Нажать <i>Начать</i> в меню окна расчет коэффициентов</p>
+
+    <img src="../imgs/grad/boi_2/13.jpg" width="700">
+
+    <ul>
+        <li>Установить источник <sup>137</sup>Cs (точка 7 мЗв/ч или 70 мЗв/ч)</li>
+        <li>Градуировать показания выставив коэф 4U</li>
+        <li>Дождаться хорошей статистики 2-5 %</li>
+        <li>Нажать Записать коэффициенты</li>
+    </ul>
+
+    <p>Выйти в раздел</p>
+    <ul>
+        <li>Снять ПСИ</li>
+        <li>Выбрать Тип точки &mdash; <i>Поверочная точка</i></li>
+    </ul>
+
+    <img src="../imgs/grad/boi_2/14.jpg" width="700">
+
+    <p>Данные переписать в электронный журнал градуировки</p>
+
+    <img src="../imgs/grad/boi_2/15.jpg" width="700">
+
+    <h3 id="energetica">ЭНЕРГЕТИКА</h3>
+
+    Установить 3 шт. БОИ 2 в держателе на поверочную дозиметрическую установку УДГ-АТ110 таким образом, чтобы
+    центральная ось коллимированного пучка гамма-излучения установки была перпендикулярна задней стенке, а расстояние от
+    источника до центра детектора было выставлено по красной метке на верхней поверхности БОИ 2.
+
+    <div class="attention_block">Важно! БОИ2 с СБМ-21,СИ19 и М07BY оцифровываются по-разному.<br>
+        Во избежание ошибки градуируйте только один тип счетчика!
+    </div>
+    <div class="tips_and_tricks">Подсказка:<br>
+        - до 2012 года БОИ2 имели в составе СБМ-21;<br>
+        - с 2012 по 2019 - СИ19;<br>
+        - с 2019 - М07BY.<br>
+        Следите за метками на корпусе и скоростями счета в 4 режиме (СБМ-21 и М07BY &mdash; 0,05с<sup>-1</sup>, СИ19
+        &mdash; 0,20с<sup>-1</sup>)
+    </div>
+
+    <ul>
+        <li>Проверить <sup>241</sup>Am 1м, <sup>60</sup>Со 10 мкЗв/ч</li>
+        <li>Запустить ПО CalculationSources</li>
+        <li>Рассчитать расстояние для H*(10)</li>
+    </ul>
+
+    <p>Данные переписать в электронный журнал градуировки</p>
+
+    <img src="../imgs/grad/boi_2/16.png" width="500">
+
+</div>
+
+</body>
+</html>
