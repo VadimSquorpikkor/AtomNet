@@ -1,3 +1,8 @@
+var a = document.getElementById("mylink");
+a.onclick = function() {
+    localStorage.setItem("open", "true");
+}
+
 function includeHTML(mode_1) {
     let mode;
     let id;
@@ -12,13 +17,20 @@ function includeHTML(mode_1) {
         mode = '';
     }
     document.getElementById(id).innerHTML =
-        '<span id="title">Участок регулировки</span>' +
+        '<span id="title">Регулировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../srk2327/2327.html">Настройка СРК</a></li>' +
+        '        <li><a href="../srk2327/2327.html">Настройка СРК</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a id="mylink" href="../srk2327/2327.html#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+        '        </li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html#usb-com-adapter">USB</a></li>' +
         '        <li><a href="../srk2327/mrp.html">&bullet; МРП (Пешеходный монитор)</a></li>' +
         '        <li><a href="../srk2327/portal.html">&bullet; Портальный монитор</a></li>' +
         '        <li><a href="../srk2327/BR.html">&bullet; ДРГ. Блок регистрации</a></li>' +
@@ -36,7 +48,7 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>БД альфа излучения</span>' +
+        '        <span><i>α</i> - БД альфа излучения</span>' +
         '    </summary>' +
         '    <ul>' +
         '    </ul>' +
@@ -44,7 +56,7 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>БД бета излучения</span>' +
+        '        <span><i>β</i> - БД бета излучения</span>' +
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
@@ -53,7 +65,7 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>БД гамма излучения </span>' +
+        '        <span><i>γ</i> - БД гамма излучения </span>' +
         '    </summary>' +
         '    <!--<div>-->' +
         '    <ul>' +
@@ -148,7 +160,7 @@ function includeHTML(mode_1) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>БД нейтронного излучения</span>' +
+        '        <span><i>n</i> - БД нейтронного излучения</span>' +
         '    </summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +

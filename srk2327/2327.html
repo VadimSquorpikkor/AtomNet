@@ -7,9 +7,22 @@
     <script type="text/javascript" src="../include.js"></script>
     <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+
+    <script>
+        function setDetails(){
+        // var val = localStorage.getItem("open");
+        // if (val === "true") {
+            if (localStorage.getItem("open") === "true") {
+        document.getElementById('usb-com-adapter').open = true;
+            }
+            // b.style.color = "red";
+            // localStorage.removeItem("open");
+        // }
+        }
+    </script>
 </head>
 
-<body>
+<body onLoad="setDetails()">
 
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
@@ -63,7 +76,7 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="usb-com-adapter">
             <summary>Настройка USB-COM адаптера:</summary>
             <img src="../imgs/2327/adapter.jpg" width="900"/>
 
