@@ -301,7 +301,7 @@ function includeHTML(mode_1) {
 
     document.getElementById("index_menu_2").innerHTML =
         '<span id="title">Градуировка</span>' +
-        '<details open' +  '>' +
+        '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +
         '    </summary>' +
@@ -310,7 +310,17 @@ function includeHTML(mode_1) {
         '        <li><a href="../grad/boi_2.html">Градуировка БОИ2</a></li>' +
         '        <li><a href="../grad/boi_4.html">Градуировка БОИ4</a></li>' +
         '    </ul>' +
-        '</details>';
+        '</details>' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
+        '        <span>Разное</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../grad/2503a.html">Градуировка 2503A<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../grad/1125a.html">Градуировка 1125A<span class="under_construction"></span></a></li>' +
+        '    </ul>' +
+        '</details>'
+    ;
 
 
 }

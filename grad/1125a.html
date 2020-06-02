@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка МКС-АТ1125А</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка МКС-АТ1125А</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0; visibility: hidden">
+
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible"></div>
+    <br>
+    <div id="menu_left" class="spoiler_menu" style="visibility: visible"></div>
+
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+    <h1>Градуировка МКС-АТ1125А</h1>
+
+    <div class="left_align">
+        <a href="#lineinost">Линейность и энергетика</a><br>
+        <a href="#lineinost2">+Линейность МКС-АТ1125А</a><br>
+    </div>
+
+    <h3 id="lineinost">ЛИНЕЙНОСТЬ и ЭНЕРГЕТИКА</h3>
+
+    <p>Установить 2 дозиметра на поверочную дозиметрическую установку УДГ-АТ110 таким образом, чтобы центральная ось
+        коллимированного пучка гамма-излучения установки была перпендикулярна оси дозиметра и пересекала его через
+        кольцевую риску на колпачке (допускается ориентация как по задней так и по боковой стенке), а расстояние от
+        источника до центра детектора было выставлено по центру блоков на на отметке + расположенной на колпачке</p>
+
+
+    <img src="../imgs/grad/1125a/01.png" width="700">
+    <img src="../imgs/grad/1125a/02.jpg" width="700">
+
+    <p>На пульте управления КС-АТ110 нажать <span class="like_a_button">ЗАДАТЬ</span> оцифровку в окне Х оцифровки</p>
+
+    <img src="../imgs/grad/1125a/03.jpg" width="700">
+
+    <p>Далее нажать <span class="like_a_button">Р1</span> и <span class="like_a_button">ОЦИФРОВКА</span></p>
+
+    <img src="../imgs/grad/1125a/04.jpg" width="700">
+
+    <ul>
+        <li>Запустить ПО CalculationSources</li>
+        <li>Подключить к ПК</li>
+        <li>Запустить программу ATAS</li>
+    </ul>
+
+    <img src="../imgs/grad/1125a/05.jpg" width="700" alt="Здесь будет рисунок" border="1">
+
+    Записать номера каналов в электронный журнал градуировки
+
+
+    <ul>
+        <li>Запустить ПО МКС_АТ1125_27</li>
+        <li>Нажать Поиск</li>
+        <li>Выбрать нужные для калибровки БОИ галочками в разделе использовать</li>
+        <li>Выбрать Калибровка</li>
+    </ul>
+
+    <p>Выбрать устройство (одно из 1125)</p>
+
+    <img src="../imgs/grad/1125a/07.jpg" width="700" alt="Здесь будет рисунок" border="1">
+
+    <p>Выбрать любую градуировочную точку и нажать <span class="like_a_button">Произвести измерение</span></p>
+
+    <img src="../imgs/grad/1125a/08.jpg" width="700" alt="Здесь будет рисунок" border="1">
+
+    <p>Нажать <span class="like_a_button">Начать</span></p>
+
+    <img src="../imgs/grad/1125a/09.jpg" width="700" alt="Здесь будет рисунок" border="1">
+
+    <ul>
+        <li>Запустить ПО CalculationSourses</li>
+        <li>Рассчитать расстояние для H*(10)</li>
+        <li>Установить источник Cs137 7мкЗв/ч</li>
+        <li>Дождаться хорошей статистики 2-5 %</li>
+        <li>Градуировать показания (с учетом фона) выставив коэф 3U ≈100</li>
+        <li>Нажать Записать коэффициенты</li>
+        <li>Выставить точку Am 30 мкЗв/ч скорректировать показания коэф 4U (д.б. СДН 100, Китай 100)</li>
+        <li>Выставить точку Cs 240мкЗв/ч скорректировать показания коэф 5U (д.б. СДН 45, Китай 40)</li>
+        <li>Перепроверить Am 30 мкЗв/ч при необходимости скорректировать из-за совместного влияния 4U и 5U</li>
+        <li>Снять точку Am 2 мкЗв/ч</li>
+        <li>Проверить Со60 10мкЗв/ч</li>
+        <li>Снять ПСИ по Cs в точках 0,07мк, 0,7мк, 70мк и 300мкЗв/ч</li>
+        <li>Данные переписать в журнал градуировки</li>
+    </ul>
+
+    <h3 id="lineinost2">+ЛИНЕЙНОСТЬ МКС-АТ1125А</h3>
+
+    <p>Установить 2 дозиметра на поверочную дозиметрическую установку УДГ-АТ130 таким образом, чтобы центральная ось
+        коллимированного пучка гамма-излучения установки пересекала красную отметку (допускается ориентация как по
+        задней так и по боковой стенке), а расстояние от источника до центра детектора было выставлено по другой красной
+        отметке на корпусе</p>
+
+    <img src="../imgs/grad/1125a/01.png" width="700">
+
+    <p>Основной вариант расположения</p>
+
+    <img src="../imgs/grad/1125a/10.jpg" width="700">
+    <img src="../imgs/grad/1125a/11.jpg" width="700">
+
+    <p>Вспомогательный вариант ориентации</p>
+
+    <img src="../imgs/grad/1125a/12.jpg" width="700">
+
+    На пульте управления КС-АТ110  нажать  "ЗАДАТЬ" оцифровку в окне Х оцифровки
+
+    <img src="../imgs/grad/1125a/13.jpg" width="700">
+
+    Далее нажать Р1 и ОЦИФРОВКА
+
+    <img src="../imgs/grad/1125a/14.jpg" width="700">
+
+    <ul>
+        <li>Запустить ПО МКС_АТ1125_27</li>
+        <li>Нажать Поиск</li>
+        <li>Выбрать нужные для калибровки БОИ галочками  в разделе использовать</li>
+        <li>Выбрать Калибровка</li>
+    </ul>
+
+    <img src="../imgs/grad/1125a/15.jpg" width="700">
+
+    Выбрать устройство (одно из 1125)
+
+    <img src="../imgs/grad/1125a/16.jpg" width="700">
+
+    Выбрать любую градуировочную точку и нажать Произвести измерение
+
+    <img src="../imgs/grad/1125a/17.jpg" width="700">
+
+    Нажать Начать
+
+    <img src="../imgs/grad/1125a/18.jpg" width="700">
+
+    <ul>
+        <li>Запустить ПО CalculationSourses</li>
+        <li>Рассчитать расстояние для H*(10)</li>
+        <li>Установить источник Cs137 1мЗв/ч</li>
+        <li>Дождаться хорошей статистики 2-5 %</li>
+        <li>показания скорректировать коэффициентом 1U</li>
+        <li>Установить точку 70мЗв/ч</li>
+        <li>показания скорректировать коэффициентом 2U</li>
+        <li>Снять ПСИ в точках 7мЗв, 70мЗв/ч</li>
+        <li>Данные записать в электронный журнал градуировки</li>
+    </ul>
+
+
+</div>
+
+</body>
+</html>
