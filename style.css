@@ -271,6 +271,11 @@ img {
 /*region INDEX 3------------------------------------*/
 /*------------------INDEX 3---------------------*/
 
+img {
+    /*width: 700px;*/
+}
+
+
 .menu_block {
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
     text-align: center;
@@ -542,11 +547,15 @@ p {
     background-color: antiquewhite;
     align-self: center;
 
-    text-indent: 0;
+    text-indent: 10px;
     border-radius: 5px;
 
     /*box-shadow: none;*/
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
+}
+
+.tips_and_tricks ul {
+    font-size: inherit;
 }
 
 .yellow_back_tight {

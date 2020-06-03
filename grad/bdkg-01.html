@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка БДКГ-01</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка БДКГ-01</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0; visibility: hidden">
+
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible"></div>
+    <br>
+    <div id="menu_left" class="spoiler_menu" style="visibility: visible"></div>
+
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+<div class="main_div">
+
+    <h1>Градуировка БДКГ-01</h1>
+
+    <div class="left_align">
+        <a href="#lineinost">Линейность</a><br>
+        <a href="#energetica">Энергетика</a><br>
+    </div>
+
+    <h3 id="lineinost">ЛИНЕЙНОСТЬ</h3>
+
+    <ul>
+        <li>Установить 3-и блока детектирования на УДГ-АТ130 таким образом чтобы они расположились перпендикулярно оси
+            излучения ось пересекала через кольцевые риски, а расстояние от источника до центра детектора было
+            выставлено по центру блоков
+        </li>
+
+        <img src="../imgs/grad/bdkg-01/01.jpg" width="700">
+
+        <li>Подключить к ПК</li>
+        <li>Запустить ПО DU Calibration</li>
+
+        <img src="../imgs/grad/bdkg-01/02.jpg" width="700">
+
+        <li>Нажать Поиск</li>
+        <li>Запустить калибровку 3-х диапазонов</li>
+
+        <img src="../imgs/grad/bdkg-01/03.jpg" width="700">
+
+        <li>Выставить точки 1 диап 100мк и 2мЗв/ч</li>
+        <li>Выставить точки 2 диап 7м 700мЗв/ч</li>
+        <li>Выставить точки 3 диап 700м 7 Зв 10Зв/ч</li>
+        <li>Снять ПСИ</li>
+        <li>Данные переписать в журнал градуировки</li>
+    </ul>
+
+    <img src="../imgs/grad/bdkg-01/04.jpg" width="700">
+
+    <h3 id="energetica">ЭНЕРГЕТИКА</h3>
+
+    <ul>
+        <li>Установить 3 блока детектирования на УДГ-АТ110 таким образом чтобы они расположились перпендикулярно оси
+            излучения ось пересекала через кольцевые риски, а расстояние от источника до центра детектора было
+            выставлено по центру блоков
+        </li>
+
+        <img src="../imgs/grad/bdkg-01/01.jpg" width="700">
+
+        <li>Подключить к ПК</li>
+        <li>Запустить ПО DU Callibration</li>
+
+        <img src="../imgs/grad/bdkg-01/05.jpg" width="700">
+
+        <li>Нажать Поиск</li>
+        <li>Установить источники</li>
+        <li>Am 1м Co60 10мк</li>
+        <li>Данные записать в журнал градуировок</li>
+
+        <img src="../imgs/grad/bdkg-01/06.jpg" width="700">
+
+    </ul>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка БДКГ-05</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка БДКГ-05</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0; visibility: hidden">
+
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible"></div>
+    <br>
+    <div id="menu_left" class="spoiler_menu" style="visibility: visible"></div>
+
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+<div class="main_div">
+
+    <h1>Градуировка БДКГ-05</h1>
+
+    <ul>
+        <li>Установить 4 блока детектирования на УДГ-АТ110 таким образом чтобы они расположились параллельно оси
+            излучения ось пересекала через кольцевые риски, а расстояние от источника до центра детектора было
+            выставлено -23 мм от торца (метка) блоков
+        </li>
+
+        <img src="../imgs/grad/bdkg-05/01.jpg" width="700">
+        <img src="../imgs/grad/bdkg-05/02.jpg" width="700">
+
+        <li>Подключить к ПК</li>
+        <li>Запустить ПО Bdkg03,05,11</li>
+
+        <img src="../imgs/grad/bdkg-05/03.jpg" width="700">
+
+        <li>Нажать Поиск</li>
+        <li>Выбрать бд</li>
+        <li>Нажать ПСИ</li>
+        <li>Начать измерения</li>
+        <li>Установить источник Cs137 7мкЗв/ч</li>
+        <li>Градуировать показания выставив коэф 3U≈100</li>
+        <li>Выставить точку Am 30 мкЗв/ч скорректировать показания коэф 4U(д.б. СДН 180, Китай 0)</li>
+        <li>Выставить точку Cs 240мкЗв/ч скорректировать показания коэф 5U(д.б. СДН 0, Китай 85)</li>
+        <li>Перепроверить Am 30 мкЗв/ч при необходимости скорректировать из-за совместного влияния 4U и 5U</li>
+        <li>Снять точку Am 2 мкЗв/ч</li>
+        <li>Проверить Со60 10мкЗв/ч</li>
+        <li>Снять ПСИ по Cs в точках 0,07мк, 0,7мк, 70мк и 300мкЗв/ч</li>
+        <li>Данные переписать в журнал градуировки</li>
+
+        <img src="../imgs/grad/bdkg-05/04.jpg" width="700">
+
+    </ul>
+
+</div>
+
+</body>
+</html>
