@@ -323,10 +323,19 @@ function includeHTML(mode_1) {
         '</details>' +
         '<details ' + mode + '>' +
         '    <summary>' +
+        '        <span>11XX</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a href="../grad/1103.html">Градуировка ДКР-АТ1103M</a></li>' +
+        '        <li><a href="../grad/1121.html">Градуировка ДКС-АТ1121</a></li>' +
+        '        <li><a href="../grad/1125a.html">Градуировка 1125A<span class="under_construction"></span></a></li>' +
+        '    </ul>' +
+        '</details>' +
+        '<details ' + mode + '>' +
+        '    <summary>' +
         '        <span>Разное</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../grad/2503a.html">Градуировка 2503A<span class="under_construction"></span></a></li>' +
         '        <li><a href="../grad/1125a.html">Градуировка 1125A<span class="under_construction"></span></a></li>' +
         '    </ul>' +
         '</details>'
