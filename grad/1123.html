@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка ДКС-АТ1123</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка ДКС-АТ1123</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0; visibility: hidden">
+
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible"></div>
+    <br>
+    <div id="menu_left" class="spoiler_menu" style="visibility: visible"></div>
+
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+<div class="main_div">
+
+    <h1>Градуировка ДКС-АТ1123</h1>
+
+    <h3>1</h3>
+
+    <ul>
+        <li>Установить 4-е дозиметра  на УДГ-АТ110 таким образом чтобы они расположились параллельно оси излучения, а
+            расстояние от источника до центра детектора равнялось -10 мм от края торца колпачока
+        </li>
+        <img src="../imgs/grad/1123/01.jpg" width="500">
+        <li>Подключить к ПК</li>
+        <li>Запустить ПО <i>1121-1123</i></li>
+        <li>Нажать <i>Поиск</i></li>
+        <li>Выбрать дозиметры</li>
+        <li>Выбрать <i>калибровка</i></li>
+        <li>Выбрать точку 1 диапазона (7-700 мк)</li>
+        <li>Нажать начать измерения</li>
+        <li>Установить источник <sup>137</sup>Cs 7 мкЗв/ч</li>
+        <li>Градуировать показания выставив коэф 1U (д.б.≈100) с учётом фона 0,1 мкЗв/ч</li>
+        <li>Снять показания по Cd 1м Am 1м <sup>60</sup>Со 10 мкЗв/ч</li>
+        <li>Снять точки 70 и 700 мкЗв/ч</li>
+        <li>Данные переписать в журнал градуировки</li>
+        <img src="../imgs/grad/1123/02.jpg" width="700">
+    </ul>
+    <ul>
+        <li>Установить дозиметры на УДГ-АТ130</li>
+        <img src="../imgs/grad/1123/03.jpg" width="700">
+        <li>Повторить подключение как на 110</li>
+        <li>Выбрать 2 диап(1-100м)</li>
+        <li>Нажать <i>начать измерения</i></li>
+        <li>Установить источник <sup>137</sup>Cs 100 мЗв/ч</li>
+        <li>Градуировать показания выставив коэф 2U (д.б.≈100?)</li>
+        <li>Снять точки 7 и 70 мЗв/ч</li>
+    </ul>
+    <ul>
+        <li>Выбрать 3 диап(0,1-10 Зв)</li>
+        <li>Нажать <i>начать измерения</i></li>
+        <li>Установить источник <sup>137</sup>Cs 100 мЗв/ч</li>
+        <li>Градуировать показания выставив коэф 3U (д.б.≈200?)</li>
+        <li>Установить источник <sup>137</sup>Cs 7 Зв/ч</li>
+        <li>Градуировать показания выставив коэф 5U (д.б.≈50?)</li>
+        <li>Снять точки 700 мЗв и 10 Зв/ч</li>
+    </ul>
+    <ul>
+        <li>Данные переписать в журнал градуировки</li>
+    </ul>
+
+    <h3>2 (Импульсная установка)</h3>
+
+    <ul>
+        <img src="../imgs/grad/1123/04.jpg" width="700" alt="Фото: Импульсная установка" border="1">
+        <li>Установить приборы на столик установки УДГ-АТ130 Совместно с двумя компараторами</li>
+        <img src="../imgs/grad/1123/05.jpg" width="700" alt="Фото" border="1">
+        <li>Установить расстояние до установки шмель-250 5,5 м на шмель-250 надеть фильтр 1</li>
+        <img src="../imgs/grad/1123/06.jpg" width="700" alt="Фото" border="1">
+        <li>Подключить дозиметры и компараторы к ПК</li>
+        <li>Запустить ПО Du calibration</li>
+        <img src="../imgs/grad/1123/07.jpg" width="700">
+        <li>Нажать <i>подключить</i></li>
+        <li>Выбрать дозиметры</li>
+        <li>Нажать кнопку калибровка импульсный режим </li>
+        <li>Выбрать нужные диапазоны</li>
+        <li>Начать</li>
+        <li>Включить установку шмель-250</li>
+        <li>Выбрать интервал 1 мин</li>
+        <li>Нажать старт</li>
+        <li>Накопленная доза д.б. 1,6 мкЗв, что соответствует 96 мкЗв/ч</li>
+        <li>Расчетный Коэф 1U ≈100</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
