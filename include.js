@@ -337,7 +337,7 @@ function includeHTML(mode_1) {
         '        <span>Разное</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../grad/1125a.html">Градуировка 1125A<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../grad/2503a.html">Градуировка 2503A<span class="under_construction"></span></a></li>' +
         '    </ul>' +
         '</details>'
     ;
