@@ -317,6 +317,7 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../grad/bdkg-01.html">Градуировка БДКГ-01</a></li>' +
+        '        <li><a href="../grad/bdkg-04.html">Градуировка БДКГ-04</a></li>' +
         '        <li><a href="../grad/bdkg-05.html">Градуировка БДКГ-05</a></li>' +
         '        <li><a href="../grad/bdkg-17.html">Градуировка БДКГ-17</a></li>' +
         '    </ul>' +
