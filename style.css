@@ -857,7 +857,6 @@ font-size: 22px;
     padding: 0;
     color: white;
     border-radius: 15px;
-
     background-color: #444444;
 
 }
@@ -1006,12 +1005,14 @@ figcaption {
     margin-top: 2px;
 }
 
+.index_menu_div {
+    /*float: left;*/
+    margin: 0; padding: 0;
+    visibility: hidden;
+}
+
 /*для всех страниц, кроме главной*/
 @media (min-width: 1300px){
-/*    body>div {
-        margin-left: 460px;
-        margin-right: 5px;
-    }*/
     .main_div {
         margin-left: 460px;
         margin-right: 5px;
@@ -1033,23 +1034,21 @@ figcaption {
     #menu {
         float: none;
     }
+
 }
-/*@media (max-width: 800px) {
-    #index_menu {
-        float: none;
-        width: auto;
-    }
-    #new_div {
-        float: none;
-    }
-}*/
+
+@media (max-width: 800px) {
+
+}
 /*для главной страницы*/
 @media (min-width: 800px) {
     #index_menu {
-        /*для дива в диве (для двух блоков меню в диве) это не актуально*/
-        /*float: left;*/
         width: 420px;
+    }
 
+    .index_menu_div {
+        float: left;
+        width: 420px;
     }
 
     .blue_back_index_right, .yellow_back_index_right, .activity_calculator, .div_for_menu_block {
