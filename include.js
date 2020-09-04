@@ -26,11 +26,32 @@ function includeHTML(mode_1) {
         '        <li><a href="../srk2327/2327.html">Настройка СРК</a>' +
         '            <div>' +
         '                <ul>' +
-        '                    <li><a id="mylink" href="../srk2327/2327.html#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=usb-com-adapter#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=moxa#moxa">Настройка Ethernet адаптера MOXA</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=cabel#cabel">Кабель для Устройства Сигнализации</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=source#source">Вот так укладывается контрольный источник</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=cabel_type#cabel_type">Какие бывают кабели для блоков</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=pu_900#pu_900">Адаптер питания для ПУ-АТ900</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=adapter#adapter">Как самому сделать адаптер</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=details#details">Названия деталей (мониторить остаток)</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html#usb-com-adapter">USB</a></li>' +
+        '<details>' +
+        '    <summary>' +
+        '        <span>Настройка комплектующих</span>' +
+        '    </summary>' +
+        '    <ul>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=usb-com-adapter#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=moxa#moxa">Настройка Ethernet адаптера MOXA</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=cabel#cabel">Кабель для Устройства Сигнализации</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=source#source">Вот так укладывается контрольный источник</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=cabel_type#cabel_type">Какие бывают кабели для блоков</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=pu_900#pu_900">Адаптер питания для ПУ-АТ900</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=adapter#adapter">Как самому сделать адаптер</a></li>' +
+        '        <li><a id="mylink" href="../srk2327/2327.html?id=details#details">Названия деталей (мониторить остаток)</a></li>' +
+        '    </ul>' +
+        '</details>' +
         '        <li><a href="../srk2327/mrp.html">&bullet; МРП (Пешеходный монитор)</a></li>' +
         '        <li><a href="../srk2327/portal.html">&bullet; Портальный монитор</a></li>' +
         '        <li><a href="../srk2327/BR.html">&bullet; ДРГ. Блок регистрации</a></li>' +
@@ -290,7 +311,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.84</a></li>' +
+        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.85</a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +

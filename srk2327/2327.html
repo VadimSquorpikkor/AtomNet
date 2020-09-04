@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>СРК</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -9,15 +10,16 @@
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 
     <script>
-        function setDetails(){
-        // var val = localStorage.getItem("open");
-        // if (val === "true") {
-            if (localStorage.getItem("open") === "true") {
-        document.getElementById('usb-com-adapter').open = true;
-            }
+        function setDetails() {
+            let urlParams = new URLSearchParams(window.location.search);
+            let id = urlParams.get('id');
+            document.getElementById(id).open = true;
+
+            // if (localStorage.getItem("open") === "true") {
+            // document.getElementById('usb-com-adapter').open = true;
+
             // b.style.color = "red";
             // localStorage.removeItem("open");
-        // }
         }
     </script>
 </head>
@@ -92,7 +94,7 @@
 
 
     <div class="nice_details">
-        <details>
+        <details id="moxa">
             <summary>Настройка Ethernet адаптера MOXA:</summary>
 
             <img src="../imgs/2327/moxa.jpg" width="490">
@@ -106,16 +108,16 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="cabel">
             <summary>Кабель для Устройства Сигнализации:</summary>
 
             <img src="../imgs/2327/cable.jpg" width="600">
         </details>
     </div>
 
-            <!--<a id="link1"></a>-->
+    <!--<a id="link1"></a>-->
     <div class="nice_details">
-        <details>
+        <details id="source">
             <summary>Вот так укладывается контрольный источник:</summary>
             <img src="../imgs/2327/istochnik.jpg" width="900"/>
             Сам источник заказывать у Антона Жуковского
@@ -123,7 +125,7 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="cabel_type">
             <summary>Какие бывают кабели для блоков:</summary>
 
             <ul>
@@ -153,7 +155,7 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="pu_900">
             <summary>Адаптер питания для ПУ-АТ900 (список деталей):</summary>
 
             <img src="../imgs/2327/acdc-adapter.jpg" width="600"/>
@@ -172,7 +174,7 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="adapter">
             <summary>Как самому сделать адаптер</summary>
 
             <img src="../imgs/2327/adapter_razyem.jpg" width="700">
@@ -180,7 +182,7 @@
     </div>
 
     <div class="nice_details">
-        <details>
+        <details id="details">
             <summary>Названия деталей (мониторить остаток на складе!)</summary>
 
             <ul>
