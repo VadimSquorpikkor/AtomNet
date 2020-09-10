@@ -540,7 +540,7 @@ p {
 
 
 .yellow_back, .yellow_back_small, .tips_and_tricks, .attention_block {
-    margin: 10px 0 10px;
+    /*margin: 10px 0 10px;*/
     padding: 10px 20px;
     font-size: 16px;
     /*background-color: khaki;*/
