@@ -90,13 +90,14 @@ th {
     color: #ffffff;
 }
 
-.under_construction:before, .under_construction:hover:before {
+/*.under_construction:before, .under_construction:hover:before {*/
+.under_construction, .under_construction:hover {
     font-size: 14px;
     color: #ff3333;
     padding: 3px 20px;
     text-shadow: 0 3px 2px #000000;
     font-style: italic;
-    content: "в работе";
+    /*content: "в работе";*/
 }
 
 .red_light_title {
@@ -105,7 +106,8 @@ th {
     text-shadow: 1px 4px 5px #aba8a8;
 }
 
-.under_construction:hover:before {
+/*.under_construction:hover:before {*/
+.under_construction:hover {
     color: #ffffff;
 }
 
@@ -326,7 +328,7 @@ img {
 .menu_block div span {
     vertical-align: middle;
     padding-top: 5px;
-    padding-left: 0px;
+    padding-left: 0;
 
     /*color: #4CAF50;*/
 }
@@ -655,9 +657,7 @@ p {
     padding-left: 100px;
 }
 
-
-
-a {
+a, .tips_and_tricks>a {
     color: darkorange;
     font-size: 18px;
     font-family: sans-serif;
@@ -665,6 +665,11 @@ a {
     padding: 2px 4px;
     transition-property: all;
     transition-duration: 450ms;
+}
+
+.tips_and_tricks a {
+    font-size: 14px;
+    color: #ff5533;
 }
 
 a:hover {
@@ -858,7 +863,6 @@ font-size: 22px;
     color: white;
     border-radius: 15px;
     background-color: #444444;
-
 }
 
 .spoiler_menu ul {
@@ -867,13 +871,13 @@ font-size: 22px;
     /*padding-left: 60px;*/
     margin: 0;
     position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
+
 }
 
 .spoiler_menu summary {
     background-color: #333;
     padding: 8px;
     margin: 0;
-
 }
 
 .spoiler_menu details:first-child summary {
@@ -893,17 +897,11 @@ font-size: 22px;
 }
 
 .spoiler_menu a {
-    /*padding-left: 10px;*/
     font-size: 15px;
     display: block;
     width: 350px;
     padding-top: 3px;
     padding-bottom: 3px;
-    /*padding: 4px 0 4px;*/
-    /*margin: 4px;*/
-    /*height: 22px;*/
-    transition-property: all;
-    transition-duration: 350ms;
 }
 
 .spoiler_menu a:hover {
@@ -916,49 +914,30 @@ font-size: 22px;
     display: none;
     margin: 0;
     text-indent: 0;
-    transition-property: all;
-    transition-duration: 1s;
-    transition-delay: 1s;
-    -moz-transition-property: all;
-    -moz-transition-duration: 1s;
-    -moz-transition-delay: 1s;
 }
 
 .spoiler_menu li div ul {
     padding: 0;
-
 }
 
 .spoiler_menu li:hover div {
-    /*position: absolute;*/
-    /*display: block;*/
-
-    /*transition-delay: 0s;*/
-
     margin: -5px;
     display: block;
     position: absolute;
-    left: 270px;
-    /*top: 0;*/
-    /*top: 20px;*/
+    left: 150px;
     color: #444;
     padding: 0;
     text-indent: 0;
-    /*background-color: darkorange;*/
     background-color: #444444;
     border-radius: 10px;
     width: 400px;
     z-index: 3;
-    /*height: 200px;*/
-    -moz-transition-property: all;
-    -moz-transition-duration: 1s;
-    -moz-transition-delay: 0s;
 }
+
 .spoiler_menu #title {
     font-size: 23px;
     text-indent: 0;
     color: gold;
-
 }
 
 #neutron {

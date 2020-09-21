@@ -3,6 +3,37 @@ a.onclick = function() {
     localStorage.setItem("open", "true");
 }
 
+function setTextColorWhiteOld() {
+    let arr = document.getElementsByClassName("under_construction");
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].style.color = "white";
+    }
+
+}
+
+function setTextColorWhite(element) {
+    element.style.color = "white";
+}
+
+function setTextColorRed(element) {
+    element.style.color = "#ff3333";
+}
+
+function setTextColorRedOld() {
+    let arr = document.getElementsByClassName("under_construction");
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].style.color = "#ff3333";
+    }
+
+}
+
+function setScript() {
+    let arr = document.getElementsByClassName("under_construction");
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].parentElement.addEventListener("mouseover", setTextColorWhite(arr[i]));
+    }
+}
+
 function includeHTML(mode_1) {
     let mode;
     let id;
@@ -37,21 +68,6 @@ function includeHTML(mode_1) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '<details>' +
-        '    <summary>' +
-        '        <span>Настройка комплектующих</span>' +
-        '    </summary>' +
-        '    <ul>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=usb-com-adapter#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=moxa#moxa">Настройка Ethernet адаптера MOXA</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=cabel#cabel">Кабель для Устройства Сигнализации</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=source#source">Вот так укладывается контрольный источник</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=cabel_type#cabel_type">Какие бывают кабели для блоков</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=pu_900#pu_900">Адаптер питания для ПУ-АТ900</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=adapter#adapter">Как самому сделать адаптер</a></li>' +
-        '        <li><a id="mylink" href="../srk2327/2327.html?id=details#details">Названия деталей (мониторить остаток)</a></li>' +
-        '    </ul>' +
-        '</details>' +
         '        <li><a href="../srk2327/mrp.html">&bullet; МРП (Пешеходный монитор)</a></li>' +
         '        <li><a href="../srk2327/portal.html">&bullet; Портальный монитор</a></li>' +
         '        <li><a href="../srk2327/BR.html">&bullet; ДРГ. Блок регистрации</a></li>' +
@@ -185,9 +201,9 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +
-        '        <li><a href="../bdkn/6102_new.html">6102. Настройка <i>-n</i> детектора<span class="under_construction"></span></a></li>' +
-        '        <li><a href="../bdkn/bdkn-01.html">Проверка плат БДКН-01 / 04<span class="under_construction"></span></a></li>' +
-        '        <li><a href="../bdkn/bdkn_01_03.html">БДКН-01 / БДКН-03<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../bdkn/6102_new.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">6102. Настройка <i>-n</i> детектора<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../bdkn/bdkn-01.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Проверка плат БДКН-01 / 04<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../bdkn/bdkn_01_03.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">БДКН-01 / БДКН-03<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../bdkn/bdkn-01_03_plat.html">БДКН-01 / БДКН-03. Проверка плат</a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
@@ -265,7 +281,7 @@ function includeHTML(mode_1) {
         '        <span>БОИ</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../boi/boi1-uo.html">БОИ-1. Устройство Обработки<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../boi/boi1-uo.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">БОИ-1. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../boi/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
         '        <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
         '        <li><a href="../boi/boi2-prog.html">БОИ-2. Прошивка</a></li>' +
@@ -307,6 +323,7 @@ function includeHTML(mode_1) {
         '        <span>Файлы, документы</span>' +
         '    </summary>' +
         '    <ul>' +
+        '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
@@ -351,7 +368,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../grad/1103.html">Градуировка ДКР-АТ1103M</a></li>' +
         '        <li><a href="../grad/1121.html">Градуировка ДКС-АТ1121</a></li>' +
         '        <li><a href="../grad/1123.html">Градуировка ДКС-АТ1123</a></li>' +
-        '        <li><a href="../grad/1125a.html">Градуировка 1125A<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../grad/1125a.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Градуировка 1125A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>' +
         '<details ' + mode + '>' +
@@ -359,10 +376,9 @@ function includeHTML(mode_1) {
         '        <span>Разное</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../grad/2503a.html">Градуировка 2503A<span class="under_construction"></span></a></li>' +
+        '        <li><a href="../grad/2503a.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>'
     ;
-
 
 }
