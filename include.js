@@ -324,6 +324,7 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
+        '        <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
