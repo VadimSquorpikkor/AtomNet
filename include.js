@@ -281,13 +281,28 @@ function includeHTML(mode_1) {
         '        <span>БОИ</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../boi/boi1-uo.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">БОИ-1. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
-        '        <li><a href="../boi/boi.html">БОИ, БОИ-2. Преобразователь напряжения</a></li>' +
-        '        <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
-        '        <li><a href="../boi/boi2-prog.html">БОИ-2. Прошивка</a></li>' +
-        '        <li><a href="../boi/boi2-prov.html">БОИ-2. Проверка</a></li>' +
-        '        <li><a href="../boi/boi4_pp_prosh.html">БОИ-4. Прошивка платы преобразователя</a></li>' +
-        '        <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ4</a></li>' +
+        '       <details ' + mode + '>' +
+            '       <summary>' +
+                '       <span>БОИ</span>' +
+                '   </summary>' +
+        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
+        '               <li><a href="../boi/boi.html">Преобразователь напряжения</a></li>' +
+        '       </details>' +
+        '       <details ' + mode + '>' +
+        '           <summary>' +
+        '               <span>БОИ 2</span>' +
+        '           </summary>' +
+        '               <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
+        '               <li><a href="../boi/boi2-prog.html">Прошивка</a></li>' +
+        '               <li><a href="../boi/boi2-prov.html">Проверка Устройства обработки</a></li>' +
+        '       </details>' +
+        '       <details ' + mode + '>' +
+        '           <summary>' +
+        '               <span>БОИ 4</span>' +
+        '           </summary>' +
+        '               <li><a href="../boi/boi4_pp_prosh.html">Прошивка платы преобразователя</a></li>' +
+        '               <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ-4</a></li>' +
+        '       </details>' +
         '    </ul>' +
         '</details>' +
         '' +
