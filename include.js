@@ -48,6 +48,7 @@ function includeHTML(mode_1) {
         mode = '';
     }
     document.getElementById(id).innerHTML =
+    // let reg_menu =
         '<span id="title">Регулировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
@@ -344,7 +345,7 @@ function includeHTML(mode_1) {
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.92</a></li>' +
+        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.95</a></li>' +
         '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
@@ -354,6 +355,7 @@ function includeHTML(mode_1) {
 
 
     document.getElementById("index_menu_2").innerHTML =
+    // let grad_menu =
         '<span id="title">Градуировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
