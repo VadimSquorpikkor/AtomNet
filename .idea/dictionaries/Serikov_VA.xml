@@ -9,11 +9,13 @@
       <w>bground</w>
       <w>bluetooth</w>
       <w>btdu</w>
+      <w>cabel</w>
       <w>conteiner</w>
       <w>contr</w>
       <w>corel</w>
       <w>darkorange</w>
       <w>delitel</w>
+      <w>dtdu</w>
       <w>ekran</w>
       <w>energetica</w>
       <w>fileserver</w>
@@ -26,6 +28,7 @@
       <w>lrus</w>
       <w>lscr</w>
       <w>moxa</w>
+      <w>mylink</w>
       <w>myprotocol</w>
       <w>newfon</w>
       <w>obmen</w>
@@ -51,6 +54,7 @@
       <w>unselect</w>
       <w>usbbd</w>
       <w>uвыс</w>
+      <w>автокалибровку</w>
       <w>гурачевский</w>
     </words>
   </dictionary>

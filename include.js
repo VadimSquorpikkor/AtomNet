@@ -1,14 +1,8 @@
-var a = document.getElementById("mylink");
-a.onclick = function() {
-    localStorage.setItem("open", "true");
-}
-
 function setTextColorWhiteOld() {
     let arr = document.getElementsByClassName("under_construction");
     for (let i = 0; i < arr.length; i++) {
         arr[i].style.color = "white";
     }
-
 }
 
 function setTextColorWhite(element) {
@@ -19,36 +13,24 @@ function setTextColorRed(element) {
     element.style.color = "#ff3333";
 }
 
-function setTextColorRedOld() {
+/*function setTextColorRedOld() {
     let arr = document.getElementsByClassName("under_construction");
     for (let i = 0; i < arr.length; i++) {
         arr[i].style.color = "#ff3333";
     }
+}*/
 
-}
-
-function setScript() {
+/*function setScript() {
     let arr = document.getElementsByClassName("under_construction");
     for (let i = 0; i < arr.length; i++) {
         arr[i].parentElement.addEventListener("mouseover", setTextColorWhite(arr[i]));
     }
-}
+}*/
 
-function includeHTML(mode_1) {
-    let mode;
-    let id;
-    if (mode_1 === open) {
-        mode = 'open';
-        id = 'menu_left';
-    } else if (mode_1 === 'index') {
-        id = 'index_menu';
-        mode = '';
-    } else {
-        id = 'menu';
-        mode = '';
-    }
-    document.getElementById(id).innerHTML =
-    // let reg_menu =
+// import {stroke} from 'qwerty.js';
+
+function getRegMenu(mode) {
+    return '' +
         '<span id="title">Регулировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
@@ -105,7 +87,6 @@ function includeHTML(mode_1) {
         '    <summary>' +
         '        <span><i>γ</i> - БД гамма излучения </span>' +
         '    </summary>' +
-        '    <!--<div>-->' +
         '    <ul>' +
         '        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a>' +
         '        </li>' +
@@ -114,8 +95,7 @@ function includeHTML(mode_1) {
         '                <ul>' +
         '                    <li><a href="../bdkg02/bdkg-02rem.html">РЕМОНТ</a></li>' +
         '                    <li><a href="../bdkg02/bdkg-02_100-200.html">Как поменять напряжение 100 &rarr; 200 вольт</a></li>' +
-        '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Как сделать калибровку по фону и снять' +
-        '                        градуировочное число</a></li>' +
+        '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Калибровка по фону и градуировочное число</a></li>' +
         '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
         '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a>' +
         '                    </li>' +
@@ -283,9 +263,9 @@ function includeHTML(mode_1) {
         '    </summary>' +
         '    <ul>' +
         '       <details ' + mode + '>' +
-            '       <summary>' +
-                '       <span>БОИ</span>' +
-                '   </summary>' +
+        '       <summary>' +
+        '       <span>БОИ</span>' +
+        '   </summary>' +
         '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
         '               <li><a href="../boi/boi.html">Преобразователь напряжения</a></li>' +
         '       </details>' +
@@ -352,10 +332,10 @@ function includeHTML(mode_1) {
         '' +
         '    </ul><br>' +
         '</details>';
+}
 
-
-    document.getElementById("index_menu_2").innerHTML =
-    // let grad_menu =
+function getGradMenu(mode) {
+    return '' +
         '<span id="title">Градуировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
@@ -397,6 +377,25 @@ function includeHTML(mode_1) {
         '        <li><a href="../grad/2503a.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>'
-    ;
+        ;
+}
 
+function includeHTML(mode_1) {
+    //открытое боковое меню и выпадающее меню для регулировки
+    if (mode_1 === open) {
+        document.getElementById('menu_left').innerHTML = getRegMenu('open');
+        document.getElementById('menu').innerHTML = getRegMenu('');
+    }
+    //открытое боковое меню и выпадающее меню для градуировки
+    else if (mode_1 === 'grad') {
+        document.getElementById('menu_left').innerHTML = getGradMenu('open');
+        document.getElementById('menu').innerHTML = getGradMenu('');
+    }
+    //закрытое боковое меню для главного меню
+    else if (mode_1 === 'index') {
+        document.getElementById('index_menu').innerHTML = getRegMenu('');
+        document.getElementById('index_menu_2').innerHTML = getGradMenu('');
+    } else {
+        //document.getElementById('menu').innerHTML = getRegMenu('');
+    }
 }

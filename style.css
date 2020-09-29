@@ -988,7 +988,7 @@ figcaption {
     margin-left: auto;
     float: left;
     width: 450px;
-    margin-top: 2px;
+    margin-top: 0;
     height: 100%;
     display: none;
     padding: 0;
