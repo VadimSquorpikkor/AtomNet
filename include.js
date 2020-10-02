@@ -97,8 +97,7 @@ function getRegMenu(mode) {
         '                    <li><a href="../bdkg02/bdkg-02_100-200.html">Как поменять напряжение 100 &rarr; 200 вольт</a></li>' +
         '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Калибровка по фону и градуировочное число</a></li>' +
         '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
-        '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a>' +
-        '                    </li>' +
+        '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a></li>' +
         '                    <li><a href="../templates/BDKG-02_template.odt">Шаблон для записи данных</a></li>' +
         '                    <li><a href="//Inv-996/журналы градуировок/BDKG02.ods">Журнал градуировки БДКГ-02</a></li>' +
         '                </ul>' +
@@ -107,9 +106,7 @@ function getRegMenu(mode) {
         '        <li><a href="../bdkg/bdkg04.html">БДКГ-04</a>' +
         '            <div>' +
         '                <ul>' +
-        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База' +
-        '                        настройки' +
-        '                        БДКГ-04</a></li>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a></li>' +
         '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a></li>' +
         '                </ul>' +
         '            </div>' +
@@ -129,15 +126,9 @@ function getRegMenu(mode) {
         '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg-23.1_raschet.ods">Расчет протокола 23/1</a></li>' +
         '                    <li><a href="../docs/bdkg22/bdkg-23-bg.ods">Таблица записи фона</a></li>' +
         '                    <li><a href="../docs/bdkg22/perechen_bdkg22.odt">Перечень</a></li>' +
-        '                    <li>' +
-        '                        <a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал' +
-        '                            градуировок БДКГ-22</a></li>' +
-        '                    <li>' +
-        '                        <a href="file://///Inv-996/журналы градуировок/BDKG23.ods">Журнал' +
-        '                            градуировок БДКГ-23</a></li>' +
-        '                    <li>' +
-        '                        <a href="file://///Inv-996/журналы градуировок/BDKG23_1.ods">Журнал' +
-        '                            градуировок БДКГ-23/1</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал градуировок БДКГ-22</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23.ods">Журнал градуировок БДКГ-23</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23_1.ods">Журнал градуировок БДКГ-23/1</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -164,9 +155,7 @@ function getRegMenu(mode) {
         '                    <li><a href="../bdmg/bdmg_pult.html">Как сделать проверку "пультом"</a></li>' +
         '                    <li><a href="../bdmg/bdmg_osh.html">Как снять показания с "ошейником"</a></li>' +
         '                    <li><a href="../docs/БДМГ%20Паспорт.docx">Паспорт настройки</a></li>' +
-        '                    <li>' +
-        '                        <a href="../docs/sertificate/2343_Pov_Rus.doc">Шаблон' +
-        '                            протокола поверки</a></li>' +
+        '                    <li><a href="../docs/sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -211,9 +200,7 @@ function getRegMenu(mode) {
         '        <li><a href="../1123/1121.html">ДКС-АТ1121</a>' +
         '            <div>' +
         '                <ul>' +
-        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База' +
-        '                        настройки' +
-        '                        АТ1121</a></li>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a></li>' +
         '                    <li><a href="file://///Inv-996/журналы градуировок/АТ1121.ods">Данные с линейки</a></li>' +
         '                </ul>' +
         '            </div>' +
@@ -221,9 +208,7 @@ function getRegMenu(mode) {
         '        <li><a href="../1123/1123.html">ДКС-АТ1123</a>' +
         '            <div>' +
         '                <ul>' +
-        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База' +
-        '                        настройки' +
-        '                        АТ1123</a></li>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a></li>' +
         '                    <li><a href="../1123/1123_umnoz.html">Проверка умножителя</a></li>' +
         '                </ul>' +
         '            </div>' +

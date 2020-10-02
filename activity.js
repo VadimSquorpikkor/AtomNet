@@ -127,6 +127,47 @@ function get_all() {
     get_act();
     get_all_activities();
     get_cd_1123();
+    alert("ok");//getDataFromFile();
+}
+
+function getDataFromFile() {
+    // const fs = require('fs')
+
+// Reading data in utf-8 format
+// which is a type of character set.
+// Instead of 'utf-8' it can be
+// other character set also like 'ascii'
+
+
+    /*fs.readFile('Input.txt', 'utf-8', (err, data) => {
+        if (err) throw err;
+
+        // Converting Raw Buffer to text
+        // data using tostring function.
+        Alert(data);
+    })*/
+
+    // let f = new FileReader();
+    // f.onloadend = function(){
+        // console.log("success");
+        // alert("ok");
+    // }
+
+    // var client = new XMLHttpRequest();
+    // client.open('GET', '/Input.txt');
+    // client.onreadystatechange = function() {
+    //     alert(client.responseText);
+    // }
+    // client.send();
+    // alert(client.responseText)
+
+
+    let reader = new FileReader;
+    let file = new File(["foo"], `Input.txt`);
+    // type: "text/plain",
+    reader.readAsText(file);
+    //reader.result;
+    alert(reader.result);
 
 }
 
