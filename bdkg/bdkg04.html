@@ -215,13 +215,30 @@
         <details>
             <summary>8. Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
                 показаниям от ОСГИ <sup>137</sup>Cs:
-                <div class="yellow_back">
-                    Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910_2" type="text"
+                <!--<div class="yellow_back">
+                    Значение мощности дозы для Cs<sup>137</sup> №2910: <input id="cs_1123_2910_2" type="text"
                                                                               value="0" title="k1" size="5"><br>
-                    Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516_2" type="text"
+                    Значение мощности дозы для Cs<sup>137</sup> №516 : <input id="cs_1123_516_2" type="text"
                                                                               value="0" title="k1" size="5">
+                </div>-->
+
+                <div class="yellow_back">
+
+                    Значение мощности дозы для Cs<sup>137</sup>
+
+                <select id="drop_down" onchange="get_cs_bdkg04()">
+                    <option value="1">№2910</option>
+                    <option value="2">№516</option>
+                    <option value="3">№517</option>
+                    <option value="4">№518</option>
+                    <option value="5">№519</option>
+                    <option value="6">№520</option>
+                </select>
+                <input type="text" id="output" size="5">
+
                 </div>
-                Проверить скорость счета от Cs<sup>135</sup> во втором диапазоне,
+
+                Проверить скорость счета от Cs<sup>137</sup> во втором диапазоне,
                 должна быть примерно 2 имп/с
             </summary>
 
@@ -237,9 +254,9 @@
 
 
                     <div class="yellow_back">
-                        Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910" type="text"
+                        Значение мощности дозы для Cs<sup>137</sup> №2910: <input id="cs_1123_2910" type="text"
                                                                                   value="0" title="k1" size="5"><br>
-                        Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516" type="text"
+                        Значение мощности дозы для Cs<sup>137</sup> №516 : <input id="cs_1123_516" type="text"
                                                                                   value="0" title="k1" size="5">
                     </div>
                     <img src="../imgs/bdkg04/12.jpg" width="800">

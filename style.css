@@ -159,7 +159,7 @@ body>div>ul>li, body>div>ol>li {
     background: linear-gradient(to bottom, #f4ff3a 5%, #f5a208 100%);
 }
 
-input[type="text"], input[type="date"] {
+input[type="text"], input[type="date"], select {
     font-family: "Trebuchet MS", sans-serif;
     font-size: 14px;
     border: 0;
@@ -169,6 +169,10 @@ input[type="text"], input[type="date"] {
     padding-left: 8px;
     padding-right: 8px;
     /*background-color: #dddddd;*/
+}
+
+select {
+    border-radius: 6px 0px 0px 6px;
 }
 
 input[type="text"]:hover, input[type="date"]:hover {

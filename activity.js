@@ -12,10 +12,14 @@ function activityAllDays(a0, pov_date, now_date, t_pol) {
     return act.toFixed(4);
 }
 
+const KOEF_TO_1121 = 0.3615;
+
 const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
 const pov_date_cd_1079 = new Date(2020,2,3);
+//const pov_date_cd_1079 = new Date(2018,9,15);
 const pov_date_cs_1121_23_04 = new Date(2019,0,30);
+
 const t_pol_cs = 365.2422*30.17;              //Период полураспада цезия 137 в днях
 const t_pol_cd = 461.4;
 
@@ -40,6 +44,10 @@ function activity_of_cs137(a0) {
 function activity_of_2910() {
     return activity(a0_2910, pov_date_2910, t_pol_cs);
 }
+function activity_of_cd109(a0, pov_date) {
+    return activity(a0, pov_date, t_pol_cd);
+}
+
 
 //Вывод активностей для каждого из источников на сегодняшний день
 function get_act() {
@@ -74,19 +82,43 @@ function get_cd_1123() {
     document.getElementById('cs_1123_516').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
 }
 
+const KOEF_CS_BDKG_04 = 0.5192;
+
 function get_cs_bdkg04() {
-    document.getElementById('cd').value   = activity(60, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cd_2').value = activity(60, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cs_1123_2910').value   = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_516').value    = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_516_2').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1123_2910_2').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
+    //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить: если активность начальная источников
+    //была разной и/или дата поверки отличается, коэффициент будет всё равно одинаковый, отличаться будет для источников с разным периодом полураспада
+
+    let act_1079 = (activity_of_cd109(525, new Date(2018,9,15)) * 0.24404).toFixed(3);
+    let act_516  = (activity_of_cs137(a0_516) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_517  = (activity_of_cs137(a0_517) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_518  = (activity_of_cs137(a0_518) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_519  = (activity_of_cs137(a0_519) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_520  = (activity_of_cs137(a0_520) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_2910 = (activity_of_2910() * KOEF_CS_BDKG_04).toFixed(3);
+
+    let a=document.getElementById('drop_down').value;
+    switch (a) {
+        case '1': document.getElementById('output').value = act_2910;break;
+        case '2': document.getElementById('output').value = act_516; break;
+        case '3': document.getElementById('output').value = act_517; break;
+        case '4': document.getElementById('output').value = act_518; break;
+        case '5': document.getElementById('output').value = act_519; break;
+        case '6': document.getElementById('output').value = act_520; break;
+    }
+
+    document.getElementById('cd').value   = act_1079;
+    document.getElementById('cd_2').value = act_1079;
+    document.getElementById('cs_1123_2910').value   = act_2910;
+    document.getElementById('cs_1123_516').value    = act_516;
+    document.getElementById('cs_1123_2910_2').value = act_2910;
+    document.getElementById('cs_1123_516_2').value  = act_516;
 }
 
-function get_cd_1121() {
-    document.getElementById('cd').value = activity(40, pov_date_cd_1079, t_pol_cd);
-    document.getElementById('cs_1121_2910').value = activity(23, pov_date_cs_1121_23_04, t_pol_cs);
-    document.getElementById('cs_1121_516').value  = activity(32, pov_date_cs_1121_23_04, t_pol_cs);
+
+function set_act_1121() {
+    document.getElementById('cd').value = (activity_of_cd109(525, new Date(2018,9,15)) * 0.1627).toFixed(3);
+    document.getElementById('cs_1121_2910').value = (activity_of_2910() * 0.3615).toFixed(3);
+    document.getElementById('cs_1121_516').value  = (activity_of_cs137(a0_516) * 0.3695).toFixed(3);
 }
 
 function get_act_204() {

@@ -9,25 +9,25 @@
     <script type="text/javascript" src="../include.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 
-<!--    <script type="text/javascript">
-        window.onload = function() {
-            var a = document.getElementById("mylink");
-            a.onclick = function() {
-                localStorage.setItem("open", "true");
+    <!--    <script type="text/javascript">
+            window.onload = function() {
+                var a = document.getElementById("mylink");
+                a.onclick = function() {
+                    localStorage.setItem("open", "true");
+                }
             }
-        }
-    </script>-->
+        </script>-->
 </head>
 
-<body onload="get_act();getDataFromFile()">
+<body onload="get_act()/*;getDataFromFile()*/">
 
 <div class="logo_div"></div>
 
 <!--<div id="index_menu" class="spoiler_menu"></div>-->
 <div id="main" class="index_menu_div">
-<div id="index_menu" class="spoiler_menu" style="visibility: visible"></div>
+    <div id="index_menu" class="spoiler_menu" style="visibility: visible"></div>
     <!--<br>-->
-<div id="index_menu_2" class="spoiler_menu" style="visibility: visible; margin-top: 5px"></div>
+    <div id="index_menu_2" class="spoiler_menu" style="visibility: visible; margin-top: 5px"></div>
 </div>
 
 <script>
@@ -35,8 +35,20 @@
 </script>
 
 <div class="yellow_back_index_right">
+
+
+    <!--<textarea name="text" rows="20" cols="70">
+
+</textarea>-->
+
+
+    <!--<form action="../process.php" method="post">
+        <input type="text" name="name" />
+        <input type="submit" />
+    </form>-->
+
     <img src="../imgs/radiation.png" width="100"
-                                  style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">
+         style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">
     <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7; text-align: left">
         <span class="red_light_title">Активность источников:</span><br><br>
         <!--        <hr color="ff6633">-->
@@ -105,6 +117,14 @@
                 <div>кБк</div>
             </div>
         </div>
+        <div class="activity_block">
+            <div>
+                <div><sup>109</sup>Cd</div>
+                <div>№1080</div>
+                <div><span id="1080">0.000</span></div>
+                <div>кБк</div>
+            </div>
+        </div>
 
         <hr color="ff6633">
         <span class="red_light_title">Без периодической поверки:</span><br><br>
@@ -133,6 +153,7 @@
                 <div>кБк</div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -162,10 +183,12 @@
 
 <div class="blue_back_index_right">
     <span class="red_light_title">Что нового?</span><br>
-    • Вышла новая версия <a href="../sertif_prosh/macro.html">макросов для протоколов поверки и сертификатов</a> &mdash; 2.95. Кому надо, обновляемся <a href="../sertif_prosh/macro.html">здесь</a>
-    или <a href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь(в папке)</a>.
+    • Вышла новая версия <a href="../sertif_prosh/macro.html">макросов для протоколов поверки и сертификатов</a> &mdash;
+    2.95. Кому надо, обновляемся <a href="../sertif_prosh/macro.html">здесь</a>
+    или <a href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь(в
+    папке)</a>.
     Что нового читаем <a href="../sertif_prosh/macro_version.html">тут</a><br>
-<!--    • Добавлена инструкция по <a href="../other/plotter.html">изготовлению наклеек</a><br>-->
+    <!--    • Добавлена инструкция по <a href="../other/plotter.html">изготовлению наклеек</a><br>-->
 
 </div>
 
