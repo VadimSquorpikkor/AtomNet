@@ -46,6 +46,7 @@ function initialize() {
     cs_833 = new RA_Source("№833", CS_137, A0_833, POV_DATE_CS);
     cd_1079 = new RA_Source("№1079", CD_109, A0_1079, POV_DATE_CD_1079);
     cd_1080 = new RA_Source("№1080", CD_109, A0_1080, POV_DATE_CD_1080);
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 //Вывод активностей для каждого из источников на сегодняшний день
@@ -66,8 +67,6 @@ function set_main_activities() {
     document.getElementById('1079').textContent = cd_1079.getActivityNow;
     document.getElementById('1080').textContent = cd_1080.getActivityNow;
 }
-
-
 //----------------------------------------------------------------------------------------------------------------------
 function calc_act() {
     let pov_date = new Date(document.getElementById('date').value);
@@ -76,14 +75,13 @@ function calc_act() {
 
     let rad = document.getElementsByName('r1');
     if (rad[2].checked) {
-        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, t_pol_cd);
+        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CD_109);
     } else if (rad[3].checked) {
-        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, t_pol_cs);
+        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CS_137);
     }else if (rad[4].checked) {
         document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value);
     }
 }
-
 
 function set_num() {
     document.getElementsByName('r1')[2].checked = true;
@@ -91,15 +89,32 @@ function set_num() {
     document.getElementById('date').value = "2018-02-12";
     document.getElementById('date_now').valueAsDate = new Date();
 }
-
-
 //----------------------------------------------------------------------------------------------------------------------
-// const KOEF_CS_BDKG_04 = 0.5192;
-// const KOEF_CD_BDKG_04 = 0.24404;
+function setDropDownActivitiesCesium(drop_id, output, koef) {
+    initialize();
+    switch (document.getElementById(drop_id).value) {
+        case '1': setValue(output, cs_2910, koef); break;
+        case '2': setValue(output, cs_516,  koef); break;
+        case '3': setValue(output, cs_517,  koef); break;
+        case '4': setValue(output, cs_518,  koef); break;
+        case '5': setValue(output, cs_519,  koef); break;
+        case '6': setValue(output, cs_520,  koef); break;
+        case '7': setValue(output, cs_521,  koef); break;
+    }
+}
+function setDropDownActivitiesCadmium(drop_id, output, koef) {
+    initialize();
+    switch (document.getElementById(drop_id).value) {
+        case '1': setValue(output, cd_1079, koef); break;
+        case '2': setValue(output, cd_1080, koef); break;
+    }
+}
+//----------------------------------------------------------------------------------------------------------------------
+const KOEF_CS_BDKG_04 = 0.5192;
+const KOEF_CD_BDKG_04 = 0.24404;
 
 function setValue(id, source, koef) {
     document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
-    // document.getElementById(id).value = source.getActivityNow;
 }
 
 function set_activities_bdkg_04() {
@@ -107,6 +122,8 @@ function set_activities_bdkg_04() {
     //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить:
     //если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет всё равно
     //одинаковый, отличаться будет для источников с разным периодом полураспада
+
+    //setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04);
 
     switch (document.getElementById('drop_down').value) {
         case '1': setValue('output', cs_2910, KOEF_CS_BDKG_04); break;
@@ -134,14 +151,44 @@ function set_activities_bdkg_04() {
     }
 
     switch (document.getElementById('drop_down_cd_2').value) {
-        case '1': setValue('output_cd', cd_1079, KOEF_CD_BDKG_04); break;
-        case '2': setValue('output_cd', cd_1080, KOEF_CD_BDKG_04); break;
+        case '1': setValue('output_cd_2', cd_1079, KOEF_CD_BDKG_04); break;
+        case '2': setValue('output_cd_2', cd_1080, KOEF_CD_BDKG_04); break;
     }
+}
 
-    setValue('cd', cd_1079, KOEF_CD_BDKG_04);
-    setValue('cd_2', cd_1079, KOEF_CD_BDKG_04);
+function get_cs_04() {
+    let res = parseFloat(document.getElementById('cs_04').value);
+    let ans = 71 - res;
+    document.getElementById('res_cs_04').value = ans.toFixed(2);
 }
 //----------------------------------------------------------------------------------------------------------------------
+//Общий метод для активности любого радиоактивного вещества
+//Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
+function activity(a0, pov_date, t_pol) {
+    let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
+    let act = a0 * Math.exp(-0.693147/t_pol * days_left);
+    return act.toFixed(3);
+}
 
-
-
+function activityAllDays(a0, pov_date, now_date, t_pol) {
+    let days_left = (now_date.getTime() - pov_date.getTime()) / (1000*60*60*24);
+    let act = a0 * Math.exp(-0.693147/t_pol * days_left);
+    return act.toFixed(4);
+}
+//----------------------------------------------------------------------------------------------------------------------
+function setValueById(id, source) {
+    document.getElementById(id).value = (source.getActivityNow).toFixed(3);
+}
+//----------------------------------------------------------------------------------------------------------------------
+//Сумарная активность всех источников 516-521
+function get_all_activities() {
+    initialize();
+    document.getElementById('sum_activity').value = (
+        cs_516.getActivityNow*1 +
+        cs_517.getActivityNow*1 +
+        cs_518.getActivityNow*1 +
+        cs_519.getActivityNow*1 +
+        cs_520.getActivityNow*1 +
+        cs_521.getActivityNow*1).toFixed(3);
+}
+//----------------------------------------------------------------------------------------------------------------------

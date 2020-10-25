@@ -126,7 +126,7 @@ function set_activity_bdkg_04() {
         case '7': document.getElementById('output_2').value = act_521; break;
     }
 
-    switch (document.getElementById('drop_down_cd').value) {
+    /*switch (document.getElementById('drop_down_cd').value) {
         case '1': document.getElementById('output_cd').value = act_1079; break;
         case '2': document.getElementById('output_cd').value = act_1080; break;
     }
@@ -134,7 +134,7 @@ function set_activity_bdkg_04() {
     switch (document.getElementById('drop_down_cd_2').value) {
         case '1': document.getElementById('output_cd_2').value = act_1079; break;
         case '2': document.getElementById('output_cd_2').value = act_1080; break;
-    }
+    }*/
 
     document.getElementById('cd').value   = act_1079;
     document.getElementById('cd_2').value = act_1079;
@@ -181,12 +181,12 @@ function get_cs_04() {
     document.getElementById('res_cs_04').value = ans.toFixed(2);
 }
 
-function get_all() {
+/*function get_all() {
     get_act();
     get_all_activities();
     get_cd_1123();
-    //alert("ok");//getDataFromFile();
-}
+    alert("ok");//getDataFromFile();
+}*/
 
 //region getDataFromFile()
 function getDataFromFile() {

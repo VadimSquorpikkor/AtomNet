@@ -5,7 +5,7 @@
     <META charset="utf8">
     <title>БДКГ-04</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <script type="text/javascript" src="../activity.js"></script>
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../my_script.js"></script>
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../activity_new.js"></script>
@@ -14,8 +14,8 @@
 
 </head>
 
-<body onload="set_activity_bdkg_04()">
-<!--<body onload="set_activities_bdkg_04()">-->
+<!--<body onload="set_activity_bdkg_04()">-->
+<body onload="set_activities_bdkg_04()">
 
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
@@ -230,7 +230,7 @@
 
                     Значение мощности дозы для <sup>137</sup>Cs
 
-                    <select id="drop_down" onchange="set_activity_bdkg_04()">
+                    <select id="drop_down" onchange="set_activities_bdkg_04()">
                         <option value="1">№2910</option>
                         <option value="2">№516</option>
                         <option value="3">№517</option>
@@ -269,7 +269,7 @@
 
                         Значение мощности дозы для <sup>137</sup>Cs
 
-                        <select id="drop_down_2" onchange="set_activity_bdkg_04()">
+                        <select id="drop_down_2" onchange="set_activities_bdkg_04()">
                             <option value="1">№2910</option>
                             <option value="2">№516</option>
                             <option value="3">№517</option>
@@ -321,10 +321,23 @@
         <details>
             <summary>9. Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b> резисторами R24 на плате
                 усилителя-преобразователя импульсов:
-                <div class="yellow_back">
+                <!--<div class="yellow_back">
                     Значение мощности дозы для <sup>109</sup>Сd: <input id="cd" type="text" value="0" title="k1"
                                                                         size="5">
+                </div>-->
+
+                <div class="yellow_back">
+
+                    Значение мощности дозы для <sup>109</sup>Сd:
+
+                    <select id="drop_down_cd" onchange="set_activities_bdkg_04()">
+                        <option value="1">№1079</option>
+                        <option value="2">№1080</option>
+                    </select>
+                    <input type="text" id="output_cd" size="5">
+
                 </div>
+
             </summary>
 
             <ul>
@@ -334,9 +347,21 @@
                     значения мощности дозы:
                 </li>
 
-                <div class="yellow_back">
+                <!--<div class="yellow_back">
                     Значение мощности дозы для <sup>109</sup>Сd: <input id="cd_2" type="text" value="0" title="k1"
                                                                         size="5">
+                </div>-->
+
+                <div class="yellow_back">
+
+                    Значение мощности дозы для <sup>109</sup>Сd:
+
+                    <select id="drop_down_cd_2" onchange="set_activities_bdkg_04()">
+                        <option value="1">№1079</option>
+                        <option value="2">№1080</option>
+                    </select>
+                    <input type="text" id="output_cd_2" size="5">
+
                 </div>
 
                 <img src="../imgs/bdkg04/14.jpg" width="800">
