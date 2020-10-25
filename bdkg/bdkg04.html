@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>БДКГ-04</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../activity.js"></script>
     <script type="text/javascript" src="../my_script.js"></script>
+    <script type="text/javascript" src="../SqrLibrary.js"></script>
+    <script type="text/javascript" src="../activity_new.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script type="text/javascript" src="../include.js"></script>
 
 </head>
 
-<body onload="get_cs_bdkg04()">
+<body onload="set_activity_bdkg_04()">
+<!--<body onload="set_activities_bdkg_04()">-->
 
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
@@ -224,21 +228,22 @@
 
                 <div class="yellow_back">
 
-                    Значение мощности дозы для Cs<sup>137</sup>
+                    Значение мощности дозы для <sup>137</sup>Cs
 
-                <select id="drop_down" onchange="get_cs_bdkg04()">
-                    <option value="1">№2910</option>
-                    <option value="2">№516</option>
-                    <option value="3">№517</option>
-                    <option value="4">№518</option>
-                    <option value="5">№519</option>
-                    <option value="6">№520</option>
-                </select>
-                <input type="text" id="output" size="5">
+                    <select id="drop_down" onchange="set_activity_bdkg_04()">
+                        <option value="1">№2910</option>
+                        <option value="2">№516</option>
+                        <option value="3">№517</option>
+                        <option value="4">№518</option>
+                        <option value="5">№519</option>
+                        <option value="6">№520</option>
+                        <option value="7">№521</option>
+                    </select>
+                    <input type="text" id="output" size="5">
 
                 </div>
 
-                Проверить скорость счета от Cs<sup>137</sup> во втором диапазоне,
+                Проверить скорость счета от <sup>137</sup>Cs во втором диапазоне,
                 должна быть примерно 2 имп/с
             </summary>
 
@@ -253,24 +258,42 @@
                     (точно)добиться показаний от источника <sup>137</sup>Cs:
 
 
-                    <div class="yellow_back">
-                        Значение мощности дозы для Cs<sup>137</sup> №2910: <input id="cs_1123_2910" type="text"
+                    <!--<div class="yellow_back">
+                        Значение мощности дозы для <sup>137</sup>Cs №2910: <input id="cs_1123_2910" type="text"
                                                                                   value="0" title="k1" size="5"><br>
-                        Значение мощности дозы для Cs<sup>137</sup> №516 : <input id="cs_1123_516" type="text"
+                        Значение мощности дозы для <sup>137</sup>Cs №516 : <input id="cs_1123_516" type="text"
                                                                                   value="0" title="k1" size="5">
+                    </div>-->
+
+                    <div class="yellow_back">
+
+                        Значение мощности дозы для <sup>137</sup>Cs
+
+                        <select id="drop_down_2" onchange="set_activity_bdkg_04()">
+                            <option value="1">№2910</option>
+                            <option value="2">№516</option>
+                            <option value="3">№517</option>
+                            <option value="4">№518</option>
+                            <option value="5">№519</option>
+                            <option value="6">№520</option>
+                            <option value="7">№521</option>
+                        </select>
+                        <input type="text" id="output_2" size="5">
+
                     </div>
+
                     <img src="../imgs/bdkg04/12.jpg" width="800">
 
-                    <!--Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
+                    Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
                     считает не точно, мало статистики):
                     <form class="yellow_back">
                         <i>Будет статистика, будет нормально работать. Пока считает примерно</i><br><br>
                         мкЗв/ч <input id="cs_04" type="text" value="26" title="channel">
                         <input type="button" value="Расчитать" onclick="get_cs_04()">
                         Номинал (кОм): <input id="res_cs_04" type="text" title="res">
-                    </form>-->
+                    </form>
                     <!--<span class="attention">???</span>-->
-                <li>Проверить скорость счета от Cs<sup>135</sup> во втором диапазоне, должна быть примерно 2
+                <li>Проверить скорость счета от <sup>137</sup>Cs во втором диапазоне, должна быть примерно 2
                     имп/с
                 </li>
                 <li>Замерить напряжение на среднем выводе подстроечного резистора R8:</li>
@@ -278,7 +301,7 @@
                 <img src="../imgs/bdkg04/16.jpg" width="800">
 
 
-                <li><span class="mark_yellow">Записать в базу настройку полученную м.д. по  Cs<sup>135</sup>,
+                <li><span class="mark_yellow">Записать в базу настройку полученную м.д. по  <sup>137</sup>Cs,
                         сопротивление R7 (кОм), напряжение на среднем выводе R8 (В):</span>
                     <a class="orange_link" title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">&neArr;</a>
@@ -299,7 +322,8 @@
             <summary>9. Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b> резисторами R24 на плате
                 усилителя-преобразователя импульсов:
                 <div class="yellow_back">
-                    Значение мощности дозы для <sup>109</sup>Сd: <input id="cd" type="text" value="0" title="k1" size="5">
+                    Значение мощности дозы для <sup>109</sup>Сd: <input id="cd" type="text" value="0" title="k1"
+                                                                        size="5">
                 </div>
             </summary>
 
@@ -311,7 +335,8 @@
                 </li>
 
                 <div class="yellow_back">
-                    Значение мощности дозы для <sup>109</sup>Сd: <input id="cd_2" type="text" value="0" title="k1" size="5">
+                    Значение мощности дозы для <sup>109</sup>Сd: <input id="cd_2" type="text" value="0" title="k1"
+                                                                        size="5">
                 </div>
 
                 <img src="../imgs/bdkg04/14.jpg" width="800">
@@ -433,7 +458,8 @@
         </details>
     </div>
     <div class="nice_details"><span class="space"></span>13. Приработать не менее 40 часов.</div>
-    <div class="nice_details"><span class="space"></span>14. Перепроверить показания по <sup>137</sup>Сs и <sup>109</sup>Cd, и напряжение
+    <div class="nice_details"><span class="space"></span>14. Перепроверить показания по <sup>137</sup>Сs и
+        <sup>109</sup>Cd, и напряжение
         выв.1 D5.1 на плата преобразователя напряжения.
         <div class="tips_and_tricks">Если прирабатывать приборы ДО регулировки, то перепроверять показания уже будет не
             нужно!!!

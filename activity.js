@@ -11,16 +11,19 @@ function activityAllDays(a0, pov_date, now_date, t_pol) {
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
     return act.toFixed(4);
 }
+//----------------------------------------------------------------------------------------------------------------------
 
-const KOEF_TO_1121 = 0.3615;
-
-const pov_date_cs = new Date(2016,9,12);    //yyyy.mm.dd  месяц начинается с 0
-const pov_date_2910 = new Date(2016,4,17);    //yyyy.mm.dd  месяц начинается с 0
-const pov_date_cd_1079 = new Date(2020,2,3);
-//const pov_date_cd_1079 = new Date(2018,9,15);
+//День поверки источника (начало отсчета распада)
+//yyyy.mm.dd  месяц начинается с 0, февраль — это 1
+const pov_date_cs = new Date(2016,9,12); //у Cs 516-520 одинаковый день поверки
+const pov_date_2910 = new Date(2016,4,17);
+const pov_date_cd_1079_dlya_raschetov = new Date(2020,2,3);
+const pov_date_cd_1079 = new Date(2018,9,15);
+const pov_date_cd_1080 = new Date(1,1,1);
 const pov_date_cs_1121_23_04 = new Date(2019,0,30);
 
-const t_pol_cs = 365.2422*30.17;              //Период полураспада цезия 137 в днях
+//Период полураспада в днях
+const t_pol_cs = 365.2422*30.17;
 const t_pol_cd = 461.4;
 
 //Активность источников в день поверки
@@ -34,6 +37,8 @@ const a0_2910 = 67.7;
 const a0_831 = 107;
 const a0_832 = 105;
 const a0_833 = 98;
+const a0_1079 = 525;
+const a0_1080 = 0;
 
 //2016.10.12
 //Частный случай для активности цезия 137-го
@@ -62,7 +67,8 @@ function get_act() {
     document.getElementById('831').textContent = activity_of_cs137(a0_831);
     document.getElementById('832').textContent = activity_of_cs137(a0_832);
     document.getElementById('833').textContent = activity_of_cs137(a0_833);
-    document.getElementById('1079').textContent = activity(525, new Date(2018,9,15), t_pol_cd);
+    document.getElementById('1079').textContent = activity(a0_1079, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('1080').textContent = activity(a0_1080, pov_date_cd_1080, t_pol_cd);
 }
 
 //Сумарная активность всех источников
@@ -77,52 +83,72 @@ function get_all_activities() {
 
 //----------------------------------------------------------------------------------------------------------------------
 function get_cd_1123() {
-    document.getElementById('cd').value = activity(50, pov_date_cd_1079, t_pol_cd);
+    document.getElementById('cd').value = activity(50, pov_date_cd_1079_dlya_raschetov, t_pol_cd);
     document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
     document.getElementById('cs_1123_516').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 const KOEF_CS_BDKG_04 = 0.5192;
+const KOEF_CD_BDKG_04 = 0.24404;
 
-function get_cs_bdkg04() {
-    //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить: если активность начальная источников
-    //была разной и/или дата поверки отличается, коэффициент будет всё равно одинаковый, отличаться будет для источников с разным периодом полураспада
+function set_activity_bdkg_04() {
+    //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить:
+    //если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет всё равно
+    //одинаковый, отличаться будет для источников с разным периодом полураспада
 
-    let act_1079 = (activity_of_cd109(525, new Date(2018,9,15)) * 0.24404).toFixed(3);
+    let act_1079 = (activity_of_cd109(a0_1079, pov_date_cd_1079) * KOEF_CD_BDKG_04).toFixed(3);
+    let act_1080 = (activity_of_cd109(a0_1080, pov_date_cd_1080) * KOEF_CD_BDKG_04).toFixed(3);
     let act_516  = (activity_of_cs137(a0_516) * KOEF_CS_BDKG_04).toFixed(3);
     let act_517  = (activity_of_cs137(a0_517) * KOEF_CS_BDKG_04).toFixed(3);
     let act_518  = (activity_of_cs137(a0_518) * KOEF_CS_BDKG_04).toFixed(3);
     let act_519  = (activity_of_cs137(a0_519) * KOEF_CS_BDKG_04).toFixed(3);
     let act_520  = (activity_of_cs137(a0_520) * KOEF_CS_BDKG_04).toFixed(3);
+    let act_521  = (activity_of_cs137(a0_521) * KOEF_CS_BDKG_04).toFixed(3);
     let act_2910 = (activity_of_2910() * KOEF_CS_BDKG_04).toFixed(3);
 
-    let a=document.getElementById('drop_down').value;
-    switch (a) {
+    switch (document.getElementById('drop_down').value) {
         case '1': document.getElementById('output').value = act_2910;break;
         case '2': document.getElementById('output').value = act_516; break;
         case '3': document.getElementById('output').value = act_517; break;
         case '4': document.getElementById('output').value = act_518; break;
         case '5': document.getElementById('output').value = act_519; break;
         case '6': document.getElementById('output').value = act_520; break;
+        case '7': document.getElementById('output').value = act_521; break;
+    }
+
+    switch (document.getElementById('drop_down_2').value) {
+        case '1': document.getElementById('output_2').value = act_2910;break;
+        case '2': document.getElementById('output_2').value = act_516; break;
+        case '3': document.getElementById('output_2').value = act_517; break;
+        case '4': document.getElementById('output_2').value = act_518; break;
+        case '5': document.getElementById('output_2').value = act_519; break;
+        case '6': document.getElementById('output_2').value = act_520; break;
+        case '7': document.getElementById('output_2').value = act_521; break;
+    }
+
+    switch (document.getElementById('drop_down_cd').value) {
+        case '1': document.getElementById('output_cd').value = act_1079; break;
+        case '2': document.getElementById('output_cd').value = act_1080; break;
+    }
+
+    switch (document.getElementById('drop_down_cd_2').value) {
+        case '1': document.getElementById('output_cd_2').value = act_1079; break;
+        case '2': document.getElementById('output_cd_2').value = act_1080; break;
     }
 
     document.getElementById('cd').value   = act_1079;
     document.getElementById('cd_2').value = act_1079;
-    document.getElementById('cs_1123_2910').value   = act_2910;
-    document.getElementById('cs_1123_516').value    = act_516;
-    document.getElementById('cs_1123_2910_2').value = act_2910;
-    document.getElementById('cs_1123_516_2').value  = act_516;
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 
 function set_act_1121() {
-    document.getElementById('cd').value = (activity_of_cd109(525, new Date(2018,9,15)) * 0.1627).toFixed(3);
+    document.getElementById('cd').value = (activity_of_cd109(a0_1079, pov_date_cd_1079) * 0.1627).toFixed(3);
     document.getElementById('cs_1121_2910').value = (activity_of_2910() * 0.3615).toFixed(3);
     document.getElementById('cs_1121_516').value  = (activity_of_cs137(a0_516) * 0.3695).toFixed(3);
 }
-
+//----------------------------------------------------------------------------------------------------------------------
 function get_act_204() {
-    document.getElementById('cd').value  = activity(35, pov_date_cd_1079, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    document.getElementById('cd').value  = activity(35, pov_date_cd_1079_dlya_raschetov, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cd2').value = activity(3.3, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cs').value  = activity(23, new Date(2018,12,15), t_pol_cs);
 }
@@ -159,9 +185,10 @@ function get_all() {
     get_act();
     get_all_activities();
     get_cd_1123();
-    alert("ok");//getDataFromFile();
+    //alert("ok");//getDataFromFile();
 }
 
+//region getDataFromFile()
 function getDataFromFile() {
     // const fs = require('fs')
 
@@ -202,6 +229,7 @@ function getDataFromFile() {
     alert(reader.result);
 
 }
+//endregion
 
 function get_path() {
     open("AtomNet/menu/menu.html")
@@ -222,11 +250,6 @@ function calc_act() {
     }
 }
 
-function exp_all() {
-    for (let item of document.getElementsByTagName("details")) {
-        item.open = !item.open;
-    }
-}
 
 function set_num() {
     document.getElementsByName('r1')[2].checked = true;
