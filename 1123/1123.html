@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>ДКС-АТ1123. Инструкция по настройке</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../activity_new.js"></script>
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../include.js"></script>
     <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-<!--    <style>
-        .main_div{
-            background: white url("../imgs/1123/bg6.png") no-repeat;
-        }
-    </style>-->
+    <!--    <style>
+            .main_div{
+                background: white url("../imgs/1123/bg6.png") no-repeat;
+            }
+        </style>-->
 </head>
 
-<!--<body onload="get_cd_1123()">-->
 <body onload="set_activities_1123()">
 
 <div class="header_div_2">
@@ -51,393 +50,342 @@
         <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a><br>
         <a href="1123_umnoz.html">Проверка умножителя</a><br>
         <!--<a href="1123_mode.html">Как переключать режимы с непрерывного в импульсный</a>-->
-
-
         <!--<a href="1123_potreb.html">ток потребления и ток заряда БА</a><br>-->
-
     </div>
 
 
-    <ol>
-        <li>
-            <div class="nice_details">
-                Присвоить номер. В перечень записать дату, количество дозиметров отданных в настройку и ФИО
-                регулировщика.
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <span class="space"></span>1. Присвоить номер. В перечень записать дату, количество дозиметров отданных
+        в настройку и ФИО регулировщика.
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>2. В полученные со сборки приборы всавить аккумуляторы, включить, подсоединить питание и поставить
+                на приработку <span class="attention">на 24 часа</span></summary>
+            <img src="../imgs/1123/00.jpg" width="800">
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>3. Проверить ток потребления: для этого замерить напряжение на R26 (мВ) и вписать значение в базу
+                настроек, база сама высчитает ток:
+            </summary>
+            <img src="../imgs/1123/20_new.jpg" width="800">
+            <img src="../imgs/1123/21.png" width="400">
+        </details>
+    </div>
+    <!--<li>
+        <details>
+            <summary>Установить АКБ. Проверить ток потребления и ток заряда БА</summary>
+            <ul>
+                <li>включить в разрыв цепи «+» БА амперметр</li>
+                <li>включить ДКР и измерить его ток потребления, значение которого должно быть не более 100 мА;</li>
+                <img src="../imgs/1123/p1.jpg" width="500">
+                <li>Подключить адаптер питания 12В и измерить ток заряда БА, значение которого должно быть примерно
+                    равно
+                    500мА(??????????????)
+                </li>
+                <img src="../imgs/1123/p2.jpg" width="500">
+            </ul>
+        </details>
+        &lt;!&ndash;<a href="1123_potreb.html">ток потребления и ток заряда БА</a></li>&ndash;&gt;
 
+    <li>-->
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>4. Записать номер и дату изготовления в память прибора.</summary>
+            <ul>
+                <li>Подключить дозиметр к адаптеру USB</li>
+                <img src="../imgs/1123/bg1.jpg" width="400">
+                <li>Запустить программу BackgroundCalibration. Дозиметр подключится автоматически</li>
+                <li>Нажать "Запись идентификационных данных"</li>
+                <img src="../imgs/1123/bg2.png" width="800">
+                <li>Записать серийный номер, месяц и год производства</li>
+                <img src="../imgs/1123/bg3.png" width="300">
+            </ul>
+            <div class="tips_and_tricks">Если перед тем, как нажать "Запись..." НЕ выделять строку с прибором,
+                Background сам подставит сегодняшнюю дату
             </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>В полученные со сборки приборы всавить аккумуляторы, включить, подсоединить питание и
-                        поставить
-                        на
-                        приработку <span class="attention">на 24 часа</span></summary>
-                    <img src="../imgs/1123/00.jpg" width="800">
-                </details>
-            </div>
-        </li>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Проверить ток потребления: для этого замерить напряжение на R26 (мВ) и вписать значение в
-                        базу
-                        настроек,
-                        база сама высчитает ток:
-                    </summary>
-                    <img src="../imgs/1123/20_new.jpg" width="800">
-                    <img src="../imgs/1123/21.png" width="400">
-                </details>
-            </div>
-        </li>
-        <!--<li>
-            <details>
-                <summary>Установить АКБ. Проверить ток потребления и ток заряда БА</summary>
-                <ul>
-                    <li>включить в разрыв цепи «+» БА амперметр</li>
-                    <li>включить ДКР и измерить его ток потребления, значение которого должно быть не более 100 мА;</li>
-                    <img src="../imgs/1123/p1.jpg" width="500">
-                    <li>Подключить адаптер питания 12В и измерить ток заряда БА, значение которого должно быть примерно
-                        равно
-                        500мА(??????????????)
-                    </li>
-                    <img src="../imgs/1123/p2.jpg" width="500">
-                </ul>
-            </details>
-            &lt;!&ndash;<a href="1123_potreb.html">ток потребления и ток заряда БА</a></li>&ndash;&gt;
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <!--<a href="1123_write_date.html">Записать номер и дату изготовления</a> в память прибора.-->
+    <div class="nice_details">
+        <details>
+            <summary>5. Перепроверить установленные коэффициенты:</summary>
+            <ul>
+                <li>При включении нажать и удерживать кнопку <span class="like_a_button">МЕМ</span></li>
+                <li>Нажать три раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
+                <li>Два раза нажать кнопку<span class="like_a_button">START</span>
+                <li>Набрать "718", для этого с помощью клавиш <span
+                        class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>
+                    и <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а спомощью
+                    <span class="like_a_button">START</span> выбирается следующая позиция
+                </li>
+                <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>
+                <li>Нажать и удерживать кнопку <span class="like_a_button">МЕМ</span>, появится ".1."</li>
+                <li>Нажимая кнопку <span class="like_a_button">МЕМ</span>, выбрать пятый режим</li>
+                <li>Переключение коэффициента осуществляется кнопкой <span
+                        class="like_a_button">START</span>, значение коэффициента изменяется кнопками <span
+                        class="like_a_button">&emsp;&bigtriangleup;&emsp;</span> и <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span>
+                </li>
 
-        <li>-->
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Записать номер и дату изготовления в память прибора.</summary>
-                    <ul>
-                        <li>Подключить дозиметр к адаптеру USB</li>
-                        <img src="../imgs/1123/bg1.jpg" width="400">
-                        <li>Запустить программу BackgroundCalibration. Дозиметр подключится автоматически</li>
-                        <li>Нажать "Запись идентификационных данных"</li>
-                        <img src="../imgs/1123/bg2.png" width="800">
-                        <li>Записать серийный номер, месяц и год производства</li>
-                        <img src="../imgs/1123/bg3.png" width="300">
-                    </ul>
-                    <div class="tips_and_tricks">Если перед тем, как нажать "Запись..." НЕ выделять строку с прибором,
-                        Background сам подставит сегодняшнюю дату</div>
-                </details>
-            </div>
+                <img src="../imgs/1123/k1.jpg" width="600">
+            </ul>
 
-            <!--<a href="1123_write_date.html">Записать номер и дату изготовления</a> в память прибора.-->
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Перепроверить установленные коэффициенты:</summary>
-                    <ul>
-                        <li>При включении нажать и удерживать кнопку <span class="like_a_button">МЕМ</span></li>
-                        <li>Нажать три раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
-                        <li>Два раза нажать кнопку<span class="like_a_button">START</span>
-                        <li>Набрать "718", для этого с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>
-                            и
-                            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а
-                            спомощью
-                            <span class="like_a_button">START</span> выбирается следующая позиция
-                        </li>
-                        <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>
-                        <li>Нажать и удерживать кнопку <span class="like_a_button">МЕМ</span>, появится ".1."</li>
-                        <li>Нажимая кнопку <span class="like_a_button">МЕМ</span>, выбрать пятый режим</li>
-                        <li>Переключение коэффициента осуществляется кнопкой <span
-                                class="like_a_button">START</span>,
-                            значение коэффициента изменяется кнопками <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>
-                            и
-                            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span></li>
+            <p><span class="attention">Должны</span> стоять такие коэффициенты:
+            <table class="small_table" align="center">
+                <tr>
+                    <td>1U</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>2U</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>3U</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>4U</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>5U</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <!--<li>Произвести заряд.-->
+    <div class="nice_details">
+        <details>
+            <summary>6. Подстроечным резистором установить фоновые показания прибора. Для этого подстроечным
+                резистором на плате преобразователя импульсов выставить 23 Ом.
+            </summary>
+            <img src="../imgs/1123/06.jpg" width="800">
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>7. Установить Uвыс резисторами R18, R19 на плате преобразователя напряжения по показаниям
+                от ОСГИ <sup>137</sup>Сs:
+            </summary>
+            <ul>
+                <li>Закрепить источник <span class="attention">ОБЯЗАТЕЛЬНО латунной пластинкой к прибору</span>
+                    <img src="../imgs/1123/07.jpg" width="600">
+                <li>Включить дозиметр</li>
+                <li>С помощью подбора номинала резистора R18 (грубо) и регулировкой подстроечного резистора R19
+                    (точно)
+                    добиться показаний от источника <sup>137</sup>Сs:
 
-                        <img src="../imgs/1123/k1.jpg" width="600">
-                    </ul>
+                    <div class="yellow_back">
+                        Значение мощности дозы для <sup>137</sup>Cs
+                        <select id="drop_down" onchange="set_activities_1123()">
+                            <option value="1">№2910</option>
+                            <option value="2">№516</option>
+                            <option value="3">№517</option>
+                            <option value="4">№518</option>
+                            <option value="5">№519</option>
+                            <option value="6">№520</option>
+                            <option value="7">№521</option>
+                        </select>
+                        <input type="text" id="output" size="5">
+                    </div>
 
-                    <p><span class="attention">Должны</span> стоять такие коэффициенты:
-                    <table class="small_table" align="center">
-                        <tr>
-                            <td>1U</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>2U</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>3U</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>4U</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>5U</td>
-                            <td>0</td>
-                        </tr>
-                    </table>
-                </details>
-            </div>
-            <!--<li>Произвести заряд.-->
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Подстроечным резистором установить фоновые показания прибора. Для этого подстроечным
-                        резистором
-                        на плате
-                        преобразователя импульсов выставить 23 Ом.
-                    </summary>
-                    <img src="../imgs/1123/06.jpg" width="800">
-                </details>
-            </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Установить Uвыс резисторами R18, R19 на плате преобразователя напряжения по показаниям от
-                        ОСГИ <sup>137</sup>Сs:
-                    </summary>
-                    <ul>
-                        <li>Закрепить источник <span class="attention">ОБЯЗАТЕЛЬНО латунной пластинкой к прибору</span>
-                            <img src="../imgs/1123/07.jpg" width="600">
-                        <li>Включить дозиметр</li>
-                        <li>С помощью подбора номинала резистора R18 (грубо) и регулировкой подстроечного резистора R19
-                            (точно)
-                            добиться показаний от источника <sup>137</sup>Сs:
-                            <ul>
-                                <div class="yellow_back">
-
-                                    Значение мощности дозы для <sup>137</sup>Cs
-                                    <!--31.709-->
-                                    <select id="drop_down" onchange="set_activities_1123()">
-                                        <option value="1">№2910</option>
-                                        <option value="2">№516</option>
-                                        <option value="3">№517</option>
-                                        <option value="4">№518</option>
-                                        <option value="5">№519</option>
-                                        <option value="6">№520</option>
-                                        <option value="7">№521</option>
-                                    </select>
-                                    <input type="text" id="output" size="5">
-
-                                </div>
-
-                                <!--<div class="yellow_back">
-                                    Значение мощности дозы для Cs<sup>135</sup> №2910: <input id="cs_1123_2910"
-                                                                                              type="text"
-                                                                                              value="0" title="k1"
-                                                                                              size="5"><br>
-                                    Значение мощности дозы для Cs<sup>135</sup> №516 : <input id="cs_1123_516"
-                                                                                              type="text"
-                                                                                              value="0" title="k1"
-                                                                                              size="5">
-                                    &lt;!&ndash;Значение мощности дозы для Cd-109: <p id="cd" >&ndash;&gt;
-                                </div>-->
-                            </ul>
-                            <img src="../imgs/1123/08.jpg" width="800">
-                            Показания снимать прямо с экрана прибора (можно и с ПК через BackgroundCalibration, но
-                            смысл?).
-                        <li>Проверить показания во втором диапазоне.
-                            <span class="mark_yellow">Записать в базу настройку
+                    <img src="../imgs/1123/08.jpg" width="800">
+                    Показания снимать прямо с экрана прибора (можно и с ПК через BackgroundCalibration, но
+                    смысл?).
+                <li>Проверить показания во втором диапазоне.
+                    <span class="mark_yellow">Записать в базу настройку
                     показания дозиметра в 1-м и 2-м диапазоне, сопротивление R18 и R19</span>
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                </li>
+            </ul>
+            <form class="yellow_back">
+                <i>Будет статистика, будет работать. Пока для красоты</i><br><br>
+                мкЗв/ч <input id="b" type="text" value="2.68" title="channel">
+                <input type="button" value="Расчитать" onclick="calc_1123()">
+                Номинал (кОм): <input id="res_sm" type="text" title="res">
+            </form>
+            <br>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>8. Проконтролировать напряжение и форму пробоя светодиода в 1 и 3 диапазоне. Для этого:</summary>
+            <ul>
+                <li>Включить прибор, перейти в 3-ий диапазон</li>
+                <li>С помощью осцилографа проверить сигнал светодиода. Максимум не должен привышать 100В:</li>
+                <img src="../imgs/1123/09.jpg" width="800">
+                <img src="../imgs/1123/os1.png" width="500">
+                <li>То же сделать для 1-го диапазона</li>
 
-                        </li>
+                <li>С помощью мультиметра проверить напряжение на 1-ом выводе микросхемы D5. Напряжение не должно
+                    превышать 4.9В.
+                    <img src="../imgs/1123/10.jpg" width="800">
+                <li>То же сделать для 1-го диапазона. Если напряжение на 1-м выводе <i>превышает</i> 4.9В, следуе
+                    заменить резистор R37 на больший номинал
+                    <img src="../imgs/1123/11.jpg" width="800">
+                <li>Значение напряжения диода и напряжение на микросхеме для 3-го и 1-го диапазона <span
+                        class="mark_yellow">записать в базу настройки</span>
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
 
-                    </ul>
-                    <!--<div class="yellow_back">-->
-                    <form class="yellow_back">
-                        <i>Будет статистика, будет работать. Пока для красоты</i><br><br>
-                        мкЗв/ч <input id="b" type="text" value="2.68" title="channel">
-                        <input type="button" value="Расчитать" onclick="calc_1123()">
-                        Номинал (кОм): <input id="res_sm" type="text" title="res">
-                    </form>
-                    <!--</li>-->
-                    <!--</div>-->
-                    <br>
-                </details>
-            </div>
-            <!--7-->
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Проконтролировать напряжение и форму пробоя светодиода в 1 и 3 диапазоне. Для этого:
-                    </summary>
-                    <ul>
-                        <li>Включить прибор, перейти в 3-ий диапазон</li>
-                        <li>С помощью осцилографа проверить сигнал светодиода. Максимум не должен привышать 100В:</li>
-                        <img src="../imgs/1123/09.jpg" width="800">
-                        <img src="../imgs/1123/os1.png" width="500">
-                        <li>То же сделать для 1-го диапазона</li>
+                </li>
+                <!--<img src="../imgs/1123/12.png" width="600">-->
+            </ul>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>
+                9. Проверить отсутствие показаний прибора в непрерывном и импульсном режиме во 2 и 3 диапазоне.
+                <!--(<a href="1123_mode.html">Как переключать режимы</a>)-->
+            </summary>
+            <ul>
+                <li>Нажать и удерживать кнопку <span class="like_a_button">МЕМ</span>. На экране появится ".2."
+                </li>
+                <li>Нажать дважды <span class="like_a_button">МЕМ</span>, на экране появится ".4.", и сразу же
+                    символ режима работы:
+                </li>
+                <img src="../imgs/1123/mode2.jpg" width="600">
+                <li>с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span> и <span
+                        class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбрать нужный режим, где:
+                    <img src="../imgs/1123/mode1.png" width="400">
+                <li>Нажать <span class="like_a_button">START</span>.
+            </ul>
 
-                        <li>С помощью мультиметра проверить напряжение на 1-ом выводе микросхемы D5. Напряжение не
-                            должно
-                            превышать 4.9В.
-                            <img src="../imgs/1123/10.jpg" width="800">
-                        <li>То же сделать для 1-го диапазона.
-                            Если напряжение на 1-м выводе <i>превышает</i> 4.9В, следуе заменить резистор R37 на больший
-                            номинал
-                            <img src="../imgs/1123/11.jpg" width="800">
-                        <li>Значение напряжения диода и напряжение на микросхеме для 3-го и 1-го диапазона <span
-                                class="mark_yellow">записать в базу настройки</span>
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
-
-                        </li>
-                        <!--<img src="../imgs/1123/12.png" width="600">-->
-                    </ul>
-                </details>
-            </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>
-                        Проверить отсутствие показаний прибора в непрерывном и импульсном режиме во 2 и 3 диапазоне.
-                        <!--(<a href="1123_mode.html">Как переключать режимы</a>)-->
-                    </summary>
-                    <ul>
-                        <li>Нажать и удерживать кнопку <span class="like_a_button">МЕМ</span>. На экране появится ".2."
-                        </li>
-                        <li>Нажать дважды <span class="like_a_button">МЕМ</span>, на экране появится ".4.", и сразу же
-                            символ режима работы:
-                        </li>
-                        <img src="../imgs/1123/mode2.jpg" width="600">
-                        <li>с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span> и <span
-                                class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбрать нужный режим, где:
-                            <img src="../imgs/1123/mode1.png" width="400">
-                        <li>Нажать <span class="like_a_button">START</span>.
-                    </ul>
-
-                    <p><span class="attention">После проверки показаний в непрерывном и импульсном режиме,
+            <p><span class="attention">После проверки показаний в непрерывном и импульсном режиме,
         обязательно переключить прибор в непрерывный режим, вся настройка проводится именно в этом режиме</span>
-                </details>
-            </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Проверить высокое</summary>
-                    <ul>
-                        <li>Мультиметром замерить напряжение на высоком (в 1-м диапазоне)</li>
-                        <img src="../imgs/1123/14.jpg" width="800">
-                        <li>Записать в базу настройки в ячейку <i>"Uвыс. I диап, В /дин"</i> полученное напряжение
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
-                        </li>
-                        <img src="../imgs/1123/13.png" width="400">
-                        <li>В ячейке "Расчет" отобразится значение напряжения на высоком в 3-м диапазоне</li>
-                        <li>Переключится в 3-й диапазон и сравнить напряжение на высоком с расчетным</li>
-                        <li>Если напряжение примерно совпало, идём дальше, если нет &mdash; корректируем.
-                            Для этого необходимо подобрать резистор R43
-                        </li>
-                        <img src="../imgs/1123/15.jpg" width="800">
-                        <li><span
-                                class="mark_yellow">Записать в базу настройки напряжение высокого в 3-ем диапазоне</span>
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
-                        </li>
-                        <li><span class="mark_yellow">Записать в базу настройки номинал резистора R43</span>
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
-                        </li>
-                    </ul>
-                </details>
-            </div>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>10. Проверить высокое</summary>
+            <ul>
+                <li>Мультиметром замерить напряжение на высоком (в 1-м диапазоне)</li>
+                <img src="../imgs/1123/14.jpg" width="800">
+                <li>Записать в базу настройки в ячейку <i>"Uвыс. I диап, В /дин"</i> полученное напряжение
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                </li>
+                <img src="../imgs/1123/13.png" width="400">
+                <li>В ячейке "Расчет" отобразится значение напряжения на высоком в 3-м диапазоне</li>
+                <li>Переключится в 3-й диапазон и сравнить напряжение на высоком с расчетным</li>
+                <li>Если напряжение примерно совпало, идём дальше, если нет &mdash; корректируем.
+                    Для этого необходимо подобрать резистор R43
+                </li>
+                <img src="../imgs/1123/15.jpg" width="800">
+                <li><span
+                        class="mark_yellow">Записать в базу настройки напряжение высокого в 3-ем диапазоне</span>
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                </li>
+                <li><span class="mark_yellow">Записать в базу настройки номинал резистора R43</span>
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                </li>
+            </ul>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>11. Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b>:</summary>
+            <img src="../imgs/1123/19.jpg" width="400">
 
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b>:</summary>
-                    <img src="../imgs/1123/19.jpg" width="400">
+            <ul>
+                <li>Закрепить источник ОСГИ <sup>109</sup>Сd <b>1079</b> на колпачок</li>
+                <li>С помощью резистор R16 (грубо) и подстроечного R17 добиться такого значения мощности дозы:
+                </li>
 
-                    <ul>
-                        <li>Закрепить источник ОСГИ <sup>109</sup>Сd <b>1079</b> на колпачок</li>
-                        <li>С помощью резистор R16 (грубо) и подстроечного R17 добиться такого значения мощности дозы:
-                        </li>
+                <div class="yellow_back">
 
-                        <!--<div class="yellow_back">
-                            Значение мощности дозы для <sup>109</sup>Сd: <input id="cd" type="text" value="0" title="k1" size="5">
-                            &lt;!&ndash;Значение мощности дозы для Cd-109: <p id="cd" >&ndash;&gt;
-                        </div>
+                    Значение мощности дозы для <sup>109</sup>Сd:
 
-                        <div class="yellow_back">
-                            Значение мощности дозы для <sup>109</sup>Сd: <input id="cd_2" type="text" value="0" title="k1" size="5">
-                            &lt;!&ndash;Значение мощности дозы для Cd-109: <p id="cd" >&ndash;&gt;
-                        </div>-->
+                    <select id="drop_down_cd" onchange="set_activities_1123()">
+                        <option value="1">№1079</option>
+                        <option value="2">№1080</option>
+                    </select>
+                    <input type="text" id="output_cd" size="5">
 
-
-                        <div class="yellow_back">
-
-                            Значение мощности дозы для <sup>109</sup>Сd:
-
-                            <select id="drop_down_cd" onchange="set_activities_1123()">
-                                <option value="1">№1079</option>
-                                <option value="2">№1080</option>
-                            </select>
-                            <input type="text" id="output_cd" size="5">
-
-                        </div>
+                </div>
 
 
-                        <img src="../imgs/1123/16.jpg" width="800">
-                        <li><span class="mark_green">Следует учитывать, что изменение сопротивления резисторов очень сильно изменяют значение мощности дозы.
-                Так, чтобы изменить значение мд на 20мкЗв, достаточно будет просто выкрутить подстроечный резистор, без перепайки резистора</span>
-                        </li>
-                        <li>Чтобы увеличить значение м.д. сопротивление резистора нужно уменьшить, и наоборот</li>
-                        <li><span class="mark_yellow">Записать в базу настройки
+                <img src="../imgs/1123/16.jpg" width="800">
+
+                <div class="tips_and_tricks">
+                    Следует учитывать, что изменение сопротивления резисторов очень сильно изменяют значение мощности
+                    дозы.
+                    Так, чтобы изменить значение мд на 20мкЗв, достаточно будет просто выкрутить подстроечный резистор,
+                    без перепайки резистора
+                </div>
+
+                <li>Чтобы увеличить значение м.д. сопротивление резистора нужно уменьшить, и наоборот</li>
+                <li><span class="mark_yellow">Записать в базу настройки
                     номиналы R16 и R17, значение м.д. от <sup>109</sup>Сd</span>
-                            <a class="orange_link" title="Открыть базу настройки АТ1123"
-                               href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
+                    <a class="orange_link" title="Открыть базу настройки АТ1123"
+                       href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">&neArr;</a>
 
-                            <img src="../imgs/1123/22.png" width="500">
-                    </ul>
-                </details>
-            </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Осцилографом проконтролировать число импульсов сигнала «МВ» на фоне ≈10-15 имп.</summary>
-                    <img src="../imgs/1123/18.jpg" width="800">
-                    <img src="../imgs/1123/17.png" width="500">
-                </details>
-            </div>
-        <li>
-            <div class="nice_details">
-                <!--<p><span class="attention">UNDER CONSTRUCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>-->
-                Перепроверить показания по <sup>137</sup>Сs и напряжение на D5.1 в 3 диапазоне на плате преобразователя
-                напряжения (см. пункт 6 и 7).
-            </div>
-        <li>
-            <div class="nice_details">
-                <details>
-                    <summary>Проверить время наработки &mdash; должно быть <span
-                            class="attention">НЕ МЕНЕЕ 100 ЧАСОВ</span>
-                    </summary>
-                    <p>Чтобы проверить часы наработки:
-                    <ul>
-                        <li>Включить прибор, при включении зажать <span class="like_a_button">ПАМЯТЬ</span></li>
-                        <li>На экране появится:</li>
-                        <img src="../imgs/1121/20.jpg" width="300">
-                        <li>нажать <span class="like_a_button">ПАМЯТЬ</span>, на экране появятся часы наработки.</li>
-                        <img src="../imgs/1121/21.jpg" width="300">
-                        <li>Часов наработки должно быть <span class="attention">НЕ МЕНЕЕ 100</span></li>
-                        <li>Если меньше, поставить включенными на стелаж прирабатываться до 100 часов</li>
-                    </ul>
-                </details>
-            </div>
-
-
-        <li>
-            <div class="nice_details">
-                Зарядить и отдать на УДГ.
-            </div>
-        </li>
-
-        <li>
-            <div class="nice_details">
-                При использовании ДКС-АТ1123 в составе СРК-ЛУЭ заменить R20 R21 с номинала 2,7 Ом на
-                12 Ом (ограничение по заряду≈100мА, дополнительных перепрошивок прибора НЕ
-                ТРЕБУЕТСЯ)
-            </div>
-        </li>
-    </ol>
+                    <img src="../imgs/1123/22.png" width="500">
+            </ul>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>12. Осцилографом проконтролировать число импульсов сигнала «МВ» на фоне ≈10-15 имп.
+            </summary>
+            <img src="../imgs/1123/18.jpg" width="800">
+            <img src="../imgs/1123/17.png" width="500">
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <!--<p><span class="attention">UNDER CONSTRUCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>-->
+        <span class="space"></span>13. Перепроверить показания по <sup>137</sup>Сs и напряжение на D5.1 в 3
+        диапазоне на плате преобразователя напряжения (см. пункт 6 и 7).
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <details>
+            <summary>14. Проверить время наработки &mdash; должно быть <span
+                    class="attention">НЕ МЕНЕЕ 100 ЧАСОВ</span>
+            </summary>
+            <p>Чтобы проверить часы наработки:
+            <ul>
+                <li>Включить прибор, при включении зажать <span class="like_a_button">ПАМЯТЬ</span></li>
+                <li>На экране появится:</li>
+                <img src="../imgs/1121/20.jpg" width="300">
+                <li>нажать <span class="like_a_button">ПАМЯТЬ</span>, на экране появятся часы наработки.</li>
+                <img src="../imgs/1121/21.jpg" width="300">
+                <li>Часов наработки должно быть <span class="attention">НЕ МЕНЕЕ 100</span></li>
+                <li>Если меньше, поставить включенными на стелаж прирабатываться до 100 часов</li>
+            </ul>
+        </details>
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <span class="space"></span>15. Зарядить и отдать на УДГ.
+    </div>
+    <!------------------------------------------------------------------------------------------------------------->
+    <div class="nice_details">
+        <span class="space"></span>16. При использовании ДКС-АТ1123 в составе СРК-ЛУЭ заменить R20 R21 с
+        номинала 2,7 Ом на 12 Ом (ограничение по заряду≈100мА, дополнительных перепрошивок прибора НЕ
+        ТРЕБУЕТСЯ)
+    </div>
 
 </div>
 
