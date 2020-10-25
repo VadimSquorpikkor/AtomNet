@@ -90,6 +90,9 @@ function set_num() {
     document.getElementById('date_now').valueAsDate = new Date();
 }
 //----------------------------------------------------------------------------------------------------------------------
+function setValue(id, source, koef) {
+    document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
+}
 function setDropDownActivitiesCesium(drop_id, output, koef) {
     initialize();
     switch (document.getElementById(drop_id).value) {
@@ -113,47 +116,15 @@ function setDropDownActivitiesCadmium(drop_id, output, koef) {
 const KOEF_CS_BDKG_04 = 0.5192;
 const KOEF_CD_BDKG_04 = 0.24404;
 
-function setValue(id, source, koef) {
-    document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
-}
-
 function set_activities_bdkg_04() {
-    initialize();
     //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить:
     //если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет всё равно
     //одинаковый, отличаться будет для источников с разным периодом полураспада
 
-    //setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04);
-
-    switch (document.getElementById('drop_down').value) {
-        case '1': setValue('output', cs_2910, KOEF_CS_BDKG_04); break;
-        case '2': setValue('output', cs_516,  KOEF_CS_BDKG_04); break;
-        case '3': setValue('output', cs_517,  KOEF_CS_BDKG_04); break;
-        case '4': setValue('output', cs_518,  KOEF_CS_BDKG_04); break;
-        case '5': setValue('output', cs_519,  KOEF_CS_BDKG_04); break;
-        case '6': setValue('output', cs_520,  KOEF_CS_BDKG_04); break;
-        case '7': setValue('output', cs_521,  KOEF_CS_BDKG_04); break;
-    }
-
-    switch (document.getElementById('drop_down_2').value) {
-        case '1': setValue('output_2', cs_2910, KOEF_CS_BDKG_04); break;
-        case '2': setValue('output_2', cs_516,  KOEF_CS_BDKG_04); break;
-        case '3': setValue('output_2', cs_517,  KOEF_CS_BDKG_04); break;
-        case '4': setValue('output_2', cs_518,  KOEF_CS_BDKG_04); break;
-        case '5': setValue('output_2', cs_519,  KOEF_CS_BDKG_04); break;
-        case '6': setValue('output_2', cs_520,  KOEF_CS_BDKG_04); break;
-        case '7': setValue('output_2', cs_521,  KOEF_CS_BDKG_04); break;
-    }
-
-    switch (document.getElementById('drop_down_cd').value) {
-        case '1': setValue('output_cd', cd_1079, KOEF_CD_BDKG_04); break;
-        case '2': setValue('output_cd', cd_1080, KOEF_CD_BDKG_04); break;
-    }
-
-    switch (document.getElementById('drop_down_cd_2').value) {
-        case '1': setValue('output_cd_2', cd_1079, KOEF_CD_BDKG_04); break;
-        case '2': setValue('output_cd_2', cd_1080, KOEF_CD_BDKG_04); break;
-    }
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04);
+    setDropDownActivitiesCesium('drop_down_2', 'output_2', KOEF_CS_BDKG_04);
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_04);
+    setDropDownActivitiesCadmium('drop_down_cd_2', 'output_cd_2', KOEF_CD_BDKG_04);
 }
 
 function get_cs_04() {
@@ -190,5 +161,67 @@ function get_all_activities() {
         cs_519.getActivityNow*1 +
         cs_520.getActivityNow*1 +
         cs_521.getActivityNow*1).toFixed(3);
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+const KOEF_CS_1123 = 0.5192;
+const KOEF_CD_1123 = 0.20337;
+
+function set_activities_1123() {
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1123);
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1123);
+
+}
+
+function calc_1123(){
+    //будет статистика — сделаю, пока просто затычка
+}
+//----------------------------------------------------------------------------------------------------------------------
+const KOEF_CS_1121 = 0.3655;
+const KOEF_CD_1121 = 0.1627;
+
+function set_activities_1121() {
+        setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1121);
+        setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1121);
+}
+
+function calc_1121() {
+    let res = parseFloat(document.getElementById('cs_1121').value);
+    let ans = (res-12)*9/7;
+    document.getElementById('res_cs_1121').value = ans.toFixed(2);
+}
+//----------------------------------------------------------------------------------------------------------------------
+const KOEF_CS_BDKG_204 = 0.3655;//22.079
+const KOEF_CD_BDKG_204 = 0.142361;//24.528
+
+function set_activities_204() {
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_204);
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_204);
+}
+//----------------------------------------------------------------------------------------------------------------------
+function resistor_bdkn_03() {
+    let res37 = parseInt(document.getElementById('r_37').value);
+    let res36 = parseInt(document.getElementById('r_36').value);
+    let channel = parseInt(document.getElementById('channel').value);
+    let div = -(res36 + res37)/(1 + (20000/(20000 + res36 + res37)*(channel/(259 - channel))));
+    let new37 = res37 + div;
+    let summa = res36 + new37;
+    let res37calc = summa - res36;
+    let res36calc = summa - res37;
+
+    document.getElementById('r_37_calc').value = res37calc.toFixed(2);
+    document.getElementById('r_36_calc').value = res36calc.toFixed(2);
+}
+//----------------------------------------------------------------------------------------------------------------------
+function get_r() {
+    let a = parseFloat(document.getElementById('a').value);
+    let ans = 47/a*1090;
+    document.getElementById('result').value = ans.toFixed(2);
+}
+
+function get_sm() {
+    let b = parseFloat(document.getElementById('b').value);
+    let ans = 5.5-2.6*b/3.45;
+    document.getElementById('res_sm').value = ans.toFixed(2);
 }
 //----------------------------------------------------------------------------------------------------------------------

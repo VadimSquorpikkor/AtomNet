@@ -84,6 +84,7 @@ function get_all_activities() {
 //----------------------------------------------------------------------------------------------------------------------
 function get_cd_1123() {
     document.getElementById('cd').value = activity(50, pov_date_cd_1079_dlya_raschetov, t_pol_cd);
+    document.getElementById('cd_2').value = activity(a0_1079 * 0.20337, pov_date_cd_1079, t_pol_cd);
     document.getElementById('cs_1123_2910').value = activity(33, pov_date_cs_1121_23_04, t_pol_cs);
     document.getElementById('cs_1123_516').value  = activity(45, pov_date_cs_1121_23_04, t_pol_cs);
 }
@@ -149,6 +150,7 @@ function set_act_1121() {
 //----------------------------------------------------------------------------------------------------------------------
 function get_act_204() {
     document.getElementById('cd').value  = activity(35, pov_date_cd_1079_dlya_raschetov, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
+    // document.getElementById('cd2').value  = activity(a0_1079, pov_date_cd_1079, t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cd2').value = activity(3.3, new Date(2018,11,15), t_pol_cd); //yyyy.mm.dd  месяц начинается с 0
     document.getElementById('cs').value  = activity(23, new Date(2018,12,15), t_pol_cs);
 }

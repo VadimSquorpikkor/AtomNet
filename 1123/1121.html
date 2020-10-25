@@ -5,7 +5,9 @@
     <META charset="utf8">
     <title>ДКС-АТ1121. Инструкция по настройке</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <script type="text/javascript" src="../activity.js"></script>
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../activity_new.js"></script>
+    <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../include.js"></script>
     <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
@@ -16,7 +18,8 @@
     </style>
 </head>
 
-<body onLoad="set_act_1121()">
+<!--<body onLoad="set_act_1121()">-->
+<body onLoad="set_activities_1121()">
 
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
@@ -195,7 +198,7 @@
                     R15
                     (точно)добиться показаний от источника <sup>137</sup>Cs:
 
-                    <form class="yellow_back">
+                    <!--<form class="yellow_back">
                         Значение мощности дозы для <sup>137</sup>Cs №2910: <input id="cs_1121_2910"
                                                                                   type="text"
                                                                                   value="0" title="k1"
@@ -205,14 +208,31 @@
                                                                                   value="0" title="k1"
                                                                                   size="5">
 
-                    </form>
+                    </form>-->
+
+                    <div class="yellow_back">
+
+                        Значение мощности дозы для <sup>137</sup>Cs
+                        <!--31.709-->
+                        <select id="drop_down" onchange="set_activities_1121()">
+                            <option value="1">№2910</option>
+                            <option value="2">№516</option>
+                            <option value="3">№517</option>
+                            <option value="4">№518</option>
+                            <option value="5">№519</option>
+                            <option value="6">№520</option>
+                            <option value="7">№521</option>
+                        </select>
+                        <input type="text" id="output" size="5">
+
+                    </div>
 
                     Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
                     считает не точно, мало статистики):
                     <form class="yellow_back">
                         <i>Будет статистика, будет нормально работать. Пока считает примерно</i><br><br>
                         мкЗв/ч <input id="cs_1121" type="text" value="26" title="channel">
-                        <input type="button" value="Расчитать" onclick="get_cs_1121()">
+                        <input type="button" value="Расчитать" onclick="calc_1121()">
                         Номинал (кОм): <input id="res_cs_1121" type="text" title="res">
                     </form>
 
@@ -389,11 +409,23 @@
                     дозы:
                 </li>
 
-                <form class="yellow_back">
+                <!--<form class="yellow_back">
                     Значение мощности дозы для <sup>109</sup>Сd: <input id="cd" type="text" value="0" title="k1"
                                                                         size="5">
-                    <!--Значение мощности дозы для Cd-109: <p id="cd" >-->
-                </form>
+                    &lt;!&ndash;Значение мощности дозы для Cd-109: <p id="cd" >&ndash;&gt;
+                </form>-->
+
+                <div class="yellow_back">
+
+                    Значение мощности дозы для <sup>109</sup>Сd:
+
+                    <select id="drop_down_cd" onchange="set_activities_1121()">
+                        <option value="1">№1079</option>
+                        <option value="2">№1080</option>
+                    </select>
+                    <input type="text" id="output_cd" size="5">
+
+                </div>
 
                 <img src="../imgs/1121/10.jpg" width="800">
                 <li><span class="attention">Сопротивление R14 не должно превышать 75кОм!</span>
