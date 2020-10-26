@@ -1,10 +1,11 @@
 //Общий метод для активности любого радиоактивного вещества
 //Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
-function activity(a0, pov_date, t_pol) {
+// noinspection DuplicatedCode
+/*function activity(a0, pov_date, t_pol) {
     let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
     return act.toFixed(3);
-}
+}*/
 
 function activityAllDays(a0, pov_date, now_date, t_pol) {
     let days_left = (now_date.getTime() - pov_date.getTime()) / (1000*60*60*24);
@@ -162,7 +163,7 @@ function get_cs_1121() {
         document.getElementById('res_cs_1121').value = ans.toFixed(2);
 }
 
-function resistor_bdkn_03() {
+/*function resistor_bdkn_03() {
     let res37 = parseInt(document.getElementById('r_37').value);
     let res36 = parseInt(document.getElementById('r_36').value);
     let channel = parseInt(document.getElementById('channel').value);
@@ -174,7 +175,7 @@ function resistor_bdkn_03() {
 
     document.getElementById('r_37_calc').value = res37calc.toFixed(2);
     document.getElementById('r_36_calc').value = res36calc.toFixed(2);
-}
+}*/
 
 // todo сделать нормально Float не нужен и округление тоже
 function get_cs_04() {
@@ -253,10 +254,10 @@ function calc_act() {
 }
 
 
-function set_num() {
+/*function set_num() {
     document.getElementsByName('r1')[2].checked = true;
     document.getElementById('act0').value = 90;
     document.getElementById('date').value = "2018-02-12";
     document.getElementById('date_now').valueAsDate = new Date();
-}
+}*/
 

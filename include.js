@@ -29,6 +29,7 @@ function setTextColorRed(element) {
 
 // import {stroke} from 'qwerty.js';
 
+//Меню для регулировки
 function getRegMenu(mode) {
     return '' +
         '<span id="title">Регулировка</span>' +
@@ -319,6 +320,7 @@ function getRegMenu(mode) {
         '</details>';
 }
 
+//Меню для градуировки
 function getGradMenu(mode) {
     return '' +
         '<span id="title">Градуировка</span>' +

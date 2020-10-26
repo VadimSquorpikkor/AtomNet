@@ -5,7 +5,6 @@
     <META charset="utf8">
     <title>БДКГ-204</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../activity_new.js"></script>
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../include.js"></script>
@@ -13,7 +12,6 @@
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 </head>
 
-<!--<body onload="get_act_204()">-->
 <body onload="set_activities_204()">
 
 <div class="header_div_2">
@@ -59,27 +57,7 @@
         <li>Установить Uвыс резисторами R7 и подстроечным R8 на плата преобразователя напряжения по показаниям от ОСГИ
             (если номинал R7 увеличиваем — показания увеличиваются).
 
-            <!--<form class="yellow_back">
-                Значение мощности дозы для <sup>137</sup>Cs №2910: <input id="cs" type="text" value="0" title="k1"
-                                                                          size="5">
-            </form>-->
-
-            <div class="yellow_back">
-
-                Значение мощности дозы для <sup>137</sup>Cs
-                <!--31.709-->
-                <select id="drop_down" onchange="set_activities_204()">
-                    <option value="1">№2910</option>
-                    <option value="2">№516</option>
-                    <option value="3">№517</option>
-                    <option value="4">№518</option>
-                    <option value="5">№519</option>
-                    <option value="6">№520</option>
-                    <option value="7">№521</option>
-                </select>
-                <input type="text" id="output" size="5">
-
-            </div>
+            <div class="yellow_back" id="div_drop_down">Ошибка загрузки</div>
 
             <img src="../imgs/204/bad_1.jpg" width="600">
 
@@ -91,24 +69,7 @@
             усилителя-преобразователя
 
 
-            <!--<form class="yellow_back">
-                Значение мощности дозы для <sup>109</sup>Cd №1079: <input id="cd" type="text" value="0" title="k1"
-                                                                          size="5"><br>
-                Значение мощности дозы для <sup>109</sup>Cd №212: <input id="cd2" type="text" value="0" title="k1"
-                                                                         size="5">
-            </form>-->
-
-            <div class="yellow_back">
-
-                Значение мощности дозы для <sup>109</sup>Сd:
-
-                <select id="drop_down_cd" onchange="set_activities_204()">
-                    <option value="1">№1079</option>
-                    <option value="2">№1080</option>
-                </select>
-                <input type="text" id="output_cd" size="5">
-
-            </div>
+            <div class="yellow_back" id="div_drop_down_cd">Ошибка загрузки</div>
 
             <img src="../imgs/204/bad_2.jpg" width="600">
 

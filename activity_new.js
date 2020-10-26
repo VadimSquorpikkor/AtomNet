@@ -53,7 +53,6 @@ function initialize() {
 function set_main_activities() {
     initialize();
     set_num();
-    // cs_516.setActivityToElementTextContent('516');
     document.getElementById('516').textContent = cs_516.getActivityNow;
     document.getElementById('517').textContent = cs_517.getActivityNow;
     document.getElementById('518').textContent = cs_518.getActivityNow;
@@ -75,11 +74,14 @@ function calc_act() {
 
     let rad = document.getElementsByName('r1');
     if (rad[2].checked) {
-        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CD_109);
+        setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CD_109));
+        // document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CD_109);
     } else if (rad[3].checked) {
-        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CS_137);
+        setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CS_137));
+        // document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, T_POL_CS_137);
     }else if (rad[4].checked) {
-        document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value);
+        setValueById('act_main', activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value));
+        // document.getElementById('act_main').value = activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value);
     }
 }
 
@@ -90,11 +92,72 @@ function set_num() {
     document.getElementById('date_now').valueAsDate = new Date();
 }
 //----------------------------------------------------------------------------------------------------------------------
+/**
+ * Выпадающее меню для активности/мощности дозы
+ * в выпадающем списке выбирается источник, в поле вывода показывается рассчитанное значение
+ * Для работы кода добавить (<body onload="set_activities_204()">) (это для примера. добавлять свой метод расчета
+ * активности для dropBox). Метод setDropDownActivitiesCesium добавляет ответ в поле вывода на выбор соответствующего
+ * пункта выпадающего меню. Также необходимо добавить <DIV>, где будет размещаться меню:
+ * (<div class="yellow_back" id="div_drop_down_cd">Ошибка загрузки</div>). id — это "div_" + id меню:
+ * например, в методе setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04): id (первый параметр) равен
+ * 'drop_down', значит id дива для меню будет div_drop_down. Так не нужен ещё один параметр в
+ * setDropDownActivitiesCesium() для имени дива, в котором будет располагаться меню. Одинаковый для всех меню id НЕЛЬЗЯ
+ * делать, так как менюшек на странице может быть несколько, а id может быть только один.
+ * Основная фишка: сам код менюшки НЕ НУЖНО ДОБАВЛЯТЬ в диве, код добавляет меню в страницу динамически
+ * (достаточно создать пустой DIV с соответствующим ID). В методе setDropDownActivitiesCesium есть проверка на наличие
+ * id менюшки (не дива, в котором будет располагаться меню, а самой меню), если id нет (а значит нет менюшки), код
+ * загружает эту меню в див. Проверка сделана для того, чтобы не нужно было добавлять в onLoad метод создания меню,
+ * только set_activities_bdkg_04(), который рассчитывает значение активности, метод создание добавлен в этот метод,
+ * при этом меню не будет создаваться каждый раз при смене пункта меню.
+ * Если код меню уже прописан в коде страницы, опять же проверка не допустит создание второго такого же меню, поэтому и
+ * пофиг, как работать с меню, добавлять в коде страницы, или не добавлять, результат будет один. Но новы страницы
+ * нужно делать без меню, чтобы JS сам добавлял код: так, если нужно будет, например, добавить еще источник в меню, не
+ * нужно будет добавлять код во всех страницах, как если бы код был захардкоден в странице, а просто добавить
+ * дополнительный код в JS — во всех страницах источник добавиться автоматом
+ *
+ * В <head> конечно добавить:
+ * <script type="text/javascript" src="../activity_new.js"></script>
+ * <script type="text/javascript" src="../SqrLibrary.js"></script>
+ */
+
+/**Просто обертка для document.getElementById(id).value, чтобы удобнее было писать код*/
 function setValue(id, source, koef) {
     document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
 }
-function setDropDownActivitiesCesium(drop_id, output, koef) {
+
+/**Добавление кода меню в страницу HTML*/
+function loadDropDownCesium(menu_id, output_id, fName) {
+    let id = "div_" + menu_id;
+    document.getElementById(id).innerHTML = '' +
+        'Значение мощности дозы для <sup>137</sup>Cs: ' +
+        '<select id=' + menu_id + ' onchange=' + fName + '> ' +
+        '<option value="1">№2910</option>' +
+        '<option value="2">№516</option>' +
+        '<option value="3">№517</option>' +
+        '<option value="4">№518</option>' +
+        '<option value="5">№519</option>' +
+        '<option value="6">№520</option>' +
+        '<option value="7">№521</option>' +
+        '</select> ' +
+        '<input type="text" id=' + output_id + ' size="5">';
+}
+
+/**Добавление кода меню в страницу HTML*/
+function loadDropDownCadmium(menu_id, output_id, fName) {
+    let id = "div_" + menu_id;
+    document.getElementById(id).innerHTML = '' +
+        'Значение мощности дозы для <sup>137</sup>Cs: ' +
+        '<select id=' + menu_id + ' onchange=' + fName + '> ' +
+        '<option value="1">№1079</option>' +
+        '<option value="2">№1080</option>' +
+        '</select> ' +
+        '<input type="text" id=' + output_id + ' size="5">';
+}
+
+/**Вывод в поле результата в зависимости от выбранного пункта меню. Для Цезия*/
+function setDropDownActivitiesCesium(drop_id, output, koef, fName) {
     initialize();
+    if (document.getElementById(drop_id)==null)loadDropDownCesium(drop_id, output, fName);
     switch (document.getElementById(drop_id).value) {
         case '1': setValue(output, cs_2910, koef); break;
         case '2': setValue(output, cs_516,  koef); break;
@@ -105,14 +168,21 @@ function setDropDownActivitiesCesium(drop_id, output, koef) {
         case '7': setValue(output, cs_521,  koef); break;
     }
 }
-function setDropDownActivitiesCadmium(drop_id, output, koef) {
+
+/**Вывод в поле результата в зависимости от выбранного пункта меню. Для Кадмия*/
+function setDropDownActivitiesCadmium(drop_id, output, koef, fName) {
     initialize();
+    if (document.getElementById(drop_id)==null)loadDropDownCadmium(drop_id, output, fName);
     switch (document.getElementById(drop_id).value) {
         case '1': setValue(output, cd_1079, koef); break;
         case '2': setValue(output, cd_1080, koef); break;
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
+/**Мощность дозы рассчитывается, как активность, умноженная на соответствующий коэффициент
+ * Метод set_activities_bdkg_04() рассчитывает активность для выбранного источника на сегодняшний день, переводит в
+ * мощность дозы и выводит результат. Также занимается созданием самой менюшки для выбора источника и вывода результата
+ */
 const KOEF_CS_BDKG_04 = 0.5192;
 const KOEF_CD_BDKG_04 = 0.24404;
 
@@ -121,10 +191,10 @@ function set_activities_bdkg_04() {
     //если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет всё равно
     //одинаковый, отличаться будет для источников с разным периодом полураспада
 
-    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04);
-    setDropDownActivitiesCesium('drop_down_2', 'output_2', KOEF_CS_BDKG_04);
-    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_04);
-    setDropDownActivitiesCadmium('drop_down_cd_2', 'output_cd_2', KOEF_CD_BDKG_04);
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_04, 'set_activities_bdkg_04()');
+    setDropDownActivitiesCesium('drop_down_2', 'output_2', KOEF_CS_BDKG_04, 'set_activities_bdkg_04()');
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_04, 'set_activities_bdkg_04()');
+    setDropDownActivitiesCadmium('drop_down_cd_2', 'output_cd_2', KOEF_CD_BDKG_04, 'set_activities_bdkg_04()');
 }
 
 function get_cs_04() {
@@ -147,11 +217,11 @@ function activityAllDays(a0, pov_date, now_date, t_pol) {
     return act.toFixed(4);
 }
 //----------------------------------------------------------------------------------------------------------------------
-function setValueById(id, source) {
-    document.getElementById(id).value = (source.getActivityNow).toFixed(3);
+function setValueById(id, value) {
+    document.getElementById(id).value = value/*.toFixed(3)*/;
 }
 //----------------------------------------------------------------------------------------------------------------------
-//Сумарная активность всех источников 516-521
+//Суммарная активность всех источников 516-521
 function get_all_activities() {
     initialize();
     document.getElementById('sum_activity').value = (
@@ -168,8 +238,8 @@ const KOEF_CS_1123 = 0.5192;
 const KOEF_CD_1123 = 0.20337;
 
 function set_activities_1123() {
-    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1123);
-    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1123);
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1123, 'set_activities_1123()');
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1123, 'set_activities_1123()');
 
 }
 
@@ -181,8 +251,8 @@ const KOEF_CS_1121 = 0.3655;
 const KOEF_CD_1121 = 0.1627;
 
 function set_activities_1121() {
-        setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1121);
-        setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1121);
+        setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_1121, 'set_activities_1121()');
+        setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_1121, 'set_activities_1121()');
 }
 
 function calc_1121() {
@@ -195,8 +265,8 @@ const KOEF_CS_BDKG_204 = 0.3655;//22.079
 const KOEF_CD_BDKG_204 = 0.142361;//24.528
 
 function set_activities_204() {
-    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_204);
-    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_204);
+    setDropDownActivitiesCesium('drop_down', 'output', KOEF_CS_BDKG_204, 'set_activities_204()');
+    setDropDownActivitiesCadmium('drop_down_cd', 'output_cd', KOEF_CD_BDKG_204, 'set_activities_204()');
 }
 //----------------------------------------------------------------------------------------------------------------------
 function resistor_bdkn_03() {
