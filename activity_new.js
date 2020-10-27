@@ -6,7 +6,6 @@ const T_POL_CD_109 = 461.4;
 //yyyy.mm.dd  месяц начинается с 0, февраль — это 1
 const POV_DATE_CS = new Date(2016, 9, 12); //у Cs 516-521 одинаковый день поверки
 const POV_DATE_2910 = new Date(2016, 4, 17);
-// const POV_DATE_CD_1079 = new Date(2018, 9, 15);
 const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
 
@@ -23,11 +22,6 @@ const A0_832 = 105;
 const A0_833 = 98;
 const A0_1079 = 525;
 const A0_1080 = 556;
-
-// 191 кБк на 25.10.2020
-// 180400 кБк на 25.10.2020
-// 13.11.2018 1079 525
-// 13.11.2018 1080 556
 
 /**Химические элементы*/
 let CS_137, CD_109;
@@ -83,7 +77,7 @@ function calc_act() {
         setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CD_109));
     } else if (rad[3].checked) {
         setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CS_137));
-    }else if (rad[4].checked) {
+    } else if (rad[4].checked) {
         setValueById('act_main', activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value));
     }
 }
@@ -110,17 +104,29 @@ function set_num() {
  * (достаточно создать пустой DIV с соответствующим ID). В методе setDropDownActivitiesCesium есть проверка на наличие
  * id менюшки (не дива, в котором будет располагаться меню, а самой меню), если id нет (а значит нет менюшки), код
  * загружает эту меню в див. Проверка сделана для того, чтобы не нужно было добавлять в onLoad метод создания меню,
- * только set_activities_bdkg_04(), который рассчитывает значение активности, метод создание добавлен в этот метод,
- * при этом меню не будет создаваться каждый раз при смене пункта меню.
+ * метод создание добавлен в этот метод, при этом меню не будет создаваться каждый раз при смене пункта меню.
  * Так как в страницы JS сам добавлял код, то если нужно будет, например, добавить еще источник в меню, не
  * нужно будет добавлять код во всех страницах, как если бы код был захардкоден в странице, а просто добавить
  * дополнительный код в JS — во всех страницах источник добавиться автоматом
  * Если в set_activities несколько методов setDropDownActivities, то каждому будет свой номер (не важно,
  * для Cs это или для Cd)
  *
+ * На страницу добавить код:
+ * <body onload="set_activities_204()">
+ *
+ * В месте на странице, где будет располагаться меню:
+ * <div class="yellow_back" id="div_drop_down_1">Ошибка загрузки</div>
+ *
  * В <head> конечно добавить:
  * <script type="text/javascript" src="../activity_new.js"></script>
  * <script type="text/javascript" src="../SqrLibrary.js"></script>
+ *
+ * Метод добавления меню в activity_new.js выглядит так:
+ * const KOEF_CS_BDKG_204 = 0.3655;
+ * function set_activities_204() {
+ *    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204);
+ * }
+ *
  */
 
 /**Просто обертка для document.getElementById(id).value, чтобы удобнее было писать код*/
@@ -131,6 +137,7 @@ function setValue(id, source, koef) {
 /**Добавление кода меню в страницу HTML*/
 function loadDropDownCesium(menu_id, output_id, fName) {
     let id = 'div_' + menu_id;
+
     document.getElementById(id).innerHTML = '' +
         'Значение мощности дозы для <sup>137</sup>Cs: ' +
         '<select id=' + menu_id + ' onchange=' + fName + '> ' +
@@ -148,6 +155,7 @@ function loadDropDownCesium(menu_id, output_id, fName) {
 /**Добавление кода меню в страницу HTML*/
 function loadDropDownCadmium(menu_id, output_id, fName) {
     let id = "div_" + menu_id;
+
     document.getElementById(id).innerHTML = '' +
         'Значение мощности дозы для <sup>109</sup>Cd: ' +
         '<select id=' + menu_id + ' onchange=' + fName + '> ' +
@@ -158,16 +166,14 @@ function loadDropDownCadmium(menu_id, output_id, fName) {
 }
 
 /**Вывод в поле результата в зависимости от выбранного пункта меню. Для Цезия
- * fName нужен методу loadDropDownCesium() для указания имени функции, которая будет вызываться в меню onchange*/
-function setDropDownActivitiesCesium(drop_id, koef, fName) {
+ * fName нужен методу loadDropDownCesium() для указания имени функции, которая будет вызываться в меню onchange
+ */
+function setDropDownActivitiesCesium(drop_id, koef) {
     initialize();
-
-    // alert("caller is " + setDropDownActivitiesCesium.caller.name.toString());
-    // alert("caller is " + arguments.callee.caller.name.toString()); //считается устаревшим
 
     let dropId = 'drop_down_' + drop_id;
     let outputId = 'output_' + drop_id;
-    ///let fName = setDropDownActivitiesCesium.caller.name.toString() + '()'; //не стандартный метод, не рекомендован к использованию. Но работает, можно было бы обойтись только двумя параметрами
+    let fName = "" + setDropDownActivitiesCesium.name + "(" + drop_id + "," + koef + ")";
 
     if (document.getElementById(dropId)==null)loadDropDownCesium(dropId, outputId, fName);
     switch (document.getElementById(dropId).value) {
@@ -182,16 +188,15 @@ function setDropDownActivitiesCesium(drop_id, koef, fName) {
 }
 
 /**Вывод в поле результата в зависимости от выбранного пункта меню. Для Кадмия
- *
  * @param drop_id — id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
  * @param koef — коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
- * @param fName нужен методу loadDropDownCesium() для указания имени функции, которая будет вызываться в меню onchange
  */
-function setDropDownActivitiesCadmium(drop_id, koef, fName) {
+function setDropDownActivitiesCadmium(drop_id, koef) {
     initialize();
 
     let dropId = 'drop_down_' + drop_id;
     let outputId = 'output_' + drop_id;
+    let fName = "" + setDropDownActivitiesCadmium.name + "(" + drop_id + "," + koef + ")";
 
     if (document.getElementById(dropId)==null)loadDropDownCadmium(dropId, outputId, fName);
     switch (document.getElementById(dropId).value) {
@@ -208,14 +213,13 @@ const KOEF_CS_BDKG_04 = 0.5192;
 const KOEF_CD_BDKG_04 = 0.233636;
 
 function set_activities_bdkg_04() {
-    //расчетный коэффициент для 516 - 0.5196, для 2910 - 0.5187, взял среднее: 0.5192. Чтобы помнить:
-    //если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет всё равно
-    //одинаковый, отличаться будет наверное для источников с разным периодом полураспада или если другой элемент
+    //Чтобы помнить: если активность начальная источников была разной и/или дата поверки отличается, коэффициент будет
+    //всё равно одинаковый, отличаться будет наверное для источников с разным периодом полураспада или если другой элемент
 
-    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_04, 'set_activities_bdkg_04()');
-    setDropDownActivitiesCesium(2, KOEF_CS_BDKG_04, 'set_activities_bdkg_04()');
-    setDropDownActivitiesCadmium(3, KOEF_CD_BDKG_04, 'set_activities_bdkg_04()');
-    setDropDownActivitiesCadmium(4, KOEF_CD_BDKG_04, 'set_activities_bdkg_04()');
+    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_04);
+    setDropDownActivitiesCesium(2, KOEF_CS_BDKG_04);
+    setDropDownActivitiesCadmium(3, KOEF_CD_BDKG_04);
+    setDropDownActivitiesCadmium(4, KOEF_CD_BDKG_04);
 }
 
 function get_cs_04() {
@@ -228,8 +232,8 @@ const KOEF_CS_1121 = 0.3655;
 const KOEF_CD_1121 = 0.1557648;
 
 function set_activities_1121() {
-    setDropDownActivitiesCesium(1, KOEF_CS_1121, 'set_activities_1121()');
-    setDropDownActivitiesCadmium(2, KOEF_CD_1121, 'set_activities_1121()');
+    setDropDownActivitiesCesium(1, KOEF_CS_1121);
+    setDropDownActivitiesCadmium(2, KOEF_CD_1121);
 }
 
 function calc_1121() {
@@ -242,8 +246,8 @@ const KOEF_CS_1123 = 0.5192;
 const KOEF_CD_1123 = 0.1947;
 
 function set_activities_1123() {
-    setDropDownActivitiesCesium(1, KOEF_CS_1123, 'set_activities_1123()');
-    setDropDownActivitiesCadmium(2, KOEF_CD_1123, 'set_activities_1123()');
+    setDropDownActivitiesCesium(1, KOEF_CS_1123);
+    setDropDownActivitiesCadmium(2, KOEF_CD_1123);
 }
 
 function calc_1123(){
@@ -254,8 +258,8 @@ const KOEF_CS_BDKG_204 = 0.3655;    //22.079
 const KOEF_CD_BDKG_204 = 0.1363;   //24.528
 
 function set_activities_204() {
-    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204, 'set_activities_204()');
-    setDropDownActivitiesCadmium(2, KOEF_CD_BDKG_204, 'set_activities_204()');
+    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204);
+    setDropDownActivitiesCadmium(2, KOEF_CD_BDKG_204);
 }
 //----------------------------------------------------------------------------------------------------------------------
 function resistor_bdkn_03() {
