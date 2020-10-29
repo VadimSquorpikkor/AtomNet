@@ -5,20 +5,10 @@
     <META charset="utf8">
     <title>Содержание</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../activity_new.js"></script>
     <script type="text/javascript" src="../include.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-
-    <!--    <script type="text/javascript">
-            window.onload = function() {
-                var a = document.getElementById("mylink");
-                a.onclick = function() {
-                    localStorage.setItem("open", "true");
-                }
-            }
-        </script>-->
 </head>
 
 <!--<body onload="get_act()/*;getDataFromFile()*/">-->
@@ -39,141 +29,40 @@
 
 <div class="yellow_back_index_right">
 
-
-    <!--<textarea name="text" rows="20" cols="70">
-
-</textarea>-->
-
-
-    <!--<form action="../process.php" method="post">
-        <input type="text" name="name" />
-        <input type="submit" />
-    </form>-->
-
     <img src="../imgs/radiation.png" width="100"
          style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">
     <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7; text-align: left">
         <span class="red_light_title">Активность источников:</span><br><br>
         <!--        <hr color="ff6633">-->
 
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№516</div>
-                <div><span id="516">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№517</div>
-                <div><span id="517">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№518</div>
-                <div><span id="518">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№519</div>
-                <div><span id="519">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№520</div>
-                <div><span id="520">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№521</div>
-                <div><span id="521">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№2910</div>
-                <div><span id="2910">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>109</sup>Cd</div>
-                <div>1079</div>
-                <div><span id="1079">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>109</sup>Cd</div>
-                <div>№1080</div>
-                <div><span id="1080">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
+        <div id="activities_div" style="text-indent: 0; background: transparent"></div>
 
         <hr color="ff6633">
         <span class="red_light_title">Без периодической поверки:</span><br><br>
 
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№831</div>
-                <div><span id="831">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№832</div>
-                <div><span id="832">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
-        <div class="activity_block">
-            <div>
-                <div><sup>137</sup>Cs</div>
-                <div>№833</div>
-                <div><span id="833">0.000</span></div>
-                <div>кБк</div>
-            </div>
-        </div>
+        <div id="activities_div_bez_poverki" style="text-indent: 0; background: transparent"></div>
 
     </div>
 </div>
 
-<div class="activity_calculator">
+<div class="activity_calculator" style="padding-left: 135px">
+<!--<div class="yellow_back_index_right" style="padding-left: 135px">-->
+
+
+    <div class="red_light_title">Калькулятор активности:</div>
 
     <div style="float: left">
-        <span>Дата поверки</span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
+        <span>Дата поверки </span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
                                         type="date"><br>
-        <span>Сегодня</span><input id="date_now" title="Дата, на момент которой необходимо рассчитать активность"
+        <span>Сегодня </span><input id="date_now" title="Дата, на момент которой необходимо рассчитать активность"
                                    name="r1" type="date"><br>
-        <span>A<sub>0</sub>(кБк)</span><input id="act0" title="Активность источника в день поверки" name="act0"
+        <span>A<sub>0</sub>(кБк) </span><input id="act0" title="Активность источника в день поверки" name="act0"
                                               type="text" size="5">
     </div>
     <div>
         <input id="t2_1" title="" name="r1" type="radio"> <span><sup>109</sup>Cd (461.4 дней)</span><br>
         <input id="t2_2" title="" name="r1" type="radio"> <span><sup>137</sup>Cs (11019.6 дней)</span><br>
-        <input id="t2_3" title="Если нужно рассчитать какойто другой элемент" name="r1" type="radio">
+        <input id="t2_3" title="Если нужно рассчитать какой-то другой элемент" name="r1" type="radio">
         <span>Custom</span>
         <input id="custom" title="Период полураспада в днях" name="r1" type="text" value="451" size="5"><br>
     </div>
@@ -195,78 +84,7 @@
 
 </div>
 
-<div class="div_for_menu_block" style="visibility: hidden; padding: 0"><!-- style="visibility: hidden; padding: 0-->
-    <div class="menu_block">
-        <a href="../srk2327/2327.html">
-            <img src="../imgs/main_menu/2327.jpg"/>
-            <div class="menu_block_top_red"><span>СРК</span></div>
-            <div class="menu_block_footer"><span>Инструкции, схемы.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../srk2327/portal.html">
-            <img src="../imgs/main_menu/fura.png"/>
-            <div class="menu_block_top_red"><span>Портальный Монитор</span></div>
-            <div class="menu_block_footer"><span>Прошивка, настройка</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../bdkg02/bdkg02.html">
-            <img src="../imgs/bdkg02/cond.jpg"/>
-            <div class="menu_block_top_green"><span>БДКГ-02</span></div>
-            <div class="menu_block_footer"><span>Настройка новых. Ремонт.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../bdkg22/bdkg22.html">
-            <img src="../imgs/main_menu/bdkg222.jpg"/>
-            <div class="menu_block_top_green"><span>БДКГ-22/23</span></div>
-            <div class="menu_block_footer"><span>Прошивка и настройка.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../1103/1103.html">
-            <img src="../imgs/main_menu/1103.png"/>
-            <div class="menu_block_top_blue"><span>ДКР-1103</span></div>
-            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../1123/1121.html">
-            <img src="../imgs/main_menu/1121.png"/>
-            <div class="menu_block_top_blue"><span>ДКС-1121</span></div>
-            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../1123/1123.html">
-            <img src="../imgs/main_menu/1121.png"/>
-            <div class="menu_block_top_blue"><span>ДКС-1123</span></div>
-            <div class="menu_block_footer"><span>Инструкция по настройке.</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../sertif_prosh/sertificate.html">
-            <img src="../imgs/main_menu/sertificate.jpg"/>
-            <div class="menu_block_top_violet"><span>Документы</span></div>
-            <div class="menu_block_footer"><span>Протоколы и сертификаты</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../sertif_prosh/prosh.html">
-            <img src="../imgs/main_menu/prosh.jpg"/>
-            <div class="menu_block_top_violet"><span>Прошивки</span></div>
-            <div class="menu_block_footer"><span>Список актуальных прошивок</span></div>
-        </a>
-    </div>
-    <div class="menu_block">
-        <a href="../docs/protokol_poverki_i_sert_gotovie">
-            <img src="../imgs/main_menu/archive.jpg"/>
-            <div class="menu_block_top_violet"><span>Архив</span></div>
-            <div class="menu_block_footer"><span>Готовые протоколы и сертификаты</span></div>
-        </a>
-    </div>
-</div>
+<div id="div_for_menu_block" class="div_for_menu_block" style="visibility: hidden; padding: 0"></div>
 
 </body>
 </html>

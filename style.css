@@ -168,6 +168,7 @@ input[type="text"], input[type="date"], select {
     -moz-box-shadow: inset 10px 10px 3px -7px rgba(0, 0, 0, 0.55);
     padding-left: 8px;
     padding-right: 8px;
+    margin-left: 9px;
     /*background-color: #dddddd;*/
 }
 
@@ -197,7 +198,7 @@ input[type="button"] {
     color: #ffffff;
     padding: 3px 11px;
     text-decoration: none;
-    text-shadow: 0 3px 2px #000000;
+    text-shadow: 0 3px 3px #000000;
 }
 
 input[type="button"]:hover {

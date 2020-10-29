@@ -53,19 +53,41 @@ function initialize() {
 function set_main_activities() {
     initialize();
     set_num();
-    document.getElementById('516').textContent = cs_516.getActivityNow;
-    document.getElementById('517').textContent = cs_517.getActivityNow;
-    document.getElementById('518').textContent = cs_518.getActivityNow;
-    document.getElementById('519').textContent = cs_519.getActivityNow;
-    document.getElementById('520').textContent = cs_520.getActivityNow;
-    document.getElementById('521').textContent = cs_521.getActivityNow;
-    document.getElementById('2910').textContent = cs_2910.getActivityNow;
-    document.getElementById('831').textContent = cs_831.getActivityNow;
-    document.getElementById('832').textContent = cs_832.getActivityNow;
-    document.getElementById('833').textContent = cs_833.getActivityNow;
-    document.getElementById('1079').textContent = cd_1079.getActivityNow;
-    document.getElementById('1080').textContent = cd_1080.getActivityNow;
+
+    /**Вывод активностей для источников на сегодняшний день*/
+    document.getElementById('activities_div').innerHTML =
+        cs_516.getActivityBlock()+
+        cs_517.getActivityBlock()+
+        cs_518.getActivityBlock()+
+        cs_519.getActivityBlock()+
+        cs_520.getActivityBlock()+
+        cs_521.getActivityBlock()+
+        cs_2910.getActivityBlock()+
+        cd_1079.getActivityBlock()+
+        cd_1080.getActivityBlock();
+
+    /**Вывод активностей для источников без периодической поверки на сегодняшний день*/
+    document.getElementById('activities_div_bez_poverki').innerHTML =
+        cs_831.getActivityBlock()+
+        cs_832.getActivityBlock()+
+        cs_833.getActivityBlock();
+
+
+    /**Вывод блочных ссылок*/
+    document.getElementById('div_for_menu_block').innerHTML =
+        getMenuBlock("../srk2327/2327.html", "../imgs/main_menu/2327.jpg", RED,"СРК", "Инструкции, схемы")+
+        getMenuBlock("../srk2327/portal.html", "../imgs/main_menu/fura.png", RED,"Портальный Монитор", "Прошивка, настройка")+
+        getMenuBlock("../bdkg02/bdkg02.html", "../imgs/bdkg02/cond.jpg", GREEN,"БДКГ-02", "Настройка новых. Ремонт")+
+        getMenuBlock("../bdkg22/bdkg22.html", "../imgs/main_menu/bdkg222.jpg", GREEN,"БДКГ-22/23", "Прошивка и настройка")+
+        getMenuBlock("../1103/1103.html", "../imgs/main_menu/1103.png", BLUE,"ДКР-1103", "Инструкция по настройке")+
+        getMenuBlock("../1123/1121.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1121", "Инструкция по настройке")+
+        getMenuBlock("../1123/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
+        getMenuBlock("../sertif_prosh/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
+        getMenuBlock("../sertif_prosh/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
+        getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
+
 }
+
 //----------------------------------------------------------------------------------------------------------------------
 function calc_act() {
     let pov_date = new Date(document.getElementById('date').value);
@@ -88,122 +110,7 @@ function set_num() {
     document.getElementById('date').value = "2018-02-12";
     document.getElementById('date_now').valueAsDate = new Date();
 }
-//----------------------------------------------------------------------------------------------------------------------
-/**
- * Выпадающее меню для активности/мощности дозы
- * в выпадающем списке выбирается источник, в поле вывода показывается рассчитанное значение
- * Для работы кода добавить (<body onload="set_activities_204()">) (это для примера. добавлять свой метод расчета
- * активности для dropBox). Метод setDropDownActivitiesCesium добавляет ответ в поле вывода на выбор соответствующего
- * пункта выпадающего меню. Также необходимо добавить <DIV>, где будет размещаться меню:
- * (<div class="yellow_back" id="div_drop_down_1">Ошибка загрузки</div>). id — это "div_" + id меню:
- * например, в методе setDropDownActivitiesCesium(1, KOEF_CS_BDKG_04): id (первый параметр) равен
- * 1, значит id дива для меню будет div_drop_down_1. Так не нужен ещё один параметр в
- * setDropDownActivitiesCesium() для имени дива, в котором будет располагаться меню. Одинаковый для всех меню id НЕЛЬЗЯ
- * делать, так как менюшек на странице может быть несколько, а id может быть только один.
- * Основная фишка: сам код менюшки НЕ НУЖНО ДОБАВЛЯТЬ в диве, код добавляет меню в страницу динамически
- * (достаточно создать пустой DIV с соответствующим ID). В методе setDropDownActivitiesCesium есть проверка на наличие
- * id менюшки (не дива, в котором будет располагаться меню, а самой меню), если id нет (а значит нет менюшки), код
- * загружает эту меню в див. Проверка сделана для того, чтобы не нужно было добавлять в onLoad метод создания меню,
- * метод создание добавлен в этот метод, при этом меню не будет создаваться каждый раз при смене пункта меню.
- * Так как в страницы JS сам добавлял код, то если нужно будет, например, добавить еще источник в меню, не
- * нужно будет добавлять код во всех страницах, как если бы код был захардкоден в странице, а просто добавить
- * дополнительный код в JS — во всех страницах источник добавиться автоматом
- * Если в set_activities несколько методов setDropDownActivities, то каждому будет свой номер (не важно,
- * для Cs это или для Cd)
- *
- * На страницу добавить код:
- * <body onload="set_activities_204()">
- *
- * В месте на странице, где будет располагаться меню:
- * <div class="yellow_back" id="div_drop_down_1">Ошибка загрузки</div>
- *
- * В <head> конечно добавить:
- * <script type="text/javascript" src="../activity_new.js"></script>
- * <script type="text/javascript" src="../SqrLibrary.js"></script>
- *
- * Метод добавления меню в activity_new.js выглядит так:
- * const KOEF_CS_BDKG_204 = 0.3655;
- * function set_activities_204() {
- *    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204);
- * }
- *
- */
 
-/**Просто обертка для document.getElementById(id).value, чтобы удобнее было писать код*/
-function setValue(id, source, koef) {
-    document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
-}
-
-/**Добавление кода меню в страницу HTML*/
-function loadDropDownCesium(menu_id, output_id, fName) {
-    let id = 'div_' + menu_id;
-
-    document.getElementById(id).innerHTML = '' +
-        'Значение мощности дозы для <sup>137</sup>Cs: ' +
-        '<select id=' + menu_id + ' onchange=' + fName + '> ' +
-        '<option value="1">№2910</option>' +
-        '<option value="2">№516</option>' +
-        '<option value="3">№517</option>' +
-        '<option value="4">№518</option>' +
-        '<option value="5">№519</option>' +
-        '<option value="6">№520</option>' +
-        '<option value="7">№521</option>' +
-        '</select> ' +
-        '<input type="text" id=' + output_id + ' size="5">';
-}
-
-/**Добавление кода меню в страницу HTML*/
-function loadDropDownCadmium(menu_id, output_id, fName) {
-    let id = "div_" + menu_id;
-
-    document.getElementById(id).innerHTML = '' +
-        'Значение мощности дозы для <sup>109</sup>Cd: ' +
-        '<select id=' + menu_id + ' onchange=' + fName + '> ' +
-        '<option value="1">№1079</option>' +
-        '<option value="2">№1080</option>' +
-        '</select> ' +
-        '<input type="text" id=' + output_id + ' size="5">';
-}
-
-/**Вывод в поле результата в зависимости от выбранного пункта меню. Для Цезия
- * fName нужен методу loadDropDownCesium() для указания имени функции, которая будет вызываться в меню onchange
- */
-function setDropDownActivitiesCesium(drop_id, koef) {
-    initialize();
-
-    let dropId = 'drop_down_' + drop_id;
-    let outputId = 'output_' + drop_id;
-    let fName = "" + setDropDownActivitiesCesium.name + "(" + drop_id + "," + koef + ")";
-
-    if (document.getElementById(dropId)==null)loadDropDownCesium(dropId, outputId, fName);
-    switch (document.getElementById(dropId).value) {
-        case '1': setValue(outputId, cs_2910, koef); break;
-        case '2': setValue(outputId, cs_516,  koef); break;
-        case '3': setValue(outputId, cs_517,  koef); break;
-        case '4': setValue(outputId, cs_518,  koef); break;
-        case '5': setValue(outputId, cs_519,  koef); break;
-        case '6': setValue(outputId, cs_520,  koef); break;
-        case '7': setValue(outputId, cs_521,  koef); break;
-    }
-}
-
-/**Вывод в поле результата в зависимости от выбранного пункта меню. Для Кадмия
- * @param drop_id — id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
- * @param koef — коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
- */
-function setDropDownActivitiesCadmium(drop_id, koef) {
-    initialize();
-
-    let dropId = 'drop_down_' + drop_id;
-    let outputId = 'output_' + drop_id;
-    let fName = "" + setDropDownActivitiesCadmium.name + "(" + drop_id + "," + koef + ")";
-
-    if (document.getElementById(dropId)==null)loadDropDownCadmium(dropId, outputId, fName);
-    switch (document.getElementById(dropId).value) {
-        case '1': setValue(outputId, cd_1079, koef); break;
-        case '2': setValue(outputId, cd_1080, koef); break;
-    }
-}
 //----------------------------------------------------------------------------------------------------------------------
 /**Мощность дозы рассчитывается, как активность, умноженная на соответствующий коэффициент
  * Метод set_activities_bdkg_04() рассчитывает активность для выбранного источника на сегодняшний день, переводит в
@@ -288,21 +195,6 @@ function get_sm() {
     document.getElementById('res_sm').value = ans.toFixed(2);
 }
 //----------------------------------------------------------------------------------------------------------------------
-/**Общий метод для активности любого радиоактивного вещества
- * Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
- */
-function activity(a0, pov_date, t_pol) {
-    let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
-    let act = a0 * Math.exp(-0.693147/t_pol * days_left);
-    return act.toFixed(3);
-}
-
-function activityAllDays(a0, pov_date, now_date, t_pol) {
-    let days_left = (now_date.getTime() - pov_date.getTime()) / (1000*60*60*24);
-    let act = a0 * Math.exp(-0.693147/t_pol * days_left);
-    return act.toFixed(4);
-}
-//----------------------------------------------------------------------------------------------------------------------
 function setValueById(id, value) {
     document.getElementById(id).value = value/*.toFixed(3)*/;
 }
@@ -319,4 +211,3 @@ function get_all_activities() {
         cs_521.getActivityNow*1).toFixed(3);
 }
 //----------------------------------------------------------------------------------------------------------------------
-
