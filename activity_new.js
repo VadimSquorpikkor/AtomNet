@@ -29,7 +29,8 @@ let CS_137, CD_109;
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
 let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080;
 
-function initialize() {
+/**Инициализация объектов класса источников и элементов*/
+function initializeSource() {
     //Создание объектов класса элементов
     CS_137 = new RA_Element("Cs", 137, T_POL_CS_137);
     CD_109 = new RA_Element("Cd", 109, T_POL_CD_109);
@@ -49,9 +50,9 @@ function initialize() {
 
 }
 //----------------------------------------------------------------------------------------------------------------------
-/**Вывод активностей для каждого из источников на сегодняшний день*/
+/**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
 function set_main_activities() {
-    initialize();
+    initializeSource();
     set_num();
 
     /**Вывод активностей для источников на сегодняшний день*/
@@ -72,7 +73,6 @@ function set_main_activities() {
         cs_832.getActivityBlock()+
         cs_833.getActivityBlock();
 
-
     /**Вывод блочных ссылок*/
     document.getElementById('div_for_menu_block').innerHTML =
         getMenuBlock("../srk2327/2327.html", "../imgs/main_menu/2327.jpg", RED,"СРК", "Инструкции, схемы")+
@@ -89,6 +89,7 @@ function set_main_activities() {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+/**Расчет активности источника для калькулятора активности*/
 function calc_act() {
     let pov_date = new Date(document.getElementById('date').value);
     let now_date = new Date(document.getElementById('date_now').value);
@@ -104,6 +105,7 @@ function calc_act() {
     }
 }
 
+/**Запись значений в калькулятор активности*/
 function set_num() {
     document.getElementsByName('r1')[2].checked = true;
     document.getElementById('act0').value = 90;
@@ -199,9 +201,9 @@ function setValueById(id, value) {
     document.getElementById(id).value = value/*.toFixed(3)*/;
 }
 //----------------------------------------------------------------------------------------------------------------------
-/**Суммарная активность всех источников 516-521*/
+/**Суммарная активность источников 516-521*/
 function get_all_activities() {
-    initialize();
+    initializeSource();
     document.getElementById('sum_activity').value = (
         cs_516.getActivityNow*1 +
         cs_517.getActivityNow*1 +

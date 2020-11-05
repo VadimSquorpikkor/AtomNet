@@ -1,25 +1,31 @@
+/**
+ * Класс радиоактивного элемента
+ */
 class RA_Element {
+    /**Радиоактивный элемент
+     * @param {string} name Название химического элемента
+     * @param {number} num Массовое число
+     * @param {number} period Период полураспада
+     */
     constructor(name, num, period) {
         this._name = name;
         this._num = num;
         this._period = period;
     }
 
-    get name() {return this._name;}
+    get getName() {return this._name;}
 
-    get num() {return this._num;}
+    /**Массовое число*/
+    get getNumber() {return this._num;}
 
-    get period() {return this._period;}
+    get getPeriod() {return this._period;}
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Класс источника
- *
  */
 class RA_Source {
-    //подумать, нужно ли имя, с одной стороны будет имя экземпляра класса, с другой стороны —
-    //мало ли где понадобится getName()
     constructor(name, element, activity_0, povDate) {
         this._name = name;
         this._element = element;
@@ -33,7 +39,7 @@ class RA_Source {
     /**Химический элемент*/
     get getElement() {return this._element;}
 
-    /**Активность источника в день поверки — начальнаяя активность*/
+    /**Активность источника в день поверки — начальная активность*/
     get getActivity_0() {return this._activity_0;}
 
     /**День поверки (дата, месяцы начинаются с 0)*/
@@ -41,12 +47,8 @@ class RA_Source {
 
     get getActivityNow() {
         let a0 = this._activity_0;
-        let t_pol = this._element.period;
+        let t_pol = this._element.getPeriod;
         let pov_date = this._povDate;
-
-        // let days_left = (new Date().getTime() - pov_date.getTime()) / (1000 * 60 * 60 * 24);
-        // let act = a0 * Math.exp(-0.693147 / t_pol * days_left);
-        // return act.toFixed(3);
 
         return activity(a0, pov_date, t_pol);
     }
@@ -55,11 +57,12 @@ class RA_Source {
 
     setActivityToElementValue(id) {document.getElementById(id).value = this.getActivityNow;}
 
+    /**Возвращает HTML код блока активности элемента*/
     getActivityBlock() {
         return '<div class="activity_block">' +
             '    <div>' +
-            '        <div><sup>' + this._element._num + '</sup>' + this._element._name + '</div>' +
-            '        <div>' + this._name + '</div>' +
+            '        <div><sup>' + this.getElement.getNumber + '</sup>' + this.getElement.getName + '</div>' +
+            '        <div>' + this.getName + '</div>' +
             '        <div><span>' + this.getActivityNow + '</span></div>' +
             '        <div>кБк</div>' +
             '    </div>' +
@@ -131,7 +134,11 @@ function loadDropDownCesium(menu_id, output_id, fName) {
         '<input type="text" id=' + output_id + ' size="5">';
 }
 
-/**Добавление кода меню в страницу HTML*/
+/**Добавление кода меню в страницу HTML
+ * @param {string} menu_id id, который будет присвоен меню
+ * @param {string} output_id
+ * @param {string} fName
+ */
 function loadDropDownCadmium(menu_id, output_id, fName) {
     let id = "div_" + menu_id;
 
@@ -145,10 +152,13 @@ function loadDropDownCadmium(menu_id, output_id, fName) {
 }
 
 /**Вывод в поле результата в зависимости от выбранного пункта меню. Для Цезия
- * fName нужен методу loadDropDownCesium() для указания имени функции, которая будет вызываться в меню onchange
+ * Если меню с таким id нет на странице, метод создает его и заполняет значением по умолчанию (case '1')
+ * Можно было разделить методы, но так меньше кода.
+ * @param drop_id id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
+ * @param koef коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
  */
 function setDropDownActivitiesCesium(drop_id, koef) {
-    initialize();
+    initializeSource();
 
     let dropId = 'drop_down_' + drop_id;
     let outputId = 'output_' + drop_id;
@@ -167,11 +177,13 @@ function setDropDownActivitiesCesium(drop_id, koef) {
 }
 
 /**Вывод в поле результата в зависимости от выбранного пункта меню. Для Кадмия
+ * Если меню с таким id нет на странице, метод создает его и заполняет значением по умолчанию (case '1')
+ * Можно было разделить методы, но так меньше кода.
  * @param drop_id id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
  * @param koef коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
  */
 function setDropDownActivitiesCadmium(drop_id, koef) {
-    initialize();
+    initializeSource();
 
     let dropId = 'drop_down_' + drop_id;
     let outputId = 'output_' + drop_id;
@@ -184,31 +196,47 @@ function setDropDownActivitiesCadmium(drop_id, koef) {
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
-/**Общий метод для активности любого радиоактивного вещества
- * Параметры: активность в день поверки(А0), кол-во дней прошедших с момента поверки, период полураспада
+/**Общий метод для активности любого радиоактивного вещества на сегодняшний день
+ * @param {*} a0 активность в день поверки
+ * @param {Date} pov_date дата поверки
+ * @param {*} t_pol период полураспада
  */
 function activity(a0, pov_date, t_pol) {
     let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
     return act.toFixed(3);
 }
-
+/**Общий метод для активности любого радиоактивного вещества на выбранный день
+ * @param {*} a0 активность в день поверки
+ * @param {Date} pov_date дата поверки
+ * @param {Date} now_date дата, на которую необходимо рассчитать активность
+ * @param {*} t_pol период полураспада
+ */
 function activityAllDays(a0, pov_date, now_date, t_pol) {
     let days_left = (now_date.getTime() - pov_date.getTime()) / (1000*60*60*24);
     let act = a0 * Math.exp(-0.693147/t_pol * days_left);
     return act.toFixed(4);
 }
 //----------------------------------------------------------------------------------------------------------------------
-const RED = "menu_block_top_red";
-const GREEN = "menu_block_top_green";
-const BLUE = "menu_block_top_blue";
+/**Имя стиля цвета*/
+const RED    = "menu_block_top_red";
+const ORANGE = "menu_block_top_orange";
+const GREEN  = "menu_block_top_green";
+const BLUE   = "menu_block_top_blue";
 const VIOLET = "menu_block_top_violet";
 
+/**Возвращает код, который нужно добавить для создания блока ссылки
+ * @param {string} path путь к вызываемой странице инструкции
+ * @param {string} image путь к изображению для отображения на блоке
+ * @param {string} color цвет пункта с именем
+ * @param {string} title имя
+ * @param {string} category имя категории
+ */
 function getMenuBlock(path, image, color, title, category) {
     return '' +
     '<div class="menu_block">' +
     '    <a href=' + path + '>' +
-    '        <img src=' + image + '/>' +
+    '        <img alt="Картинка" src= ' + image + '/>' +
     '        <div class=' + color + '><span>' + title + '</span></div>' +
     '        <div class="menu_block_footer"><span>' + category + '</span></div>' +
     '    </a>' +
