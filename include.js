@@ -156,7 +156,7 @@ function getRegMenu(mode) {
         '                    <li><a href="../bdmg/bdmg_pult.html">Как сделать проверку "пультом"</a></li>' +
         '                    <li><a href="../bdmg/bdmg_osh.html">Как снять показания с "ошейником"</a></li>' +
         '                    <li><a href="../docs/БДМГ%20Паспорт.docx">Паспорт настройки</a></li>' +
-        '                    <li><a href="../docs/sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +

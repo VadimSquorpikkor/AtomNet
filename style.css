@@ -133,8 +133,8 @@ th {
     /*background-size: 150px;*/
 
     /*ДР*/
-    background: #ffffff url("imgs/den_rozhdeniya.png") no-repeat right top;
-    background-size: 200px;
+    /*background: #ffffff url("imgs/den_rozhdeniya.png") no-repeat right top;
+    background-size: 200px;*/
 }
 
 body>div>ul>li, body>div>ol>li {
