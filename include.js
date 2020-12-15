@@ -302,17 +302,22 @@ function getRegMenu(mode) {
         '' +
         '<details ' + mode + '>' +
         '    <summary>' +
-        '        <span>Файлы, документы</span>' +
+        '        <span>Файлы, документы, макросы</span>' +
         '    </summary>' +
         '    <ul>' +
+        '       <details ' + mode + '>' +
+        '           <summary>' +
+        '               <span>Макросы</span>' +
+        '           </summary>' +
+        '           <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
+        '           <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
+        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.03</a></li>' +
+        '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
+        '       </details>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
-        '        <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
-        '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
-        '        <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов поверки - 2.95</a></li>' +
-        '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
         '' +
@@ -343,6 +348,7 @@ function getGradMenu(mode) {
         '        <li><a href="../grad/bdkg-04.html">Градуировка БДКГ-04</a></li>' +
         '        <li><a href="../grad/bdkg-05.html">Градуировка БДКГ-05</a></li>' +
         '        <li><a href="../grad/bdkg-17.html">Градуировка БДКГ-17</a></li>' +
+        '        <li><a href="../grad/bdkg-204.html">Градуировка БДКГ-204</a></li>' +
         '    </ul>' +
         '</details>' +
         '<details ' + mode + '>' +
