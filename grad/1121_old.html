@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Градуировка ДКС-АТ1121</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <!--<script type="text/javascript" src="../activity.js"></script>-->
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Градуировка ДКС-АТ1121</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+</div>
+
+<div class="left_side_menu" style="float: left; margin: 0; padding: 0">
+    <div id="menu_left" class="spoiler_menu"></div>
+    <script>
+        includeHTML('grad');
+    </script>
+</div>
+
+<div class="main_div">
+
+    <h1>Градуировка ДКС-АТ1121</h1>
+
+    <ul>
+        <li>Установить 4-е дозиметра  на УДГ-АТ110 таким образом чтобы они расположились параллельно оси излучения, а
+            расстояние от источника до центра детектора равнялось -10 мм от края торца колпачка
+        </li>
+        <img src="../imgs/grad/1121/01.jpg" width="500">
+        <li>Подключить к ПК</li>
+        <li>Запустить ПО <i>1121-1123</i></li>
+        <li>Нажать <i>Поиск</i></li>
+        <li>Выбрать дозиметры</li>
+        <li>Выбрать <i>калибровка</i></li>
+        <li>Выбрать точку 1 диапазона (7-700 мк)</li>
+        <li>Нажать начать измерения</li>
+        <li>Установить источник <sup>137</sup>Cs 7 мкЗв/ч</li>
+        <li>Градуировать показания выставив коэф 1U (д.б.≈100) с учётом фона 0,1 мкЗв/ч</li>
+        <li>Снять показания по Cd 1м Am 1м <sup>60</sup>Со 10 мкЗв/ч</li>
+        <li>Снять точки 70 и 700 мкЗв/ч</li>
+        <li>Данные переписать в журнал градуировки</li>
+        <img src="../imgs/grad/1121/02.jpg" width="900">
+    </ul>
+    <ul>
+        <li>Установить дозиметры на УДГ-АТ130</li>
+        <img src="../imgs/grad/1121/03.jpg" width="700">
+        <li>Повторить подключение как на 110</li>
+        <li>Выбрать 2 диап(1-100м)</li>
+        <li>Нажать <i>начать измерения</i></li>
+        <li>Установить источник <sup>137</sup>Cs 100 мЗв/ч</li>
+        <li>Градуировать показания выставив коэф 2U (д.б.≈100?)</li>
+        <li>Снять точки 7 и 70 мЗв/ч</li>
+    </ul>
+    <ul>
+        <li>Выбрать 3 диап(0,1-10 Зв)</li>
+        <li>Нажать <i>начать измерения</i></li>
+        <li>Установить источник <sup>137</sup>Cs 100 мЗв/ч</li>
+        <li>Градуировать показания выставив коэф 3U (д.б.≈200?)</li>
+        <li>Установить источник <sup>137</sup>Cs 7 Зв/ч</li>
+        <li>Градуировать показания выставив коэф 5U (д.б.≈50?)</li>
+        <li>Снять точки 700 мЗв и 10 Зв/ч</li>
+    </ul>
+    <ul>
+        <li>Данные переписать в журнал градуировки</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
