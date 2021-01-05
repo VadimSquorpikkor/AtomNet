@@ -125,8 +125,8 @@ th {
 
 .main_div{
     /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
-    background-size: 250px;*/
+    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
