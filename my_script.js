@@ -10,3 +10,19 @@ function show_menu(){
         x.style.display = "none";
     }
 }
+
+
+function readfile(id) {
+    // alert(document.getElementById('iframe').contentDocument.body.firstChild.innerHTML);
+
+    /////перезагрузить содержимое (не работает)////
+    // Get the iframe
+    const iframe = document.getElementById(id);
+    // Reload the iframe
+    iframe.contentWindow.location.reload();
+    ///////////////////////////////////////////////
+
+    document.getElementById(id).contentDocument.body.firstChild.innerHTML;
+
+
+}
