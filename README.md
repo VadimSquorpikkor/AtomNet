@@ -3,7 +3,7 @@ Device Settings Instructions
 # Инструкции для Участка Регулировки Испытаний и Ремонта
 
 
-![alt tag](main.jpg)
+![alt tag](main2.jpg)
 
 * Настройка СРК
 * БД альфа-излучения

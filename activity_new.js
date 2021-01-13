@@ -53,7 +53,7 @@ function initializeSource() {
 /**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
 function set_main_activities() {
     initializeSource();
-    set_num();
+    initialize_calc();
 
     /**Вывод активностей для источников на сегодняшний день*/
     document.getElementById('activities_div').innerHTML =
@@ -89,30 +89,78 @@ function set_main_activities() {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-/**Расчет активности источника для калькулятора активности*/
-function calc_act() {
-    let pov_date = new Date(document.getElementById('date').value);
-    let now_date = new Date(document.getElementById('date_now').value);
-    let act0 = document.getElementById('act0').value;
-
-    let rad = document.getElementsByName('r1');
-    if (rad[2].checked) {
-        setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CD_109));
-    } else if (rad[3].checked) {
-        setValueById('act_main', activityAllDays(act0, pov_date, now_date, T_POL_CS_137));
-    } else if (rad[4].checked) {
-        setValueById('act_main', activityAllDays(act0, pov_date, now_date, document.getElementById('custom').value));
-    }
+/**Расчет активности источника для калькулятора активности (НОВЫЙ)*/
+let period;
+function calculate_activity() {
+    let pov_date = new Date(document.getElementById('date_a0').value);
+    let now_date = new Date(document.getElementById('date_calc').value);
+    let act0 = document.getElementById('activity_0').value;
+    document.getElementById('activity_now').value = activityAllDays(act0, pov_date, now_date, period);
 }
 
 /**Запись значений в калькулятор активности*/
-function set_num() {
-    document.getElementsByName('r1')[2].checked = true;
-    document.getElementById('act0').value = 90;
-    document.getElementById('date').value = "2018-02-12";
-    document.getElementById('date_now').valueAsDate = new Date();
+function initialize_calc() {
+    document.getElementById('date_a0').value = "2018-02-12";
+    document.getElementById('date_calc').valueAsDate = new Date();
+    setActivity_0();
 }
 
+function setActivity_0() {
+    switch (document.getElementById("ra_spinner").value) {
+        case '1': setA0_And_Period(100, CS_137.getPeriod); break;
+        case '2': setA0_And_Period(100, CD_109.getPeriod); break;
+        case '3': setA0_By_Element(cs_2910); break;
+        case '4': setA0_By_Element(cs_516); break;
+        case '5': setA0_By_Element(cs_517); break;
+        case '6': setA0_By_Element(cs_518); break;
+        case '7': setA0_By_Element(cs_519); break;
+        case '8': setA0_By_Element(cs_520); break;
+        case '9': setA0_By_Element(cs_521); break;
+        case '10': setA0_By_Element(cs_831); break;
+        case '11': setA0_By_Element(cs_833); break;
+        case '12': setA0_By_Element(cd_1079); break;
+        case '13': setA0_By_Element(cd_1080); break;
+    }
+}
+
+function setA0_And_Period(a0, element_period) {
+    document.getElementById('activity_0').readOnly = false;
+    document.getElementById('date_a0').readOnly = false;
+    setValueById('activity_0', a0);
+    period = element_period;
+    calculate_activity();
+}
+
+function setA0_By_Element(elem) {
+    document.getElementById('activity_0').readOnly = true;
+    document.getElementById('date_a0').readOnly = true;
+    setValueById('activity_0', elem.getActivity_0);
+    period = elem.getElement.getPeriod;
+    setDate(elem.getPovDate);
+    calculate_activity();
+}
+
+function setDate(date) {
+    let day = date.getDate(),
+        month = date.getMonth() + 1,
+        year = date.getFullYear();
+
+    month = (month < 10 ? "0" : "") + month;
+    day = (day < 10 ? "0" : "") + day;
+
+    document.getElementById('date_a0').value = year + "-" + month + "-" + day;
+}
+
+function checkIsNumber(id) {
+    // if (/*typeof document.getElementById(id).value == 'number'*/true) {
+    if (isNaN(document.getElementById(id).value)) {
+        document.getElementById(id).style.color = '#ff0000';
+        setValueById('activity_now', 'Не число!');
+    } else {
+        document.getElementById(id).style.color = '#000000';
+        calculate_activity();
+    }
+}
 //----------------------------------------------------------------------------------------------------------------------
 /**Мощность дозы рассчитывается, как активность, умноженная на соответствующий коэффициент
  * Метод set_activities_bdkg_04() рассчитывает активность для выбранного источника на сегодняшний день, переводит в

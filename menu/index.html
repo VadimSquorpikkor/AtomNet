@@ -24,48 +24,115 @@
     includeHTML('index');
 </script>
 
-<div class="yellow_back_index_right">
+<div class="yellow_back_index_right" style="text-align: left">
 
-    <img src="../imgs/radiation.png" width="100"
-         style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">
-    <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7; text-align: left">
-        <span class="red_light_title">Активность источников:</span><br><br>
+    <!--<img src="../imgs/radiation.png" width="100"
+         style="float: left; margin-left: 10px; margin-right: 10px; margin-top: 50px">-->
+    <!--    <div style="text-indent: 0; background: transparent; font-size: 12px; line-height: 0.7; text-align: left">-->
+    <span class="red_light_title">Активность источников:</span><br><!--<br>-->
+    <!--        <img src="../imgs/radiation.png" width="75" style="margin-left: 0">-->
+    <div id="activities_div" style="text-indent: 0; background: transparent"></div>
 
-        <div id="activities_div" style="text-indent: 0; background: transparent"></div>
+    <hr color="ff6633">
+    <span class="red_light_title">Без периодической поверки:</span><br><!--<br>-->
 
-        <hr color="ff6633">
-        <span class="red_light_title">Без периодической поверки:</span><br><br>
+    <div id="activities_div_bez_poverki" style="text-indent: 0; background: transparent"></div>
 
-        <div id="activities_div_bez_poverki" style="text-indent: 0; background: transparent"></div>
-
-    </div>
+    <!--    </div>-->
 </div>
 
-<div class="activity_calculator" style="padding-left: 135px">
+<div class="yellow_back_index_right" style="overflow: auto; text-align: left">
 
-    <div class="red_light_title">Калькулятор активности:</div>
+    <span class="red_light_title">Калькулятор активности источников:</span><br>
 
-    <div style="float: left">
-        <span>Дата поверки </span><input id="date" title="Дата, когда активность источника равна А0" name="r1"
-                                        type="date"><br>
-        <span>Сегодня </span><input id="date_now" title="Дата, на момент которой необходимо рассчитать активность"
-                                   name="r1" type="date"><br>
-        <span>A<sub>0</sub>(кБк) </span><input id="act0" title="Активность источника в день поверки" name="act0"
-                                              type="text" size="5">
-    </div>
-    <div>
-        <input id="t2_1" title="" name="r1" type="radio"> <span><sup>109</sup>Cd (461.4 дней)</span><br>
-        <input id="t2_2" title="" name="r1" type="radio"> <span><sup>137</sup>Cs (11019.6 дней)</span><br>
-        <input id="t2_3" title="Если нужно рассчитать какой-то другой элемент" name="r1" type="radio">
-        <span>Custom</span>
-        <input id="custom" title="Период полураспада в днях" name="r1" type="text" value="451" size="5"><br>
-    </div>
-    <div style="margin-left: 150px">
-        <input title="" name="r1" type="button" value="Рассчитать" onclick="calc_act()">
-        <input id="act_main" title="" name="r1" type="text" size="5"><span>(кБк)</span>
+    <div class="activity_block">
+        <div style="padding: 5px">
 
+            <table style="border:none">
+                <tr>
+                    <td style="border:none">
+                        <div class="red_light_title">Радиоактивный элемент<br> или источник:</div>
+                    </td>
+                    <td style="border:none">
+                        <div class="red_light_title">А<sub>0</sub> (кБк):</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none">
+                        <select id="ra_spinner" onchange="setActivity_0()">
+                            <option value="1">137-Cs</option>
+                            <option value="2">109-Cd</option>
+                            <option value="3">№2910</option>
+                            <option value="4">№516</option>
+                            <option value="5">№517</option>
+                            <option value="6">№518</option>
+                            <option value="7">№519</option>
+                            <option value="8">№520</option>
+                            <option value="9">№521</option>
+                            <option value="10">№831</option>
+                            <option value="11">№833</option>
+                            <option value="12">№1079</option>
+                            <option value="13">№1080</option>
+                        </select>
+                    </td>
+                    <td style="border:none">
+                        <input id="activity_0" type="text" size="12" datatype="number"  title="Активность в день поверки. Для источников с номерами изменить активность нельзя"
+                               oninput="checkIsNumber('activity_0')" onchange="calculate_activity()">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border:none">
+                        <hr color="ff6633">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:none">
+                        <div class="red_light_title">Дата<br>поверки:</div>
+                    </td>
+                    <td style="border:none">
+                        <div class="red_light_title">Расчетный<br>день:</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none">
+                        <input id="date_a0" title="Дата поверки (А0). Для источников с номерами изменить дату нельзя"
+                               onchange="calculate_activity()"
+                               type="date">
+                    </td>
+                    <td style="border:none">
+                        <input id="date_calc" title="Дата, на момент которой необходимо рассчитать активность"
+                               onchange="calculate_activity()"
+                               type="date">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" style="border:none">
+                        <hr color="ff6633">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:none" colspan="2">
+                        <div class="red_light_title">Активность, кБк</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:none" colspan="2">
+                        <!--                        <input title="" name="r1" type="button" value="Рассчитать" onclick="calculate_activity()">-->
+                        <input id="activity_now" title="" name="r1" type="text" size="12">
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
     </div>
+
 </div>
+
 
 <div class="blue_back_index_right">
     <span class="red_light_title">Что нового?</span><br>
@@ -74,12 +141,8 @@
     или <a href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь(в
     папке)</a>.
     Что нового читаем <a href="../sertif_prosh/macro_version.html">тут</a><br>
-        • Добавлена инструкция <a href="../grad/bdkg-204.html">Градуировка БДКГ-204</a><br>
-        • Исправлена и дополнена инструкция <a href="../grad/1123.html">Градуировка 1123</a><br>
-        • Исправлена и дополнена инструкция <a href="../grad/1121.html">Градуировка 1121</a><br>
-        • Добавления в инструкцию <a href="../bdkg/bdkg04.html">БДКГ-04</a><br>
-        • Добавления в инструкцию <a href="../1123/1121.html">1121</a><br>
-        • Добавлена инструкция <a href="../grad/bdkg-02.html">Градуировка БДКГ-02</a><br>
+    • Инструкции теперь доступны в интернет по <a href="https://storage.googleapis.com/uchastokrir.appspot.com/menu/index.html">ссылке</a>
+<!--    • Добавлена инструкция <a href="../grad/bdkg-02.html">Градуировка БДКГ-02</a><br>-->
 </div>
 
 <div id="div_for_menu_block" class="div_for_menu_block" style="visibility: hidden; padding: 0"></div>
