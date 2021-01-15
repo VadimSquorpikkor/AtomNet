@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Как записать дату и время</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="../11xx/1123.html"> ДКС-АТ1123 </a>
+    <a href="">Как записать дату и время</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+    <h1>Как записать дату и время</h1>
+
+    <ul>
+        <li>Подключить дозиметр к адаптеру USB</li>
+        <img src="../imgs/1123/bg1.jpg" width="400">
+        <li>Запустить программу BackgroundCalibration. Дозиметр подключится автоматически</li>
+        <li>Нажать "Запись идентификационных данных"</li>
+        <img src="../imgs/1123/bg2.png" width="800">
+        <li>Записать серийный номер, месяц и год производства</li>
+        <img src="../imgs/1123/bg3.png" width="300">
+    </ul>
+    <p><span class="mark_green">Если перед тем, как нажать "Запись..." НЕ выделять строку с прибором,
+        Background сам подставит сегодняшнюю дату</span>
+
+</div>
+
+
+</body>
+</html>

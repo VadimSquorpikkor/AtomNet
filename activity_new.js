@@ -79,9 +79,9 @@ function set_main_activities() {
         getMenuBlock("../srk2327/portal.html", "../imgs/main_menu/fura.png", RED,"Портальный Монитор", "Прошивка, настройка")+
         getMenuBlock("../bdkg02/bdkg02.html", "../imgs/bdkg02/cond.jpg", GREEN,"БДКГ-02", "Настройка новых. Ремонт")+
         getMenuBlock("../bdkg22/bdkg22.html", "../imgs/main_menu/bdkg222.jpg", GREEN,"БДКГ-22/23", "Прошивка и настройка")+
-        getMenuBlock("../1103/1103.html", "../imgs/main_menu/1103.png", BLUE,"ДКР-1103", "Инструкция по настройке")+
-        getMenuBlock("../1123/1121.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1121", "Инструкция по настройке")+
-        getMenuBlock("../1123/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
+        getMenuBlock("../11xx/1103_new.html", "../imgs/main_menu/1103.png", BLUE,"ДКР-1103", "Инструкция по настройке")+
+        getMenuBlock("../11xx/1121.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1121", "Инструкция по настройке")+
+        getMenuBlock("../11xx/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
         getMenuBlock("../sertif_prosh/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
         getMenuBlock("../sertif_prosh/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
         getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
@@ -238,6 +238,12 @@ function get_r() {
     let a = parseFloat(document.getElementById('a').value);
     let ans = 47/a*1090;
     document.getElementById('result').value = ans.toFixed(2);
+}
+
+function get_r2() {
+    let a = parseFloat(document.getElementById('a2').value);
+    let ans = 47/a*1090;
+    document.getElementById('result2').value = ans.toFixed(2);
 }
 
 function get_sm() {

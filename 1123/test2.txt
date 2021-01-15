@@ -1,3 +1,0 @@
-let text = `
-My test text goes here!
-`;

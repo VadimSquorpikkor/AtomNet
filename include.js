@@ -187,18 +187,20 @@ function getRegMenu(mode) {
         '        <span>1103M / 1121 / 1123</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../1103/1103.html">ДКР-АТ1103М</a>' +
-        '            <div>' +
-        '                <ul>' +
-        '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
-        '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
-        '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
-        '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
-        '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
-        '                </ul>' +
-        '            </div>' +
+        '        <li><a href="../11xx/1103_new.html">ДКР-АТ1103М</a>' +
+        '        <li><a href="../1103/1103.html">ДКР-АТ1103М (старый вариант)</a>' +
+        // '            <div>' +
+        // '                <ul>' +
+        // '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
+        // '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
+        // '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
+        // '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
+        // '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
+        // '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
+        // '                </ul>' +
+        // '            </div>' +
         '        </li>' +
-        '        <li><a href="../1123/1121.html">ДКС-АТ1121</a>' +
+        '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a>' +
         '            <div>' +
         '                <ul>' +
         '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a></li>' +
@@ -206,15 +208,15 @@ function getRegMenu(mode) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../1123/1123.html">ДКС-АТ1123</a>' +
+        '        <li><a href="../11xx/1123.html">ДКС-АТ1123</a>' +
         '            <div>' +
         '                <ul>' +
         '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a></li>' +
-        '                    <li><a href="../1123/1123_umnoz.html">Проверка умножителя</a></li>' +
+        '                    <li><a href="../11xx/1123_umnoz.html">Проверка умножителя</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../1123/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
+        '        <li><a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
         '        <li><a href="../other/1125_uo.html">1125, 1103М. Проверка платы УО</a></li>' +
         '        <li><a href="../other/signalizator.html">Устройство сигнализации 1121,1123</a></li>' +
         '    </ul>' +
@@ -236,7 +238,7 @@ function getRegMenu(mode) {
         '    <ul>' +
         '        <li><a href="../other/delitel.html">Проверка делителя</a></li>' +
         '        <li><a href="../other/umnoz_1121.html">Проверка умножителя 1121,α,β,1103,1125</a></li>' +
-        '        <li><a href="../1123/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
+        '        <li><a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
         '        <li><a href="../other/umnoz_1315.html">Проверка умножителя 1315</a></li>' +
         '        <li><a href="../other/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
         '        <li><a href="../other/umnoz_201m.html">Проверка умножителя БДКГ-201М</a></li>' +
@@ -311,7 +313,7 @@ function getRegMenu(mode) {
         '           </summary>' +
         '           <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
         '           <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
-        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.03</a></li>' +
+        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.06</a></li>' +
         '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
         '       </details>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +

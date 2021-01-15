@@ -125,8 +125,8 @@ th {
 
 .main_div{
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
-    background-size: 250px;
+    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
+    /*background-size: 250px;*/
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
@@ -501,42 +501,7 @@ p {
     text-align: right;
 }
 
-.activity_calculator div {
-    background-color: antiquewhite;
-    text-indent: 0;
-}
-
-.activity_calculator span {
-    font-size: 14px;
-    display: inline-block;
-}
-
-.activity_calculator div:first-child span {
-    width: 150px;
-    padding: 2px 12px;
-    text-align: right;
-}
-
-/*
-.new_div {
-    background: #555555;
-    margin-top: 0;
-    float: left;
-    width: auto;
-    margin-left: 5px;
-    padding: 0
-}
-*/
-
-.yellow_back_index_right>div>span{
-    /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #000000;*/
-}
-.blue_back_index_right, .yellow_back_index_right, .activity_calculator {
-    /*ДЛЯ НОВОГО ГОДА (отсоединить калькулятор)*/
-    /*background-image: url("imgs/lava.jpg");*/
-    /*background-image: url("imgs/ng.jpg");*/
-
+.blue_back_index_right, .yellow_back_index_right {
     margin: 5px;
     font-size: 14px;
     background-color: antiquewhite;
@@ -1071,7 +1036,7 @@ figcaption {
         width: 420px;
     }
 
-    .blue_back_index_right, .yellow_back_index_right, .activity_calculator, .div_for_menu_block {
+    .blue_back_index_right, .yellow_back_index_right, .div_for_menu_block {
         margin-left: 430px;
     }
     .div_for_menu_block {

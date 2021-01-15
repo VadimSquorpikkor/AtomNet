@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Проверка тока потребления и тока заряда</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../my_script.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="1123.html"> ДКС-АТ1123 </a>
+    <a href="">Проверка тока потребления и тока заряда</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+    <h1>Проверка тока потребления и тока заряда БА ДКР-АТ1103М</h1>
+
+    <ul>
+        <li>включить в разрыв цепи «+» БА амперметр</li>
+        <li>включить ДКР и измерить его ток потребления, значение которого должно быть не более 100 мА;</li>
+        <img src="../imgs/1123/p1.jpg" width="500">
+        <li>Подключить адаптер питания 12В и измерить ток заряда БА, значение которого должно быть примерно равно
+            500мА(??????????????)
+        </li>
+        <img src="../imgs/1123/p2.jpg" width="500">
+    </ul>
+
+</div>
+
+
+
+</body>
+</html>

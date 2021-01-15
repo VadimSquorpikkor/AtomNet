@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>ДКР-АТ1103М. Инструкция по настройке</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../my_script.js"></script>
+    <script type="text/javascript" src="../SqrLibrary.js"></script>
+    <script type="text/javascript" src="../activity_new.js"></script>
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body onload="set_activities_1121()">
+<!--<body onload="openDetails('prosh')">-->
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">ДКР-АТ1103М</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+    <script>
+        includeHTML();
+    </script>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+    <script>
+        includeHTML(open);
+    </script>
+</div>
+
+
+<div class="main_div">
+
+
+    <h1>Дозиметр рентгеновского излучения<br>
+        ДКР-АТ1103М.<br>Инструкция по настройке</h1>
+
+    <div class="left_align">
+        <a href="#prosh" onclick="openDetails('prosh')">Как прошить</a><br>
+        <a href="#957" onclick="openDetails('957')">Как сделать инициализацию 957</a><br>
+        <a href="#potreb" onclick="openDetails('potreb')">Как проверить ток потребления и ток заряда</a><br>
+        <a href="#smesch" onclick="openDetails('smesch')">Смещение -3В...-5В</a><br>
+        <a href="#spectr" onclick="openDetails('cal_ba', 'spectr')">Как включить спектрометрический режим</a><br>
+        <a href="#cal_ba" onclick="openDetails('cal_ba')">Как сделать предварительную калибровку по Ba<sup>133</sup></a><br>
+    </div>
+
+    <div class="nice_details">
+        <details id="prosh">
+            <summary>1. <span class="attention">Все 11ХХ изначально прошиты прошивкой 1125</span>, поэтому
+                первое,что необходимо сделать, это прошить дозиметр нужной прошивкой
+            </summary>
+            <ul>
+                <li>Подключить дозиметр к USB адаптеру (адаптер к USB пока не подключать)</li>
+                <img src="../imgs/1103/4.jpg" width="300">
+                <li>Замкнуть на контроллере землю (22-й вывод, например) и PSEN (32-й вывод).
+                    <span class="mark_green"> А лучше зажать кнопку звука</span></li>
+                <li>Подключить адаптер к USB, при этом будет слышен звуковой сигнал. Кнопку можно отпустить</li>
+                <li>Прошивать с помощью <a href="../other/flip.html">Flip</a>, прошивка <span class="attention">1103v1.hex</span>
+                </li>
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>2. Наклеить наклейки с внутренним порядковым номером, полученным с монтажа приборам. Этот же номер
+                вписать в паспорт настройки
+            </summary>
+            <img src="../imgs/1103/04.jpg" width="400">
+            Приготовить паспорт. В него будут записываться данные настройки:
+            <img src="../imgs/1103/pass2.png" width="700">
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <span class="space">3. Провести внешний осмотр плат прибора на:</span>
+        <ul>
+            <li>соответствие типа номиналов элементов и правильность их установки согласно ПЭ3 и СБ.</li>
+            <li>отсутствие обрывов и коротких замыканий элементов и печатных проводников.</li>
+            <li>отсутствие коротких замыканий по шинам питания.</li>
+        </ul>
+    </div>
+
+
+    <div class="nice_details">
+        <details>
+            <summary>4. Визуально проконтролировать одинаково высокую контрастность свечения всех сегментов ЖКИ
+            </summary>
+            для этого после
+            включения прибора и появления индикации тестового изображения нажать и удерживать кнопку
+            подсветки для удержания на табло тестового изображения на требуемое время, после чего кнопку отпустить
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details id="957">
+            <summary>5. Провести инициализацию 957
+            </summary>
+            <p>После прошивке, при включении дозиметра на табло появляется мигающее
+                сообщение «Err25», сопровождающиеся прерывистым звуковым сигналом (ошибка данных энергонезависимой
+                памяти,
+                означающая, что в данном случае в памяти ничего не записано из-за первого включения).
+
+                <img src="../imgs/1103/7.jpg" width="300">
+
+            <p>Это значит, что прибор <i>не инициализирован</i>. Для этого нужно:
+
+            <ul>
+                <li>При включении нажать и удерживать кнопку <span class="like_a_button">МЕМ</span></li>
+                <li>Нажать два раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
+                <img src="../imgs/1103/8.jpg" width="300">
+                <li>Два раза нажать кнопку<span class="like_a_button">START</span>
+
+                <li>Набрать "957", для этого с помощью клавиш <span
+                        class="like_a_button">&emsp;&bigtriangleup;&emsp;</span> и
+                    <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а спомощью
+                    <span class="like_a_button">START</span> выбирается следующая позиция
+                </li>
+                <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>
+                <img src="../imgs/1103/9.jpg" width="300">
+            </ul>
+            <p>Прибор инициирован. После перезагрузки он будет работать в обычном режиме
+            <p>Также прибор можно инициировать с помощью ПО ATAS tech на ПК
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details id="potreb">
+            <summary>6. Проверить ток потребления и ток заряда БА
+            </summary>
+            <ul>
+                <li>включить в разрыв цепи «+» БА амперметр</li>
+                <li>включить ДКР и измерить его ток потребления, значение которого должно быть не более 30 мА;</li>
+                <img src="../imgs/1103/p1.jpg" width="500">
+                <li>Подключить адаптер питания 12В и измерить ток заряда БА, значение которого должно быть примерно
+                    равно
+                    400мА
+                </li>
+                <img src="../imgs/1103/p2.jpg" width="500">
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>7. Проверить индикатор заряда
+            </summary>
+                К выключенному ДКР подключить адаптер 12В, при этом на табло должен загореться символ,
+                указывающий на подключение внешнего источника питания и индицирующий работу режима заряда БА
+            <img src="../imgs/1103/05.jpg" width="250">
+
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>8. Проверить осциллографом наличие светодиодного импульса в точке 11 платы преобразователя ”фон”.
+            </summary>
+            <img src="../imgs/1103/02.jpg" width="800">
+            Максимальная амплитуда сигнала не должна превышать 100В и иметь такую форму(<span class="attention">обязательно</span>
+            иметь "горб"[1] и длинный "спад"[2]):
+            <img src="../imgs/1103/o5.png" width="500">
+            <span class="mark_yellow">Данные записать в паспорт ("Умнож")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>9. Проверить осциллографом наличие высоковольтных импульсов в точке 14 платы преобразователя
+                ”фон”.
+            </summary>
+            <img src="../imgs/1103/03.jpg" width="800">
+            Максимальная амплитуда сигнала не должна превышать 70в и иметь такую форму
+            (<span class="attention">при превышении напряжения свыше 70В, незамедлительно отключите прибор!</span>):
+            <img src="../imgs/1103/o3.png" width="500">
+            <span class="mark_yellow">Данные записать в паспорт ("Uвыс")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details id="smesch">
+            <summary>10. Выставить смещение -3…-5мВ
+            </summary>
+            <p>Мультиметром на пределе 200m замерить напряжение. Оно должно быть в промежутке от -3mV до -5mV.
+                Если напряжение не входит в промежуток, следует скоректировать его подобрав и установив резистор на
+                место [А],
+                чтобы уменьшить, и на [В], чтобы увеличить. В большинствве случаев подходит такой алгоритм:
+            <ul>
+                <li>На место [А] запаять резистор на 3.6 МОм</li>
+                <li>Если напряжение больше необходимого, поменять на резистор меньшего номинала</li>
+                <li>Если напряжение меньше необходимого, поменять на резистор большего номинала
+            </ul>
+
+            <img src="../imgs/1103/s2.jpg" width="800">
+
+            <p>Чтобы не гадать с номиналом, можно воспользоваться такой таблицей (пока не хватает статистики, поэтому
+                таблица
+                примерная):
+
+            <table>
+                <tr>
+                    <th>Начальное напряжение (mV)</th>
+                    <th>Какой резистор запаять (МОм)</th>
+                    <th>Примерно какое напряжение получится (mV)</th>
+                </tr>
+                <tr>
+                    <td>2.68</td>
+                    <td>3.6</td>
+                    <td>-3.7</td>
+                </tr>
+                <tr>
+                    <td>4.91</td>
+                    <td>2.7</td>
+                    <td>-3.51</td>
+                </tr>
+                <tr>
+                    <td>3.0</td>
+                    <td>3.0</td>
+                    <td>-4.77</td>
+                </tr>
+                <tr>
+                    <td>2.42</td>
+                    <td>3.6</td>
+                    <td>-4.01</td>
+                </tr>
+                <tr>
+                    <td>-0.28</td>
+                    <td>5.6</td>
+                    <td>-4.44</td>
+                </tr>
+                <tr>
+                    <td>-1.03</td>
+                    <td>6.2</td>
+                    <td>-4.70</td>
+                </tr>
+
+            </table>
+            <br>
+            <p>Можно также воспользоваться формой:
+            <div class="yellow_back">
+                <form>
+                    <i>Мало статистики, поэтому форма пока считает примерно</i><br><br>
+                    U(mV) <input id="b" type="text" value="2.68" title="channel">
+                    <input type="button" value="Рассчитать" onclick="get_sm()">
+                    Номинал (MОм): <input id="res_sm" type="text" title="res">
+                </form>
+            </div>
+            <span class="mark_yellow">Данные записать в паспорт ("Смещ.")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>11. Выставить уровень опорного сигнала (сигнал светодиода пройденного через блок ФЭУ)
+            </summary>
+            на выводе 7 D4.2 (рис.5) в
+            значение 1.30…1.35В (используется осциллограф Tektronix TDS 2012C) как показано на рис. 6 путем подстройки
+            потенциометра R38 (рис. 7). В случае если диапазона регулировки этого потенциометра недостаточно для
+            установления требуемого значения уровня то следует подобрать резистор R37 для установки нужного значения
+            <span class="mark_yellow">Данные записать в паспорт ("Сигнал")</span>
+
+
+            <img src="../imgs/1103/01.jpg" width="800">
+            <img src="../imgs/1103/o6.png" width="500">
+
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details id="cal_ba">
+            <summary>12. Сделать предварительную калибровку по Ba<sup>133</sup>
+                <div class="yellow_back">
+                    <form>
+                        № канала <input id="a2" type="text" value="100" title="channel">
+                        <input type="button" value="Рассчитать" onclick="get_r2()">
+                        Номинал (кОм): <input id="result2" type="text" title="res">
+                    </form>
+                </div>
+            </summary>
+
+            <ul>
+                <li>Подключите прибор к ПЭВМ с помощь кабеля БД через модуль адаптера USB-БД</li>
+                <img src="../imgs/1103/4.jpg" width="400">
+            </ul>
+            <div class="nice_details">
+                <details id="spectr">
+                    <summary>Переведите прибор в спектрометрический режим F5</summary>
+                    <ul>
+                        <li>При включении нажать и удерживать кнопку <span class="like_a_button">МЕМ</span></li>
+                        <li>Нажать два раза <span class="like_a_button">МЕМ</span>, на экране появится "---":
+                        </li>
+                        <img src="../imgs/1103/8.jpg" width="300">
+                        <li>Два раза нажать кнопку<span class="like_a_button">START</span>
+                        <li>Набрать "718", для этого с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>
+                            и
+                            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а
+                            спомощью
+                            <span class="like_a_button">START</span> выбирается следующая позиция
+                        </li>
+                        <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>
+                        <!--<img src="../imgs/1103/9.jpg" width="300">-->
+                        <li>Нажать и удерживать кнопку <span class="like_a_button">МЕМ</span>, появится ".1."
+                        </li>
+                        <li>Нажимая кнопку <span class="like_a_button">МЕМ</span>, выбрать седьмой режим</li>
+                        <li>Нажать <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>, появится "F5"
+                        </li>
+                        <li>Спектрометрический режим включен</li>
+                    </ul>
+                </details>
+            </div>
+            <ul>
+                <li>Закрепить на "колпачке" прибора источник Барий (Ba)</li>
+                <li>Запустите программу ATAS tech. Нажмите режим «инициализировать соединение». Программа должна
+                    обнаружить
+                    прибор и вывести на экран спектр, считываемый с прибора. <span class="mark_green">То же (и проще) можно сделать
+                    с помощью BackgroundCalibration: запустить BG, выбрать дозиметр, нажать спектр. Режим F5 включится
+                <i>автоматически</i></span>:
+                </li>
+
+                <img src="../imgs/1103/5.png" width="700">
+
+                <li>При помощи подборочного резистора R13 грубо и потенциометра R16 платы преобразователя «ФОН» (рис.
+                    10) точно установите второй пик спектра Ba133 в 109±1 канал. При этом первый пик Ba133 должен
+                    находится
+                    примерно в 42 канале:
+                    <!--<img src="../imgs/1103/ba1.jpg" width="700">-->
+                    <img src="../imgs/1103/8.png" width="700">
+                    <img src="../imgs/1103/ba2.jpg" width="700">
+                    <ul>
+                        <li>Чтобы переместить пик влево, сопротивление резистора R13 нужно увеличить</li>
+                        <li>Чтобы переместить пик вправо, сопротивление резистора R13 нужно уменьшить</li>
+                    </ul>
+                    <p>Чтобы не подбирать резистор, можно воспользоваться формулой: 47/х*1090, где х &mdash; это №
+                        канала при
+                        470кОм.
+                        Или воспользоваться формой:
+                    <div class="yellow_back">
+                        <form>
+                            № канала <input id="a" type="text" value="100" title="channel">
+                            <input type="button" value="Рассчитать" onclick="get_r()">
+                            Номинал (кОм): <input id="result" type="text" title="res">
+                        </form>
+                    </div>
+                </li>
+                <p>С помощью подбора резистора R13 канал устанавливается примерно, плюс-минус 5 каналов.
+                    Поэтому для более точной настройки применяется подстроечный резистор R16:
+                <ul>
+                    <li>Чтобы переместить пик влево, подстроечный нужно повернуть по часовой</li>
+                    <li>Чтобы переместить пик вправо, подстроечный нужно повернуть по против часовой</li>
+                    Один канал &mdash; это, примерно, четверть оборота.
+                </ul>
+                <li><span class="mark_yellow">Данные записать в паспорт ("R13" и "Ba 109")</span></li>
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>13. Проконтролировать напряжение на 3 выводе микросхемы D8 платы преобразователя «Фон».
+            </summary>
+            Оно должно находится в примерно в середине диапазона 0,7…1,7В, что свидетельствует о том что потенциометр
+            после регулировки не находится в крайних положениях а схема температурной стабилизации высокого находится в
+            рабочем режиме.
+            <span class="mark_yellow">Данные записать в паспорт ("R16")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>14. Проконтролировать напряжение на 6 выводе микросхемы D8 платы преобразователя «Фон».
+            </summary>
+            Оно не должно превышать значения 4,2 В для нормальной работы схемы светодиодной стабилизации!
+            <span class="mark_yellow">Данные записать в паспорт ("D8:6")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary>15. Проконтролировать напряжение на эмиттере транзистора VT6 (или +С24) платы преобразователя
+                «Фон».
+            </summary>
+            При нормальном режиме работы прибора оно не должно превышать половины напряжения питания т. е. +3В и
+            является косвенным показателем уровня высокого напряжения на ФЭУ!
+            <img src="../imgs/1103/06.jpg" width="850">
+            <span class="mark_yellow">Данные записать в паспорт ("+C24")</span>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <span class="space">16. С помощью BackgroundCalibration записать в память прибора серийный номер, месяц и год производства</span>
+    </div>
+
+    <div class="nice_details">
+        <span class="space">17. Настройка завершена. Приборы выложить на полку, подключить адаптер питания, включить.</span>
+    </div>
+
+</div>
+
+</body>
+</html>
