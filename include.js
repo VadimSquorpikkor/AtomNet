@@ -29,10 +29,33 @@ function setTextColorRed(element) {
 
 // import {stroke} from 'qwerty.js';
 
-//Меню для регулировки
+
+let isClose;
+function switchMenuState() {
+    if (!isClose) {
+        // document.getElementsByName('menu_left111').innerHTML = getRegMenu('');
+        if (document.getElementById('menu_left')!=null)document.getElementById('menu_left').innerHTML = getRegMenu('');
+        if (document.getElementById('menu')!=null)document.getElementById('menu').innerHTML = getRegMenu('');
+        if (document.getElementById('index_menu') != null) document.getElementById('index_menu').innerHTML = getRegMenu('');
+        document.getElementById('switchButton').value = "Открыть";
+    }
+    if (isClose) {
+        if (document.getElementById('menu_left')!=null) document.getElementById('menu_left').innerHTML = getRegMenu('open');
+        if (document.getElementById('menu')!=null)document.getElementById('menu').innerHTML = getRegMenu('open');
+        if (document.getElementById('index_menu')!=null)document.getElementById('index_menu').innerHTML = getRegMenu('open');
+        document.getElementById('switchButton').value = "Свернуть";
+    }
+    isClose = !isClose;
+}
+
 function getRegMenu(mode) {
+
+    let title;
+    if (mode==='open') title = "Свернуть";
+    if (mode==='') title = "Открыть";
+
     return '' +
-        '<span id="title">Регулировка</span>' +
+        '<span id="title">Регулировка</span> <span class="space"><span class="space"><span class="space"> <input style="margin: 2px" id="switchButton" type="button" onclick="switchMenuState()" value=' + title + '>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -379,19 +402,21 @@ function getGradMenu(mode) {
 function includeHTML(mode_1) {
     //открытое боковое меню и выпадающее меню для регулировки
     if (mode_1 === open) {
-        document.getElementById('menu_left').innerHTML = getRegMenu('open');
         document.getElementById('menu').innerHTML = getRegMenu('');
+        document.getElementById('menu_left').innerHTML = getRegMenu('open');
     }
     //открытое боковое меню и выпадающее меню для градуировки
     else if (mode_1 === 'grad') {
-        document.getElementById('menu_left').innerHTML = getGradMenu('open');
         document.getElementById('menu').innerHTML = getGradMenu('');
+        document.getElementById('menu_left').innerHTML = getGradMenu('open');
     }
     //закрытое боковое меню для главного меню
     else if (mode_1 === 'index') {
         document.getElementById('index_menu').innerHTML = getRegMenu('');
         document.getElementById('index_menu_2').innerHTML = getGradMenu('');
+        isClose = true;
     } else {
         //document.getElementById('menu').innerHTML = getRegMenu('');
     }
+
 }
