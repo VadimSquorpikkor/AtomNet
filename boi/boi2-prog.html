@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
     <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../include.js"></script>
-    <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 </head>
 
@@ -21,18 +20,17 @@
     <a href="">БОИ-2 Прошивка</a>
 
     <div class="spoiler_menu" id="menu" style="display: none"></div>
-    <script>
-        includeHTML();
-    </script>
 
 </div>
 
 <div class="left_side_menu">
     <div id="menu_left" class="spoiler_menu"></div>
-    <script>
-        includeHTML(open);
-    </script>
 </div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
 
 
 <div class="main_div">

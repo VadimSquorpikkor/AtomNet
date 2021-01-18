@@ -5,7 +5,6 @@
     <title>Проверка коэффициентов</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../include.js"></script>
-    <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 </head>
 
@@ -20,17 +19,16 @@
     <a href="">Проверка коэффициентов</a>
 
     <div class="spoiler_menu" id="menu" style="display: none"></div>
-    <script>
-        includeHTML();
-    </script>
 </div>
 
 <div class="left_side_menu">
     <div id="menu_left" class="spoiler_menu"></div>
-    <script>
-        includeHTML(open);
-    </script>
 </div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
 
 
 <div class="main_div">
@@ -42,7 +40,7 @@
         <li>Нажать три раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
         <li>Два раза нажать кнопку<span class="like_a_button">START</span>
         <li>Набрать "718", для этого с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span> и
-            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а спомощью
+            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а с помощью
             <span class="like_a_button">START</span> выбирается следующая позиция
         </li>
         <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>

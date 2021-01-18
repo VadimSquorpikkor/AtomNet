@@ -1,3 +1,9 @@
+const OPEN = "open";
+const CLOSE = "close";
+const REG_MENU = "reg_menu";
+const GRAD_MENU = "grad_menu";
+
+
 function setTextColorWhiteOld() {
     let arr = document.getElementsByClassName("under_construction");
     for (let i = 0; i < arr.length; i++) {
@@ -30,32 +36,81 @@ function setTextColorRed(element) {
 // import {stroke} from 'qwerty.js';
 
 
+
 let isClose;
 function switchMenuState() {
+    // alert(state);
+    let menu_left = document.getElementById('menu_left');
+    let menu_popup = document.getElementById('menu');
+    let menu_main = document.getElementById('index_menu');
+
     if (!isClose) {
-        // document.getElementsByName('menu_left111').innerHTML = getRegMenu('');
-        if (document.getElementById('menu_left')!=null)document.getElementById('menu_left').innerHTML = getRegMenu('');
-        if (document.getElementById('menu')!=null)document.getElementById('menu').innerHTML = getRegMenu('');
-        if (document.getElementById('index_menu') != null) document.getElementById('index_menu').innerHTML = getRegMenu('');
-        document.getElementById('switchButton').value = "Открыть";
+        if (menu_left !=null)  menu_left.innerHTML = getRegMenu('');
+        if (menu_popup!=null)  menu_popup.innerHTML = getRegMenu('');
+        if (menu_main != null) menu_main.innerHTML = getRegMenu('');
+        document.getElementById('switchButton').value = "Развернуть";
     }
     if (isClose) {
-        if (document.getElementById('menu_left')!=null) document.getElementById('menu_left').innerHTML = getRegMenu('open');
-        if (document.getElementById('menu')!=null)document.getElementById('menu').innerHTML = getRegMenu('open');
-        if (document.getElementById('index_menu')!=null)document.getElementById('index_menu').innerHTML = getRegMenu('open');
+        if (menu_left !=null) menu_left.innerHTML = getRegMenu('open');
+        if (menu_popup!=null) menu_popup.innerHTML = getRegMenu('open');
+        if (menu_main !=null) menu_main.innerHTML = getRegMenu('open');
         document.getElementById('switchButton').value = "Свернуть";
+    }
+    if (isClose === undefined) {
+        if (menu_main != null) {
+            menu_main.innerHTML = getRegMenu('open');
+            isClose = true;
+        }
+        else {
+            menu_left.innerHTML = getRegMenu('');
+            menu_popup.innerHTML = getRegMenu('open');
+        }
     }
     isClose = !isClose;
 }
 
+let isCloseGrad;
+function switchMenuStateGrad() {
+    let menu_left = document.getElementById('menu_left');
+    let menu_popup = document.getElementById('menu');
+    let menu_main = document.getElementById('index_menu_2');
+
+    if (!isCloseGrad) {
+        if (menu_left!=null)menu_left.innerHTML = getGradMenu('');
+        if (menu_popup!=null)menu_popup.innerHTML = getGradMenu('');
+        if (menu_main != null) menu_main.innerHTML = getGradMenu('');
+        document.getElementById('switchButton2').value = "Развернуть";
+    }
+    if (isCloseGrad) {
+        if (menu_left!=null) menu_left.innerHTML = getGradMenu('open');
+        if (menu_popup!=null)menu_popup.innerHTML = getGradMenu('open');
+        if (menu_main!=null)menu_main.innerHTML = getGradMenu('open');
+        document.getElementById('switchButton2').value = "Свернуть";
+    }
+    if (isCloseGrad === undefined) {
+        if (menu_main != null) {
+            menu_main.innerHTML = getGradMenu('open');
+            isCloseGrad = true;
+        }
+        else {
+            menu_left.innerHTML = getGradMenu('');
+            menu_popup.innerHTML = getGradMenu('');
+        }
+    }
+    isCloseGrad = !isCloseGrad;
+}
+
+function getTextByMode(mode_state) {
+    if (mode_state==='open') return "Свернуть";
+    if (mode_state==='') return "Развернуть";
+}
+
+// let mode_state;
 function getRegMenu(mode) {
-
-    let title;
-    if (mode==='open') title = "Свернуть";
-    if (mode==='') title = "Открыть";
-
+    // mode_state = mode;
     return '' +
-        '<span id="title">Регулировка</span> <span class="space"><span class="space"><span class="space"> <input style="margin: 2px" id="switchButton" type="button" onclick="switchMenuState()" value=' + title + '>' +
+        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuState() value=' + getTextByMode(mode) + '></span>' +
+        // '<span  id="title" style="display:inline-block; width: 100%; text-align: justify">Регулировка <input style="margin: 2px" id="switchButton" type="button" onclick="switchMenuState()" value=' + title + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -353,7 +408,8 @@ function getRegMenu(mode) {
 //Меню для градуировки
 function getGradMenu(mode) {
     return '' +
-        '<span id="title">Градуировка</span>' +
+        // '<span id="title">Градуировка</span>' +
+        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton2" type="button" onclick="switchMenuStateGrad()" value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +
@@ -399,24 +455,25 @@ function getGradMenu(mode) {
         ;
 }
 
-function includeHTML(mode_1) {
-    //открытое боковое меню и выпадающее меню для регулировки
-    if (mode_1 === open) {
-        document.getElementById('menu').innerHTML = getRegMenu('');
-        document.getElementById('menu_left').innerHTML = getRegMenu('open');
-    }
-    //открытое боковое меню и выпадающее меню для градуировки
-    else if (mode_1 === 'grad') {
-        document.getElementById('menu').innerHTML = getGradMenu('');
-        document.getElementById('menu_left').innerHTML = getGradMenu('open');
-    }
-    //закрытое боковое меню для главного меню
-    else if (mode_1 === 'index') {
-        document.getElementById('index_menu').innerHTML = getRegMenu('');
-        document.getElementById('index_menu_2').innerHTML = getGradMenu('');
-        isClose = true;
-    } else {
-        //document.getElementById('menu').innerHTML = getRegMenu('');
-    }
+function includeMenu(menu_id, menu_type, menu_state) {
+    let state;
+    if (menu_state === OPEN) state = 'open';
+    if (menu_state === CLOSE) state = '';
 
+    if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML = getRegMenu(state);
+    if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML = getGradMenu(state);
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+function show_menu(){
+    let x = document.getElementById("menu");
+    if (x.style.display === "") {
+        x.style.display = "block";
+    }
+    else if (x.style.display === "none") {
+        x.style.display = "block";
+    }
+    else {
+        x.style.display = "none";
+    }
 }

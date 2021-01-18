@@ -257,3 +257,4 @@ function openDetails(...id) {
         document.getElementById(id[i]).open = true;
     }
 }
+

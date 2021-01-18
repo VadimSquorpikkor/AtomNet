@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
     <!--<script type="text/javascript" src="../activity.js"></script>-->
     <script type="text/javascript" src="../include.js"></script>
-    <script type="text/javascript" src="../my_script.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 </head>
 
@@ -24,12 +23,14 @@
     <div class="spoiler_menu" id="menu" style="display: none"></div>
 </div>
 
-<div class="left_side_menu" style="float: left; margin: 0; padding: 0">
+<div class="left_side_menu">
     <div id="menu_left" class="spoiler_menu"></div>
-    <script>
-        includeHTML('grad');
-    </script>
 </div>
+
+<script>
+    includeMenu("menu_left", GRAD_MENU, OPEN);
+    includeMenu("menu", GRAD_MENU, CLOSE);
+</script>
 
 
 <div class="main_div">

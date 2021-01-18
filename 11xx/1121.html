@@ -5,7 +5,6 @@
     <META charset="utf8">
     <title>ДКС-АТ1121. Инструкция по настройке</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
-    <script type="text/javascript" src="../my_script.js"></script>
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../activity_new.js"></script>
     <script type="text/javascript" src="../include.js"></script>
@@ -20,32 +19,26 @@
 <body onload="set_activities_1121()">
 
 <div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <input title="" type="button" value="Меню" onclick="show_menu()" class="menu_button" id="menu_button">
 
     <a href="../menu/index.html">Главная</a>
     <a href="">ДКС-АТ1121. Инструкция по настройке</a>
 
     <div class="spoiler_menu" id="menu" style="display: none"></div>
-    <script>
-        includeHTML();
-    </script>
 </div>
 
 <div class="left_side_menu">
     <div id="menu_left" class="spoiler_menu"></div>
-    <script>
-        includeHTML(open);
-    </script>
 </div>
 
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
 
 <div class="main_div">
 
-
     <h1>ДКС-АТ1121.<br>Инструкция по настройке</h1>
-
-    <!--<img src="../imgs/under_construction.jpg">-->
 
     <div class="left_align">
         <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a><br>
@@ -53,9 +46,6 @@
         <!--<a href="../1123_umnoz.html">Проверка умножителя</a><br>-->
 
     </div>
-    <!--    <div class="yellow_back_centered">
-            <input title="" name="r1" type="button" value="Рqqqq" onclick="exp_all()">
-        </div>-->
 
     <!--todo сделать копии форм для расчетов в summary (как в БДКГ-04)-->
     <br>
