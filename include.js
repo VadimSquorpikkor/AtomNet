@@ -2,115 +2,58 @@ const OPEN = "open";
 const CLOSE = "close";
 const REG_MENU = "reg_menu";
 const GRAD_MENU = "grad_menu";
+const COLOR_WHITE = "white";
+const COLOR_RED = "#ff3333";
 
-
-function setTextColorWhiteOld() {
-    let arr = document.getElementsByClassName("under_construction");
-    for (let i = 0; i < arr.length; i++) {
-        arr[i].style.color = "white";
-    }
+/**Установить цвет выбранного элемента
+ * @param {*} element
+ * @param {string} color — константа с цветом
+ */
+function setTextColor(element, color) {
+    element.style.color = color;
 }
 
-function setTextColorWhite(element) {
-    element.style.color = "white";
-}
-
-function setTextColorRed(element) {
-    element.style.color = "#ff3333";
-}
-
-/*function setTextColorRedOld() {
-    let arr = document.getElementsByClassName("under_construction");
-    for (let i = 0; i < arr.length; i++) {
-        arr[i].style.color = "#ff3333";
-    }
-}*/
-
-/*function setScript() {
-    let arr = document.getElementsByClassName("under_construction");
-    for (let i = 0; i < arr.length; i++) {
-        arr[i].parentElement.addEventListener("mouseover", setTextColorWhite(arr[i]));
-    }
-}*/
-
-// import {stroke} from 'qwerty.js';
-
-
-
-let isClose;
-function switchMenuState() {
-    // alert(state);
-    let menu_left = document.getElementById('menu_left');
-    let menu_popup = document.getElementById('menu');
-    let menu_main = document.getElementById('index_menu');
-
-    if (!isClose) {
-        if (menu_left !=null)  menu_left.innerHTML = getRegMenu('');
-        if (menu_popup!=null)  menu_popup.innerHTML = getRegMenu('');
-        if (menu_main != null) menu_main.innerHTML = getRegMenu('');
-        document.getElementById('switchButton').value = "Развернуть";
-    }
-    if (isClose) {
-        if (menu_left !=null) menu_left.innerHTML = getRegMenu('open');
-        if (menu_popup!=null) menu_popup.innerHTML = getRegMenu('open');
-        if (menu_main !=null) menu_main.innerHTML = getRegMenu('open');
-        document.getElementById('switchButton').value = "Свернуть";
-    }
-    if (isClose === undefined) {
-        if (menu_main != null) {
-            menu_main.innerHTML = getRegMenu('open');
-            isClose = true;
-        }
-        else {
-            menu_left.innerHTML = getRegMenu('');
-            menu_popup.innerHTML = getRegMenu('open');
-        }
-    }
-    isClose = !isClose;
-}
-
-let isCloseGrad;
-function switchMenuStateGrad() {
-    let menu_left = document.getElementById('menu_left');
-    let menu_popup = document.getElementById('menu');
-    let menu_main = document.getElementById('index_menu_2');
-
-    if (!isCloseGrad) {
-        if (menu_left!=null)menu_left.innerHTML = getGradMenu('');
-        if (menu_popup!=null)menu_popup.innerHTML = getGradMenu('');
-        if (menu_main != null) menu_main.innerHTML = getGradMenu('');
-        document.getElementById('switchButton2').value = "Развернуть";
-    }
-    if (isCloseGrad) {
-        if (menu_left!=null) menu_left.innerHTML = getGradMenu('open');
-        if (menu_popup!=null)menu_popup.innerHTML = getGradMenu('open');
-        if (menu_main!=null)menu_main.innerHTML = getGradMenu('open');
-        document.getElementById('switchButton2').value = "Свернуть";
-    }
-    if (isCloseGrad === undefined) {
-        if (menu_main != null) {
-            menu_main.innerHTML = getGradMenu('open');
-            isCloseGrad = true;
-        }
-        else {
-            menu_left.innerHTML = getGradMenu('');
-            menu_popup.innerHTML = getGradMenu('');
-        }
-    }
-    isCloseGrad = !isCloseGrad;
-}
-
+/**Установить надпись на кнопке, в зависимости от параметра
+ * @param {string} mode_state*/
 function getTextByMode(mode_state) {
     if (mode_state==='open') return "Свернуть";
     if (mode_state==='') return "Развернуть";
 }
 
-// let mode_state;
-function getRegMenu(mode) {
-    // mode_state = mode;
+/**Разворачивание/сворачивание спойлеров в меню для "Регулировки"
+ * @param {string} state — текущее состояние спойлеров, если состояние 'open' (все спойлеры открыты),
+ * то в элемент по id загружается меню с параметром '', и все спойлеры получаются закрытыми, и наоборот
+ * @param {*} id — идентификатор элемента (DIV), в который будет загружено меню
+ */
+function switchMenuStateReg(state, id) {
+    if (state === '') document.getElementById(id).innerHTML = getRegMenu('open', id);
+    else document.getElementById(id).innerHTML = getRegMenu('', id);
+}
+
+/**Разворачивание/сворачивание спойлеров в меню для "Градуировки"
+ * @param {string} state — текущее состояние спойлеров, если состояние 'open' (все спойлеры открыты),
+ * то в элемент по id загружается меню с параметром '', и все спойлеры получаются закрытыми, и наоборот
+ * @param {*} id — идентификатор элемента (DIV), в который будет загружено меню
+ */
+function switchMenuStateGrad(state, id) {
+    if (state === '') document.getElementById(id).innerHTML = getGradMenu('open', id);
+    else document.getElementById(id).innerHTML = getGradMenu('', id);
+}
+
+/**Загружает HTML код меню для Регулировки
+ * @param {string} mode — если 'open', меню будет загружено с раскрытыми спойлерами, если '' — с закрытыми
+ *
+ * Входные параметры передаются в функцию switchMenuStateReg, которая запускается по нажатии кнопки сворачивающей спойлеры
+ * Кнопка будет выполнять действия, зависящие от параметров в getGradMenu:
+ * так, кнопка будет разворачивать спойлеры, если меню было загружено со свернутыми спойлерами и наоборот
+ * Загружать меню кнопка будет в элемент, который был передан в её метод (switchMenuStateReg)
+ * Менюшек несколько, соответственно кнопок тоже, но все они используют одни и те же методы, при этом работают с разными элементами
+ * Для функции getTextByMode по параметру mode выбирается, какая надпись будет на кнопке, сворачивающей спойлеры
+ * @param {string} id — id элемента, в который будет загружено меню, этот id передается в параметры кнопки, сам метод этот id не использует
+ */
+function getRegMenu(mode, id) {
     return '' +
-        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuState() value=' + getTextByMode(mode) + '></span>' +
-        // '<span  id="title" style="display:inline-block; width: 100%; text-align: justify">Регулировка <input style="margin: 2px" id="switchButton" type="button" onclick="switchMenuState()" value=' + title + '></span>' +
+        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -250,9 +193,9 @@ function getRegMenu(mode) {
         '    </summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +
-        '        <li><a href="../bdkn/6102_new.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">6102. Настройка <i>-n</i> детектора<span class="under_construction">В работе</span></a></li>' +
-        '        <li><a href="../bdkn/bdkn-01.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Проверка плат БДКН-01 / 04<span class="under_construction">В работе</span></a></li>' +
-        '        <li><a href="../bdkn/bdkn_01_03.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">БДКН-01 / БДКН-03<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../bdkn/6102_new.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">6102. Настройка <i>-n</i> детектора<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../bdkn/bdkn-01.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Проверка плат БДКН-01 / 04<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../bdkn/bdkn_01_03.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БДКН-01 / БДКН-03<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../bdkn/bdkn-01_03_plat.html">БДКН-01 / БДКН-03. Проверка плат</a></li>' +
         '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
@@ -267,16 +210,16 @@ function getRegMenu(mode) {
         '    <ul>' +
         '        <li><a href="../11xx/1103_new.html">ДКР-АТ1103М</a>' +
         '        <li><a href="../1103/1103.html">ДКР-АТ1103М (старый вариант)</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
-        // '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
-        // '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
-        // '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
-        // '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
-        // '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
+        '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
+        '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
+        '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
+        '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
+        '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
+        '                </ul>' +
+        '            </div>' +
         '        </li>' +
         '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a>' +
         '            <div>' +
@@ -332,7 +275,7 @@ function getRegMenu(mode) {
         '       <summary>' +
         '       <span>БОИ</span>' +
         '   </summary>' +
-        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
+        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
         '               <li><a href="../boi/boi.html">Преобразователь напряжения</a></li>' +
         '       </details>' +
         '       <details ' + mode + '>' +
@@ -405,11 +348,20 @@ function getRegMenu(mode) {
         '</details>';
 }
 
-//Меню для градуировки
-function getGradMenu(mode) {
+/**Загружает HTML код меню для Градуировки
+ * @param {string} mode — если 'open', меню будет загружено с раскрытыми спойлерами, если '' — с закрытыми
+ *
+ * Входные параметры передаются в функцию switchMenuStateGrad, которая запускается по нажатии кнопки сворачивающей спойлеры
+ * Кнопка будет выполнять действия, зависящие от параметров в getGradMenu:
+ * так, кнопка будет разворачивать спойлеры, если меню было загружено со свернутыми спойлерами и наоборот
+ * Загружать меню кнопка будет в элемент, который был передан в её метод (switchMenuStateGrad)
+ * Менюшек несколько, соответственно кнопок тоже, но все они используют одни и те же методы, при этом работают с разными элементами
+ * Для функции getTextByMode по параметру mode выбирается, какая надпись будет на кнопке, сворачивающей спойлеры
+ * @param {string} id — id элемента, в который будет загружено меню, этот id передается в параметры кнопки, сам метод этот id не использует
+ * */
+function getGradMenu(mode, id) {
     return '' +
-        // '<span id="title">Градуировка</span>' +
-        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton2" type="button" onclick="switchMenuStateGrad()" value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +
@@ -441,7 +393,7 @@ function getGradMenu(mode) {
         '        <li><a href="../grad/1103.html">Градуировка ДКР-АТ1103M</a></li>' +
         '        <li><a href="../grad/1121.html">Градуировка ДКС-АТ1121</a></li>' +
         '        <li><a href="../grad/1123.html">Градуировка ДКС-АТ1123</a></li>' +
-        '        <li><a href="../grad/1125a.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Градуировка 1125A<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../grad/1125a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 1125A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>' +
         '<details ' + mode + '>' +
@@ -449,22 +401,27 @@ function getGradMenu(mode) {
         '        <span>Разное</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../grad/2503a.html" onmouseover="setTextColorWhite(this.lastChild)" onmouseout="setTextColorRed(this.lastChild)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../grad/2503a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>'
         ;
 }
 
+/**Загрузка кода меню в выбранный элемент (DIV)
+ * @param {string} menu_id — id элемента, в который будет загружено меню
+ * @param {string} menu_type — какой тип меню будет загружен: для градуировки (GRAD_MENU) или для регулировки (REG_MENU)
+ * @param {string} menu_state — если OPEN, меню будет загружено с раскрытыми спойлерами, если CLOSE — с закрытыми
+ */
 function includeMenu(menu_id, menu_type, menu_state) {
     let state;
     if (menu_state === OPEN) state = 'open';
     if (menu_state === CLOSE) state = '';
 
-    if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML = getRegMenu(state);
-    if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML = getGradMenu(state);
+    if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML = getRegMenu(state, menu_id);
+    if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML = getGradMenu(state, menu_id);
 }
 
-//----------------------------------------------------------------------------------------------------------------------
+/**Показывает/скрывает всплывающее меню по нажатии зеленой кнопки "Меню"*/
 function show_menu(){
     let x = document.getElementById("menu");
     if (x.style.display === "") {
