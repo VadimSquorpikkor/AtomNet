@@ -83,9 +83,6 @@ th {
     height: 80px;
     margin: 0;
     margin-bottom: 10px;
-
-
-
 }
 
 .version_label {
@@ -131,6 +128,12 @@ th {
     padding-left: 30px;
     box-shadow: none;
     margin-left: 10px;
+}
+
+/*После добавления .menu_and_main_div (в котором есть visibility: hidden), все вложенные элементы тоже стали
+  не видны (каскадность). Чтобы вернуть видимость для вложенных элементов и был добавлен этот стиль*/
+.main_div, .header_div_2, .left_side_menu, .logo_div, .index_menu_div, .yellow_back_index_right, .blue_back_index_right {
+    visibility: visible;
 }
 
 .main_div{
@@ -394,11 +397,9 @@ img {
 /*---------------------------------------*/
 /*endregion*/
 
-body {
-    /*background-color: antiquewhite;*/
-}
 
-.main_div {
+/*.main_div {*/ /*todo выбрать правильный селектор*/
+body>div>div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
@@ -448,14 +449,14 @@ summary {
     border-radius: 8px;
 }
 
-.main_div>ul>li>div {
+/*.main_div>ul>li>div {
 
     text-indent: 0;
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 10px 15px 10px;
     margin: 5px 10px 10px;
     border-radius: 20px 0 20px 0;
-}
+}*/
 
 .orange_link {
     background-color: darkorange;
@@ -1095,8 +1096,13 @@ figcaption {
 .menu_and_main_div {
     max-width: 1700px;
     margin: auto;
+    visibility: hidden;
 }
 
 body {
-    /*background: ;*/
+    /*background-image: url("main_bg.jpg");*/
+    /*background: #ddd url("bg_main_transp_dark.png");*/
+    /*background: #444 url("bg_main_transp_dark.png");*/
+    background: #888 url("bg_main_transp.png");
+    /*background: #ccc url("bg_main_transp.png");*/
 }
