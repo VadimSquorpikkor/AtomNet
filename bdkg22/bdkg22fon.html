@@ -13,6 +13,8 @@
 
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
+<div class="menu_and_main_div">
+
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
            id="menu_button">
@@ -90,7 +92,7 @@
             ним закончена
         </li>
     </ul>
-    Если показания отличаютя от необходимых, следует скорректировать коэффициенты. Для этого:
+    Если показания отличаются от необходимых, следует скорректировать коэффициенты. Для этого:
     <ul>
         <li>Для разблокировки кнопок управления &mdash; еще раз набрать слово <span class="attention">serial</span></li>
         <li>Если программа считывает показания с БД (т.е. уже была нажата кнопка "Старт"), нажать "Стоп"</li>
@@ -128,19 +130,19 @@
             Скорость счета <input id="a" type="text" value="0.5" title="s_sch"><br>
             Мощность дозы <input id="b" type="text" value="100" title="m_d"><br>
             К1 ("Коэф.чувств. диап 0") <input id="c" type="text" value="100" title="k1"><br>
-            <input type="button" value="Расчитать" onclick="get_k()"><br>
-            Коэфффициент: <input id="result" type="text" title="res"><br>
+            <input type="button" value="Рассчитать" onclick="get_k()"><br>
+            Коэффициент: <input id="result" type="text" title="res"><br>
         </form>
     </div>
 
     <br>или <a href="../docs/BDKG22_koef.exe">программкой</a>
     <br>или <a href="../docs/bdkg22/Расчет%20коэфф.xlsx">Excel файлом</a>, где:
     Count - "Скорость счета", МД - желаемое значение мощности дозы (100), К1 - значение "Коэф.чувств. диап 0".
-    В поле "Расч.Знач. К0" выводится расчитанное значение коэффициента &mdash; "Коэф.собст.фона диап 0"<br><br>
+    В поле "Расч.Знач. К0" выводится рассчитанное значение коэффициента &mdash; "Коэф.собст.фона диап 0"<br><br>
 
 
 </div>
 
-
+</div>
 </body>
 </html>

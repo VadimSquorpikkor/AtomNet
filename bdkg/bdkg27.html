@@ -20,6 +20,8 @@
 
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
+<div class="menu_and_main_div">
+
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
            id="menu_button">
@@ -55,7 +57,7 @@
         <img src="../imgs/bdkg27/03.jpg" width="600">
 
         <li><span class="attention">ПОКАЗАНИЯ БРАТЬ НЕ С БУ, А С МУЛЬТИМЕТРА, ТОЧНЕЕ БУДЕТ</span></li>
-        <li>Рассчет вести можно прямо на странице, а можно воспользоваться
+        <li>Расчет вести можно прямо на странице, а можно воспользоваться
             <a href="../docs/bdkg27/bdkg-27.ods">расчетом в excel</a>, как удобнее
         </li>
         <li>Подключиться к блоку обмена БДКГ-27 с помощью SARKtech</li>
@@ -69,7 +71,7 @@
 
     <form class="green_back">
         <input id="u_7sv" type="text" value="4" title="" onchange="calc_bdkg27()">
-        <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+        <input type="button" value="Рассчитать" onclick="calc_bdkg27()">
     </form>
 
     <ul>
@@ -174,11 +176,11 @@
     <hr>
 
     <ul>
-        <li>Все данные по точкам получены, нажать <input type="button" value="Расчитать" onclick="calc_bdkg27()"></li>
+        <li>Все данные по точкам получены, нажать <input type="button" value="Рассчитать" onclick="calc_bdkg27()"></li>
     </ul>
 
 <!--    <form class="green_back">
-        <input type="button" value="Расчитать" onclick="calc_bdkg27()">
+        <input type="button" value="Рассчитать" onclick="calc_bdkg27()">
     </form>-->
 
 
@@ -221,19 +223,19 @@
 
     </table>
     <ul>
-        <li>Расчитанную таблицу скопипастить в протокол поверки</li>
-        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму. Нажать "Расчитать".
+        <li>Рассчитанную таблицу скопипастить в протокол поверки</li>
+        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму. Нажать "Рассчитать".
     </ul>
     <form class="green_back">
         <input id="g1" type="text" value="0.07" title=""><br>
         <input id="g2" type="text" value="0.7" title=""><br>
         <input id="g3" type="text" value="7" title=""><br>
         <input id="g4" type="text" value="10" title=""><br>
-        <input type="button" value="Расчитать" onclick="calc_bdkg27_pogr()">
+        <input type="button" value="Рассчитать" onclick="calc_bdkg27_pogr()">
     </form>
 
     <ul>
-        <li>Расчитанную таблицу тоже скопипастить в протокол поверки (в протоколе поверки 2-е таблицы для расчета)</li>
+        <li>Рассчитанную таблицу тоже скопипастить в протокол поверки (в протоколе поверки 2-е таблицы для расчета)</li>
     </ul>
 
     <table id="table2" style="max-width: 500px; margin: 5px auto">
@@ -270,7 +272,7 @@
     </table>
 
     <div class="tips_and_tricks">Чтобы вставить скопированную таблицу, нужно в свободном месте документа OpenOffice Writer нажать Ctrl+Shift+V, а в появившемся
-        меню выбрать "Формат HTML без коментариев".
+        меню выбрать "Формат HTML без комментариев".
 
         <img src="../imgs/bdkg27/04.jpg" width="632">
 
@@ -278,12 +280,12 @@
 
     <ul class="attention">
         <li>В протоколе номером является номер ионизационной камеры, на неё же клеится поверочная наклейка!!!</li>
-        <!--<li>Данные для другой таблицы протокола поверки беруться из журнала градуировки.
+        <!--<li>Данные для другой таблицы протокола поверки берутся из журнала градуировки.
             Рассчитать погрешности через файл Excel
         </li>-->
     </ul>
 
 </div>
-
+</div>
 </body>
 </html>

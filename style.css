@@ -68,6 +68,13 @@ th {
 
 
 .logo_div {
+    /*todo эти стили актуальны, пока на главной странице нет .main_div с вложенными в него .blue_back_index_right и .yellow_back_index_right, так эта часть стиля скопирована из .main_div*/
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 30px 15px 20px;
+    /*margin: 10px auto 20px;*/
+    border-radius: 10px;
+
+
     /*background-image: url("imgs/lava.jpg");*/
     background: #333333;
     background-image: url("logo2.png");
@@ -76,6 +83,9 @@ th {
     height: 80px;
     margin: 0;
     margin-bottom: 10px;
+
+
+
 }
 
 .version_label {
@@ -137,7 +147,7 @@ th {
     background-size: 200px;*/
 }
 
-body>div>ul>li, body>div>ol>li {
+.main_div>ul>li, .main_div>ol>li {
     margin-bottom: 5px;
 }
 
@@ -388,7 +398,7 @@ body {
     /*background-color: antiquewhite;*/
 }
 
-body > div {
+.main_div {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 30px 15px 20px;
     margin: 10px auto 20px;
@@ -438,7 +448,7 @@ summary {
     border-radius: 8px;
 }
 
-body>div>ul>li>div {
+.main_div>ul>li>div {
 
     text-indent: 0;
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
@@ -502,14 +512,21 @@ p {
 }
 
 .blue_back_index_right, .yellow_back_index_right {
+    /*todo эти стили актуальны, пока на главной странице нет .main_div с вложенными в него .blue_back_index_right и .yellow_back_index_right, так эта часть стиля скопирована из .main_div*/
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 30px 15px 20px;
+    /*margin: 10px auto 20px;*/
+    border-radius: 10px;
+    /*********************************************/
+
     margin: 5px;
     font-size: 14px;
     background-color: antiquewhite;
     align-self: center;
     text-align: center;
-    padding: 10px;
+    /*padding: 10px;*/
     text-indent: 0;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
 }
 
 .blue_back_index_right {
@@ -767,7 +784,7 @@ summary div ul {
     border-radius: 25px;
 }
 
-body > div > .left_align {
+.main_div > .left_align {
     /*box-shadow: none;*/
     text-align: left;
     font-size: smaller;
@@ -1073,4 +1090,13 @@ figcaption {
 /**В JS этот стиль добавляется к стилю кнопки, если страница прокручена вниз больше, чем на высоту экрана*/
 .to_page_top-show {
     display: block;
+}
+
+.menu_and_main_div {
+    max-width: 1700px;
+    margin: auto;
+}
+
+body {
+    /*background: ;*/
 }

@@ -55,7 +55,7 @@ function switchMenuStateGrad(state, id) {
  */
 function getRegMenu(mode, id) {
     return '' +
-        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin-bottom: 3px" id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -363,7 +363,7 @@ function getRegMenu(mode, id) {
  * */
 function getGradMenu(mode, id) {
     return '' +
-        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin: 2px" id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin-bottom: 3px" id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +

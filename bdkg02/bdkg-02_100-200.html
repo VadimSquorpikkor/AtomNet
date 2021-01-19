@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>100 &rarr; 200 вольт</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -13,63 +14,69 @@
 
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+<div class="menu_and_main_div">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="bdkg02.html">БДКГ-02 </a>
-    <a href="">100 &rarr; 200 вольт</a>
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
+        <a href="../menu/index.html">Главная</a>
+        <a href="bdkg02.html">БДКГ-02 </a>
+        <a href="">100 &rarr; 200 вольт</a>
 
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
+    </div>
 
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
 
-
-<div class="main_div">
-
-    <h1>БДКГ-02. Поменять напряжение 100 &rarr; 200 вольт</h1>
-
-    <p>Если блок не прошел линейку по точкам, как вариант, можно попробовать поменять напряжение с 200 В на 100 В.
-        С другой стороны, старые (ремонтные) БД работали на 100 В, поэтому, если такой блок не прошел линейку,
-        можно попробовать поменять напряжение со 100 В на 200 В. Вообще статистика показывает, что чаще хорошо проходят
-        линейку блоки с 200 вольтами, поэтому применение такого напряжения более оправдано.</p>
-    <p>Так как исполнений плат было
-        несколько, соответственно существует несколько методов доработки:</p>
-
-    <ol>
-        <li>Новые платы, самый простой вариант: напряжение регулируется установкой нулевого резистора на соответствующие
-            контактные площадки, 200 В &mdash; R2, 100 В &mdash; R3:
-        </li>
-        <img src="../imgs/bdkg02/100200/1.jpg" width="700">
-        <li>Старый вариант, самый неудобный: нужно перерезать дорожку (ремонтные БД чаще всего будут приходить с уже
-            перерезанной дорожкой) и запаять провод от 11-ой ноги до нужного диода (см. рисунок):
-        </li>
-        <img src="../imgs/bdkg02/100200/4.jpg" width="700">
-
-        <li>Промежуточный вариант: аналогичен второму варианту, но уже не нужно перерезать дорожку, для 100 В нужно
-            отпаять нулевой диод и запаять провод от 11-ой ноги до соответствующего диода. На 200 В резистор оставить на
-            месте, никаких проводов запаивать не нужно:
-        </li>
-        <figure>
-            <img src="../imgs/bdkg02/100200/3.jpg" width="700">
-            <figcaption>Рисунок 1. Здесь 200 вольт</figcaption>
-        </figure>
-        <figure>
-            <img src="../imgs/bdkg02/100200/2.jpg" width="700">
-            <figcaption>Рисунок 2. А здесь 100 вольт</figcaption>
-        </figure>
-    </ol>
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
 
 
+    <div class="main_div">
+
+        <h1>БДКГ-02. Поменять напряжение 100 &rarr; 200 вольт</h1>
+
+        <p>Если блок не прошел линейку по точкам, как вариант, можно попробовать поменять напряжение с 200 В на 100 В.
+            С другой стороны, старые (ремонтные) БД работали на 100 В, поэтому, если такой блок не прошел линейку,
+            можно попробовать поменять напряжение со 100 В на 200 В. Вообще статистика показывает, что чаще хорошо
+            проходят
+            линейку блоки с 200 вольтами, поэтому применение такого напряжения более оправдано.</p>
+        <p>Так как исполнений плат было
+            несколько, соответственно существует несколько методов доработки:</p>
+
+        <ol>
+            <li>Новые платы, самый простой вариант: напряжение регулируется установкой нулевого резистора на
+                соответствующие
+                контактные площадки, 200 В &mdash; R2, 100 В &mdash; R3:
+            </li>
+            <img src="../imgs/bdkg02/100200/1.jpg" width="700">
+            <li>Старый вариант, самый неудобный: нужно перерезать дорожку (ремонтные БД чаще всего будут приходить с уже
+                перерезанной дорожкой) и запаять провод от 11-ой ноги до нужного диода (см. рисунок):
+            </li>
+            <img src="../imgs/bdkg02/100200/4.jpg" width="700">
+
+            <li>Промежуточный вариант: аналогичен второму варианту, но уже не нужно перерезать дорожку, для 100 В нужно
+                отпаять нулевой диод и запаять провод от 11-ой ноги до соответствующего диода. На 200 В резистор
+                оставить на
+                месте, никаких проводов запаивать не нужно:
+            </li>
+            <figure>
+                <img src="../imgs/bdkg02/100200/3.jpg" width="700">
+                <figcaption>Рисунок 1. Здесь 200 вольт</figcaption>
+            </figure>
+            <figure>
+                <img src="../imgs/bdkg02/100200/2.jpg" width="700">
+                <figcaption>Рисунок 2. А здесь 100 вольт</figcaption>
+            </figure>
+        </ol>
+
+
+    </div>
 </div>
 </body>
 </html>

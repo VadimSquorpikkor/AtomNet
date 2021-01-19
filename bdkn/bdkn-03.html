@@ -14,6 +14,8 @@
 
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
+<div class="menu_and_main_div">
+
 <div class="header_div_2">
     <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
            id="menu_button">
@@ -42,14 +44,14 @@
         <li>Изначально прошита от БДКН-1, надо прошить на БДКН-3</li>
         <li>Припаять ножку pls разъема к точке КТ1</li>
         <img src="../imgs/bdkn-03_2/kt1.jpg" width="700">
-        <li>Подключить вход ацп к припаяному разъему PLS (КТ1), подключить бдкн через разъем ODU к БОИ (требуется
+        <li>Подключить вход ацп к припаянному разъему PLS (КТ1), подключить БДКН через разъем ODU к БОИ (требуется
             именно батарейное питание, при запитывании от USB-COM проникает оч сильная помеха)
         </li>
         <img src="../imgs/bdkn-03_2/acp.jpg" width="700">
         <li>Экран установить на БД</li>
         <li>Устанавливаем источник</li>
         <img src="../imgs/bdkn-03_2/source.jpg" width="700">
-        <li>Включаем БОИ , запускаем ATAS, спектр долчен быть как на рисунке
+        <li>Включаем БОИ , запускаем ATAS, спектр должен быть как на рисунке
             (259 канал +5%-3% т.е. диапазон 255-270канал)
             <img src="../imgs/bdkn-03_2/spectr_atas.jpg" width="900">
             если канал не соответствует &mdash; регулируем усиление подбором резистором R36, R37
@@ -57,12 +59,12 @@
         </li>
 
         <form class="yellow_back" style="max-width: 800px; margin: auto">
-            <i>Проверяем номиналы запаяных резисторов, если отличаются от табличных, меняем табличные
+            <i>Проверяем номиналы запаянных резисторов, если отличаются от табличных, меняем табличные
                 значения</i><br><br>
             R37: <input id="r_37" type="text" value="560" title="res">
             R36: <input id="r_36" type="text" value="3900" title="res"><br><br>
             Номер канала: <input id="channel" type="text" value="259" title="ch">
-            <input type="button" value="Расчитать" onclick="resistor_bdkn_03()"><br>
+            <input type="button" value="Рассчитать" onclick="resistor_bdkn_03()"><br>
             <hr color="#FFF">
             <img src="../imgs/attention.png" width="100" style="float: left; margin: 20px">
             <div style="text-indent: 0; background-color: transparent">
@@ -79,7 +81,7 @@
         <li>Записываем серийный номер при помощи Background calibration</li>
         <li>Проверяем фон- подключаем к бои , ставим вдали от источников, за час должен набрать не более 40нЗ при 5%
         </li>
-        <li>Клеиим малярку на торец, пишем номер прибора, канал, фон (прошел-нет)</li>
+        <li>Клеим малярку на торец, пишем номер прибора, канал, фон (прошел-нет)</li>
         <li>Отдаем на заливку Ване</li>
         <li>Берем экраны у Юры Мороз и несем на монтаж и корпуса</li>
         <li>После установки корпуса проверяем фон - подключаем к бои , ставим вдали от источников, за час должен
@@ -90,6 +92,6 @@
 
 
 </div>
-
+</div>
 </body>
 </html>
