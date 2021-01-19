@@ -4,6 +4,8 @@ const REG_MENU = "reg_menu";
 const GRAD_MENU = "grad_menu";
 const COLOR_WHITE = "white";
 const COLOR_RED = "#ff3333";
+const СВЕРНУТЬ = "Свернуть"
+const РАЗВЕРНУТЬ = "Развернуть"
 
 /**Установить цвет выбранного элемента
  * @param {*} element
@@ -16,8 +18,8 @@ function setTextColor(element, color) {
 /**Установить надпись на кнопке, в зависимости от параметра
  * @param {string} mode_state*/
 function getTextByMode(mode_state) {
-    if (mode_state==='open') return "Свернуть";
-    if (mode_state==='') return "Развернуть";
+    if (mode_state==='open') return СВЕРНУТЬ;
+    if (mode_state==='') return РАЗВЕРНУТЬ;
 }
 
 /**Разворачивание/сворачивание спойлеров в меню для "Регулировки"
@@ -433,4 +435,32 @@ function show_menu(){
     else {
         x.style.display = "none";
     }
+}
+
+function trackScroll() {
+    'use strict';
+
+    function trackScroll() {
+        let scrolled = window.pageYOffset;
+        let coords = document.documentElement.clientHeight;
+
+        if (scrolled > coords) {
+            goTopBtn.classList.add('to_page_top-show');
+        }
+        if (scrolled < coords) {
+            goTopBtn.classList.remove('to_page_top-show');
+        }
+    }
+
+    function backToTop() {
+        if (window.pageYOffset > 0) {
+            window.scrollBy(0, -80);
+            setTimeout(backToTop, 0);
+        }
+    }
+
+    let goTopBtn = document.querySelector('.to_page_top');
+
+    window.addEventListener('scroll', trackScroll);
+    goTopBtn.addEventListener('click', backToTop);
 }
