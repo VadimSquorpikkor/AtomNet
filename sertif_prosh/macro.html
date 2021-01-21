@@ -6,6 +6,7 @@
     <title>Как установить макрос для протоколов и сертификатов</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../SqrLibrary.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script>window.addEventListener('scroll', trackScroll)</script>
 </head>
@@ -16,207 +17,230 @@
 
 <div class="menu_and_main_div">
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="">Как установить макрос для протоколов и сертификатов</a>
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Как установить макрос для протоколов и сертификатов</a>
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
-
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
-
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
-
-
-<div class="main_div">
-
-    <h1>Макрос для протоколов и сертификатов<br>3.06</h1>
-
-    <img src="../imgs/macro/main.jpg" width="754">
-
-    <div class="left_align">
-        <a href="macro_version.html">Что нового?</a><br>
-        <a href="../docs/AtomtexLibrary.zip">Архив с макросом</a><br>
-        <a href="#new">Как установить макрос</a><br>
-        <a href="#update">Как обновить макрос</a>
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
     </div>
 
-    <div class="nice_details">
-        <details>
-            <summary>Картинки</summary>
-            <img src="../imgs/macro/allBD2.jpg" width="1000">
-        </details>
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
     </div>
 
-    <div class="yellow_back">
-        <h3>Список устройств доступных в макросе</h3>
-        <ul>
-            <li>В составе 1117М &mdash; протокол поверки, протокол проверки, сертификат:
-                БДКГ-01, БДКГ-03, БДКГ-04, БДКГ-05, БДКГ-11, БДКГ-17, БДКГ-24, БДКГ-30, БДКГ-32, БДКН-01, БДКН-03,
-                БДПА-01, БДПА-02, БДПБ-01, БДПБ-02, БОИ, БОИ-2, БОИ-4, БОИ-1 (с СБМ), БОИ-2 (с СБМ), БДКР-01,
-                БДПС-02, БДПА-03, БДПБ-03, БДКН-05
-            </li>
-            <li>БДКГ-02</li>
-            <li>БДКГ-204</li>
-            <li>БДМГ-2343 (только протокол поверки)</li>
-            <li>Портальный монитор &mdash; -11/1, -19, -35, БДРМ-05 (только протокол поверки)</li>
-            <li>МРП-АТ920, 920В, 920Р &mdash; -11/1, -19, -35 (только протокол поверки)</li>
-            <li>БДКГ-22, БДКГ-23, БДКГ-23/1</li>
-            <li>БДКГ-224</li>
-            <li>АТ1103М, АТ1121, АТ1123</li>
-            <li>АТ6130, АТ6130А, АТ6130С, АТ6130Д</li>
-            <li>АТ1125 / АТ1125А</li>
-            <li>БДКН-02 / БДКН-04 / БДКН-05</li>
-            <li>БДКГ-11/1 для СРК (протокол поверки, протокол проверки, сертификат)</li>
-            <li>ДКГ-АТ2503, ДКГ-АТ2503А, ДКГ-АТ2503B, ДКГ-АТ2503B/1, ДКГ-АТ2503B/2 (протокол поверки, протокол проверки, сертификат)</li>
-            <li>ДКГ-АТ3509, ДКГ-АТ3509А, ДКГ-АТ3509В, ДКГ-АТ3509С (протокол поверки, протокол проверки, сертификат)</li>
-            <li>БДКГ-25 (протокол поверки, протокол проверки, сертификат)</li>
-            <li>АТ2140 (протокол поверки, протокол проверки)</li>
-        </ul>
-        <a href="macro_version.html">Список изменений</a>
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>Макрос для протоколов и сертификатов<br>3.09</h1>
+
+        <img src="../imgs/macro/main.jpg" width="754">
+
+        <div class="tips_and_tricks">
+            Как правило новые версии появляются гораздо раньше на FileServer, поэтому самую свежую версию лучше брать
+            там
+            (FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов/)
+        </div>
+
+        <div class="left_align">
+            <a href="macro_version.html">Что нового?</a><br>
+            <a href="../docs/AtomtexLibrary.zip">Архив с макросом</a><br>
+            <a href="#new" onclick="openDetails('new')">Как установить макрос</a><br>
+            <a href="#update" onclick="openDetails('update')">Как обновить макрос</a>
+        </div>
+
+        <div class="nice_details">
+            <details>
+                <summary>Картинки</summary>
+                <img src="../imgs/macro/allBD2.jpg" width="1000">
+            </details>
+        </div>
+
+        <div class="yellow_back">
+            <h3>Список устройств доступных в макросе</h3>
+            <ul>
+                <li>В составе 1117М &mdash; протокол поверки, протокол проверки, сертификат:
+                    БДКГ-01, БДКГ-03, БДКГ-04, БДКГ-05, БДКГ-11, БДКГ-17, БДКГ-24, БДКГ-30, БДКГ-32, БДКН-01, БДКН-03,
+                    БДПА-01, БДПА-02, БДПБ-01, БДПБ-02, БОИ, БОИ-2, БОИ-4, БОИ-1 (с СБМ), БОИ-2 (с СБМ), БДКР-01,
+                    БДПС-02, БДПА-03, БДПБ-03, БДКН-05
+                </li>
+                <li>БДКГ-02</li>
+                <li>БДКГ-204</li>
+                <li>БДМГ-2343 (только протокол поверки)</li>
+                <li>Портальный монитор &mdash; -11/1, -19, -35, БДРМ-05 (только протокол поверки)</li>
+                <li>МРП-АТ920, 920В, 920Р &mdash; -11/1, -19, -35 (только протокол поверки)</li>
+                <li>БДКГ-22, БДКГ-23, БДКГ-23/1</li>
+                <li>БДКГ-224</li>
+                <li>АТ1103М, АТ1121, АТ1123</li>
+                <li>АТ6130, АТ6130А, АТ6130С, АТ6130Д</li>
+                <li>АТ1125 / АТ1125А</li>
+                <li>БДКН-02 / БДКН-04 / БДКН-05</li>
+                <li>БДКГ-11/1 для СРК (протокол поверки, протокол проверки, сертификат)</li>
+                <li>ДКГ-АТ2503, ДКГ-АТ2503А, ДКГ-АТ2503B, ДКГ-АТ2503B/1, ДКГ-АТ2503B/2 (протокол поверки, протокол
+                    проверки, сертификат)
+                </li>
+                <li>ДКГ-АТ3509, ДКГ-АТ3509А, ДКГ-АТ3509В, ДКГ-АТ3509С (протокол поверки, протокол проверки,
+                    сертификат)
+                </li>
+                <li>БДКГ-25 (протокол поверки, протокол проверки, сертификат)</li>
+                <li>АТ2140 (протокол поверки, протокол проверки, сертификат)</li>
+            </ul>
+            <a href="macro_version.html">Список изменений</a>
+        </div>
+
+        <div class="nice_details">
+            <details id="new">
+                <summary>Как поставить себе макрос</summary>
+
+                <p>Если макрос уже стоит и его нужно просто обновить, <a href="#update" onclick="openDetails('update')">идем
+                    сюда</a>
+
+                <div class="attention_block">
+                    Макрос написан для OpenOffice, поэтому работать в MicrosoftOffice или в LibreOffice <span
+                        class="attention">НЕ БУДЕТ</span>
+                </div>
+
+                <p>Если в процессе установки будет выскакивать такое окно, не обращаем внимания, жмем "ОК" (придется
+                    нажать
+                    несколько раз подряд)
+                    <img src="../imgs/macro/16.jpg" width="450"></p>
+
+                <ul>
+                    <li>Распаковать <a href="../docs/AtomtexLibrary.zip">архив с макросом</a> в папку C:\Users\<i>Имя
+                        пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic
+                        <!--"C:/Пользователи/Общие/Общие документы"-->
+                        <img src="../imgs/macro/18.jpg" width="1000">
+                    </li>
+
+                    <li>Запустить OpenOffice Writer и в открывшемся документе нажать Alt+F11. В появившемся окне нажать
+                        "Управление"
+                        <img src="../imgs/macro/2.jpg" width="630"></li>
+
+                    <li>Выбрать вкладку "Библиотеки" и нажать "Добавить"
+                        <img src="../imgs/macro/3.jpg" width="490"></li>
+
+                    <li>Открыть папку, в которую распаковывали архив, и в папке "AtomtexLibrary" выбрать файл
+                        "script.xlb".
+                        Нажать
+                        "Открыть"
+                        <img src="../imgs/macro/19.jpg" width="743">
+                    </li>
+
+                    <li>Нажать "OK"
+                        <img src="../imgs/macro/5.jpg" width="380">
+                    </li>
+
+                    <li>Нажать "Закрыть"
+                        <img src="../imgs/macro/6.jpg" width="490">
+                    </li>
+
+                    <li>Следующее окно не закрываем, раз уж мы здесь, сделаем ярлык для запуска макроса. Для этого
+                        выбираем нашу библиотеку ("AtomtexLibrary") и раскрываем её (нажимаем маленький плюсик):
+                        <img src="../imgs/macro/7.jpg" width="630">
+                    </li>
+
+                    <li>Выбираем модуль "ModuleMain", а в нем &mdash; функцию "MainDialog_Show" (эта функция запускает
+                        главное окно
+                        макроса) и нажимаем "Назначить"
+                        <img src="../imgs/macro/9.jpg" width="630">
+                    </li>
+
+                    <li>Под ярлык макроса сделаем отдельную панель, так будет удобнее. Нажимаем "Создать"
+                        <img src="../imgs/macro/10.jpg" width="620">
+                    </li>
+
+                    <li>Как-нибудь называем (например "Атомтех") и жмем "ОК"
+                        <img src="../imgs/macro/11.jpg" width="380">
+                    </li>
+
+                    <li>Жмем "Добавить"
+                        <img src="../imgs/macro/12.jpg" width="620">
+                    </li>
+
+                    <li>Опять выбираем модуль "ModuleMain" и функцию "MainDialog_Show". Жмем "Добавить"
+                        <img src="../imgs/macro/13.jpg" width="570">
+                    </li>
+
+                    <li>Нажать "Изменить", "Добавить значок"
+                        <img src="../imgs/macro/14.jpg" width="670">
+                    </li>
+
+                    <li>Выбираем значок (если нужен значок АТОМТЕХ, жмем добавить и идем в папку с библиотекой, там
+                        где-то есть), жмем "ОК" <img src="../imgs/macro/15.jpg" width="620">
+                    </li>
+
+                    <li>Следует учитывать, что в макросе есть список пользователей макроса, поэтому если макрос
+                        попытается открыть пользователь, которого в этом списке нет, он получит вот такое сообщение:
+                        <img src="../imgs/macro/22.jpg" width="683">
+
+                        При этом пользователь может продолжить пользоваться макросом, но для этого ему каждый раз
+                        придется вводить своё имя. Чтобы добавить себя в список, обращаться к разработчику. Если по
+                        каким-то причинам нет возможности договориться с разработчиком (лень, например), можно добавить
+                        себя самому (но при следующем обновлении данные придется вводить опять). Для этого:
+                    </li>
+
+
+                    <li>На окне программы OpenOffice Writer жмем Alt+F11. Выбираем модуль "ModuleMain",
+                        а в нем &mdash; функцию "MainDialog_Show" (уже такое было) и нажимаем "Редактировать"
+                        <img src="../imgs/macro/20.jpg" width="630">
+                    </li>
+
+                    <li>Видим окно кода макроса, почти в самом верху находим код, как на картинке, и добавляем своё имя
+                        пользователя по аналогии (добавить строчку <span class="yellow_back_small">users.add(<i>"Имя_пользователя"</i>)</span>
+                        ). Жмякаем "Сохранить". <img src="../imgs/macro/23.jpg" width="774">
+                    </li>
+
+                    <li>Готово! Макрос установлен и работает
+                        <img src="../imgs/macro/17.jpg" width="360">
+                    </li>
+
+                </ul>
+
+                <div class="tips_and_tricks">Если не получается, а всё это описание вызывает тоску и уныние, зовем
+                    Вадима Серикова, он все сделает (недорого)
+                </div>
+
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="update">
+                <summary>Как обновить уже установленный макрос</summary>
+
+                <ul>
+                    <h3>Способ 1 (Проще):</h3>
+                    <li>Открыть папку \\Fileserver\Manufacture\Uchastok.RIR\База настроек\Instruction\_Макрос для
+                        протоколов
+                    </li>
+                    <li>Скопировать папку "AtomtexLibrary"</li>
+                    <li>Перейти по ссылке со своим именем</li>
+                    <li>Удалить папку "AtomtexLibrary"</li>
+                    <li>Ctrl+V</li>
+
+                    <h3>Способ 2 (Сложнее):</h3>
+                    <li>Открыть папку C:\Users\<i>Имя пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic\</li>
+                    <li>Удалить папку "AtomtexLibrary"</li>
+                    <li>В папке C:\Users\<i>Имя пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic\ распаковать <a
+                            href="../docs/AtomtexLibrary.zip">Архив с макросом</a><br></li>
+
+                </ul>
+
+                <img src="../imgs/macro/24.jpg" width=923>
+
+                <div class="tips_and_tricks">
+                    Как правило новые версии появляются гораздо раньше на FileServer, поэтому первый способ
+                    предпочтительнее
+                </div>
+
+            </details>
+        </div>
     </div>
-
-    <h1 id="new">Как поставить себе макрос</h1>
-
-    <p>Если макрос уже стоит и его нужно просто обновить, <a href="#update">идем сюда</a>
-
-    <div class="attention_block">
-        Макрос написан для OpenOffice, поэтому работать в MicrosoftOffice или в LibreOffice <span
-            class="attention">НЕ БУДЕТ</span>
-    </div>
-
-    <p>Если в процессе установки будет выскакивать такое окно, не обращаем внимания, жмем "ОК" (придется нажать
-        несколько раз подряд)
-        <img src="../imgs/macro/16.jpg" width="450"></p>
-
-    <ul>
-        <li>Распаковать <a href="../docs/AtomtexLibrary.zip">архив с макросом</a> в папку C:\Users\<i>Имя
-            пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic<!--"C:/Пользователи/Общие/Общие документы"-->
-            <img src="../imgs/macro/18.jpg" width="1000">
-        </li>
-
-        <li>Запустить OpenOffice Writer и в открывшемся документе нажать Alt+F11. В появившемся окне нажать "Управление"
-            <img src="../imgs/macro/2.jpg" width="630"></li>
-
-        <li>Выбрать вкладку "Библиотеки" и нажать "Добавить"
-            <img src="../imgs/macro/3.jpg" width="490"></li>
-
-        <li>Открыть папку, в которую распаковывали архив, и в папке "AtomtexLibrary" выбрать файл "script.xlb". Нажать
-            "Открыть"
-            <img src="../imgs/macro/19.jpg" width="743">
-        </li>
-
-        <li>Нажать "OK"
-            <img src="../imgs/macro/5.jpg" width="380">
-        </li>
-
-        <li>Нажать "Закрыть"
-            <img src="../imgs/macro/6.jpg" width="490">
-        </li>
-
-        <li>Следующее окно не закрываем, раз уж мы здесь, сделаем ярлык для запуска макроса. Для этого выбираем нашу
-            библиотеку
-            ("AtomtexLibrary") и раскрываем её (нажимаем маленький плюсик):
-            <img src="../imgs/macro/7.jpg" width="630">
-        </li>
-
-        <li>Выбираем модуль "ModuleMain", а в нем &mdash; функцию "MainDialog_Show" (эта функция запускает главное окно
-            макроса) и нажимаем "Назначить"
-            <img src="../imgs/macro/9.jpg" width="630">
-        </li>
-
-        <li>Под ярлык макроса сделаем отдельную панель, так будет удобнее. Нажимаем "Создать"
-            <img src="../imgs/macro/10.jpg" width="620">
-        </li>
-
-        <li>Как-нибудь называем (например "Атомтех") и жмем "ОК"
-            <img src="../imgs/macro/11.jpg" width="380">
-        </li>
-
-        <li>Жмем "Добавить"
-            <img src="../imgs/macro/12.jpg" width="620">
-        </li>
-
-        <li>Опять выбираем модуль "ModuleMain" и функцию "MainDialog_Show". Жмем "Добавить"
-            <img src="../imgs/macro/13.jpg" width="570">
-        </li>
-
-        <li>Нажать "Изменить", "Добавить значок"
-            <img src="../imgs/macro/14.jpg" width="670">
-        </li>
-
-        <li>Выбираем значок (если нужен значок АТОМТЕХ, жмем добавить и идем в папку с библиотекой, там где-то есть),
-            жмем "ОК"
-            <img src="../imgs/macro/15.jpg" width="620">
-        </li>
-
-        <li>Следует учитывать, что в макросе есть список пользователей макроса, поэтому если макрос попытается открыть
-            пользователь, которого в этом списке нет, он получит вот такое сообщение:
-            <img src="../imgs/macro/22.jpg" width="683">
-
-            При этом пользователь может продолжить пользоваться макросом, но для этого ему каждый раз придется вводить
-            своё имя. Чтобы добавить себя в список, обращаться к разработчику. Если по каким-то причинам нет возможности
-            договориться с разработчиком (лень, например), можно добавить себя самому (но при следующем обновлении
-            данные придется вводить опять). Для этого:
-        </li>
-
-
-        <li>На окне программы OpenOffice Writer жмем Alt+F11. Выбираем модуль "ModuleMain",
-            а в нем &mdash; функцию "MainDialog_Show" (уже такое было) и нажимаем "Редактировать"
-            <img src="../imgs/macro/20.jpg" width="630">
-        </li>
-
-        <li>Видим окно кода макроса, почти в самом верху находим код, как на картинке, и добавляем своё имя пользователя
-            по аналогии (добавить строчку <span class="yellow_back_small">users.add(<i>"Имя_пользователя"</i>)</span> ).
-            Жмякаем "Сохранить".
-            <img src="../imgs/macro/23.jpg" width="774">
-        </li>
-
-        <li>Готово! Макрос установлен и работает
-            <img src="../imgs/macro/17.jpg" width="360">
-        </li>
-
-    </ul>
-
-    <div class="tips_and_tricks">Если не получается, а всё это описание вызывает тоску и уныние, зовем Вадима Серикова,
-        он все сделает (недорого)
-    </div>
-
-    <h1 id="update">Как обновить уже установленный макрос</h1>
-
-    <ul>
-        <h3>Способ 1 (Проще):</h3>
-        <li>Открыть папку \\Fileserver\Manufacture\Uchastok.RIR\База настроек\Instruction\_Макрос для
-            протоколов
-        </li>
-        <li>Скопировать папку "AtomtexLibrary"</li>
-        <li>Перейти по ссылке со своим именем</li>
-        <li>Удалить папку "AtomtexLibrary"</li>
-        <li>Ctrl+V</li>
-
-        <h3>Способ 2 (Сложнее):</h3>
-        <li>Открыть папку C:\Users\<i>Имя пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic\</li>
-        <li>Удалить папку "AtomtexLibrary"</li>
-        <li>В папке C:\Users\<i>Имя пользователя</i>\AppData\Roaming\OpenOffice\4\user\basic\ распаковать <a
-                href="../docs/AtomtexLibrary.zip">Архив с макросом</a><br></li>
-
-    </ul>
-
-    <img src="../imgs/macro/24.jpg" width=923>
-
-    <div class="tips_and_tricks">
-        Как правило новые версии появляются гораздо раньше на FileServer, поэтому первый способ предпочтительнее
-    </div>
-
-</div>
 </div>
 </body>
 </html>

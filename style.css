@@ -1,4 +1,9 @@
 
+/*todo box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.33), inset 0 0 6px 3px rgba(0, 0, 0, 0.25); /*смещение по X, смещение по Y, размытие, размер (0 - как у самого объекта)*/
+
+/*todo чтобы закрыть все region: Ctrl+Shift+Num-*/
+/*todo чтобы открыть все region: Ctrl+Shift+Num+*/
+
 /*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -477,10 +482,11 @@ body {
 }
 
 .like_a_button {
-    border-style: double;
     font-size: 15px;
-    background-color: white;
-    padding: 2px;
+    background-color: #888888;
+    color:white;
+    padding: 3px 5px;
+    box-shadow: 3px 3px 4px 0 rgba(0, 0, 0, 0.33), inset 0 0 6px 3px rgba(0, 0, 0, 0.25); /*смещение по X, смещение по Y, размытие, размер (0 - как у самого объекта)*/
 }
 
 .space {
@@ -613,6 +619,7 @@ body {
 
 .tips_and_tricks a:hover {
     background-color: #ff5533;
+    color: #ffffff;
 }
 
 .red_back_index_right a {
@@ -622,6 +629,7 @@ body {
 
 .red_back_index_right a:hover {
     background-color: #ff5533;
+    color: white;
 }
 
 /*endregion-------------------------------------------------------------------------------------------------------------*/
@@ -720,6 +728,7 @@ a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.
 }
 
 a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
+    background-color: darkorange;
     padding-left: 25px;
     background-size: 23px;
 }

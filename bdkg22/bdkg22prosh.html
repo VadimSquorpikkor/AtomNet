@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta charset="UTF-8">
     <title>БДКГ-22/23. Прошивка</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -14,125 +15,125 @@
 
 <div class="menu_and_main_div">
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="bdkg22.html">БДКГ-22/23 </a>
-    <a href="">Прошивка</a>
+        <a href="../menu/index.html">Главная</a>
+        <a href="bdkg22.html">БДКГ-22/23 </a>
+        <a href="">Прошивка</a>
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
-
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
-
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
-
-
-<div class="main_div">
-
-    <h1>БДКГ-22/23. Прошивка</h1>
-
-    <div class="left_align">
-        <a href="bdkg22_cannot_prog.html">Если блок не подключается к Flip без видимых причин</a><br>
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
     </div>
 
-    <p>
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
 
-        <span class="attention">Если контроллер уже был прошит, подключиться к блоку для прошивки НЕ ПОЛУЧИТСЯ!
-            Для того чтобы перепрошить блок:
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
 
-            <ul class="attention">
+
+    <div class="main_div">
+
+        <h1>БДКГ-22/23. Прошивка</h1>
+
+        <div class="left_align">
+            <a href="bdkg22_cannot_prog.html">Если блок не подключается к Flip без видимых причин</a><br>
+        </div>
+
+        <div class="tips_and_tricks">
+            <span class="attention">Если контроллер уже был прошит, подключиться к блоку для прошивки НЕ ПОЛУЧИТСЯ!</span>
+            <p>
+                Для того чтобы перепрошить блок:
+
+            <ul>
                 <li>Отключить питание</li>
                 <li>Замкнуть выводы (вставить перемычку):</li>
 
-            <img src="../imgs/bdkg22/prosh/6.jpg" width="600">
+                <img src="../imgs/bdkg22/prosh/6.jpg" width="600">
 
                 <li>Подключить питание</li>
                 <li>Достать перемычку</li>
 
             </ul>
-
-        </span>
-
-    <ul>
-        <li>БДКГ-22 и 23 прошиваются специальным кабелем DB9&xrarr;Fisher с двумя линиями A/B и разъемом питания для 12В
-
-        <img src="../imgs/bdkg22/prosh/11.jpg" width="800"/>
-
-<!--
-    <p>Я подключаюсь таким адаптером:
-
-        <img src="../imgs/bdkg22/prosh/5.jpg" width="700"/>
--->
+        </div>
 
 
-        <li>Подключается к компьютеру через адаптер USB-COMi-SI-M
-            <span class="attention">с нестандартными настройками</span>
-        </li>
-        <img src="../imgs/bdkg22/prosh/5.jpg" width="800"/>
-
-        Есть три версии прошивки:
         <ul>
-            <li>bdkg22.hex &mdash; для БДКГ-22. Измерение в зивертах.</li>
-            <li>bdkg23.hex &mdash; для БДКГ-23. Измерение в греях.</li>
-            <li>bdkg23а.hex &mdash; для БДКГ-23/1 (изначально назывался БДКГ-23А). Измерение в зивертах.</li>
+            <li>БДКГ-22 и 23 прошиваются специальным кабелем DB9&xrarr;Fisher с двумя линиями A/B и разъемом питания для
+                12В
+
+                <img src="../imgs/bdkg22/prosh/11.jpg" width="800"/>
+
+            <li>Подключается к компьютеру через адаптер USB-COMi-SI-M
+                <span class="attention">с нестандартными настройками</span>
+            </li>
+            <img src="../imgs/bdkg22/prosh/5.jpg" width="800"/>
+
+            Есть три версии прошивки:
+            <ul>
+                <li>bdkg22.hex &mdash; для БДКГ-22. Измерение в зивертах.</li>
+                <li>bdkg23.hex &mdash; для БДКГ-23. Измерение в греях.</li>
+                <li>bdkg23а.hex &mdash; для БДКГ-23/1 (изначально назывался БДКГ-23А). Измерение в зивертах.</li>
+            </ul>
+
+            <li>Шить через <a href="../other/flip.html">Flip:</a></li>
+
+            <li>Наклеить наклейку с версией прошивки</li>
+
+
+            <img src="../imgs/bdkg22/prosh/3.jpg" width="800"/>
         </ul>
 
-        <li>Шить через <a href="../other/flip.html">Flip:</a></li>
+        <div class="nice_details">
+            <details>
+                <summary>Можно прошить БДКГ-22/23 не используя перемычку,
+                    а значит можно прошивать/перепрошивать блоки не разбирая их, прямо в корпусе
+                </summary>
 
-        <li>Наклеить наклейку с версией прошивки</li>
+                <img src="../imgs/bdkg22/prosh/8.jpg" width="900">
 
+                <p>Суть метода заключается в разблокировке загрузчика через Terminal</p>
+                <ul>
+                    <li>Подключиться через прошивочный кабель</li>
+                    <li>Подать питание на кабель</li>
+                    <li>Кабель к USB-COMi адаптеру подключить через переходник (<a href="../imgs/bdkg22/1.png">схема</a>)
+                    </li>
 
-        <img src="../imgs/bdkg22/prosh/3.jpg" width="800"/>
-    </ul>
+                    <img src="../imgs/bdkg22/prosh/7.jpg" width="400"/>
+                </ul>
 
-    <a class="attention">Можно прошить БДКГ-22/23 не используя перемычку,
-        а значит можно прошивать/перепрошивать блоки не разбирая их, прямо в корпусе</a>
-
-        <img src="../imgs/bdkg22/prosh/8.jpg" width="900">
-
-    <p>Суть метода заключается в разблокировке загрузчика через Terminal</p>
-    <ul>
-        <li>Подключиться через прошивочный кабель</li>
-        <li>Подать питание на кабель</li>
-        <li>Кабель к USB-COMi адаптеру подключить через переходник (<a href="../imgs/bdkg22/1.png">схема</a>)</li>
-
-        <img src="../imgs/bdkg22/prosh/7.jpg" width="400"/>
-    </ul>
-
-    <ul>
-        <li>На USB-COM адаптере выставить:</li>
-        <img src="../imgs/bdkg22/prosh/9.jpg" width="600">
-        <li>Запустить Terminal <span class="attention">для БДКГ-22</span>
-            (если такого нет, <a href="../docs/bdkg22/Command.txt">вот</a> настройки Command)
-        </li>
-        <li>Выбрать com-порт</li>
-        <li>Скорость &mdash; 19200 (Baud)</li>
-        <li>(Для проверки можно нажать ID, блок должен ответить)</li>
-        <li>Выбрать: "Настройка", "+", "->"</li>
-        <li>Выбрать: "Внутрисхемный загрузчик", "+", "->"</li>
-        <img src="../imgs/bdkg22/prosh/terminal.png" width="650">
-        БД разблокирован (пока подключено питание)
-        <li>Порт: выбрать "Off" (или закрыть Flip), чтобы освободить порт</li>
-        <li>Подключить кабель к USB-COM адаптеру без переходника (<span
-                class="attention">ПИТАНИЕ ОТ КАБЕЛЯ НЕ ОТКЛЮЧАТЬ!</span>
-            иначе блок опять заблокируется)
-        </li>
-        <li>На адаптере поставить:</li>
-        <img src="../imgs/bdkg22/prosh/10.jpg" width="600">
-        <li>Теперь можно шить стандартным способом (через Flip)</li>
+                <ul>
+                    <li>На USB-COM адаптере выставить:</li>
+                    <img src="../imgs/bdkg22/prosh/9.jpg" width="600">
+                    <li>Запустить Terminal <span class="attention">для БДКГ-22</span>
+                        (если такого нет, <a href="../docs/bdkg22/Command.txt">вот</a> настройки Command)
+                    </li>
+                    <li>Выбрать com-порт</li>
+                    <li>Скорость &mdash; 19200 (Baud)</li>
+                    <li>(Для проверки можно нажать ID, блок должен ответить)</li>
+                    <li>Выбрать: "Настройка", "+", "->"</li>
+                    <li>Выбрать: "Внутрисхемный загрузчик", "+", "->"</li>
+                    <img src="../imgs/bdkg22/prosh/terminal.png" width="650">
+                    БД разблокирован (пока подключено питание)
+                    <li>Порт: выбрать "Off" (или закрыть Flip), чтобы освободить порт</li>
+                    <li>Подключить кабель к USB-COM адаптеру без переходника (<span
+                            class="attention">ПИТАНИЕ ОТ КАБЕЛЯ НЕ ОТКЛЮЧАТЬ!</span>
+                        иначе блок опять заблокируется)
+                    </li>
+                    <li>На адаптере поставить:</li>
+                    <img src="../imgs/bdkg22/prosh/10.jpg" width="600">
+                    <li>Теперь можно шить стандартным способом (через Flip)</li>
 
 
-    </ul>
+                </ul>
+            </details>
+        </div>
 
-</div>
+    </div>
 </div>
 </body>
 </html>
