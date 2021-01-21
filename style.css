@@ -1,6 +1,5 @@
-/*todo Переписать CSS*/
 
-/*Таблицы------------------------------------------------------------------*/
+/*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
 }
@@ -31,7 +30,10 @@ th {
     background-color: #4CAF50;
     color: white;
 }
-/*Блок с активностью на главной странице-------------------------------------*/
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Блок с активностью на главной странице -------------------------------------------------------------------------*/
+
 .activity_block {
     background-color: #f57506;
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.55);
@@ -64,38 +66,9 @@ th {
     color: #ff3333;
     padding: 3px;
 }
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-
-
-.logo_div {
-    /*todo эти стили актуальны, пока на главной странице нет .main_div с вложенными в него .blue_back_index_right и .yellow_back_index_right, так эта часть стиля скопирована из .main_div*/
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 30px 15px 20px;
-    /*margin: 10px auto 20px;*/
-    border-radius: 10px;
-
-
-    /*background-image: url("imgs/lava.jpg");*/
-    background: #333333;
-    background-image: url("logo2.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 80px;
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.version_label {
-    font-size: 14px;
-    color: #ff3333;
-    padding: 3px 20px;
-    text-shadow: 0 3px 2px #000000;
-    font-style: italic;
-}
-
-.version_label:hover {
-    color: #ffffff;
-}
+/*region ------- UNDER CONSTRUCTION ---------------------------------------------------------------------------------------------*/
 
 /*.under_construction:before, .under_construction:hover:before {*/
 .under_construction, .under_construction:hover {
@@ -107,19 +80,25 @@ th {
     /*content: "в работе";*/
 }
 
-.red_light_title {
-    font-size: 20px;
-    color: #FF6633;
-    text-shadow: 1px 4px 5px #aba8a8;
-}
-
 /*.under_construction:hover:before {*/
 .under_construction:hover {
     color: #ffffff;
 }
 
-.no_markers {
-    list-style-type: none;
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Дивы и вложенные в дивы элементы -------------------------------------------------------------------------------*/
+
+.logo_div {
+    background: #333333 url("logo2.png") no-repeat center;
+
+    /*background: #333333;*/
+    /*background-image: url("logo2.png"), url("logo_pcb2.png");*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat, repeat;*/
+
+    height: 80px;
+    margin-bottom: 10px;
 }
 
 .li_div, .li_div:hover {
@@ -132,7 +111,7 @@ th {
 
 /*После добавления .menu_and_main_div (в котором есть visibility: hidden), все вложенные элементы тоже стали
   не видны (каскадность). Чтобы вернуть видимость для вложенных элементов и был добавлен этот стиль*/
-.main_div, .header_div_2, .left_side_menu, .logo_div, .index_menu_div, .yellow_back_index_right, .blue_back_index_right {
+.main_div, .header_div_2, .left_side_menu, .logo_div, .index_menu_div, .yellow_back_index_right, .red_back_index_right {
     visibility: visible;
 }
 
@@ -154,6 +133,25 @@ th {
     margin-bottom: 5px;
 }
 
+/*.main_div {*/ /*todo выбрать правильный селектор*/
+body>div>div {
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 30px 15px 20px;
+    margin: 10px auto 20px;
+    border-radius: 10px;
+    /*max-width: 1200px;*/
+}
+
+.menu_and_main_div {
+    max-width: 1700px;
+    margin: auto;
+    visibility: hidden;
+}
+
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Зеленая кнопка меню --------------------------------------------------------------------------------------------*/
+
 #menu_button {
     background-color: #44c767;
     /*background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);*/
@@ -172,13 +170,16 @@ th {
     padding: 0;
     text-decoration: none;
     text-shadow: 0 1px 0 #2f6627;
-    box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.53);
+    box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.53), inset 1px 1px 6px 6px rgba(0, 0, 0, 0.25);
 
 }
 
 #menu_button :hover {
     background: linear-gradient(to bottom, #f4ff3a 5%, #f5a208 100%);
 }
+/*endregion-----------------------------------------------------------------------------------------------------------*/
+
+/*region ------- UI компоненты — кнопки, селекты, инпуты -----------------------------------------------------------------------*/
 
 input[type="text"], input[type="date"], select {
     font-family: "Trebuchet MS", sans-serif;
@@ -194,7 +195,7 @@ input[type="text"], input[type="date"], select {
 }
 
 select {
-    border-radius: 6px 0px 0px 6px;
+    border-radius: 6px 0 0 6px;
 }
 
 input[type="text"]:hover, input[type="date"]:hover {
@@ -231,26 +232,9 @@ input[type="button"]:active {
     background: linear-gradient(to bottom, #ffa86c 5%, #dc0d0c 100%);
 }
 
-img {
-    display: block;
-    margin: 5px auto;
-    max-width: 100%;
-    text-indent: 0;
-}
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-.line_through {
-    text-decoration: line-through;
-    color: gray;
-
-}
-
-#main_menu {
-    display: none;
-    position: fixed;
-    margin-top: 10px;
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-}
-
+/*region ------- header_div_2 ---------------------------------------------------------------------------------------------------*/
 .header_div_2 {
     text-indent: 0;
     margin: -10px 0 0;
@@ -295,9 +279,9 @@ img {
     background: linear-gradient(to bottom, #64ff57 5%, #08b80d 100%);
 
 }
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-/*region INDEX 3------------------------------------*/
-/*------------------INDEX 3---------------------*/
+/*region ------- БЛОЧНЫЕ ССЫЛКИ НА ГЛАВОЙ СТРАНИЦЕ ------------------------------------------------------------------------------*/
 
 img {
     /*width: 700px;*/
@@ -394,79 +378,9 @@ img {
     color: white;
 }
 
-/*---------------------------------------*/
-/*endregion*/
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-
-/*.main_div {*/ /*todo выбрать правильный селектор*/
-body>div>div {
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 30px 15px 20px;
-    margin: 10px auto 20px;
-    border-radius: 10px;
-    /*max-width: 1200px;*/
-}
-
-ol > li > div, .nice_details{
-    text-indent: 0;
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 5px 15px 5px 15px;
-    margin: 10px 10px 10px 10px;
-    /*border-radius: 20px 0 20px 0;*/
-    border-radius: 8px;
-    transition-property: all;
-    transition-duration: 350ms;
-}
-
-ol > li > div:hover, .nice_details:hover{
-    box-shadow: 4px 1px 21px 1px rgba(255, 100, 0, 0.53);
-    padding: 5px 22px 5px 22px;
-    margin: 10px 3px 10px 3px;
-    transition-property: all;
-    transition-duration: 350ms;
-}
-
-summary:hover::marker {
-    color: #f5a208;
-}
-
-/* replace with custom image */
-/*summary {
-    list-style-image: url(right-arrow.svg);
-}
-
-!* hide arrow *!
-summary {
-    list-style-image: none;
-}*/
-
-.small_nice_details{
-    text-indent: 0;
-    box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
-    padding: 3px 10px;
-    margin: 5px;
-    /*border-radius: 20px 0 20px 0;*/
-    border-radius: 8px;
-}
-
-/*.main_div>ul>li>div {
-
-    text-indent: 0;
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 10px 15px 10px;
-    margin: 5px 10px 10px;
-    border-radius: 20px 0 20px 0;
-}*/
-
-.orange_link {
-    background-color: darkorange;
-    color: white;
-    border-radius: 10px;
-}
-
-.orange_link:hover {
-    background-color: green;
-}
+/*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY ------------------------------------------------------------------------*/
 
 div {
     /*padding: 5px 20px;*/
@@ -481,18 +395,85 @@ p {
     text-indent: 40px;
 }
 
-/*todo объединить с header div*/
-.footer_div {
-    background-color: orange;
+a {
+    color: darkorange;
+    font-size: 18px;
     font-family: sans-serif;
-    color: white;
-    border-radius: 20px;
-    bottom: 0;
-    width: 95%;
-    padding: 5px 20px;
-    margin: 0 0;
-    text-indent: 0;
+    text-decoration: none;
+    padding: 2px 4px;
+    transition-property: all;
+    transition-duration: 450ms;
+}
 
+a:hover {
+    color: white;
+    background-color: darkorange;
+    border-radius: 9px;
+    padding: 2px 4px;
+    transition-property: all;
+    transition-duration: 250ms;
+}
+
+img {
+    display: block;
+    margin: 5px auto;
+    max-width: 100%;
+    text-indent: 0;
+}
+
+h1, h3 {
+    font-size: 26px;
+    color: #bd7400;
+    text-align: center;
+    font-family: "Book Antiqua", "Garamond", "Traditional Arabic", "Times New Roman", sans-serif;
+    text-transform: uppercase;
+    text-indent: 0;
+    /*text-shadow: 1px */
+
+    /*text-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.55);*/
+}
+
+h3 {
+    font-size: 22px;
+    text-transform: none;
+}
+
+ul {
+    text-indent: 10px;
+    font-size: 18px;
+}
+
+ol {
+    /*padding-left: 40px;*/
+    text-indent: 10px;
+    font-size: 18px;
+}
+
+figcaption {
+    text-align: center;
+    font-style: italic;
+}
+
+body {
+    /*background-image: url("main_bg.jpg");*/
+    /*background: #ddd url("bg_main_transp_dark.png");*/
+    /*background: #444 url("bg_main_transp_dark.png");*/
+    background: #888 url("bg_main_transp.png");
+    /*background: #ccc url("bg_main_transp.png");*/
+}
+
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- DARK_LINK, LIKE_A_BUTTON, SPACE, LINE_THROUGH, RED_LIGHT_TITLE, NO_MARKERS -------------------------------------*/
+
+.dark_link {
+    color: #ff5533;
+    font-size: 20px;
+    font-family: sans-serif
+}
+
+.dark_link:hover{
+    background-color: #ff5533;
 }
 
 .like_a_button {
@@ -501,6 +482,30 @@ p {
     background-color: white;
     padding: 2px;
 }
+
+.space {
+    margin-left: 20px;
+}
+
+.line_through {
+    text-decoration: line-through;
+    color: gray;
+
+}
+
+.red_light_title {
+    font-size: 20px;
+    color: #FF6633;
+    text-shadow: 1px 4px 5px #aba8a8;
+}
+
+.no_markers {
+    list-style-type: none;
+}
+
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Контейнеры: yellow_back, tips_and_tricks, attentions, menu_block и т.д. ----------------------------------------*/
 
 .yellow_back_right {
     font-size: 14px;
@@ -512,65 +517,46 @@ p {
     text-align: right;
 }
 
-.blue_back_index_right, .yellow_back_index_right {
-    /*todo эти стили актуальны, пока на главной странице нет .main_div с вложенными в него .blue_back_index_right и .yellow_back_index_right, так эта часть стиля скопирована из .main_div*/
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 30px 15px 20px;
-    /*margin: 10px auto 20px;*/
-    border-radius: 10px;
-    /*********************************************/
-
+/*И red и yellow используются только на главной странице*/
+.red_back_index_right, .yellow_back_index_right {
     margin: 5px;
     font-size: 14px;
     background-color: antiquewhite;
     align-self: center;
     text-align: center;
-    /*padding: 10px;*/
     text-indent: 0;
-    /*border-radius: 10px;*/
 }
 
-.blue_back_index_right {
+.red_back_index_right {
     text-align: left;
     padding-left: 40px;
     background-color: #ffdddd;
 }
 
-
-
-.yellow_back, .yellow_back_small, .tips_and_tricks, .attention_block {
-    /*margin: 10px 0 10px;*/
+.yellow_back, .yellow_back_small, .tips_and_tricks, .attention_block, .yellow_back_tight {
     padding: 10px 20px;
     font-size: 16px;
-    /*background-color: khaki;*/
     background-color: antiquewhite;
     align-self: center;
-
     text-indent: 10px;
     border-radius: 5px;
-
-    /*box-shadow: none;*/
     box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
 }
 
-.tips_and_tricks ul {
-    font-size: inherit;
+/*Прямоугольник для <span>, применяется для отображения команды ("01 13 08 ff 24 00 04 00 0A 12 20")*/
+.yellow_back_small {
+    padding: 1px 20px;
 }
 
+/*То же, что и yellow_back, но контейнер получается не на всю страницу по ширине, а только 500px и располагается по середине*/
 .yellow_back_tight {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: antiquewhite;
     text-indent: 0;
-    border-radius: 5px;
-    box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);
-
     max-width: 500px;
     margin: 20px auto;
 }
 
-.yellow_back_small {
-    padding: 1px 20px;
+.tips_and_tricks ul {
+    font-size: inherit;
 }
 
 .tips_and_tricks {
@@ -581,8 +567,6 @@ p {
     background-color: #ddddff;
     min-height: 50px;
     border-radius: 5px;
-    /*margin: 10px 20px;*/
-    /*font-style: italic;*/
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
     text-indent: 0;
     font-size: 14px;
@@ -605,6 +589,44 @@ p {
     margin: 20px auto;
 }
 
+/*Контейнер для ссылок в начале страницы под заголовком */
+.left_align {
+    text-align: left;
+    font-size: smaller;
+    background-color: lemonchiffon;
+    text-indent: 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.23);
+}
+
+.div_for_menu_block {
+    margin-top: 2px;
+    visibility: hidden;
+    padding: 0;
+}
+
+.tips_and_tricks a {
+    font-size: 14px;
+    color: #ff5533;
+}
+
+.tips_and_tricks a:hover {
+    background-color: #ff5533;
+}
+
+.red_back_index_right a {
+    font-size: 16px;
+    color: #ff5533;
+}
+
+.red_back_index_right a:hover {
+    background-color: #ff5533;
+}
+
+/*endregion-------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Зеленая форма. Применяется только в БДКГ-27 --------------------------------------------------------------------*/
 .green_back {
     margin: 10px auto;
     padding: 10px 20px;
@@ -621,7 +643,9 @@ p {
     margin: 5px;
 }
 
+/*endregion-------------------------------------------------------------------------------------------------------------*/
 
+/*region ------- Выделение в тексте (mark, attention) ---------------------------------------------------------------------------*/
 
 .yellow_back p {
     margin: 10px;
@@ -631,10 +655,12 @@ p {
     font-size: 14px;
 }
 
+/*Просто красный шрифт для важного в тексте*/
 .attention {
     color: #ff3333;
 }
 
+/*Как и attention, но больше шрифт*/
 .attention_big {
     color: #ff3333;
     font-size: 20px;
@@ -654,34 +680,9 @@ p {
     padding-left: 100px;
 }
 
-a, .tips_and_tricks>a {
-    color: darkorange;
-    font-size: 18px;
-    font-family: sans-serif;
-    text-decoration: none;
-    padding: 2px 4px;
-    transition-property: all;
-    transition-duration: 450ms;
-}
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-.tips_and_tricks a {
-    font-size: 14px;
-    color: #ff5533;
-}
-
-.blue_back_index_right a {
-    font-size: 16px;
-    color: #ff5533;
-}
-
-a:hover {
-    color: white;
-    background-color: darkorange;
-    border-radius: 9px;
-    padding: 2px 4px;
-    transition-property: all;
-    transition-duration: 250ms;
-}
+/*region ------- Ссылки с иконками на документы ---------------------------------------------------------------------------------*/
 
 a[href$='.ods'] {
     background: url(imgs/file_types/ods.png) no-repeat left center;
@@ -711,7 +712,6 @@ a[href$='.zip'] {
     background: url(imgs/file_types/rar.png) no-repeat left center;
 }
 
-
 a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'], a[href$='.zip'] {
     background-size: 20px;
     padding-left: 25px;
@@ -721,16 +721,49 @@ a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.
 
 a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
     padding-left: 25px;
-    background-color: darkorange;
-    /*transform: scale(1.3);*/
+    background-size: 23px;
 }
 
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-
+/*region ------- SUMMARY DETAILS ol>li>div, nice_details, summary ---------------------------------------------------------------*/
 summary {
     cursor: pointer;
 }
 
+ol > li > div, .nice_details{
+    text-indent: 0;
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 5px 15px 5px 15px;
+    margin: 10px 10px 10px 10px;
+    /*border-radius: 20px 0 20px 0;*/
+    border-radius: 8px;
+    transition-property: all;
+    transition-duration: 350ms;
+}
+
+ol > li > div:hover, .nice_details:hover{
+    box-shadow: 4px 1px 21px 1px rgba(255, 100, 0, 0.53);
+    padding: 5px 22px 5px 22px;
+    margin: 10px 3px 10px 3px;
+    transition-property: all;
+    transition-duration: 350ms;
+}
+
+summary:hover::marker {
+    color: #f5a208;
+}
+
+.small_nice_details{
+    text-indent: 0;
+    box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
+    padding: 3px 10px;
+    margin: 5px;
+    /*border-radius: 20px 0 20px 0;*/
+    border-radius: 8px;
+}
+
+/*Узкий красный <summary>*/
 .red_light {
     font-size: 16px;
     color: white;
@@ -744,10 +777,7 @@ summary {
 
 .red_light:hover {
     background-color: #4CAF50;
-
 }
-
-
 
 details details p {
     box-shadow: 3px 3px 4px gray;
@@ -769,96 +799,9 @@ summary div ul {
 
 }
 
-.dark_link {
-    color: orangered;
-    font-size: 20px;
-    font-family: sans-serif
-}
+/*endregion ----------------------------------------------------------------------------------------------------------*/
 
-.left_align {
-    box-shadow: none;
-    text-align: left;
-    font-size: smaller;
-    background-color: lemonchiffon;
-    text-indent: 0;
-    padding: 10px 20px;
-    border-radius: 25px;
-}
-
-.main_div > .left_align {
-    /*box-shadow: none;*/
-    text-align: left;
-    font-size: smaller;
-    background-color: lemonchiffon;
-    text-indent: 0;
-    padding: 10px 20px;
-    border-radius: 10px;
-    box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.23);
-}
-
-ul {
-    text-indent: 10px;
-    font-size: 18px;
-}
-
-ol {
-    /*padding-left: 40px;*/
-    text-indent: 10px;
-    font-size: 18px;
-}
-
-
-
-.space {
-    margin-left: 20px;
-}
-
-
-
-
-.left_side {
-    float: left;
-}
-
-
-h1, h3 {
-    font-size: 26px;
-    color: #bd7400;
-    text-align: center;
-    font-family: "Book Antiqua", "Garamond", "Traditional Arabic", "Times New Roman", sans-serif;
-    text-transform: uppercase;
-    text-indent: 0;
-}
-
-h3 {
-font-size: 22px;
-    text-transform: none;
-
-}
-
-@font-face {
-    font-family: 'MyGaramond';
-    src: url('GARA.ttf')  format('truetype');
-}
-@font-face {
-    font-family: 'MyBookman';
-    src: url('BookmanUralic.ttf')  format('truetype');
-}
-@font-face {
-    font-family: 'MyPalladio';
-    src: url('Palladio.otf')  format('truetype');
-}
-.float_clear {
-    clear: left;
-}
-
-/*.bg_1121 {
-    !*background: white image("imgs/1121/1121_bg.png") no-repeat;*!
-    background-image: url("imgs/1121/1121_bg.png");
-    background: no-repeat;
-    background-color: white;
-}*/
-
+/*region ------- ГЛАВНОЕ МЕНЮ (СПОЙЛЕРЫ) ---------------------------------------------------------------------------------------- */
 .spoiler_menu {
     margin: 0 auto;
     padding: 0;
@@ -963,33 +906,15 @@ font-size: 22px;
     text-indent: 0;
     color: gold;
 }
+/*endregion*/
 
-#neutron {
-    background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
-    background-size: 65px;
-}
+/*region ------- left_side_menu, index_menu_div, #main_menu ---------------------------------------------------------------------*/
 
-figcaption {
-    text-align: center;
-    font-style: italic;
-}
-
-/*.spoiler_menu details {
-    !*height: 100px;*!
-    transition: all 0.3s;
-}*/
-
-@keyframes slideDown {
-    0% {
-        opacity: 0;
-        /*height: 0;*/
-        transform: translateY(50px);
-    }
-    100% {
-        opacity: 1;
-        /*height: 100px;*/
-        transform: translateY(0);
-    }
+#main_menu {
+    display: none;
+    position: fixed;
+    margin-top: 10px;
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
 }
 
 .left_side_menu {
@@ -1001,18 +926,19 @@ figcaption {
     display: none;
     padding: 0;
     border-radius: 25px;
-}
-
-.div_for_menu_block {
-    margin-top: 2px;
+    /*opacity: .9;*/
 }
 
 .index_menu_div {
     /*float: left;*/
     margin: 0; padding: 0;
     visibility: hidden;
+    /*opacity: .9;*/
 }
 
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- @MEDIA @KEYFRAMES @FONT-FACE -----------------------------------------------------------------------------------*/
 /*для всех страниц, кроме главной*/
 @media (min-width: 1300px){
     .main_div {
@@ -1037,7 +963,6 @@ figcaption {
     #menu {
         float: none;
     }
-
 }
 
 @media (max-width: 800px) {
@@ -1054,15 +979,41 @@ figcaption {
         width: 420px;
     }
 
-    .blue_back_index_right, .yellow_back_index_right, .div_for_menu_block {
+    .red_back_index_right, .yellow_back_index_right, .div_for_menu_block {
         margin-left: 430px;
     }
-    .div_for_menu_block {
-        margin-top: 2px;
+
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        /*height: 0;*/
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        /*height: 100px;*/
+        transform: translateY(0);
     }
 }
 
-/**Для кнопки возврата в начало страницы*/
+@font-face {
+    font-family: 'MyGaramond';
+    src: url('GARA.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'MyBookman';
+    src: url('BookmanUralic.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'MyPalladio';
+    src: url('Palladio.otf')  format('truetype');
+}
+
+/*endregion ------------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Для кнопки возврата в начало страницы --------------------------------------------------------------------------*/
 .to_page_top {
     position: fixed;
     bottom: 80px;
@@ -1092,17 +1043,17 @@ figcaption {
 .to_page_top-show {
     display: block;
 }
+/*endregion ------------------------------------------------------------------------------------------------------------*/
 
-.menu_and_main_div {
-    max-width: 1700px;
-    margin: auto;
-    visibility: hidden;
-}
+/*.bg_1121 {
+    !*background: white image("imgs/1121/1121_bg.png") no-repeat;*!
+    background-image: url("imgs/1121/1121_bg.png");
+    background: no-repeat;
+    background-color: white;
+}*/
 
-body {
-    /*background-image: url("main_bg.jpg");*/
-    /*background: #ddd url("bg_main_transp_dark.png");*/
-    /*background: #444 url("bg_main_transp_dark.png");*/
-    background: #888 url("bg_main_transp.png");
-    /*background: #ccc url("bg_main_transp.png");*/
-}
+/*#neutron {
+    background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
+    background-size: 65px;
+}*/
+
