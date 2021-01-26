@@ -57,7 +57,7 @@ class RA_Source {
 
     setActivityToElementValue(id) {document.getElementById(id).value = this.getActivityNow;}
 
-    /**Возвращает HTML код блока активности элемента*/
+    /**Возвращает HTML код блока активности элемента с заполненными значениями активности*/
     getActivityBlock() {
         return '<div class="activity_block">' +
             '    <div>' +
@@ -204,6 +204,10 @@ function setDropDownActivitiesCadmium(drop_id, koef) {
  * @param {*} a0 активность в день поверки
  * @param {Date} pov_date дата поверки
  * @param {*} t_pol период полураспада
+ *
+ * ! При расчете пройденных дней, дата возвращает время (а не дату) не случайно,
+ *  так я получаю вещественное, а не целое кол-во пройденных дней, и всегда получаю активность на текущий момент, а не
+ *  на текущий день
  */
 function activity(a0, pov_date, t_pol) {
     let days_left = (new Date().getTime() - pov_date.getTime()) / (1000*60*60*24);

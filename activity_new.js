@@ -8,6 +8,7 @@ const POV_DATE_CS = new Date(2016, 9, 12); //у Cs 516-521 одинаковый 
 const POV_DATE_2910 = new Date(2016, 4, 17);
 const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
+const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -52,6 +53,7 @@ function initializeSource() {
 //----------------------------------------------------------------------------------------------------------------------
 /**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
 function set_main_activities() {
+    insertCalculatorCode();
     initializeSource();
     initialize_calc();
 
@@ -86,6 +88,46 @@ function set_main_activities() {
         getMenuBlock("../sertif_prosh/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
         getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
 
+    /**Вывод Div с рассчитанными расстояниями от источников*/
+    insertDistanceCalculator();
+}
+//----------------------------------------------------------------------------------------------------------------------
+/**Вывод Div с рассчитанными расстояниями от источников
+ * let dist = r0 * 2^( -1*days_left / (2*t_pol)) */
+function insertDistanceCalculator() {
+    //Текущая дата калькулятора активности
+    let now_date = new Date(document.getElementById('date_calc').value);
+    //Сколько дней прошло со дня поверки
+    let days_left = (now_date.getTime() - POV_DATE_FOR_DISTANCE.getTime()) / (1000*60*60*24);
+    //Чтобы получить расстояние до источника, нужно начальное расстояние домножить на этот коэффициент. Для Цезия-137
+    let koefCs = Math.pow(2,  -1*days_left / (2*T_POL_CS_137));
+    document.getElementById('div_for_source_distance').innerHTML = '' +
+        '<div style="padding: 5px"><table style="border:none">'+
+        '           <tr>' +
+        '               <td style="border:none"><div class="red_light_title">МД, H<sup>*</sup>(10):</div></td>'+
+        '               <td style="border:none"><div class="red_light_title">Источник:</div></td>'+
+        '               <td style="border:none"><div class="red_light_title">Расстояние:</div></td>'+
+        '           </tr>'+
+        '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
+        /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
+        getDistanceStroke("0.7 мкЗв", "ОНА", 232.30, koefCs) +
+        getDistanceStroke("7 мкЗв",   "ОНА", 74.58,  koefCs) +
+        getDistanceStroke("70 мкЗв",  "9ХК", 161.37, koefCs) +
+        getDistanceStroke("0.7 мЗв",  "9ХК", 51.81,  koefCs) +
+        getDistanceStroke("7 мЗв",    "043", 348.90, koefCs) +
+        getDistanceStroke("70 мЗв",   "043", 112.10, koefCs) +
+        getDistanceStroke("0.7 Зв",   "163", 231.28, koefCs) +
+        getDistanceStroke("7 Зв",     "163", 74.51,  koefCs) +
+        getDistanceStroke("40 Зв",    "163", 32.25,  koefCs) +
+        '   </table></div>';
+}
+
+function getDistanceStroke(md_name, src_name, r0, koef) {
+    let distance = (r0*koef).toFixed(2);
+    return '<tr>'+
+        '    <td style="border:none"><div class="red_light_title">'+ md_name +'</div></td>'+
+        '    <td style="border:none"><div class="red_light_title">'+ src_name +'</div></td>'+
+        '    <td style="border:none"><div class="red_light_title">'+ distance +'</div></td></tr>'
 }
 
 //----------------------------------------------------------------------------------------------------------------------

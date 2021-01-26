@@ -464,3 +464,80 @@ function trackScroll() {
     window.addEventListener('scroll', trackScroll);
     goTopBtn.addEventListener('click', backToTop);
 }
+
+function insertCalculatorCode() {
+    document.getElementById('activity_calculator_block').innerHTML = ''+
+    '<div style="padding: 5px">'+
+    '    <table style="border:none">'+
+    '        <tr>'+
+    '            <td style="border:none">'+
+    '                <div class="red_light_title">Радиоактивный элемент<br> или источник:</div>'+
+    '            </td>'+
+    '            <td style="border:none">'+
+    '                <div class="red_light_title">А<sub>0</sub> (кБк):</div>'+
+    '            </td>'+
+    '        </tr>'+
+    '        <tr>'+
+    '            <td style="border:none">'+
+    '                <select id="ra_spinner" onchange="setActivity_0()">'+
+    '                    <option value="1">137-Cs</option>'+
+    '                    <option value="2">109-Cd</option>'+
+    '                    <option value="3">№2910</option>'+
+    '                    <option value="4">№516</option>'+
+    '                    <option value="5">№517</option>'+
+    '                    <option value="6">№518</option>'+
+    '                    <option value="7">№519</option>'+
+    '                    <option value="8">№520</option>'+
+    '                    <option value="9">№521</option>'+
+    '                    <option value="10">№831</option>'+
+    '                    <option value="11">№833</option>'+
+    '                    <option value="12">№1079</option>'+
+    '                    <option value="13">№1080</option>'+
+    '                </select>'+
+    '            </td><td style="border:none">'+
+    '            <input id="activity_0" type="text" size="12" datatype="number"'+
+    '                   title="Активность в день поверки. Для источников с номерами изменить активность нельзя"'+
+    '                   oninput="checkIsNumber(\'activity_0\')" onchange="calculate_activity()">'+
+    '        </td>'+
+    '        </tr>'+
+    '        <tr><td colspan="2" style="border:none"><hr color="ff6633"></td></tr>'+
+    '        <tr>'+
+    '            <td style="border:none">'+
+    '                <div class="red_light_title">Дата<br>поверки:</div>'+
+    '            </td>'+
+    '            <td style="border:none">'+
+    '                <div class="red_light_title">Расчетный<br>день:</div>'+
+    '            </td>'+
+    '        </tr>'+
+    '        <tr>'+
+    '            <td style="border:none">'+
+    '                <input id="date_a0"'+
+    '                       title="Дата поверки (А0). Для источников с номерами изменить дату нельзя"'+
+    '                       onchange="calculate_activity()"'+
+    '                       type="date">'+
+    '            </td>'+
+    '            <td style="border:none">'+
+    '                <input id="date_calc" title="Дата, на момент которой необходимо рассчитать активность"'+
+    '                       onchange="calculate_activity();insertDistanceCalculator()"'+
+    '                       type="date">'+
+    '            </td>'+
+    '        </tr>'+
+    '        <tr>'+
+    '            <td colspan="2" style="border:none">'+
+    '                <hr color="ff6633">'+
+    '            </td>'+
+    '        </tr>'+
+    '        <tr>'+
+    '            <td style="border:none" colspan="2">'+
+    '                <div class="red_light_title">Активность, кБк</div>'+
+    '            </td>'+
+    '        </tr>'+
+    '        <tr>'+
+    '            <td style="border:none" colspan="2">'+
+    '                <input id="activity_now" title="" name="r1" type="text" size="12">'+
+    '            </td>'+
+    '        </tr>'+
+    '    </table>'+
+    '</div>'
+
+}

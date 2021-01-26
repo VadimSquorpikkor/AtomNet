@@ -30,123 +30,25 @@
         includeMenu("index_menu_2", GRAD_MENU, CLOSE);
     </script>
 
-<!--         style="text-align: left; padding-left:30px; background: antiquewhite url('../imgs/radiation.png') no-repeat right; background-size:400px">-->
     <div class="yellow_back_index_right" style="text-align: left; padding-left:30px; background: antiquewhite; background-size:400px">
-        <span class="red_light_title">Активность источников:</span><br><!--<br>-->
+        <span class="red_light_title">Активность источников:</span><br>
         <div id="activities_div" style="text-indent: 0; background: transparent"></div>
-
         <hr color="ff6633">
-        <span class="red_light_title">Без периодической поверки:</span><br><!--<br>-->
-
+        <span class="red_light_title">Без периодической поверки:</span><br>
         <div id="activities_div_bez_poverki" style="text-indent: 0; background: transparent"></div>
     </div>
 
-<!--    <div class="yellow_back_index_right" style="overflow: auto; text-align: left; padding-left:30px; background: antiquewhite url('../radioaktivnyy-raspad.png') no-repeat right; background-size:300px">-->
     <div class="yellow_back_index_right" style="overflow: auto; text-align: left; padding-left:30px; background: antiquewhite; background-size:300px">
-
         <span class="red_light_title">Калькулятор активности источников:</span><br>
-
-        <div class="activity_block">
-            <div style="padding: 5px">
-
-                <table style="border:none">
-                    <tr>
-                        <td style="border:none">
-                            <div class="red_light_title">Радиоактивный элемент<br> или источник:</div>
-                        </td>
-                        <td style="border:none">
-                            <div class="red_light_title">А<sub>0</sub> (кБк):</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border:none">
-                            <select id="ra_spinner" onchange="setActivity_0()">
-                                <option value="1">137-Cs</option>
-                                <option value="2">109-Cd</option>
-                                <option value="3">№2910</option>
-                                <option value="4">№516</option>
-                                <option value="5">№517</option>
-                                <option value="6">№518</option>
-                                <option value="7">№519</option>
-                                <option value="8">№520</option>
-                                <option value="9">№521</option>
-                                <option value="10">№831</option>
-                                <option value="11">№833</option>
-                                <option value="12">№1079</option>
-                                <option value="13">№1080</option>
-                            </select>
-                        </td>
-                        <td style="border:none">
-                            <input id="activity_0" type="text" size="12" datatype="number"
-                                   title="Активность в день поверки. Для источников с номерами изменить активность нельзя"
-                                   oninput="checkIsNumber('activity_0')" onchange="calculate_activity()">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2" style="border:none">
-                            <hr color="ff6633">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="border:none">
-                            <div class="red_light_title">Дата<br>поверки:</div>
-                        </td>
-                        <td style="border:none">
-                            <div class="red_light_title">Расчетный<br>день:</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border:none">
-                            <input id="date_a0"
-                                   title="Дата поверки (А0). Для источников с номерами изменить дату нельзя"
-                                   onchange="calculate_activity()"
-                                   type="date">
-                        </td>
-                        <td style="border:none">
-                            <input id="date_calc" title="Дата, на момент которой необходимо рассчитать активность"
-                                   onchange="calculate_activity()"
-                                   type="date">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2" style="border:none">
-                            <hr color="ff6633">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td style="border:none" colspan="2">
-                            <div class="red_light_title">Активность, кБк</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border:none" colspan="2">
-                            <!--                        <input title="" name="r1" type="button" value="Рассчитать" onclick="calculate_activity()">-->
-                            <input id="activity_now" title="" name="r1" type="text" size="12">
-                        </td>
-                    </tr>
-                </table>
-
-
-            </div>
-        </div>
-
+        <div id="activity_calculator_block" class="activity_block"></div>
+        <div id="div_for_source_distance" style="text-align: left" class="activity_block"></div>
     </div>
-
 
     <div class="red_back_index_right">
         <span class="red_light_title">Что нового?</span><br>
-        • Вышла новая версия <a href="../sertif_prosh/macro.html">макросов для протоколов поверки и сертификатов</a>
-        &mdash; 3.09.  <!--Кому надо, обновляемся <a href="../sertif_prosh/macro.html">здесь</a>-->
-        <!--или <a
-            href="myprotocol:////FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/_Макрос для протоколов">здесь(в
-        папке)</a>-->.
+        • Вышла новая версия <a href="../sertif_prosh/macro.html">макросов для протоколов поверки и сертификатов</a> &mdash; 3.14.
         Что нового читаем <a href="../sertif_prosh/macro_version.html">тут</a><br>
-        • Инструкции теперь доступны в интернет по <a
-            href="https://storage.googleapis.com/uchastokrir.appspot.com/menu/index.html">ссылке</a><br>
+        • Инструкции теперь доступны в интернет по <a href="https://storage.googleapis.com/uchastokrir.appspot.com/menu/index.html">ссылке</a><br>
         • Переделана инструкция для <a href="../11xx/1103_new.html">1103М</a><br>
         • Дополнена/исправлена инструкция для <a href="../other/umnoz_1315.html">умножителя 1315</a><br>
         • Переделан калькулятор активности<br>
