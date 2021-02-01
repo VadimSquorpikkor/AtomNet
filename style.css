@@ -1041,6 +1041,7 @@ summary div ul {
     display: none;
     content: "wef2e";
     box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.55);
+    padding: 0;
 }
 .to_page_top:hover {
     background: limegreen;
