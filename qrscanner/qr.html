@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>QR Code generator library</title>
+    <meta http-equiv="Content-Style-Type" content="text/css"/>
+    <meta http-equiv="Content-Script-Type" content="application/javascript"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="/res/style/style.css" type="text/css"/>
+    <link rel="canonical" href="https://www.nayuki.io/page/qr-code-generator-library"/>
+    <style type="text/css">
+        article input[type=radio] + label, article input[type=checkbox] + label {
+            margin-right: 0.8em;
+            padding-left: 0.2em;
+        }
+        article canvas, article svg {
+            padding: 1.0em;
+            background-color: #E8E8E8;
+        }
+        article form table td:first-child {
+            white-space: pre;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="vert-main">
+    <div class="horz-main">
+        <article>
+            <h1>QR Code generator</h1>
+            <!--<p>You can generate QR Code symbols conveniently on this web page, powered by the TypeScript version of this library.</p>-->
+            <form onsubmit="event.preventDefault();">
+                <div id="loading"></div>
+                <div id="loaded"></div>
+                <table class="noborder" style="width:100%">
+                    <tbody>
+                    <tr>
+                        <td><label for="text-input"><strong>Text string:</strong></label></td>
+                        <td style="width:100%"><textarea placeholder="Enter your text to be put into the QR Code" id="text-input" style="width:100%; max-width:30em; /*height:5em;*/ font-family:inherit"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><strong>QR Code:</strong></td>
+                        <td>
+                            <canvas id="qrcode-canvas" style="display:none"></canvas>
+                            <svg xmlns="http://www.w3.org/2000/svg" id="qrcode-svg" style="width:30em; height:30em; display:none" stroke="none">
+                                <rect width="100%" height="100%" fill="#FFFFFF"/>
+                                <path d="" fill="#000000"/>
+                            </svg>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error correction:</strong></td>
+                        <td>
+                            <input type="radio" name="errcorlvl" id="errcorlvl-low" checked="checked"/><label for="errcorlvl-low">Low</label>
+                            <input type="radio" name="errcorlvl" id="errcorlvl-medium"/><label for="errcorlvl-medium">Medium</label>
+                            <input type="radio" name="errcorlvl" id="errcorlvl-quartile"/><label for="errcorlvl-quartile">Quartile</label>
+                            <input type="radio" name="errcorlvl" id="errcorlvl-high"/><label for="errcorlvl-high">High</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Output format:</td>
+                        <td>
+                            <input type="radio" name="output-format" id="output-format-bitmap" checked="checked"/><label for="output-format-bitmap">Bitmap</label>
+                            <input type="radio" name="output-format" id="output-format-vector"/><label for="output-format-vector">Vector</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="border-input">Border:</label></td>
+                        <td><input type="number" min="0" max="100" step="1" value="4" id="border-input" style="width:4em"/> modules</td>
+                    </tr>
+                    <tr id="scale-row">
+                        <td><label for="scale-input">Scale:</label></td>
+                        <td><input type="number" min="1" max="30" step="1" value="8" id="scale-input" style="width:4em"/> pixels per module</td>
+                    </tr>
+                    <tr>
+                        <td>Version range:</td>
+                        <td>
+                            Minimum = <input type="number" min="1" max="40" step="1" value="1"  id="version-min-input" style="width:4em" oninput="app.handleVersionMinMax('min');"/>,
+                            maximum = <input type="number" min="1" max="40" step="1" value="40" id="version-max-input" style="width:4em" oninput="app.handleVersionMinMax('max');"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="mask-input">Mask pattern:</label></td>
+                        <td><input type="number" min="-1" max="7" step="1" value="-1" id="mask-input" style="width:4em"/> (−1 for automatic, 0 to 7 for manual)</td>
+                    </tr>
+                    <tr>
+                        <td>Boost ECC:</td>
+                        <td><input type="checkbox" checked="checked" id="boost-ecc-input"/><label for="boost-ecc-input">Increase <abbr title="error-correcting code">ECC</abbr> level within same version</label></td>
+                    </tr>
+                    <tr>
+                        <td>Statistics:</td>
+                        <td id="statistics-output" style="white-space:pre"></td>
+                    </tr>
+                    <tr id="svg-xml-row" style="display:none">
+                        <td>SVG XML code:</td>
+                        <td>
+                            <textarea id="svg-xml-output" readonly="readonly" style="width:100%; height:15em; font-family:'Courier 10 Pitch BT',monospace; font-size:80%"></textarea>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <script src="qrcodegen.js"></script>
+            <script src="qrcodegen-input-demo.js"></script>
+        </article>
+    </div>
+</div>
+
+<!--<script src="https://www.googletagmanager.com/gtag/js?id=UA-23532931-1" async="async"></script>-->
+<script>window.dataLayer=window.dataLayer||[]; function gtag(){dataLayer.push(arguments);} gtag("js",new Date()); gtag("config","UA-23532931-1");</script>
+</body>
+</html>
+
