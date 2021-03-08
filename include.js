@@ -339,6 +339,7 @@ function getRegMenu(mode, id) {
         '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.18</a></li>' +
         '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
         '       </details>' +
+        '        <li><a href="../other/adjustment_db.html">AdjustmentDB и AdjustmentWeb</a></li>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +

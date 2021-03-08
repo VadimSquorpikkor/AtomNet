@@ -18,59 +18,62 @@
 
 <div class="menu_and_main_div">
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="">Flip. Как шить</a>
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Flip. Как шить</a>
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
-
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
-
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
-
-<div class="main_div">
-    <div style="display: flex; align-items: center; justify-content: center; margin: 0; padding: 0">
-        <h1>Flip. Как шить</h1>
-        <img src="../imgs/flip/flip.png" style="margin: 0">
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
     </div>
 
-    <ul>
-        <li>Запустить Flip</li>
-        <li>Выбрать тип контроллера &mdash; AT89C51ED2 (как правило уже выбран), нажать соединение, выбрав RS232</li>
-        <img src="../imgs/flip/03.jpg" width="800">
-        <li>Выбрать порт, скорость 115200, нажать "Connect"</li>
-        <img src="../imgs/flip/02.jpg" width="250">
-        <li>Если кнопка загорелась красным &mdash; всё хорошо, устройство подключилось, можно шить</li>
-        <img src="../imgs/flip/07.jpg" width="250">
-        <li>Выбрать прошивку, нажать "Run"</li>
-        <img src="../imgs/flip/05.jpg" width="800">
-        <li>После окончания процесса прошивки снять флаг "BLJB", поставить "Level 2"</li>
-        <img src="../imgs/flip/06.jpg" width="650">
-        <li>БД прошит. Нажать "Disconnect"</li>
-
-    </ul>
-
-    <div class="tips_and_tricks">Если при попытке подключения выскакивает такое окно:
-        <img src="../imgs/flip/01.jpg">
-        это значит, что в системе закончились свободные СОМ порты примерно до 40. Просто Flip не видит порты выше этого
-        значения. Надо звать админа, и просить почистить СОМ порты
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
     </div>
 
-    <div class="tips_and_tricks">Если выскочила такая ошибка:
-        <img src="../imgs/1103/3.png" width="492">
-        ХЗ, что такое, единственно найденное 100% решение &mdash; перезагрузить комп и перепрошить, после перезагрузки
-        ошибка больше не появляется
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+        <div style="display: flex; align-items: center; justify-content: center; margin: 0; padding: 0">
+            <h1>Flip. Как шить</h1>
+            <img src="../imgs/flip/flip.png" style="margin: 0">
+        </div>
+
+        <ul>
+            <li>Запустить Flip</li>
+            <li>Выбрать тип контроллера &mdash; AT89C51ED2 (как правило уже выбран), нажать соединение, выбрав RS232
+            </li>
+            <img src="../imgs/flip/03.jpg" width="800">
+            <li>Выбрать порт, скорость 115200, нажать "Connect"</li>
+            <img src="../imgs/flip/02.jpg" width="250">
+            <li>Если кнопка загорелась красным &mdash; всё хорошо, устройство подключилось, можно шить</li>
+            <img src="../imgs/flip/07.jpg" width="250">
+            <li>Выбрать прошивку, нажать "Run"</li>
+            <img src="../imgs/flip/05.jpg" width="800">
+            <li>После окончания процесса прошивки снять флаг "BLJB", поставить "Level 2"</li>
+            <img src="../imgs/flip/06.jpg" width="650">
+            <li>БД прошит. Нажать "Disconnect"</li>
+
+        </ul>
+
+        <div class="tips_and_tricks">Если при попытке подключения выскакивает такое окно:
+            <img src="../imgs/flip/01.jpg">
+            это значит, что в системе закончились свободные СОМ порты примерно до 40. Просто Flip не видит порты выше
+            этого
+            значения. Надо звать админа, и просить почистить СОМ порты
+        </div>
+
+        <div class="tips_and_tricks">Если выскочила такая ошибка:
+            <img src="../imgs/1103/3.png" width="492">
+            ХЗ, что такое, единственно найденное 100% решение &mdash; перезагрузить комп и перепрошить, после
+            перезагрузки
+            ошибка больше не появляется
+        </div>
     </div>
-</div>
 </div>
 </body>
 </html>
