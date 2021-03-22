@@ -519,7 +519,7 @@ function insertCalculatorCode() {
     '            </td>'+
     '            <td style="border:none">'+
     '                <input id="date_calc" title="Дата, на момент которой необходимо рассчитать активность"'+
-    '                       onchange="calculate_activity();insertDistanceCalculator()"'+
+    '                       onchange="calculate_activity();insertDistanceCalculator();insertKermaDistanceCalculator()"'+
     '                       type="date">'+
     '            </td>'+
     '        </tr>'+

@@ -90,6 +90,7 @@ function set_main_activities() {
 
     /**Вывод Div с рассчитанными расстояниями от источников*/
     insertDistanceCalculator();
+    insertKermaDistanceCalculator();
 }
 //----------------------------------------------------------------------------------------------------------------------
 /**Вывод Div с рассчитанными расстояниями от источников
@@ -104,21 +105,50 @@ function insertDistanceCalculator() {
     document.getElementById('div_for_source_distance').innerHTML = '' +
         '<div style="padding: 5px"><table style="border:none">'+
         '           <tr>' +
-        '               <td style="border:none"><div class="red_light_title">МД, H<sup>*</sup>(10):</div></td>'+
+        '               <td style="border:none"><div class="red_light_title">H<sup>*</sup>(10), Зв/ч:</div></td>'+
         '               <td style="border:none"><div class="red_light_title">Источник:</div></td>'+
         '               <td style="border:none"><div class="red_light_title">Расстояние:</div></td>'+
         '           </tr>'+
         '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
         /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
-        getDistanceStroke("0.7 мкЗв", "ОНА", 232.30, koefCs) +
-        getDistanceStroke("7 мкЗв",   "ОНА", 74.58,  koefCs) +
-        getDistanceStroke("70 мкЗв",  "9ХК", 161.37, koefCs) +
-        getDistanceStroke("0.7 мЗв",  "9ХК", 51.81,  koefCs) +
-        getDistanceStroke("7 мЗв",    "043", 348.90, koefCs) +
-        getDistanceStroke("70 мЗв",   "043", 112.10, koefCs) +
-        getDistanceStroke("0.7 Зв",   "163", 231.28, koefCs) +
-        getDistanceStroke("7 Зв",     "163", 74.51,  koefCs) +
-        getDistanceStroke("40 Зв",    "163", 32.25,  koefCs) +
+        getDistanceStroke("0.7 мкЗв/ч", "ОНА", 232.30, koefCs) +
+        getDistanceStroke("7 мкЗв/ч",   "ОНА", 74.58,  koefCs) +
+        getDistanceStroke("70 мкЗв/ч",  "9ХК", 161.37, koefCs) +
+        getDistanceStroke("0.7 мЗв/ч",  "9ХК", 51.81,  koefCs) +
+        getDistanceStroke("7 мЗв/ч",    "043", 348.90, koefCs) +
+        getDistanceStroke("70 мЗв/ч",   "043", 112.10, koefCs) +
+        getDistanceStroke("0.7 Зв/ч",   "163", 231.28, koefCs) +
+        getDistanceStroke("7 Зв/ч",     "163", 74.51,  koefCs) +
+        getDistanceStroke("40 Зв/ч",    "163", 32.25,  koefCs) +
+        '   </table></div>';
+}
+
+/**Вывод Div с рассчитанными расстояниями от источников для Кермы в воздухе*/
+function insertKermaDistanceCalculator() {
+    //Текущая дата калькулятора активности
+    let now_date = new Date(document.getElementById('date_calc').value);
+    //Сколько дней прошло со дня поверки
+    let days_left = (now_date.getTime() - POV_DATE_FOR_DISTANCE.getTime()) / (1000*60*60*24);
+    //Чтобы получить расстояние до источника, нужно начальное расстояние домножить на этот коэффициент. Для Цезия-137
+    let koefCs = Math.pow(2,  -1*days_left / (2*T_POL_CS_137));
+    document.getElementById('div_for_source_distance_kerma').innerHTML = '' +
+        '<div style="padding: 5px"><table style="border:none">'+
+        '           <tr>' +
+        '               <td style="border:none"><div class="red_light_title">Керма, Гр/ч:</div></td>'+
+        '               <td style="border:none"><div class="red_light_title">Источник:</div></td>'+
+        '               <td style="border:none"><div class="red_light_title">Расстояние:</div></td>'+
+        '           </tr>'+
+        '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
+        /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
+        getDistanceStroke("0.7 мкГр/ч", "ОНА", 212.08, koefCs) +
+        getDistanceStroke("7 мкГр/ч",   "ОНА", 68.04,  koefCs) +
+        getDistanceStroke("70 мкГр/ч",  "9ХК", 147.28, koefCs) +
+        getDistanceStroke("0.7 мГр/ч",  "9ХК", 47.26,  koefCs) +
+        getDistanceStroke("7 мГр/ч",    "9ТН", 52.92, koefCs) +
+        getDistanceStroke("70 мГр/ч",   "043", 102.29, koefCs) +
+        getDistanceStroke("0.7 Гр/ч",   "163", 211.21, koefCs) +
+        getDistanceStroke("7 Гр/ч",     "163", 67.99,  koefCs) +
+        getDistanceStroke("40 Гр/ч",    "163", 29.42,  koefCs) +
         '   </table></div>';
 }
 
