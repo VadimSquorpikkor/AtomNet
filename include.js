@@ -127,6 +127,7 @@ function getRegMenu(mode, id) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
+        '        <li><a href="../bdkg/bdkg_3_5_7_11.html">БДКГ-03 -05 -07 -11</a></li>' +
         '        <li><a href="../bdkg/bdkg04.html">БДКГ-04</a>' +
         '            <div>' +
         '                <ul>' +
@@ -167,6 +168,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg35.html">БДКГ-35</a></li>' +
         '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>' +
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
+        '        <li><a href="../bdkg/bdkr-01.html">БДКР-01</a></li>' +
         '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a>' +
         '            <div>' +
         '                <ul>' +

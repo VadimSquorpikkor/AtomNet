@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>БДКР-01. Настройка</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">БДКР-01. Настройка</a>
+
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>БДКР-01. Настройка</h1>
+
+        <h3>1. Настройка и проверка (без экрана)</h3>
+
+        <ul>
+            <li>1.1. Подключите БД к ПЭВМ с помощь кабеля БД через модуль адаптера USB-БД, одновременно контролируя
+                высокое напряжение в контрольной точке 13 платы ПН, значение которого должно быть в пределах 500-1000 В.
+                При увеличении напряжения свыше 1200 В незамедлительно отключите БД от ПЭВМ.
+            </li>
+            <li>1.2. Записать начальные значения коэффициентов и энергии. Подключить БД к программе Terminal и отправить
+                в определённом порядке команды в шестнадцатеричном виде:
+            </li>
+        </ul>
+
+        <div class="yellow_back">
+            Эти команды необходимы, если старая и новая прошивки процессора отличаются также и прошивкой ПЛИС
+            <ul>
+                <li>Режим настройки: 05 00 07 FF 00</li>
+                <li>Восстановить прошивку ALTERA: 08 00 81 00 00</li>
+            </ul>
+        </div>
+
+        <br>
+        <div class="yellow_back">
+            <ul>
+                <li>Режим настройки: 05 00 07 FF 00</li>
+                <li>Код усиления 128: 13 08 FF 04 00 04 43 00 00 00</li>
+                <li>Начальные значения КК: 08 00 82 00 00</li>
+            </ul>
+        </div>
+
+        <br>
+        <div class="yellow_back">
+            <ul>
+                <li>Нач. псевдоспектры энерг.калибр.: 08 00 C0 00 00</li>
+                (Эта команда выполняется несколько десятков секунд. Нужно дождаться ответа)
+                <li>Регистр диагностики: 08 00 02 00 00</li>
+            </ul>
+        </div>
+
+        <ul>
+            <li>1.3. Запустите программу ATAS tech Нажмите режим «инициализировать соединение». Программа должна
+                обнаружить БД и вывести на экран спектр, считываемый с БД (рис 1).
+            </li>
+        </ul>
+
+        <figure>
+            <img src="../imgs/bdkr01/1.jpg" width="700">
+            <figcaption>Рисунок 1</figcaption>
+        </figure>
+
+        <figure>
+            <img src="../imgs/bdkr01/2.jpg" width="700">
+            <figcaption>Рисунок 2</figcaption>
+        </figure>
+
+        <ul>
+            <li>1.5. При помощи подборочного резистора R13 и потенциометра R11 платы ПН установите второй пик спектра в
+                218±3 канал (Рисунок 2).
+            </li>
+            <li>1.6. Проконтролируйте реперный сигнал на выходе операционного усилителя D4:6 платы усилителя 512 в
+                соответствии с рис 3, амплитуда которого должна быть в пределах 1,1-1,3 В.
+            </li>
+        </ul>
+
+        <figure>
+            <img src="../imgs/bdkr01/3.jpg" width="400">
+            <figcaption>Рисунок 3</figcaption>
+        </figure>
+
+        <ul>
+            <li>1.7. Проконтролируйте напряжение на выходе D4:6 платы ПН, величина которого должна быть (0,7-4) В.</li>
+            <li>1.8. Измерьте с помощью вольтметра С509 высокое напряжение в точке 13 платы ПН, величина которого должна
+                быть (500-800) В..
+            </li>
+        </ul>
+
+        <h3>2. Приработка БД.</h3>
+        <ul>
+            <li>2.1 Соберите БД в экран в соответствии со сборочным чертежом.</li>
+            <li>2.2 Подключите БД к БОИ , и приработайте не менее 24 часов.</li>
+            <li>2.3 Проконтролируйте спектр в соответствии с п. 1.5</li>
+            </li>
+
+    </div>
+</div>
+</body>
+</html>
