@@ -2,3 +2,28 @@
 // (при аплоде все html у меня почему-то был тип application/octet-stream, при открытии такой файл открывается как архив)
 // спросит "Authorise..." жмем "Authorise" — согласиться (надо будет пару минут подождать, не сразу начнет работать, как надо)
 gsutil -m setmeta -h Content-Type:text/html gs://uchastokrir.appspot.com/**.html
+
+gsutil web set -m menu/index.html -e 404.html gs://uchastokrir.appspot.com
+
+gsutil iam ch 'user:uchastok.rir@gmail.com:legacyObjectOwner' gs://uchastokrir.appspot.com
+
+uchastokrir.appspot.com
+
+ Project name
+AtomNet
+Project ID
+uchastokrir
+Project number
+418585592310
+
+
+
+gsutil mb -p uchastokrir2 gs://uchastokrir.appspot.com/
+
+
+
+--------------------------------------------------------------------
+staging.atomnet.appspot.com/bdkg
+
+
+gsutil -m setmeta -h Content-Type:text/html gs://staging.atomnet.appspot.com/**.html
