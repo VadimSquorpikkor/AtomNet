@@ -131,7 +131,8 @@ function loadDropDownCesium(menu_id, output_id, fName) {
         '<option value="6">№520</option>' +
         '<option value="7">№521</option>' +
         '<option value="8">№831</option>' +
-        '<option value="9">№833</option>' +
+        '<option value="9">№832</option>' +
+        '<option value="10">№833</option>' +
         '</select> ' +
         '<input type="text" id=' + output_id + ' size="5">';
 }
@@ -176,7 +177,8 @@ function setDropDownActivitiesCesium(drop_id, koef) {
         case '6': setValue(outputId, cs_520,  koef); break;
         case '7': setValue(outputId, cs_521,  koef); break;
         case '8': setValue(outputId, cs_831,  koef); break;
-        case '9': setValue(outputId, cs_833,  koef); break;
+        case '9': setValue(outputId, cs_832,  koef); break;
+        case '10': setValue(outputId, cs_833,  koef); break;
     }
 }
 

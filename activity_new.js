@@ -6,6 +6,7 @@ const T_POL_CD_109 = 461.4;
 //yyyy.mm.dd  месяц начинается с 0, февраль — это 1
 const POV_DATE_CS = new Date(2016, 9, 12); //у Cs 516-521 одинаковый день поверки
 const POV_DATE_2910 = new Date(2016, 4, 17);
+const POV_DATE_800 = new Date(2019,9,17);
 const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
 const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
@@ -43,9 +44,9 @@ function initializeSource() {
     cs_519 = new RA_Source("№519", CS_137, A0_519, POV_DATE_CS);
     cs_520 = new RA_Source("№520", CS_137, A0_520, POV_DATE_CS);
     cs_521 = new RA_Source("№521", CS_137, A0_521, POV_DATE_CS);
-    cs_831 = new RA_Source("№831", CS_137, A0_831, POV_DATE_CS);
-    cs_832 = new RA_Source("№832", CS_137, A0_832, POV_DATE_CS);
-    cs_833 = new RA_Source("№833", CS_137, A0_833, POV_DATE_CS);
+    cs_831 = new RA_Source("№831", CS_137, A0_831, POV_DATE_800);
+    cs_832 = new RA_Source("№832", CS_137, A0_832, POV_DATE_800);
+    cs_833 = new RA_Source("№833", CS_137, A0_833, POV_DATE_800);
     cd_1079 = new RA_Source("№1079", CD_109, A0_1079, POV_DATE_CD_1079);
     cd_1080 = new RA_Source("№1080", CD_109, A0_1080, POV_DATE_CD_1080);
 
@@ -189,9 +190,10 @@ function setActivity_0() {
         case '8': setA0_By_Element(cs_520); break;
         case '9': setA0_By_Element(cs_521); break;
         case '10': setA0_By_Element(cs_831); break;
-        case '11': setA0_By_Element(cs_833); break;
-        case '12': setA0_By_Element(cd_1079); break;
-        case '13': setA0_By_Element(cd_1080); break;
+        case '11': setA0_By_Element(cs_832); break;
+        case '12': setA0_By_Element(cs_833); break;
+        case '13': setA0_By_Element(cd_1079); break;
+        case '14': setA0_By_Element(cd_1080); break;
     }
 }
 

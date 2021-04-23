@@ -493,9 +493,10 @@ function insertCalculatorCode() {
     '                    <option value="8">№520</option>'+
     '                    <option value="9">№521</option>'+
     '                    <option value="10">№831</option>'+
-    '                    <option value="11">№833</option>'+
-    '                    <option value="12">№1079</option>'+
-    '                    <option value="13">№1080</option>'+
+    '                    <option value="11">№832</option>'+
+    '                    <option value="12">№833</option>'+
+    '                    <option value="13">№1079</option>'+
+    '                    <option value="14">№1080</option>'+
     '                </select>'+
     '            </td><td style="border:none">'+
     '            <input id="activity_0" type="text" size="12" datatype="number"'+
