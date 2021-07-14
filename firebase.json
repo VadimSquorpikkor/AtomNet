@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": "../AtomNet",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+	".git/**",
+      "**/node_modules/**",
+	"_for_sort/**",
+	"templates/**"
+    ]
+  }
+}

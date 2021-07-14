@@ -1,6 +1,5 @@
-1. Изменения добавить в D:\GitHub\AtomNet2\
-2. Открыть консоль CLI
-3. cd D:\GitHub\AtomNet2
-4. firebase deploy
+1. Открыть консоль CLI
+2. cd D:\GitHub\AtomNet
+3. firebase deploy
 
 Некоторые файлы (.js) могут добавиться только через пару минут, надо просто подождать
