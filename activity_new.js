@@ -87,6 +87,7 @@ function set_main_activities() {
         getMenuBlock("../11xx/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
         getMenuBlock("../sertif_prosh/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
         getMenuBlock("../sertif_prosh/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
+        getMenuBlock("../other/plotter.html", "../imgs/plot/p16.jpg", VIOLET,"Наклейки", "Изготовление наклеек")+
         getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
 
     /**Вывод Div с рассчитанными расстояниями от источников*/
@@ -162,8 +163,8 @@ function getDistanceStroke(md_name, src_name, r0, koef) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-/**Расчет активности источника для калькулятора активности (НОВЫЙ)*/
 let period;
+/**Расчет активности источника для калькулятора активности (НОВЫЙ)*/
 function calculate_activity() {
     let pov_date = new Date(document.getElementById('date_a0').value);
     let now_date = new Date(document.getElementById('date_calc').value);
