@@ -10,6 +10,7 @@ const POV_DATE_800 = new Date(2019,9,17);
 const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
 const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
+const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для удельной активности 1125
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -25,11 +26,15 @@ const A0_833 = 98;
 const A0_1079 = 525;
 const A0_1080 = 556;
 
+const A0_483 = 87;
+const A0_93 = 880;
+const A0_3668 = 7932;
+
 /**Химические элементы*/
 let CS_137, CD_109;
 
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
-let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080;
+let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668;
 
 /**Инициализация объектов класса источников и элементов*/
 function initializeSource() {
@@ -38,17 +43,21 @@ function initializeSource() {
     CD_109 = new RA_Element("Cd", 109, T_POL_CD_109);
     //Создание объектов класса источников
     cs_2910 = new RA_Source("№2910", CS_137, A0_2910, POV_DATE_2910);
-    cs_516 = new RA_Source("№516", CS_137, A0_516, POV_DATE_CS);
-    cs_517 = new RA_Source("№517", CS_137, A0_517, POV_DATE_CS);
-    cs_518 = new RA_Source("№518", CS_137, A0_518, POV_DATE_CS);
-    cs_519 = new RA_Source("№519", CS_137, A0_519, POV_DATE_CS);
-    cs_520 = new RA_Source("№520", CS_137, A0_520, POV_DATE_CS);
-    cs_521 = new RA_Source("№521", CS_137, A0_521, POV_DATE_CS);
-    cs_831 = new RA_Source("№831", CS_137, A0_831, POV_DATE_800);
-    cs_832 = new RA_Source("№832", CS_137, A0_832, POV_DATE_800);
-    cs_833 = new RA_Source("№833", CS_137, A0_833, POV_DATE_800);
+    cs_516  = new RA_Source("№516",  CS_137, A0_516,  POV_DATE_CS);
+    cs_517  = new RA_Source("№517",  CS_137, A0_517,  POV_DATE_CS);
+    cs_518  = new RA_Source("№518",  CS_137, A0_518,  POV_DATE_CS);
+    cs_519  = new RA_Source("№519",  CS_137, A0_519,  POV_DATE_CS);
+    cs_520  = new RA_Source("№520",  CS_137, A0_520,  POV_DATE_CS);
+    cs_521  = new RA_Source("№521",  CS_137, A0_521,  POV_DATE_CS);
+    cs_831  = new RA_Source("№831",  CS_137, A0_831,  POV_DATE_800);
+    cs_832  = new RA_Source("№832",  CS_137, A0_832,  POV_DATE_800);
+    cs_833  = new RA_Source("№833",  CS_137, A0_833,  POV_DATE_800);
     cd_1079 = new RA_Source("№1079", CD_109, A0_1079, POV_DATE_CD_1079);
     cd_1080 = new RA_Source("№1080", CD_109, A0_1080, POV_DATE_CD_1080);
+
+    cs_483  = new RA_Source("№483",  CS_137, A0_483,  POV_DATE_FOR_UD_SRC);
+    cs_93   = new RA_Source("№93",   CS_137, A0_93,   POV_DATE_FOR_UD_SRC);
+    cs_3668 = new RA_Source("№3668", CS_137, A0_3668, POV_DATE_FOR_UD_SRC);
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -74,7 +83,10 @@ function set_main_activities() {
     document.getElementById('activities_div_bez_poverki').innerHTML =
         cs_831.getActivityBlock()+
         cs_832.getActivityBlock()+
-        cs_833.getActivityBlock();
+        cs_833.getActivityBlock()+
+        cs_483.getActivityBlock()+
+        cs_93.getActivityBlock()+
+        cs_3668.getActivityBlock();
 
     /**Вывод блочных ссылок*/
     document.getElementById('div_for_menu_block').innerHTML =
