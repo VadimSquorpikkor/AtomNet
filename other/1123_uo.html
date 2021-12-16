@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Проверка платы УО</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="../11xx/1121.html"> ДКС-АТ1121</a>
+    <a href="">ДКС-АТ1121, АТ1123. Проверка УО</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+<div class="main_div">
+
+    <h1>ДКС-АТ1121, АТ1123. Проверка УО</h1>
+
+    <ul>
+        <li>
+            <div class="nice_details">
+            <details>
+
+                <summary>Подключить технологическую АКБ и клавиатуру. Подключить мультиметр в разрыв питания</summary>
+                <img src="../imgs/1121_uo/01.jpg" width="800">
+            </details>
+            </div>
+        </li>
+        <li>
+            <div class="nice_details">
+            <details>
+                <summary>Ввести инициализацию 957.</summary>
+                    <p>После прошивке, при включении дозиметра на табло появляется мигающее
+                        сообщение «Err25», сопровождающиеся прерывистым звуковым сигналом (ошибка данных
+                        энергонезависимой памяти,
+                        означающая, что в данном случае в памяти ничего не записано из-за первого включения).
+
+                    <p>Это значит, что прибор <i>не инициализирован</i>. Для этого нужно:
+
+                    <ul>
+                        <li>Включить прибор</li>
+                        <li>Нажать три раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
+                        <li>Два раза нажать кнопку<span class="like_a_button">START</span>
+                        <li>Набрать "957", для этого с помощью клавиш <span class="like_a_button">&emsp;&bigtriangleup;&emsp;</span>
+                            и
+                            <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span> выбирается цифра, а
+                            с помощью
+                            <span class="like_a_button">START</span> выбирается следующая позиция
+                        </li>
+                        <li>После ввода последней цифры, нажать <span class="like_a_button">МЕМ</span></li>
+                        <img src="../imgs/1103/9.jpg" width="300">
+                        <li>После инициализации прибор сам перезапустится и включится уже без ошибки</li>
+
+                    </ul>
+                    <p class="yellow_back">Также прибор можно инициировать с помощью ПО ATAS tech на ПК
+            </details>
+            </div>
+        </li>
+
+        <li>
+            <div class="nice_details">
+                <details>
+                    <summary>Провести операцию 0/50</summary>
+                    <p>Операция 0/50 — это запись в память значение полного разряда батареи.
+                        Подключите АКБ к прибору (<span class="attention">НЕ ВКЛЮЧАЙТЕ ПРИБОР</span>).
+                        Подключите зарядное устройство (на экране появится отображение заряда и 5%)
+                        Отсоедините АКБ от платы, подождите 5 сек, на экране появится вместо 5% - 0%
+                        подключите АКБ к плате, на экране появиться отображение заряда и заряд в 50%</p>
+                </details>
+            </div>
+        </li>
+
+
+        <li>
+            <div class="nice_details">
+            <details>
+                <summary>Проверить ток потребления и ток заряда</summary>
+                    <p>Подключить мультиметр в разрыв питания АКБ:
+                        <img src="../imgs/1125/02.jpg" width="600">
+                    <p>Включить прибор, замерить ток потребления, должен быть примерно 11 мА.
+                    <p>Подключить питание 12 В от адаптера в DJK разъем:
+                        <img src="../imgs/1125/03.jpg" width="600">
+                    <p>Замерить ток заряда, должен быть примерно 570 мА.
+            </details>
+            </div>
+        </li>
+        <li>При включении зажать клавишу ПОДСТВЕТКА &mdash; проверить наличие всех сегментов ЖКИ.</li>
+        <li>Запустить двойную подсветку и проверить отсутствие мусора и темных пятен между подсветкой и ЖКИ.</li>
+        <li>Поставить отметку маркером на защитной пленке ЖКИ об отсутствии царапин.</li>
+        <li>Проверить управление: ПУСК, ПАМЯТЬ, ПОДСТВЕТКУ и ЗВУК.</li>
+        <li>
+            <div class="nice_details">
+            <details>
+                <summary>Проверить обмен с БД.</summary>
+                    <p>Подключить УО к компьютеру через USB адаптер (АКБ можно не подключать, УО будет запитываться от
+                        адаптера):
+                        <img src="../imgs/1125/04.jpg" width="700">
+                    <p>Запустить "Background Calibration". Плата должна определиться в нем, как "АТ1123"
+                        <img src="../imgs/1121_uo/11.jpg" width="800">
+            </details>
+            </div>
+        </li>
+        <li>Поставить отметку маркером на плате о проведенной проверке</li>
+        <li>Отдать на монтаж</li>
+    </ul>
+
+</div>
+</div>
+</body>
+</html>

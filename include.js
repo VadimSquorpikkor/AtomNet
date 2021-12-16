@@ -242,6 +242,7 @@ function getRegMenu(mode, id) {
         '            </div>' +
         '        </li>' +
         '        <li><a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
+        '        <li><a href="../other/1123_uo.html">1121, 1123. Проверка платы УО</a></li>' +
         '        <li><a href="../other/1125_uo.html">1125, 1103М. Проверка платы УО</a></li>' +
         '        <li><a href="../other/signalizator.html">Устройство сигнализации 1121,1123</a></li>' +
         '    </ul>' +

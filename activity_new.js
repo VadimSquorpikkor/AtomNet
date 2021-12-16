@@ -11,6 +11,7 @@ const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
 const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
 const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для удельной активности 1125
+const POV_DATE_595 = new Date(2021, 6, 29);
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -26,15 +27,16 @@ const A0_833 = 98;
 const A0_1079 = 525;
 const A0_1080 = 556;
 
-const A0_483 = 87;
-const A0_93 = 880;
-const A0_3668 = 7932;
+const A0_483 = 0.087;
+const A0_93 = 0.880;
+const A0_3668 = 7.932;
+const A0_595 = 97.070;
 
 /**Химические элементы*/
 let CS_137, CD_109;
 
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
-let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668;
+let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595;
 
 /**Инициализация объектов класса источников и элементов*/
 function initializeSource() {
@@ -58,6 +60,7 @@ function initializeSource() {
     cs_483  = new RA_Source("№483",  CS_137, A0_483,  POV_DATE_FOR_UD_SRC);
     cs_93   = new RA_Source("№93",   CS_137, A0_93,   POV_DATE_FOR_UD_SRC);
     cs_3668 = new RA_Source("№3668", CS_137, A0_3668, POV_DATE_FOR_UD_SRC);
+    cs_595  = new RA_Source("№595",  CS_137, A0_595,  POV_DATE_595);
 
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -86,7 +89,8 @@ function set_main_activities() {
         cs_833.getActivityBlock()+
         cs_483.getActivityBlock()+
         cs_93.getActivityBlock()+
-        cs_3668.getActivityBlock();
+        cs_3668.getActivityBlock()+
+        cs_595.getActivityBlock();
 
     /**Вывод блочных ссылок*/
     document.getElementById('div_for_menu_block').innerHTML =
@@ -205,8 +209,9 @@ function setActivity_0() {
         case '10': setA0_By_Element(cs_831); break;
         case '11': setA0_By_Element(cs_832); break;
         case '12': setA0_By_Element(cs_833); break;
-        case '13': setA0_By_Element(cd_1079); break;
-        case '14': setA0_By_Element(cd_1080); break;
+        case '13': setA0_By_Element(cs_595); break;
+        case '14': setA0_By_Element(cd_1079); break;
+        case '15': setA0_By_Element(cd_1080); break;
     }
 }
 
