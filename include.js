@@ -1,3 +1,5 @@
+// noinspection NonAsciiCharacters
+
 const OPEN = "open";
 const CLOSE = "close";
 const REG_MENU = "reg_menu";
@@ -339,7 +341,7 @@ function getRegMenu(mode, id) {
         '           </summary>' +
         '           <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
         '           <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
-        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.30</a></li>' +
+        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.38</a></li>' +
         '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
         '       </details>' +
         '        <li><a href="../other/adjustment_db.html">AdjustmentDB и AdjustmentWeb</a></li>' +

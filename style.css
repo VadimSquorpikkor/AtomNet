@@ -4,6 +4,8 @@
 /*todo чтобы закрыть все region: Ctrl+Shift+Num-*/
 /*todo чтобы открыть все region: Ctrl+Shift+Num+*/
 
+/*todo для нового года и ДР см. .main_div и .logo_div*/
+
 /*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -95,12 +97,18 @@ th {
 /*region ------- Дивы и вложенные в дивы элементы -------------------------------------------------------------------------------*/
 
 .logo_div {
-    background: #333333 url("logo2.png") no-repeat center;
+    /*background: #333333 url("logo2.png") no-repeat center;*//*стандарт*/
 
     /*background: #333333;*/
     /*background-image: url("logo2.png"), url("logo_pcb2.png");*/
     /*background-position: center;*/
     /*background-repeat: no-repeat, repeat;*/
+
+    /*ДЛЯ НОВОГО ГОДА*/
+    background: #333333;
+    background-image: url("logo2.png"), url("sneg.jpg");
+    background-position: center, right top;
+    background-repeat: no-repeat, repeat;
 
     height: 80px;
     margin-bottom: 10px;
@@ -122,8 +130,8 @@ th {
 
 .main_div{
     /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
-    /*background-size: 250px;*/
+    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
@@ -441,6 +449,7 @@ h1, h3 {
 h3 {
     font-size: 22px;
     text-transform: none;
+    font-family: Arial;
 }
 
 ul {
@@ -686,6 +695,12 @@ body {
     color: orangered;
     font-size: 36px;
     padding-left: 100px;
+}
+
+.underline_italic {
+    font-style: italic;
+    /*font-weight: bold;*/
+    text-decoration: underline;
 }
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/

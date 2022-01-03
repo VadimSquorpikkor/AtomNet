@@ -3,3 +3,9 @@
 3. firebase deploy
 
 Некоторые файлы (.js) могут добавиться только через пару минут, надо просто подождать
+
+Если: Error: Failed to get Firebase project uchastokrir2. Please make sure the project exists and your account has permission to access it.
+Это значит, что консоль подключена к другому аккаунту/не подключена ни к какому аккаунту
+Нужно выйти и зайти под аккаунтом uchastokrir2
+Выйти: firebase logout
+Войти: firebase login — перекинет на страничку, там выбрать аккаунт, нажать "allow", в консоле появится "Success! Logged in as uchastok.rir@gmail.com"
