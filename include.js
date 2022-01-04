@@ -427,6 +427,8 @@ function includeMenu(menu_id, menu_type, menu_state) {
 
     if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML = getRegMenu(state, menu_id);
     if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML = getGradMenu(state, menu_id);
+
+    // left_menu_visibility(false);
 }
 
 /**Показывает/скрывает всплывающее меню по нажатии зеленой кнопки "Меню"*/
@@ -441,6 +443,19 @@ function show_menu(){
     else {
         x.style.display = "none";
     }
+}
+
+function left_menu_visibility(show){
+    let menu = document.getElementById("menu_left");
+    let menu2 = document.getElementById("left_side_menu");
+    // let hiddenMenuDiv = document.getElementById("hidden_menu_div");
+    // let smallButtons = document.getElementById("hidden_menu_div");
+
+    if (show) menu2.style.display = "block";
+    else menu2.style.display = "none";
+
+    menu.hidden = !show;
+    // hiddenMenuDiv.hidden = show;
 }
 
 function trackScroll() {

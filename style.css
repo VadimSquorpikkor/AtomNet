@@ -966,20 +966,34 @@ summary div ul {
 /*для всех страниц, кроме главной*/
 @media (min-width: 1300px){
     .main_div {
-        margin-left: 460px;
-        margin-right: 5px;
-        /*max-width: 1200px;*/
+        float: none;
+        overflow: hidden;
     }
+
     .left_side_menu {
+        width: 460px;
         display: block;
+        float: left;
+        margin-right: 10px;
     }
     .header_div_2 {
         margin-left: 470px;
         position: absolute;
 
+        /*float: none;*/
+        /*overflow: hidden;*/
+        /*padding-top: 5px;*/
+
+        /*margin-top: -40px;*/
+        /*margin-right: auto;*/
+
+        /*float: none;*/
+        /*overflow: hidden;*/
+
     }
     #menu_button {
         display: none;
+        position: fixed;
     }
 }
 
@@ -1069,6 +1083,20 @@ summary div ul {
     display: block;
 }
 /*endregion ------------------------------------------------------------------------------------------------------------*/
+
+.hidden_menu_div {
+    /*width: 100px;*/
+    text-indent: 5px;
+    /*margin: 5px;*/
+    margin-bottom: -20px;
+    padding: 17px;
+    color: white;
+    border-radius: 15px;
+    background-color: #444444;
+    /*float: none;*/
+    /*overflow: hidden;*/
+    visibility: visible;
+}
 
 /*.bg_1121 {
     !*background: white image("imgs/1121/1121_bg.png") no-repeat;*!
