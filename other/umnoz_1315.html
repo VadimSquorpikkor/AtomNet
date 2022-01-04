@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <META charset="utf8">
     <title>Проверка умножителя 1315</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
@@ -15,113 +16,115 @@
 
 <div class="menu_and_main_div">
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="">Проверка умножителя 1315</a>
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Проверка умножителя 1315</a>
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
+    </div>
 
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
 
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
-
-
-<div class="main_div">
-
-    <h1>Проверка умножителя 1315</h1>
-
-    <ul>
-        <li>Проверяем мультиметром на короткое замыкание провода, припаянные к умножителю</li>
-        <img src="../imgs/umnoz_1315/1.jpg" width="400">
-        <li>Проверяем мультиметром правильность установки и исправность светодиода. Мультиметр в режиме измерения диода
-            (прозвонки). Светодиод должен светиться синим цветом, номинал KP-1608QBC-D
-        </li>
-        <li>Собрать схему для проверки. Взять пульт для умножителей, подключить к источнику питания Б5-78/6
-            (подаем напряжение 6-7 В). К выводам пульта подключаем осциллограф и умножитель. Выставить входное
-            напряжение 95В потенциометром на задней стенке пульта.
-        </li>
-        <img src="../imgs/umnoz_1315/2.jpg" width="700">
-        <li>На осциллографе должна быть такая картина</li>
-        <img src="../imgs/umnoz_1315/3.jpg" width="400">
-        <li>Проверить <span class="attention">статиком</span> напряжение в точке 11 относительно земли. Напряжения должны быть: <span class="mark_yellow">потом напишу</span>
-            <img src="../imgs/umnoz_1315/4.jpg" width="400">
-        </li>
-
-        <li>Подключить к точке 11 нагрузку 10 МОм (не мультиметр, не вольтметр, не осциллограф, так как предел измерения 1000В) в течении 10 секунд</li>
-        <li>Перепроверить <span class="attention">статиком</span> напряжение в точке 11</li>
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
 
 
+    <div class="main_div">
 
-<!--        <div class="yellow_back">
+        <h1>Проверка умножителя 1315</h1>
 
-        <table id="table_calc" style="max-width: 800px; margin: 5px auto">
-            <div style="background-color: inherit;  text-align: center">
-                <input id="u" type="text" value="95" title="Напряжение">
-                <input type="button" value="Рассчитать" onclick="calc_tab()">
-            </div>
+        <ul>
+            <li>Проверяем мультиметром на короткое замыкание провода, припаянные к умножителю</li>
+            <img src="../imgs/umnoz_1315/1.jpg" width="400" alt="изображение не найдено">
+            <li>Проверяем мультиметром правильность установки и исправность светодиода. Мультиметр в режиме измерения
+                диода
+                (прозвонки). Светодиод должен светиться синим цветом, номинал KP-1608QBC-D
+            </li>
+            <li>Собрать схему для проверки. Взять пульт для умножителей, подключить к источнику питания Б5-78/6
+                (подаем напряжение 6-7 В). К выводам пульта подключаем осциллограф и умножитель. Выставить входное
+                напряжение 95В потенциометром на задней стенке пульта.
+            </li>
+            <img src="../imgs/umnoz_1315/2.jpg" width="700" alt="изображение не найдено">
+            <li>На осциллографе должна быть такая картина</li>
+            <img src="../imgs/umnoz_1315/3.jpg" width="400" alt="изображение не найдено">
+            <li>Проверить <span class="attention">статиком</span> напряжение в точке 11 относительно земли. Напряжения
+                должны быть: <span class="mark_yellow">потом напишу</span>
+                <img src="../imgs/umnoz_1315/4.jpg" width="400" alt="изображение не найдено">
+            </li>
 
-            <tr>
-                <td>Точка</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
-            </tr>
-            <tr>
-                <td>Напряжение</td>
-                <td id="t_2">76</td>
-                <td id="t_1">20</td>
-                <td id="t_3">140</td>
-                <td id="t_4">180</td>
-                <td id="t_5">218</td>
-                <td id="t_6">247</td>
-                <td id="t_7">280</td>
-                <td id="t_8">315</td>
-                <td id="t_9">345</td>
-                <td id="t_10">375</td>
-                <td id="t_11">397</td>
-            </tr>
-        </table>
+            <li>Подключить к точке 11 нагрузку 10 МОм (не мультиметр, не вольтметр и не осциллограф, так как предел
+                измерения 1000В) в течении 10 секунд
+            </li>
+            <li>Перепроверить <span class="attention">статиком</span> напряжение в точке 11</li>
 
 
-        </div>-->
+            <!--        <div class="yellow_back">
 
-        <!--<li>При измерении мультиметром напряжения на 11 точке , картинка на осциллографе изменится и будет такая:</li>
-        <img src="../imgs/umnoz_1315/5.jpg" width="400">-->
-        <li>Потребление от источника питания рабочего умножителя не более 20ма, если потребление больше (например 60ма)
-            и картинка на осциллографе с сильно заваленными фронтами, значит умножитель не исправен.
-        </li>
+                    <table id="table_calc" style="max-width: 800px; margin: 5px auto">
+                        <div style="background-color: inherit;  text-align: center">
+                            <input id="u" type="text" value="95" title="Напряжение">
+                            <input type="button" value="Рассчитать" onclick="calc_tab()">
+                        </div>
 
+                        <tr>
+                            <td>Точка</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                            <td>6</td>
+                            <td>7</td>
+                            <td>8</td>
+                            <td>9</td>
+                            <td>10</td>
+                            <td>11</td>
+                        </tr>
+                        <tr>
+                            <td>Напряжение</td>
+                            <td id="t_2">76</td>
+                            <td id="t_1">20</td>
+                            <td id="t_3">140</td>
+                            <td id="t_4">180</td>
+                            <td id="t_5">218</td>
+                            <td id="t_6">247</td>
+                            <td id="t_7">280</td>
+                            <td id="t_8">315</td>
+                            <td id="t_9">345</td>
+                            <td id="t_10">375</td>
+                            <td id="t_11">397</td>
+                        </tr>
+                    </table>
+
+
+                    </div>-->
+
+            <!--<li>При измерении мультиметром напряжения на 11 точке , картинка на осциллографе изменится и будет такая:</li>
+            <img src="../imgs/umnoz_1315/5.jpg" width="400">-->
+            <li>Потребление от источника питания рабочего умножителя не более 20ма, если потребление больше (например
+                60ма)
+                и картинка на осциллографе с сильно заваленными фронтами, значит умножитель не исправен.
+            </li>
+        </ul>
         <h3>Устранение неисправностей</h3>
+        <ul>
+            <li>Ремонт заключается в проверке элементов и монтажа.</li>
+            <li>Обратить внимание на качество пайки, чтобы не было не припаянных элементов.</li>
+            <li>Проверить диоды мультиметром.</li>
+            <li>Проверить маленькие конденсаторы мультиметром (предел 20Мом), должно быть не менее 2 Мом ! Что меньше —
+                менять. Номинал 0603-X7R-0,1 мкФ +_10%-100В (06031C104KAT2A)
+            </li>
 
-        <li>Ремонт заключается в проверке элементов и монтажа.
-        </li>
-        <li>Обратить внимание на качество пайки, чтобы не было не припаянных элементов.
-        </li>
-        <li>Проверить диоды мультиметром.</li>
-        <li>Проверить маленькие конденсаторы мультиметром (предел 20Мом), должно быть не менее 2 Мом ! что меньше-
-            менять. Номинал 0603-X7R-0,1 мкФ +_10%-100В (06031C104KAT2A)
-        </li>
+        </ul>
 
-    </ul>
-
-</div>
+    </div>
 </div>
 </body>
 </html>

@@ -27,6 +27,7 @@ table {
     font-size: 14px;
     border-collapse: collapse;
     width: 300px;
+    margin: auto;
 }
 table, th, td {
     border: 1px solid black;
@@ -736,7 +737,7 @@ a[href$='.zip'] {
 }
 
 a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.pdf'], a[href$='.doc'], a[href$='.xls'], a[href$='.rar'], a[href$='.zip'] {
-    background-size: 20px;
+    background-size: 21px;
     padding-left: 25px;
     transition-duration: 150ms;
     /*transition-property: none;*/
@@ -745,7 +746,7 @@ a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.
 a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
     background-color: darkorange;
     padding-left: 25px;
-    background-size: 23px;
+    background-size: 24px;
 }
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/
@@ -915,13 +916,13 @@ summary div ul {
     margin: -5px;
     display: block;
     position: absolute;
-    left: 150px;
+    left: 250px;
     color: #444;
     padding: 0;
     text-indent: 0;
     background-color: #444444;
     border-radius: 10px;
-    width: 400px;
+    width: 370px;
     z-index: 3;
 }
 
@@ -1054,19 +1055,20 @@ summary div ul {
 /*region ------- Для кнопки возврата в начало страницы --------------------------------------------------------------------------*/
 .to_page_top {
     position: fixed;
-    bottom: 80px;
-    right: 40px;
+    bottom: 30px;
+    right: 30px;
     z-index: 9999;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     text-align: center;
     line-height: 30px;
-    background: #ff8c00;
+    /*background: #ff8c00;*/
+    background: #444444;
     opacity: .6;
     color: #fff;
     font-size: 28px;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 10px;
     display: none;
     content: "wef2e";
     box-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.55);

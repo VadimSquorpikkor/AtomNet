@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTag, GrazieInspection -->
 <html lang="ru">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
@@ -63,17 +64,17 @@
                 <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">базу настройки
                     БДКГ-04</a> и в перечень записать дату настройки, серийный номер и ФИО регулировщика.
             </summary>
-            <img src="../imgs/bdkg04/02.jpg" width="400">
-            <img src="../imgs/bdkg04/01.jpg" width="300">
+            <img src="../imgs/bdkg04/02.jpg" width="400" alt="изображение не найдено">
+            <img src="../imgs/bdkg04/01.jpg" width="300" alt="изображение не найдено">
         </details>
     </div>
     <div class="nice_details">
         <details>
             <summary>2. На плате преобразователя напряжения заменить резисторы R20 и R31</summary>
             Во избежания колебаний показаний в точке 700 мЗв в 3-м диапазоне (плавают от 680 до 820 мЗв), на плате
-            преобразователя напряжения заменить резистор R20 c 30 кОм на 20 кОм и резистор R31 с 150 кОм на 330 кОм.
+            преобразователя напряжения заменить резистор R20 с 30 кОм на 20 кОм и резистор R31 с 150 кОм на 330 кОм.
             Это уменьшит колебания высокого напряжения, "успокоит" прибор.
-            <img src="../imgs/bdkg04/28.jpg" width="800">
+            <img src="../imgs/bdkg04/28.jpg" width="800" alt="изображение не найдено">
 <!--            <summary>2. Откусить выступающие ножки трансформатора</summary>-->
 <!--            <img src="../imgs/bdkg04/03.jpg" width="800">-->
         </details>
@@ -82,7 +83,8 @@
         <details>
             <summary>3. Перепроверить установленные коэффициенты:
                 <br><span class="attention">Должны</span> стоять такие коэффициенты:
-                <table class="small_table" align="center">
+                <!--suppress HtmlUnknownTag -->
+                <table class="small_table">
                     <tr>
                         <td>1U</td>
                         <td>0.5</td>
@@ -107,7 +109,7 @@
             </summary>
 
             <p>Подключить БД к технологическому БОИ
-                <img src="../imgs/bdkg04/04.jpg" width="800">
+                <img src="../imgs/bdkg04/04.jpg" width="800" alt="изображение не найдено">
             <ul>
                 <li>При включении нажать и удерживать кнопку <span class="like_a_button">МЕМ</span></li>
                 <li>Нажать три раза <span class="like_a_button">МЕМ</span>, на экране появится "---":</li>
@@ -128,11 +130,11 @@
                     и
                     <span class="like_a_button">&emsp;&bigtriangledown;&emsp;</span></li>
 
-                <img src="../imgs/bdkg04/05.jpg" width="800">
+                <img src="../imgs/bdkg04/05.jpg" width="800" alt="изображение не найдено">
             </ul>
 
             <p><span class="attention">Должны</span> стоять такие коэффициенты:
-            <table class="small_table" align="center">
+            <table class="small_table">
                 <tr>
                     <td>1U</td>
                     <td>0.5</td>
@@ -164,12 +166,12 @@
 
             <ul>
                 <li>Подключить БД к адаптеру USB</li>
-                <img src="../imgs/bdkg04/06.jpg" width="800">
+                <img src="../imgs/bdkg04/06.jpg" width="800" alt="изображение не найдено">
                 <li>Запустить программу BackgroundCalibration. Дозиметр подключится автоматически</li>
                 <li>Нажать "Запись идентификационных данных"</li>
-                <img src="../imgs/bdkg04/07.jpg" width="800">
+                <img src="../imgs/bdkg04/07.jpg" width="800" alt="изображение не найдено">
                 <li>Записать серийный номер, месяц и год производства</li>
-                <img src="../imgs/bdkg04/08.jpg" width="300">
+                <img src="../imgs/bdkg04/08.jpg" width="300" alt="изображение не найдено">
             </ul>
             <div class="tips_and_tricks">Если перед тем, как нажать "Запись..." НЕ выделять строку с прибором,
                 Background сам подставит сегодняшнюю дату
@@ -189,7 +191,7 @@
 
             Для того, чтобы измерить ток, у меня есть специальный адаптер USB с разрывом питания
             и выходом на мультиметр:
-            <img src="../imgs/bdkg04/09.jpg" width="800">
+            <img src="../imgs/bdkg04/09.jpg" width="800" alt="изображение не найдено">
 
         </details>
     </div>
@@ -202,19 +204,19 @@
                 Для этого:
 
                 <li>С помощью осциллографа проверить сигнал светодиода.</li>
-                <img src="../imgs/bdkg04/26.jpg" width="800">
+                <img src="../imgs/bdkg04/26.jpg" width="800" alt="изображение не найдено">
                 <li>Максимальная амплитуда сигнала не должна превышать 100В и иметь такую форму(<span
                         class="attention">обязательно</span>
                     иметь "горб"[1] и длинный "спад"[2]):
                 </li>
-                <img src="../imgs/bdkg04/28.png" width="500">
+                <img src="../imgs/bdkg04/28.png" width="500" alt="изображение не найдено">
                 <li>То же сделать для 3-го диапазона</li>
                 <li>Разница между амплитудами первого и третьего диапазона не должна превышать 30 В</li>
                 <li>Значение напряжения диода для 3-го и 1-го диапазона <span
                         class="mark_yellow">записать в базу настройки</span>
                     <a title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods"></a>
-                    <img src="../imgs/bdkg04/27.jpg" width="311">
+                    <img src="../imgs/bdkg04/27.jpg" width="311" alt="изображение не найдено">
 
             </ul>
         </details>
@@ -224,6 +226,7 @@
             <summary>8. Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
                 показаниям от ОСГИ <sup>137</sup>Cs:
 
+                <!--suppress HtmlUnknownTag -->
                 <div class="yellow_back" id="div_drop_down_1">Ошибка загрузки</div>
 
                 Проверить скорость счета от <sup>137</sup>Cs во втором диапазоне,
@@ -233,16 +236,16 @@
             <ul>
                 <li>Закрепить источник <span class="attention">ОБЯЗАТЕЛЬНО латунной пластинкой к прибору</span>
                     и <span class="attention">со снятым колпачком</span>
-                    <img src="../imgs/bdkg04/10.jpg" width="800"></li>
+                    <img src="../imgs/bdkg04/10.jpg" width="800" alt="изображение не найдено"></li>
                 <li>Подключить БД через адаптер USB к компьютеру:</li>
-                <img src="../imgs/bdkg04/11.jpg" width="800">
+                <img src="../imgs/bdkg04/11.jpg" width="800" alt="изображение не найдено">
                 <li>Запустить Background Calibration</li>
                 <li>С помощью подбора номинала резистора R7 (грубо) и регулировкой подстроечного резистора R8
                     (точно)добиться показаний от источника <sup>137</sup>Cs:
 
                     <div class="yellow_back" id="div_drop_down_2">Ошибка загрузки</div>
 
-                    <img src="../imgs/bdkg04/12.jpg" width="800">
+                    <img src="../imgs/bdkg04/12.jpg" width="800" alt="изображение не найдено">
 
                     Чтобы не подбирать номинал резистора наугад, можно воспользоваться такой формой (пока
                     считает не точно, мало статистики):
@@ -257,7 +260,7 @@
                 </li>
                 <li>Замерить напряжение на среднем выводе подстроечного резистора R8:</li>
 
-                <img src="../imgs/bdkg04/16.jpg" width="800">
+                <img src="../imgs/bdkg04/16.jpg" width="800" alt="изображение не найдено">
 
 
                 <li><span class="mark_yellow">Записать в базу настройку полученную м.д. по  <sup>137</sup>Cs,
@@ -265,7 +268,7 @@
                     <a title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods"></a>
 
-                    <img src="../imgs/bdkg04/13.jpg" width="350">
+                    <img src="../imgs/bdkg04/13.jpg" width="350" alt="изображение не найдено">
                 </li>
 
                 <!--<img src="../imgs/1121/03.png" width="500">-->
@@ -292,7 +295,7 @@
 
                 <div class="yellow_back" id="div_drop_down_4">Ошибка загрузки</div>
 
-                <img src="../imgs/bdkg04/14.jpg" width="800">
+                <img src="../imgs/bdkg04/14.jpg" width="800" alt="изображение не найдено">
                 <!--<img src="../imgs/1123/16.jpg" width="800">-->
                 <li>Чтобы увеличить значение м.д. сопротивление резистора нужно уменьшить, и наоборот</li>
                 <li><span class="mark_yellow">Записать в базу настройки
@@ -300,14 +303,14 @@
                     <a title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods"></a>
 
-                    <img src="../imgs/bdkg04/17.jpg" width="350">
+                    <img src="../imgs/bdkg04/17.jpg" width="350" alt="изображение не найдено">
             </ul>
 
         </details>
     </div>
     <div class="nice_details">
         <details>
-            <summary>10. Проконтролировать напряжение на выводе D4.1 на плата преобразователя напряжения в 3
+            <summary>10. Проконтролировать напряжение на выводе D4.1 на плате преобразователя напряжения в 3
                 диапазоне.
             </summary>
 
@@ -317,22 +320,22 @@
                 <li>Запустить Background Calibration.</li>
                 <li>Проверить напряжение в первом диапазоне на 1-ом выводе D4.1 на плате преобразователя
                     напряжения
-                    в первом и 3-ем диапазоне. (3-ий диапазоны переключается в BCalibration кнопкой <span
+                    в первом и 3-ем диапазоне. (3-ий диапазон переключается в BCalibration кнопкой <span
                             class="like_a_button"> Диапазон 3 </span> )
                 </li>
-                <img src="../imgs/bdkg04/18.jpg" width="800">
+                <img src="../imgs/bdkg04/18.jpg" width="800" alt="изображение не найдено">
 
                 <li>Значения обоих напряжений и номинал резистора R24 записать в базу настроек
                     <a title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods"></a>
                 </li>
-                <img src="../imgs/bdkg04/20.jpg" width="300">
+                <img src="../imgs/bdkg04/20.jpg" width="300" alt="изображение не найдено">
 
                 <span class="attention">В 3-ем диапазоне значение напряжения должно составлять 4.7-5В.</span>
                 Регулировка напряжения в 3 диапазоне осуществляется подбором номинала резистора R24 на плате
                 преобразователя.<br>
                 <!--<span class="attention">Номинал резистора не должен превышать 12кОм!</span>-->
-                <img src="../imgs/bdkg04/19.jpg" width="800">
+                <img src="../imgs/bdkg04/19.jpg" width="800" alt="изображение не найдено">
             </ul>
             <div class="yellow_back">
                 Примерно такие номиналы:
@@ -353,9 +356,9 @@
                 <li><span class="attention">Осциллографом</span>
                     замерить напряжение на высоком (в 1-м диапазоне):
                 </li>
-                <img src="../imgs/bdkg04/22.jpg" width="800">
+                <img src="../imgs/bdkg04/22.jpg" width="800" alt="изображение не найдено">
                 <span class="attention">Смотреть значение "Размах":</span>
-                <img src="../imgs/bdkg04/23.jpg" width="450">
+                <img src="../imgs/bdkg04/23.jpg" width="450" alt="изображение не найдено">
 
                 <li>Высокое будет "прыгать", поэтому удобнее на осциллографе установить режим "Усреднения"
                     <details>
@@ -365,7 +368,7 @@
                         <div>Для этого на осциллографе нажать "Сбор данных" [A],
                             выбрать "Среднее" [B], выставить "Усреднение" равным 128, нажать
                             "Измерения" [C]
-                            <img src="../imgs/1121/13.png" width="600">
+                            <img src="../imgs/1121/13.png" width="600" alt="изображение не найдено">
                         </div>
                     </details>
 
@@ -374,7 +377,7 @@
                     <a title="Открыть базу настройки БДКГ-04"
                        href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods"></a>
 
-                    <img src="../imgs/bdkg04/24.jpg" width="350">
+                    <img src="../imgs/bdkg04/24.jpg" width="350" alt="изображение не найдено">
                 </li>
                 <li>В ячейке "Расчет" отобразится значение напряжения на высоком в 3-м диапазоне</li>
                 <li>Переключится в 3-й диапазон и сравнить напряжение на высоком с расчетным</li>
@@ -384,7 +387,7 @@
                     <span class="attention">Отклонение от расчетного значения не должно превышать 0,6-0,8 В</span>
                 </li>
                 <li>Чтобы увеличить, надо уменьшить и наоборот</li>
-                <img src="../imgs/bdkg04/19.jpg" width="800">
+                <img src="../imgs/bdkg04/19.jpg" width="800" alt="изображение не найдено">
                 <span class="attention"></span>
                 <li><span
                         class="mark_yellow">Записать в базу настройки напряжение высокого 3-ем диапазоне</span>
@@ -406,14 +409,13 @@
 
             Если во 2 диапазоне на фоне есть показания, то на плате преобразователя тока регулируем R5 (R5
             уменьшаем на 1 номинал).
-            <img src="../imgs/bdkg04/21.jpg" width="600">
+            <img src="../imgs/bdkg04/21.jpg" width="600" alt="изображение не найдено">
 
         </details>
     </div>
     <div class="nice_details"><span class="space"></span>13. Приработать не менее 40 часов.</div>
     <div class="nice_details"><span class="space"></span>14. Перепроверить показания по <sup>137</sup>Сs и
-        <sup>109</sup>Cd, и напряжение
-        выв.1 D5.1 на плата преобразователя напряжения.
+        <sup>109</sup>Cd, и напряжение выв.1 D5.1 на плате преобразователя напряжения.
         <div class="tips_and_tricks">Если прирабатывать приборы ДО регулировки, то перепроверять показания уже будет не
             нужно!!!
         </div>
