@@ -465,8 +465,10 @@ ol {
 }
 
 figcaption {
+    font-size: 14px;
     text-align: center;
     font-style: italic;
+    text-indent: 0;
 }
 
 body {
@@ -1111,4 +1113,20 @@ summary div ul {
     background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
     background-size: 65px;
 }*/
+
+.image_div {
+    width: fit-content;
+    margin: auto;
+    text-indent: 0;
+}
+.image_div img:hover{
+    transform:scale(1.8);
+    transition: transform 0.25s ease;
+}
+/* Clear floats after image container */
+.image_div::after {
+    content: "";
+    clear: both;
+    display: table;
+}
 

@@ -9,6 +9,14 @@ const COLOR_RED = "#ff3333";
 const СВЕРНУТЬ = "Свернуть"
 const РАЗВЕРНУТЬ = "Развернуть"
 
+// Function to increase image size
+// для работы: <img src="../imgs/adjustment/11.jpg" onclick="enlargeImg(this)">
+function enlargeImg(img) {
+    img.style.transform = "scale(1.5)";
+    img.style.transition =
+        "transform 0.25s ease";
+}
+
 /**Установить цвет выбранного элемента
  * @param {*} element
  * @param {string} color — константа с цветом
