@@ -1,5 +1,7 @@
 #AtomNet
 
+* <b>06.01.22</b>
+1. Дополнения для "AdjustmentDB и AdjustmentWeb" и "AdjustmentDB. Описание сервиса"
 * <b>05.01.22</b>
 1. AdjustmentDB и AdjustmentWeb: дополнено описание, добавлены картинки
 * <b>04.01.22</b>глобальный коммит 117 файлов
