@@ -2,10 +2,15 @@
 2. cd D:\GitHub\AtomNet
 3. firebase deploy
 
-Некоторые файлы (.js) могут добавиться только через пару минут, надо просто подождать
+Некоторые файлы (.js и .css) могут добавиться только через пару минут, надо просто подождать (не обращать внимания, если что-то не работает или неправильно отображается, проверить позже)
 
 Если: Error: Failed to get Firebase project uchastokrir2. Please make sure the project exists and your account has permission to access it.
 Это значит, что консоль подключена к другому аккаунту/не подключена ни к какому аккаунту
 Нужно выйти и зайти под аккаунтом uchastokrir2
 Выйти: firebase logout
 Войти: firebase login — перекинет на страничку, там выбрать аккаунт, нажать "allow", в консоле появится "Success! Logged in as uchastok.rir@gmail.com"
+После этого деплоить как обычно
+
+Если: Error: HTTP Error: 429, You have exceeded the Hosting storage quota for your Firebase project, so you cannot deploy to your site right now. Visit the Firebase console to either manage your Hosting storage or upgrade to the Blaze plan.
+Это значит, что закончилось место на хостинге
+Заходим в Firebase->Hosting->Dashboard и в списке истории удаляем старые коммиты (хоть пару штук). Это предыдущие деплои, они не нужны, но firebase их хранит

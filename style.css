@@ -442,9 +442,7 @@ h1, h3 {
     font-family: "Book Antiqua", "Garamond", "Traditional Arabic", "Times New Roman", sans-serif;
     text-transform: uppercase;
     text-indent: 0;
-    /*text-shadow: 1px */
-
-    /*text-shadow: 4px 6px 10px 0 rgba(0, 0, 0, 0.55);*/
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; /*это чтобы на фоне картинке текст заголовка не сливался с картинкой*/
 }
 
 h3 {
