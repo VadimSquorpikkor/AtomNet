@@ -1117,9 +1117,16 @@ summary div ul {
     margin: auto;
     text-indent: 0;
 }
-.image_div img:hover{
+/*.image_div img:hover{
     transform:scale(1.8);
     transition: transform 0.25s ease;
+}*/
+.bigger{
+    transform:scale(2.2);
+    transition: transform 0.25s ease;
+}
+.resizable {
+    cursor: pointer;
 }
 /* Clear floats after image container */
 .image_div::after {

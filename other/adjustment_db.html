@@ -7,6 +7,7 @@
     <title>AdjustmentDB</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../include.js"></script>
+    <script type="text/javascript" src="../jquery-3.6.0.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script>window.addEventListener('scroll', trackScroll)</script>
 </head>
@@ -134,9 +135,12 @@
             <li><span class="underline_italic">В диалоге на вкладке "Кратко" выбрать нужный статус</span> (рис. 5),
                 после чего диалог закроется и в окне с данными добавится выбранный статус. Это значит, что добавленный
                 статус был успешно добавлен в БД.<br><br>
-                <em>Примечание</em><br>
-                Для участка регулировки: при первом поступлении устройства на участок, кроме статуса устройства
-                оператору необходимо также добавить фамилию ответственного за ремонт (рис. 10).
+                <em>Примечания</em>
+                <ol><li>Для участка регулировки: при первом поступлении устройства на участок, кроме статуса устройства
+                    оператору необходимо также добавить фамилию ответственного за ремонт (рис. 10).</li>
+                    <li>Для участков сборки, монтажа и градуировки режим "Подробно" в диалоге статусов не доступен,
+                        диалог всегда открывается в режиме "Кратко".</li>
+                </ol>
             </li>
             <!--<li><span class="underline_italic">В диалоге выбрать нужный статус</span>, после чего диалог закроется и в
                 окне с данными добавится выбранный статус. Это значит, что добавленный статус был успешно добавлен в БД.
@@ -153,27 +157,27 @@
 
         <div class="image_div">
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/11.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/11.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 1</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/12.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/12.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 2</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/16.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/16.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 3</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/14.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/14.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 4</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/13.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/13.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 5</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/15.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/15.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 6</figcaption>
             </figure>
 
@@ -219,23 +223,23 @@
 
         <div class="image_div">
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/11.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/11.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 7</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/12.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/12.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 8</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/14.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/14.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 9</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/21.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/21.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 10</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/15.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/15.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 11</figcaption>
             </figure>
         </div>
@@ -254,7 +258,7 @@
 
         <div class="image_div">
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/23.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/23.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 14</figcaption>
             </figure>
         </div>
@@ -269,14 +273,23 @@
 
         <div class="image_div">
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/21.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/21.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 12</figcaption>
             </figure>
             <figure style="float: left; padding-right: 10px; margin: 0">
-                <img src="../imgs/adjustment/22.jpg" width="180" alt="изображение не найдено">
+                <img class="resizable" src="../imgs/adjustment/22.jpg" width="160" alt="изображение не найдено">
                 <figcaption>Рис. 13</figcaption>
             </figure>
         </div>
+
+        <script type="text/javascript">
+
+            $(".resizable").click(function () {
+                // $(this).css('transform', 'scale(1.8)');// то же но хз как уменьшить
+                $(this).toggleClass("bigger");//но так ещё пришлось стиль в css дописывать
+            })
+
+        </script>
 
     </div>
 </div>
