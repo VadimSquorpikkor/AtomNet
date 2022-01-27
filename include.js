@@ -9,6 +9,12 @@ const COLOR_RED = "#ff3333";
 const СВЕРНУТЬ = "Свернуть"
 const РАЗВЕРНУТЬ = "Развернуть"
 
+function toggleMenu(elem) {
+    // $(elem.firstChild).toggle();
+    // $(elem).toggleClass("small_nice_details");
+    // $(elem).toggleClass("display_block");
+}
+
 // Function to increase image size
 // для работы: <img src="../imgs/adjustment/11.jpg" onclick="enlargeImg(this)">
 function enlargeImg(img) {
@@ -125,6 +131,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a>' +
         '        </li>' +
         '        <li><a href="../bdkg02/bdkg02.html">БДКГ-02</a>' +
+        /*'        <li onclick="toggleMenu()"><a>БДКГ-02</a>' +*/   <!--href="../bdkg02/bdkg02.html">-->
         '            <div>' +
         '                <ul>' +
         '                    <li><a href="../bdkg02/bdkg-02rem.html">РЕМОНТ</a></li>' +

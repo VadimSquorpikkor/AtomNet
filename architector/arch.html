@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta charset="UTF-8">
+    <title>ARCH</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+
+    <style type="text/css">
+        .data_div {
+            text-indent: 0;
+            padding: 5px;
+            background: #dddddd;
+            margin: 10px;
+        }
+        .data_span {
+            font-size: 12px;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">ARCH</a>
+
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>ARCH</h1>
+        <input type="button" id="insert_du" value="Добавить БД">
+        <input type="text" placeholder="БДКГ-02" id="du_name" value="БДКГ-02">
+        <input type="text" placeholder="Гамма" id="du_type" value="Гамма"><!--этого не будет значение будет браться из объекта DUnit-->
+        <br>
+        <input type="button" id="insert_pu" value="Добавить ПУ">
+        <input type="text" placeholder="ПУ-900" id="pu_name" value="ПУ-900">
+        <br>
+        <input type="button" id="calculate" value="Посчитать">
+        <input type="button" id="reset" value="Сброс">
+
+
+
+        <div id="data" class="data_div"></div>
+        <br>
+        <div id="result" class="data_div"></div>
+
+
+    </div>
+        <script type="text/javascript" src="architector.js"></script>
+        <script type="text/javascript" src="calculation.js"></script>
+</div>
+</body>
+</html>
