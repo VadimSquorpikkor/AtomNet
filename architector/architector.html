@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta charset="UTF-8">
-    <title>ARCH</title>
+    <title>Architector</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../include.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
@@ -14,13 +14,27 @@
         .data_div {
             text-indent: 0;
             padding: 5px;
-            background: #dddddd;
+            background: white;
             margin: 10px;
-        }
-        .data_span {
+            border-radius: 5px;
+            border-color: #cccccc;
+            border-width: 2px;
+            border-style: solid;
             font-size: 12px;
         }
 
+        .playground_div {
+            text-indent: 0;
+            padding: 5px;
+            background: white;
+            margin: 10px;
+            border-radius: 5px;
+            border-color: #cccccc;
+            border-width: 2px;
+            border-style: solid;
+            height: 500px;
+
+        }
 
 
     </style>
@@ -37,7 +51,7 @@
                id="menu_button">
 
         <a href="../menu/index.html">Главная</a>
-        <a href="">ARCH</a>
+        <a href="">Architector</a>
 
         <div class="spoiler_menu" id="menu" style="display: none"></div>
     </div>
@@ -53,25 +67,25 @@
 
     <div class="main_div">
 
-        <h1>ARCH</h1>
+        <h1>Architector</h1>
         <input type="button" id="insert_du" value="Добавить БД">
-        <input type="text" placeholder="БДКГ-02" id="du_name" value="БДКГ-02">
-        <input type="text" placeholder="Гамма" id="du_type" value="Гамма"><!--этого не будет значение будет браться из объекта DUnit-->
-        <br>
+<!--        <input type="text" placeholder="БДКГ-02" id="du_name" value="БДКГ-02">-->
+<!--        <br>-->
         <input type="button" id="insert_pu" value="Добавить ПУ">
-        <input type="text" placeholder="ПУ-900" id="pu_name" value="ПУ-900">
-        <br>
+<!--        <input type="text" placeholder="ПУ-900" id="pu_name" value="ПУ-900">-->
+<!--        <br>-->
         <input type="button" id="calculate" value="Посчитать">
         <input type="button" id="reset" value="Сброс">
 
-
-
         <div id="data" class="data_div"></div>
+        <br>
+        <div id="playground" class="playground_div"></div>
         <br>
         <div id="result" class="data_div"></div>
 
 
     </div>
+        <script type="text/javascript" src="entities.js"></script>
         <script type="text/javascript" src="architector.js"></script>
         <script type="text/javascript" src="calculation.js"></script>
 </div>

@@ -98,7 +98,7 @@ th {
 /*region ------- Дивы и вложенные в дивы элементы -------------------------------------------------------------------------------*/
 
 .logo_div {
-    /*background: #333333 url("logo2.png") no-repeat center;*//*стандарт*/
+    background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
     /*background: #333333;*/
     /*background-image: url("logo2.png"), url("logo_pcb2.png");*/
@@ -106,10 +106,10 @@ th {
     /*background-repeat: no-repeat, repeat;*/
 
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #333333;
+    /*background: #333333;
     background-image: url("logo2.png"), url("sneg.jpg");
     background-position: center, right top;
-    background-repeat: no-repeat, repeat;
+    background-repeat: no-repeat, repeat;*/
 
     height: 80px;
     margin-bottom: 10px;
@@ -131,8 +131,8 @@ th {
 
 .main_div{
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
-    background-size: 250px;
+    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
+    /*background-size: 250px;*/
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/

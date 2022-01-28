@@ -1,59 +1,7 @@
-const DUNIT = 'DU';
-const PULT = 'PU';
-const BDKG02 = 'bdkg-02';
-const G = 'gamma';
-
-
-
-
-
-class Item {
-    constructor(name, type, cat) {
-        this._name = name;
-        this._type = type;
-        this._cat = cat;
-    }
-
-    get getName() { return this._name;
-    }
-
-    get getType() {
-        return this._type;
-    }
-    get getCat() {
-        return this._cat;
-    }
-}
-
-class DU extends Item{
-    constructor(name, type) {
-        super(name, type, DUNIT);
-    }
-}
-
-class PU extends Item {
-    constructor(name) {
-        super(name, 'no_type', PULT);
-    }
-}
-
-class Line {
-    _items = [];
-
-    constructor(name) {
-        this._name = name;
-    }
-
-    get name() { return this._name; }
-
-    addItem(item) { this._items.push(item); }
-
-    get getItems() { return this._items; }
-}
-
-
-
-
+const STEP = 60;
+let y_start_pos;
+let x_pos;
+let y_pos;
 
 function addItemToLine(line, item) {
     line.addItem(item);
@@ -61,31 +9,53 @@ function addItemToLine(line, item) {
 
 function calculatedLine(line) {
     let list = [];
-    let boxType;
     let items = line.getItems;
     for (let i = 0; i < items.length; i++) {
-        list.push(items[i].getName);
-        if (items[i].getCat===DUNIT) list.push('провод с разъемом');
-        if (items[i].getCat===PULT) list.push('адаптер питания');
+        list.push(items[i]);
 
-        if (i === 0) boxType = 'K2';
-        else if (i===items.length-1) boxType = 'K2';
-        else boxType = 'K3';
-        list.push(boxType);
+        let wire;
+        if (items[i].getCat===DUNIT) {
+            wire = wire_razyom;
+            list.push(wire);
+        }
+        if (items[i].getCat===PULT) {
+            wire = wire_ver;
+            // list.push('адаптер питания');//todo
+        }
 
-        drawSet(items[i], 'провод', boxType);
+        let box;
+        if (i === 0) box = k2_right;//boxType = 'K2';
+        else if (i===items.length-1) box = k2_left;
+        else box = k3;
+        list.push(box);
+
+        drawSet(items[i], wire, box);
+        if (i!==items.length-1) drawWire();
     }
     return list;
 }
 
 function drawSet(item, provod, box) {
-    let itemImg = getImage(item);
-    let provodImg = getImage(provod);
-    let boxImg = getImage(box);
+    y_pos = y_start_pos;
+    drawItem(item.getImg, x_pos, y_pos);
+    y_pos+=STEP*2;
+    drawItem(provod.getImg, x_pos, y_pos);
+    y_pos+=STEP;
+    drawItem(box.getImg, x_pos, y_pos);
+    x_pos+=STEP;
+
 }
 
-function getImage(stuff) {
+function drawWire() {
+    drawItem(wire_hor.getImg, x_pos, y_pos);
+    x_pos+=STEP;
+}
 
+function makeCountDataFromList(list) {
+    let book = [];
+    for (let s in list) {
+
+    }
 }
 
 

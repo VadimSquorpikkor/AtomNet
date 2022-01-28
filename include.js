@@ -360,6 +360,7 @@ function getRegMenu(mode, id) {
         '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
         '       </details>' +
         '        <li><a href="../other/adjustment_db.html">AdjustmentDB</a></li>' +
+        '        <li><a href="../architector/architector.html">Architector</a></li>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
