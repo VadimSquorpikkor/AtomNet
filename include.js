@@ -359,7 +359,14 @@ function getRegMenu(mode, id) {
         '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.38</a></li>' +
         '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
         '       </details>' +
-        '        <li><a href="../other/adjustment_db.html">AdjustmentDB</a></li>' +
+        '       <details ' + mode + '>' +
+        '           <summary>' +
+        '               <span>AdjustmentDB</span>' +
+        '           </summary>' +
+        '               <li><a href="../other/adjustment_db.html">AdjustmentDB</a></li>' +
+        '               <li><a href="../other/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
+        '               <li><a href="../other/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
+        '       </details>' +
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
