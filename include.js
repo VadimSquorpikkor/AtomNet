@@ -9,6 +9,11 @@ const COLOR_RED = "#ff3333";
 const СВЕРНУТЬ = "Свернуть"
 const РАЗВЕРНУТЬ = "Развернуть"
 
+/**Открыть папку в отдельной вкладке, путь должен быть вида: Fileserver/Manufacture/Uchastok.RIR */
+function openFile(path) {
+    window.open("file://///"+path);
+}
+
 function toggleMenu(elem) {
     // $(elem.firstChild).toggle();
     // $(elem).toggleClass("small_nice_details");
