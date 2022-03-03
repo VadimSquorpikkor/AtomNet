@@ -7,8 +7,8 @@
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../include.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
-
     <script>window.addEventListener('scroll', trackScroll)</script>
+    <script type="text/javascript" src="../jquery-3.6.0.js"></script>
 </head>
 
 <body>
@@ -463,10 +463,26 @@
         <details>
             <summary>Настройка и проверка собранного портального монитора</summary>
 
-            <img src="../imgs/portal/01.jpg" width="800" alt="изображение не найдено">
-            <img src="../imgs/portal/02.jpg" width="800" alt="изображение не найдено">
-            <img src="../imgs/portal/03.jpg" width="800" alt="изображение не найдено">
-            <img src="../imgs/portal/04.jpg" width="800" alt="изображение не найдено">
+            <div class="attention_block">
+                При первичном включении системы (подачи питания на пульт/шкаф) зона сканирования (сработки) должна быть свободна и ПО «Argus» не запущено!
+            </div>
+
+            <table style="border-collapse: collapse; border: hidden; width: auto; margin: auto;">
+                <tr>
+                    <td style="padding: 20px">
+                        <img class="resizable" src="../imgs/portal/02.jpg" width="300" alt="изображение не найдено">
+                    </td>
+                    <td style="border: hidden; padding: 20px">
+                        <img class="resizable" src="../imgs/portal/01.jpg" width="300" alt="изображение не найдено">
+                        <img class="resizable" src="../imgs/portal/03.jpg" width="300" alt="изображение не найдено">
+                        <img class="resizable" src="../imgs/portal/04.jpg" width="300" alt="изображение не найдено">
+                    </td>
+                </tr>
+            </table>
+
+            <div style="text-align: center; box-shadow: none">
+                <span style="text-align: center" class="underline_italic">(Картинки кликабельные)</span>
+            </div>
 
 
         </details>
@@ -481,6 +497,15 @@
             <img src="../imgs/portal/argus/a5.jpg" width="450" alt="изображение не найдено">
         </details>
     </div>
+
+    <script type="text/javascript">
+
+        $(".resizable").click(function () {
+            // $(this).css('transform', 'scale(1.8)');// то же но хз как уменьшить
+            $(this).toggleClass("bigger");//но так ещё пришлось стиль в css дописывать
+        })
+
+    </script>
 
 </div>
 </div>
