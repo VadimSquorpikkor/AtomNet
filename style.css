@@ -115,6 +115,10 @@ th {
     margin-bottom: 10px;
 }
 
+/*ul {
+    list-style-position: inside;
+}*/
+
 .li_div, .li_div:hover {
     padding-top: 0;
     text-indent: 0;
@@ -415,6 +419,7 @@ a {
     font-family: sans-serif;
     text-decoration: none;
     padding: 2px 4px;
+    margin-left: -4px;
     transition-property: all;
     transition-duration: 450ms;
 }
@@ -500,7 +505,7 @@ body {
 }
 
 .space {
-    margin-left: 20px;
+    margin-left: 16px;
 }
 
 .line_through {
@@ -740,6 +745,7 @@ a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.
     background-size: 21px;
     padding-left: 25px;
     transition-duration: 150ms;
+    margin-left: 2px;
     /*transition-property: none;*/
 }
 
@@ -747,6 +753,7 @@ a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.
     background-color: darkorange;
     padding-left: 25px;
     background-size: 24px;
+    margin-left: 2px;
 }
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/

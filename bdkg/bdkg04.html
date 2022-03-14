@@ -10,7 +10,6 @@
     <script type="text/javascript" src="../activity_new.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script type="text/javascript" src="../include.js"></script>
-
     <script>window.addEventListener('scroll', trackScroll)</script>
 </head>
 
@@ -48,13 +47,16 @@
         </form>-->
     <!--<img src="../imgs/under_construction.jpg">-->
 
+<!--    <img src="../imgs/bdkg04/bd.jpg">-->
+
     <h1>БДКГ-04</h1>
 
     <!--<img src="../imgs/bdkg04/bd.jpg" width="235"><br>-->
 
     <div class="left_align">
         <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a><br>
-        <a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a>
+        <a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a><br>
+        <a href="../other/flash_magic.html">Инструкция по прошивке блоков</a>
     </div>
 
 
@@ -68,9 +70,14 @@
             <img src="../imgs/bdkg04/01.jpg" width="300" alt="изображение не найдено">
         </details>
     </div>
+
+    <div class="nice_details">
+        <span class="space"></span>2. <a href="../other/flash_magic.html">Прошить</a> блоки
+    </div>
+
     <div class="nice_details">
         <details>
-            <summary>2. На плате преобразователя напряжения заменить резисторы R20 и R31</summary>
+            <summary>3. На плате преобразователя напряжения заменить резисторы R20 и R31</summary>
             Во избежания колебаний показаний в точке 700 мЗв в 3-м диапазоне (плавают от 680 до 820 мЗв), на плате
             преобразователя напряжения заменить резистор R20 с 30 кОм на 20 кОм и резистор R31 с 150 кОм на 330 кОм.
             Это уменьшит колебания высокого напряжения, "успокоит" прибор.
@@ -81,7 +88,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>3. Перепроверить установленные коэффициенты:
+            <summary>4. Перепроверить установленные коэффициенты:
                 <br><span class="attention">Должны</span> стоять такие коэффициенты:
                 <!--suppress HtmlUnknownTag -->
                 <table class="small_table">
@@ -161,7 +168,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>4. Записать внутренние номера и дату. Проверить отсутствие срыва светодиодной стабилизации.
+            <summary>5. Записать внутренние номера и дату. Проверить отсутствие срыва светодиодной стабилизации.
             </summary>
 
             <ul>
@@ -183,11 +190,11 @@
         </details>
     </div>
     <div class="nice_details">
-        <span class="space"></span>5. Поставить на приработку на 20 часов
+        <span class="space"></span>6. Поставить на приработку на 20 часов
     </div>
     <div class="nice_details">
         <details>
-            <summary>6. Проверить ток потребления: должен быть примерно 20 мА</summary>
+            <summary>7. Проверить ток потребления: должен быть примерно 20 мА</summary>
 
             Для того, чтобы измерить ток, у меня есть специальный адаптер USB с разрывом питания
             и выходом на мультиметр:
@@ -197,7 +204,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>7. Проконтролировать напряжение и форму пробоя светодиода в 1 и 3 диапазоне.
+            <summary>8. Проконтролировать напряжение и форму пробоя светодиода в 1 и 3 диапазоне.
             </summary>
             <!--<div>-->
             <ul>
@@ -223,7 +230,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>8. Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
+            <summary>9. Установить Uвыс резисторами R7 и подстроечным R8 на плате преобразователя напряжения по
                 показаниям от ОСГИ <sup>137</sup>Cs:
 
                 <!--suppress HtmlUnknownTag -->
@@ -279,7 +286,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>9. Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b> резисторами R24 на плате
+            <summary>10. Установить показания прибора от ОСГИ <sup>109</sup>Сd <b>1079</b> резисторами R24 на плате
                 усилителя-преобразователя импульсов:
 
                 <div class="yellow_back" id="div_drop_down_3">Ошибка загрузки</div>
@@ -310,7 +317,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>10. Проконтролировать напряжение на выводе D4.1 на плате преобразователя напряжения в 3
+            <summary>11. Проконтролировать напряжение на выводе D4.1 на плате преобразователя напряжения в 3
                 диапазоне.
             </summary>
 
@@ -350,7 +357,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>11. Настроить напряжение 3-го диапазона</summary>
+            <summary>12. Настроить напряжение 3-го диапазона</summary>
 
             <ul>
                 <li><span class="attention">Осциллографом</span>
@@ -404,7 +411,7 @@
     </div>
     <div class="nice_details">
         <details>
-            <summary>12. Проверить отсутствие показаний прибора во 2 и 3 диапазоне на фоне
+            <summary>13. Проверить отсутствие показаний прибора во 2 и 3 диапазоне на фоне
             </summary>
 
             Если во 2 диапазоне на фоне есть показания, то на плате преобразователя тока регулируем R5 (R5
@@ -413,17 +420,17 @@
 
         </details>
     </div>
-    <div class="nice_details"><span class="space"></span>13. Приработать не менее 40 часов.</div>
-    <div class="nice_details"><span class="space"></span>14. Перепроверить показания по <sup>137</sup>Сs и
+    <div class="nice_details"><span class="space"></span>14. Приработать не менее 40 часов.</div>
+    <div class="nice_details"><span class="space"></span>15. Перепроверить показания по <sup>137</sup>Сs и
         <sup>109</sup>Cd, и напряжение выв.1 D5.1 на плате преобразователя напряжения.
         <div class="tips_and_tricks">Если прирабатывать приборы ДО регулировки, то перепроверять показания уже будет не
             нужно!!!
         </div>
     </div>
-    <div class="nice_details"><span class="space"></span>15. Отдать на линейку.</div>
+    <div class="nice_details"><span class="space"></span>16. Отдать на линейку.</div>
     <div class="nice_details">
         <details>
-            <summary>16. После того, как вернулись с линейки</summary>
+            <summary>17. После того, как вернулись с линейки</summary>
             <ul>
                 <li>1. <!--Если есть колебания показаний в точке 700 мЗв в 3-м диапазоне (плавают от 680 до 820 мЗв), то на
                     плате преобразователя напряжения заменить резистор R20 c 30 кОм на 20 кОм и резистор R31 с 150 кОм

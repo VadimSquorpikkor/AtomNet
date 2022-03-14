@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta charset="UTF-8">
+    <title>Инструкция по прошивке процессоров LPC11U67</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Инструкция по прошивке процессоров LPC11U67</a>
+
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>Инструкция<br>
+            по прошивке процессоров LPC11U67<br>
+            (БДКГ-04/24/30/32/35/224/230)</h1>
+
+        <div class="attention_block">ВАЖНО! Проверить наличие контакта между стоком и истоком транзистора VT1 на плате с
+            процессором.
+        </div>
+
+        <ol>
+            <li>Запускаем ПО “Flash Magic”.</li>
+            <li>Выбираем нужный COM-порт (1) и устанавливаем скорость 57600 (2).</li>
+
+            <img src="../imgs/flash_magic/01.png" width="750">
+
+            <li>Выбираем в графе «Device» (нажав кнопку «Change» (3)) нужный процессор (в случае с БДКГ-04 это
+                процессор LPC11U67J, который находиться в LPC1000→UART→LPC11U67).
+            </li>
+
+            <img src="../imgs/flash_magic/02.png" width="750">
+
+            <li>Выбираем файл прошивки: нажимаем кнопку “Browse…” и по пути
+                \\FILESERVER\Manufacture\Uchastok.RIR\programming\Programmator\LPC11U67\bdkg-04,24,30,32,224,230
+                выбираем нужный файл прошивки (в случае с БДКГ-04 это файл «bdkg-04_.hex»).
+            </li>
+
+            <img src="../imgs/flash_magic/03.png" width="750">
+
+            <li>Подключаем блок (к примеру БДГК-04) к ПК через адаптер USB-БД, ставим галочку в «Verify after
+                Programming» (5) (для проверки записанной прошивки) и нажимаем кнопку «Start» (6).
+            </li>
+
+            <img src="../imgs/flash_magic/04.png" width="750">
+            <img src="../imgs/flash_magic/05.png" width="750">
+
+            <li>Если никаких ошибок не выскочило (8) и не зависло на установлении скорости (7), то программирование
+                прошло успешно. Переподключить БД.
+
+                <img src="../imgs/flash_magic/06.png" width="750">
+                <img src="../imgs/flash_magic/07.png" width="750">
+
+
+            </li>
+
+            <div class="nice_details">
+                <details>
+                    <summary>Если вдруг понадобиться перепрограммировать БД, то есть два варианта:</summary>
+                    <ol>
+                        <li>Перед его подключением к ПК требуется закоротить (пинцетом) точки 7 и 8 на плате устройства
+                            обработки (после подключения убрать пинцет) и повторить 1-6 заново.
+                        </li>
+                        <li>Включить ПО «Aterminal» для БДКГ-04/24/30/32/35/224/230. Выполнить пункт 8 и 9. Потом
+                            выбрать команду «Настройка: 05 00 07 FF 00», отправить, после получения ответа выбрать
+                            команду «Внутрисхемный загрузчик: 6C 00 F0», отправить. После получения ответа закрыть
+                            COM-порт и повторить пункты 1-6 заново.
+                        </li>
+                </details>
+            </div>
+
+            <li>Запускаем ПО «ATerminal» для БДКГ-04/24/30/32/224/230.</li>
+            <li>Выбираем нужный COM-порт (8) и выставляем скорость до 100000 (9).</li>
+
+            <img src="../imgs/flash_magic/08.png" width="450">
+
+            <li>Выбрать любую команду, добавить её (10) и не менее 4-х раз отправить (11)
+
+                <img src="../imgs/flash_magic/09.png" width="450">
+
+                После получения ответа, скорость (9) выставиться автоматически. Это означает, что контроллер
+                запрограммирован и БД можно отдавать в настройку.
+
+            </li>
+
+        </ol>
+
+        <div class="yellow_back">После всех манипуляций, проверить работоспособность БД через ПО «Background
+            Calibration» или «DU
+            Calibration».
+        </div>
+
+        <div class="attention_block">ВАЖНО! После завершения прошивки сбросить (перекоммутировать) питание.</div>
+
+    </div>
+</div>
+</body>
+</html>

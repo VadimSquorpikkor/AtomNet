@@ -155,6 +155,7 @@ function getRegMenu(mode, id) {
         '                <ul>' +
         '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a></li>' +
         '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a></li>' +
+        '                    <li><a href="../other/flash_magic.html">Инструкция по прошивке блоков</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -338,6 +339,7 @@ function getRegMenu(mode, id) {
         '        <span>Всякое разное</span>' +
         '    </summary>' +
         '    <ul>' +
+        '        <li><a href="../other/flash_magic.html">Инструкция по прошивке LPC11U67</a></li>' +
         '        <li><a href="../other/bdrm-05m.html">БДРМ-05М. Настройка</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
