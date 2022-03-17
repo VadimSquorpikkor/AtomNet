@@ -572,6 +572,17 @@ body {
     padding: 1px 20px;
 }
 
+.language_span {
+    float: left;
+    padding: 2px 4px;
+    font-size: 12px;
+    /*background-color: #3333ff;*/
+    background-color: #4CAF50;
+    /*box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);*/
+    /*color: antiquewhite;*/
+    color: white;
+}
+
 /*То же, что и yellow_back, но контейнер получается не на всю страницу по ширине, а только 500px и располагается по середине*/
 .yellow_back_tight {
     text-indent: 0;
