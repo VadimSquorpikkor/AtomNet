@@ -488,6 +488,19 @@ function left_menu_visibility(show){
     // hiddenMenuDiv.hidden = show;
 }
 
+function left_menu_visibility_2(){
+    let menu = document.getElementsByClassName("left_side_menu")[0];
+    let links = document.getElementsByClassName("header_div_2")[0];
+    if (menu.style.display === "none") {
+        menu.style.display = "block";
+        links.style.marginLeft = "470px";
+    }
+    else {
+        menu.style.display = "none";
+        links.style.marginLeft = "0px";
+    }
+}
+
 function trackScroll() {
     'use strict';
 

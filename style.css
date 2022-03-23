@@ -134,6 +134,9 @@ th {
 }
 
 .main_div{
+    /*Для варианта с верхним дивом (upper_div)*/
+    /*margin-top: 25px;*/
+
     /*ДЛЯ НОВОГО ГОДА*/
     /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
     /*background-size: 250px;*/
@@ -161,6 +164,7 @@ body>div>div {
 }
 
 .menu_and_main_div {
+
     max-width: 1700px;
     margin: auto;
     visibility: hidden;
@@ -398,7 +402,7 @@ img {
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
-/*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY ------------------------------------------------------------------------*/
+/*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY PRE------------------------------------------------------------------------*/
 
 div {
     /*padding: 5px 20px;*/
@@ -485,6 +489,15 @@ body {
     /*background: #ccc url("bg_main_transp.png");*/
 }
 
+pre {
+    font-size: 14px;
+    margin-left: 50px;
+    margin-right: 50px;
+    /*max-width: 500px;*/
+    background: #333333;
+    color: #dddddd;
+}
+
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
 /*region ------- DARK_LINK, LIKE_A_BUTTON, SPACE, LINE_THROUGH, RED_LIGHT_TITLE, NO_MARKERS -------------------------------------*/
@@ -530,6 +543,30 @@ body {
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
 /*region ------- Контейнеры: yellow_back, tips_and_tricks, attentions, menu_block и т.д. ----------------------------------------*/
+
+/*.upper_div {
+    z-index: 100;
+    position: fixed;
+    width:100%;
+    !*margin: -30px -10px 10px -10px;*!
+    margin: -10px -10px 10px -10px;
+    background: #333333;
+    padding: 5px;
+}
+
+.upper_div a, a:hover{
+    font-size: 14px;
+    background: none;
+    cursor: pointer;
+}
+
+.upper_div a:hover{
+    color: darkorange;
+}
+
+.upper_div a{
+    color: white;
+}*/
 
 .yellow_back_right {
     font-size: 14px;
@@ -986,7 +1023,7 @@ summary div ul {
 
 /*region ------- @MEDIA @KEYFRAMES @FONT-FACE -----------------------------------------------------------------------------------*/
 /*для всех страниц, кроме главной*/
-@media (min-width: 1300px){
+@media (min-width: 1500px){/*1300*/
     .main_div {
         float: none;
         overflow: hidden;

@@ -13,6 +13,9 @@
 
 <body>
 
+<!--todo кнопка показать/скрыть меню-->
+<!--<div class="upper_div"><a onclick="left_menu_visibility_2()">Показать/скрыть меню</a></div>-->
+
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
 <div class="menu_and_main_div">
@@ -21,6 +24,8 @@
         <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
                id="menu_button">
 
+<!--todo кнопка показать/скрыть меню-->
+<!--        <a onclick="left_menu_visibility_2()">Меню</a>-->
         <a href="../menu/index.html">Главная</a>
         <a href="../other/adjustment_db.html">AdjustmentDB</a>
         <a href="../other/adjustment_db_service.html">Описание сервиса</a>
@@ -312,6 +317,8 @@
 
         <h3>AdjustmentWeb</h3>
 
+        <h3>AtomNet (Инструкции)</h3>
+
         <h4>Deploy</h4>
 
         <p>
@@ -331,11 +338,14 @@
             Если: <i>Error: Failed to get Firebase project uchastokrir2. Please make sure the project exists and your
             account has permission to access it.</i>
             Это значит, что консоль подключена к другому аккаунту/не подключена ни к какому аккаунту.
-            Нужно выйти и зайти под аккаунтом uchastokrir2.
-            Выйти: firebase logout.
-            Войти: firebase login — перекинет на страничку, там выбрать аккаунт, нажать "allow", в консоле появится.
-            "Success! Logged in as uchastok.rir@gmail.com".
-            После этого деплоить как обычно.
+        <ul>
+            <li>Нужно выйти и зайти под аккаунтом uchastokrir2. Выйти: firebase logout.</li>
+            <li>Войти: firebase login — перекинет на страничку, там выбрать аккаунт, нажать "allow", в консоле
+                появится "Success! Logged in as uchastok.rir@gmail.com".</li>
+            <li>После этого деплоить как обычно.</li>
+        </ul>
+
+
         </p>
         <p>
             Если: <i>Error: HTTP Error: 429, You have exceeded the Hosting storage quota for your Firebase project, so
@@ -347,6 +357,27 @@
         </p>
 
         <img src="../imgs/adjustment_admin/3.jpg" width="900" alt="изображение не найдено">
+
+        <p>
+            Чтобы не деплоить ненужные файлы (.git например — на сайте не нужны, а весят нормально), в корне создается
+            (редактируется) firebase.json, в нем указывается, какую папку аплодить и какие папки/файлы игнорировать:
+        </p>
+        <pre>
+
+{
+    "hosting": {
+        "public": "../AtomNet",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+	    ".git/**",
+            "**/node_modules/**",
+	    "_for_sort/**",
+	    "templates/**"
+        ]
+    }
+}
+        </pre>
 
     </div>
 </div>
