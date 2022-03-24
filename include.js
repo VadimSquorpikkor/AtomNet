@@ -14,6 +14,10 @@ function openFile(path) {
     window.open("file://///"+path);
 }
 
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+
 function toggleMenu(elem) {
     // $(elem.firstChild).toggle();
     // $(elem).toggleClass("small_nice_details");

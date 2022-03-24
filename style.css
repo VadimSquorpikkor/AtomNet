@@ -594,7 +594,7 @@ pre {
     background-color: #ffdddd;
 }
 
-.yellow_back, .yellow_back_small, .tips_and_tricks, .attention_block, .yellow_back_tight {
+.yellow_back, .yellow_back_small, .tips_and_tricks, .attention_block, .yellow_back_tight, .yellow_back_small_clickable {
     padding: 10px 20px;
     font-size: 16px;
     background-color: antiquewhite;
@@ -605,8 +605,20 @@ pre {
 }
 
 /*Прямоугольник для <span>, применяется для отображения команды ("01 13 08 ff 24 00 04 00 0A 12 20")*/
-.yellow_back_small {
-    padding: 1px 20px;
+.yellow_back_small, .yellow_back_small_clickable {
+    padding: 0px 20px;
+}
+
+.yellow_back_small_clickable {
+    cursor: pointer;
+}
+
+.yellow_back_small_clickable:hover {
+    color: red;
+}
+
+.yellow_back_small_clickable:active {
+    color: blue;
 }
 
 .language_span {

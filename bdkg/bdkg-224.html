@@ -95,22 +95,24 @@
             </li>
             <li>Переход в режим усреднения. Запустить ATerminal, начальные настройки: скорость 19200 и Parity:Even.
                 Нажать ID код(посмотреть подключился ли прибор).
+
                 <ol>
-                    <li>Режим: Настройка: <span class="yellow_back_small">01 05 00 07 ff 00</span></li>
-                    <li>Режим: Мобильный: <span class="yellow_back_small">01 06 00 0e 00 02</span></li>
-                    <li>Предельная статистика: <span class="yellow_back_small">01 06 00 0f 00 01</span> (выбираем нужную команду из списка и меняем последнюю
-                        цифру)
-                    </li>
-                    <li>Время усреднения: <span class="yellow_back_small">01 06 00 10 02 58</span> (выбираем нужную команду из списка и меняем последние 3
-                        цифры)
-                    </li>
-                    <li>Скорость передачи: <span class="yellow_back_small">01 06 00 47 00 05</span> (выбираем нужную команду из списка и меняем последнюю
-                        цифру)
-                    </li>
-                    <li>Нет бита четности: <span class="yellow_back_small">01 06 00 48 00 03</span></li>
-                    <li>AutoBaud запрещен: <span class="yellow_back_small">06 00 4a 00 01</span></li>
+                    <li>Режим: Настройка: <span onclick="copyToClipboard('01 05 00 07 ff 00')" class="yellow_back_small_clickable">01 05 00 07 ff 00</span></li>
+                    <li>Режим: Мобильный: <span onclick="copyToClipboard('01 06 00 0e 00 02')" class="yellow_back_small_clickable">01 06 00 0e 00 02</span></li>
+                    <li>Предельная статистика: <span onclick="copyToClipboard('01 06 00 0f 00 01')" class="yellow_back_small_clickable">01 06 00 0f 00 01</span> (выбираем нужную команду из списка и меняем последнюю цифру)</li>
+                    <li>Время усреднения: <span onclick="copyToClipboard('01 06 00 10 02 58')" class="yellow_back_small_clickable">01 06 00 10 02 58</span> (выбираем нужную команду из списка и меняем последние 3 цифры)</li>
+
+                    <span class="underline_italic">Если потребуется по заказу:</span>
+
+                    <li>Скорость передачи: <span onclick="copyToClipboard('01 06 00 47 00 05')" class="yellow_back_small_clickable">01 06 00 47 00 05</span> (выбираем нужную команду из списка и меняем последнюю цифру)</li>
+                    <li>Нет бита четности: <span onclick="copyToClipboard('01 06 00 48 00 03')" class="yellow_back_small_clickable">01 06 00 48 00 03</span></li>
+                    <li>AutoBaud запрещен: <span onclick="copyToClipboard('06 00 4a 00 01')" class="yellow_back_small_clickable">06 00 4a 00 01</span></li>
                 </ol>
                 Далее нажать Рестарт. Выставить скорость 9600 и Parity:None. Нажать ID код.
+
+                <div class="tips_and_tricks">Все команды сделаны кликабельными, при клике по команде её содержимое копируется в буфер обмена</div>
+
+            <li>Установить дату (месяц и год) соответствующую дате отгрузки (по контракту)</li>
         </ul>
 
         <div class="attention_block">
