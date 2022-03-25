@@ -31,171 +31,259 @@
 
 <div class="menu_and_main_div">
 
-<div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
-           id="menu_button">
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+               id="menu_button">
 
-    <a href="../menu/index.html">Главная</a>
-    <a href="">СРК-АТ2327</a>
+        <a href="../menu/index.html">Главная</a>
+        <a href="">СРК-АТ2327</a>
 
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-</div>
-
-<div class="left_side_menu">
-    <div id="menu_left" class="spoiler_menu"></div>
-</div>
-
-<script>
-    includeMenu("menu_left", REG_MENU, OPEN);
-    includeMenu("menu", REG_MENU, CLOSE);
-</script>
-
-
-<div class="main_div">
-
-    <h1>СРК-АТ2327.<br>
-        Система радиационного контроля</h1>
-
-
-    <img src="../imgs/2327/1.jpg" width="800" alt="изображение не найдено">
-
-    <div class="yellow_back">
-        <a href="BR.html">&bullet; ДРГ. Блок регистрации</a><br>
-        <a href="mrp.html">&bullet; МРП. Пешеходный монитор</a><br>
-        <a href="portal.html">&bullet; Портальный монитор</a><br><br>
-        <a href="941adapter.html">941-й адаптер интерфейсный</a><br>
-        <a href="942.html">942-й адаптер интерфейсный</a><br>
-        <a href="943.html">943-й адаптер интерфейсный</a><br><br>
-        <a href="p900.html">ПУ АТ-900</a><br>
-        <a href="sark2mrp.html">SARK2 и МРП</a><br><br>
-
-        <a href="../docs/Описание%20СРК%20портал.doc">СРК портальный монитор</a><br>
-        <a href="../docs/Описание%20СРК%20портал%20(2).doc">СРК портальный монитор 2</a><br>
-        <a href="../docs/Степень%20защиты%20для%20СРК.odt">Степень защиты для СРК</a><br>
-        <a href="../docs/СРК%20табло%20инструкция.doc">СРК табло алгоритм работы</a><br><br>
-        <a href="../docs/SRK_Title.odt">Шаблон листа заказов</a><br>
-        <a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a><br><br>
-        <a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a><br>
-        <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a>
+        <div class="spoiler_menu" id="menu" style="display: none"></div>
     </div>
 
-    <div class="nice_details">
-        <details id="usb-com-adapter">
-            <summary>Настройка USB-COM адаптера:</summary>
-            <img src="../imgs/2327/adapter.jpg" width="900" alt="изображение не найдено"/>
-
-            <p>Это старая версия адаптера:
-
-                <img src="../imgs/2327/adapter_old.jpg" width="900" alt="изображение не найдено"/>
-
-            <p>Так настраивается "синий" адаптер:
-
-                <img src="../imgs/2327/old_adapter.jpg" width="600" alt="изображение не найдено"/>
-        </details>
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
     </div>
 
+    <script>
+        includeMenu("menu_left", REG_MENU, OPEN);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
 
-    <div class="nice_details">
-        <details id="moxa">
-            <summary>Настройка Ethernet адаптера MOXA:</summary>
 
-            <img src="../imgs/2327/moxa.jpg" width="490" alt="изображение не найдено">
+    <div class="main_div">
 
-            <p>
-                Настраивается по <a href="../docs/NPort_5130-12107098061.pdf">инструкции</a>.
-                <span class="attention">В пункте 3.3 выбрать</span> <span class="mark_green"> RS-485, 2 wire</span>.
-                Чуть что, пароль &mdash; <span class="mark_green">moxa</span>
-            </p>
-        </details>
+        <h1>СРК-АТ2327.<br>
+            Система радиационного контроля</h1>
+
+
+        <img src="../imgs/2327/1.jpg" width="800" alt="изображение не найдено">
+
+        <div class="yellow_back">
+            <a href="BR.html">&bullet; ДРГ. Блок регистрации</a><br>
+            <a href="mrp.html">&bullet; МРП. Пешеходный монитор</a><br>
+            <a href="portal.html">&bullet; Портальный монитор</a><br><br>
+            <a href="941adapter.html">941-й адаптер интерфейсный</a><br>
+            <a href="942.html">942-й адаптер интерфейсный</a><br>
+            <a href="943.html">943-й адаптер интерфейсный</a><br><br>
+            <a href="p900.html">ПУ АТ-900</a><br>
+            <a href="sark2mrp.html">SARK2 и МРП</a><br><br>
+
+            <a href="../docs/Описание%20СРК%20портал.doc">СРК портальный монитор</a><br>
+            <a href="../docs/Описание%20СРК%20портал%20(2).doc">СРК портальный монитор 2</a><br>
+            <a href="../docs/Степень%20защиты%20для%20СРК.odt">Степень защиты для СРК</a><br>
+            <a href="../docs/СРК%20табло%20инструкция.doc">СРК табло алгоритм работы</a><br><br>
+            <a href="../docs/SRK_Title.odt">Шаблон листа заказов</a><br>
+            <a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a><br><br>
+            <a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a><br>
+            <a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a>
+        </div>
+
+        <div class="nice_details">
+            <details id="usb-com-adapter">
+                <summary>Настройка USB-COM адаптера:</summary>
+                <img src="../imgs/2327/adapter.jpg" width="900" alt="изображение не найдено"/>
+
+                <p>Это старая версия адаптера:
+
+                    <img src="../imgs/2327/adapter_old.jpg" width="900" alt="изображение не найдено"/>
+
+                <p>Так настраивается "синий" адаптер:
+
+                    <img src="../imgs/2327/old_adapter.jpg" width="600" alt="изображение не найдено"/>
+            </details>
+        </div>
+
+
+        <div class="nice_details">
+            <details id="moxa">
+                <summary>Настройка Ethernet адаптера MOXA:</summary>
+
+                <img src="../imgs/2327/moxa.jpg" width="490" alt="изображение не найдено">
+
+                <p>
+                    Настраивается по <a href="../docs/NPort_5130-12107098061.pdf">инструкции</a>.
+                    <span class="attention">В пункте 3.3 выбрать</span> <span class="mark_green"> RS-485, 2 wire</span>.
+                    Чуть что, пароль &mdash; <span class="mark_green">moxa</span>
+                </p>
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="cabel">
+                <summary>Кабель для Устройства Сигнализации:</summary>
+
+                <img src="../imgs/2327/cable.jpg" width="600" alt="изображение не найдено">
+            </details>
+        </div>
+
+        <!--<a id="link1"></a>-->
+        <div class="nice_details">
+            <details id="source">
+                <summary>Вот так укладывается контрольный источник:</summary>
+                <img src="../imgs/2327/istochnik.jpg" width="900" alt="изображение не найдено"/>
+                Сам источник заказывать у Антона Жуковского
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="cabel_type">
+                <summary>Какие бывают кабели для блоков:</summary>
+
+                <ul>
+                    <li>DB9 для USB-COM &mdash; 685621.<a class="dark_link" href="../docs/cables/129.jpg">129</a>
+                        &mdash;
+                        1,5 м
+                    </li>
+                    <li>DB9 для Ethernet &mdash; 685621.<a class="dark_link" href="../docs/cables/129.jpg">129-01</a>
+                        &mdash; 1,5 м
+                    </li>
+                    <li>DB9 для маленького табло (ТЭИ) &mdash; <a class="dark_link"
+                                                                  href="../docs/cables/315.jpg">315</a>
+                        &mdash; согласовывается с заказчиком (примерно 1,5 м)
+                    </li>
+                    <li>ODU прямой (Большой) для БДКГ-204 &mdash; 318-01 &mdash; 0,5 м</li>
+                    <li>ODU угловой (Большой) для БДКГ-25 &mdash; 318 &mdash; 0,5 м</li>
+                    <li>ТО-7 для БД &mdash; 025 &mdash; 0,5 м</li>
+                    <li>ODU (Маленький) для БД &mdash; <a class="dark_link" href="../docs/cables/409.jpg">409</a>
+                        &mdash;
+                        0,5 м
+                    </li>
+                    <li>ТО-5 для БД &mdash; 109 &mdash; 0,5 м</li>
+                </ul>
+                <p>На 318-ый кабель заказать:
+                <ul>
+                    <li>(угловая) Вилка кабельная W11K0C-P07MFD0-6000</li>
+                    <li>(прямая) Вилка кабельная S21K0C-P07MFD0-6000 + черная резиновая втулочка</li>
+                </ul>
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="pu_900">
+                <summary>Адаптер питания для ПУ-АТ900 (список деталей):</summary>
+
+                <img src="../imgs/2327/acdc-adapter.jpg" width="600" alt="изображение не найдено"/>
+
+                <ul>
+                    <li>Адаптер сетевой PSC12R-120</li>
+                    <li>Розетка PX0410/04S/5560</li>
+                    <!--<li>Розетка PX0410/04S/5560 (раньше был 4550)</li>-->
+                    <li>Контакты SA3347/1 (2шт)</li>
+                    <li>Рукав-защита кабеля HV2213</li>
+                </ul>
+
+                <p>Получить на складе и отдать на монтаж
+                </p>
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="adapter">
+                <summary>Как самому сделать адаптер</summary>
+
+                <img src="../imgs/2327/adapter_razyem.jpg" width="700" alt="изображение не найдено">
+            </details>
+        </div>
+
+        <div class="nice_details">
+            <details id="prepare">
+                <summary>Подготовка БД</summary>
+
+                <ul>
+                    <li>Наклеить наклейку с номером БД в системе</li>
+                    <li>Осмотреть внешний вид блока на отсутствие царапин и отслоения краски на корпусе, наличии пломб,
+                        наличие отметок о герметичности (для БД с IP65 и выше), и дополнительных наклеек (к примеру
+                        "ВНИМАНИЕ! Беречь от удара")
+                    </li>
+                    <li>Подключить БД через адаптер USB-COM к ПК и открыть ПО SARKtech</li>
+                    <li>Записать адрес БД, соответствующий его местонахождения в системе</li>
+
+                    <img src="../imgs/2327/prepare/prepare_1.png" width="800" alt="изображение не найдено">
+
+                    <div class="attention_block">Адрес считается записанным после того, как выскочить окно "Адрес
+                        записан" (на
+                        картинке ниже). Если выскочило окно с ошибкой - значит отсутствует связь с БД. Устранить
+                        неисправность
+                        и повторить запись адреса заново
+                    </div>
+
+                    <img src="../imgs/2327/prepare/prepare_1.png" width="800" alt="изображение не найдено">
+
+                    <li>Подключиться к БД по записанному адресу (чем меньше выбранных адресов для сканирования, тем
+                        быстрее
+                        подключиться к БД). После подключения справа отобразиться подключённый БД с внутренним номером
+                        (в
+                        скобках).
+                    </li>
+
+                    <img src="../imgs/2327/prepare/prepare_3.png" width="800" alt="изображение не найдено">
+
+                    <li>Перейти во вкладку "Монитор" и проверить корректность фоновых показаний, а также отсутствие
+                        показаний в диапазонах выше 1-ого (для многодиапазонных БД)
+                    </li>
+
+                    <img src="../imgs/2327/prepare/prepare_4.png" width="800" alt="изображение не найдено">
+
+                    <li>Перейти во вкладку "Управление" и, выбрав в левом окне БД:</li>
+
+                    <ol>
+                        <li>Проверить "Статус". По всем каналам должно быть по нулям</li>
+                        <img src="../imgs/2327/prepare/prepare_5.png" width="800" alt="изображение не найдено">
+                        <li>Записать "Время интегрирования" равным 5</li>
+                        <img src="../imgs/2327/prepare/prepare_7.png" width="800" alt="изображение не найдено">
+
+                        <div class="attention_block">Имеются функции требующие пароля (на картинке снизу). Пароль —
+                            текущее
+                            время без ":", к примеру 1422
+                        </div>
+                        <img src="../imgs/2327/prepare/prepare_6.png" width="800" alt="изображение не найдено">
+
+                        <li>Записать "Пороги". Рабочий/аварийный порог для БДКГ-02 и БДКГ-204 = 500/1000, БДКН-02 ПП =
+                            1/10,
+                            БДКН-02(04) МД = 100/200, УДКГ-37 (обычный режим) = 5000/10000, УДКГ-37 (в режиме ФВР)
+                            = 500000000/1000000000
+                        </li>
+                        <img src="../imgs/2327/prepare/prepare_8.png" width="800" alt="изображение не найдено">
+
+                        <li>Записать "Идентификационные данные". Внутренний номер должен быть уже записан,
+                            номер поставки = номер СРК (слева от точки), серийный номер = номер БД в системе
+                            (справа от точки). Указать тип БД. Если БД подключается через адаптер (АИ-АТ941), то выбрать
+                            тип БД "АИ-АТ941", а данные записать подключённого блока (в том числе и внутренний номер)
+                        </li>
+                        <img src="../imgs/2327/prepare/prepare_9.png" width="800" alt="изображение не найдено">
+                    </ol>
+
+                    <li>Перепроверить записанные данные (функции с "чтение") и коэффициенты.</li>
+                    <img src="../imgs/2327/prepare/prepare_10.png" width="800" alt="изображение не найдено">
+
+                    <li>Записать в журнал градуировки БД номер (блока в системе) и адрес поставки (если имеются такие
+                        графы)
+                    </li>
+                    <img src="../imgs/2327/prepare/prepare_11.png" width="700" alt="изображение не найдено">
+
+                    <li>Записать в перечень настройки БД заводской номер и данные заказа (имя заказчика и номер
+                        заказа)
+                    </li>
+                    <img src="../imgs/2327/prepare/prepare_12.jpg" width="700" alt="изображение не найдено">
+
+                </ul>
+            </details>
+        </div>
+
+        <!--<div class="nice_details">
+            <details id="details">
+                <summary>Названия деталей (мониторить остаток на складе!)</summary>
+
+                <ul>
+                    <li>Аккумулятор <span class="attention">LC-P 127 R2P 12V</span></li>
+                    <li>Оповещатель пожарный <span class="attention">"АСТО 12/1" (НЕ ВХОДИТЬ)</span></li>
+                    <li>Табло (маленькое) <span class="attention">СКНЕ 467814.040</span></li>
+                </ul>
+            </details>
+        </div>-->
+
     </div>
-
-    <div class="nice_details">
-        <details id="cabel">
-            <summary>Кабель для Устройства Сигнализации:</summary>
-
-            <img src="../imgs/2327/cable.jpg" width="600" alt="изображение не найдено">
-        </details>
-    </div>
-
-    <!--<a id="link1"></a>-->
-    <div class="nice_details">
-        <details id="source">
-            <summary>Вот так укладывается контрольный источник:</summary>
-            <img src="../imgs/2327/istochnik.jpg" width="900" alt="изображение не найдено"/>
-            Сам источник заказывать у Антона Жуковского
-        </details>
-    </div>
-
-    <div class="nice_details">
-        <details id="cabel_type">
-            <summary>Какие бывают кабели для блоков:</summary>
-
-            <ul>
-                <li>DB9 для USB-COM &mdash; 685621.<a class="dark_link" href="../docs/cables/129.jpg">129</a> &mdash;
-                    1,5 м
-                </li>
-                <li>DB9 для Ethernet &mdash; 685621.<a class="dark_link" href="../docs/cables/129.jpg">129-01</a>
-                    &mdash; 1,5 м
-                </li>
-                <li>DB9 для маленького табло (ТЭИ) &mdash; <a class="dark_link" href="../docs/cables/315.jpg">315</a>
-                    &mdash; согласовывается с заказчиком (примерно 1,5 м)
-                </li>
-                <li>ODU прямой (Большой) для БДКГ-204 &mdash; 318-01 &mdash; 0,5 м</li>
-                <li>ODU угловой (Большой) для БДКГ-25 &mdash; 318 &mdash; 0,5 м</li>
-                <li>ТО-7 для БД &mdash; 025 &mdash; 0,5 м</li>
-                <li>ODU (Маленький) для БД &mdash; <a class="dark_link" href="../docs/cables/409.jpg">409</a> &mdash;
-                    0,5 м
-                </li>
-                <li>ТО-5 для БД &mdash; 109 &mdash; 0,5 м</li>
-            </ul>
-            <p>На 318-ый кабель заказать:
-            <ul>
-                <li>(угловая) Вилка кабельная W11K0C-P07MFD0-6000</li>
-                <li>(прямая) Вилка кабельная S21K0C-P07MFD0-6000 + черная резиновая втулочка</li>
-            </ul>
-        </details>
-    </div>
-
-    <div class="nice_details">
-        <details id="pu_900">
-            <summary>Адаптер питания для ПУ-АТ900 (список деталей):</summary>
-
-            <img src="../imgs/2327/acdc-adapter.jpg" width="600" alt="изображение не найдено"/>
-
-            <ul>
-                <li>Адаптер сетевой PSC12R-120</li>
-                <li>Розетка PX0410/04S/5560</li>
-                <!--<li>Розетка PX0410/04S/5560 (раньше был 4550)</li>-->
-                <li>Контакты SA3347/1 (2шт)</li>
-                <li>Рукав-защита кабеля HV2213</li>
-            </ul>
-
-            <p>Получить на складе и отдать на монтаж
-            </p>
-        </details>
-    </div>
-
-    <div class="nice_details">
-        <details id="adapter">
-            <summary>Как самому сделать адаптер</summary>
-
-            <img src="../imgs/2327/adapter_razyem.jpg" width="700" alt="изображение не найдено">
-        </details>
-    </div>
-
-    <div class="nice_details">
-        <details id="details">
-            <summary>Названия деталей (мониторить остаток на складе!)</summary>
-
-            <ul>
-                <li>Аккумулятор <span class="attention">LC-P 127 R2P 12V</span></li>
-                <li>Оповещатель пожарный <span class="attention">"АСТО 12/1" (НЕ ВХОДИТЬ)</span></li>
-                <li>Табло (маленькое) <span class="attention">СКНЕ 467814.040</span></li>
-            </ul>
-        </details>
-    </div>
-
-</div>
 </div>
 </body>
 </html>

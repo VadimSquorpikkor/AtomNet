@@ -442,7 +442,15 @@ img {
     margin: 5px auto;
     max-width: 100%;
     text-indent: 0;
+    color: red;
+    font-style: italic;
 }
+
+
+
+/*img::after {
+    content: "Изображение не найдено";
+}*/
 
 h1, h3 {
     font-size: 26px;

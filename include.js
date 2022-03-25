@@ -96,7 +96,7 @@ function getRegMenu(mode, id) {
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=cabel_type#cabel_type">Какие бывают кабели для блоков</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=pu_900#pu_900">Адаптер питания для ПУ-АТ900</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=adapter#adapter">Как самому сделать адаптер</a></li>' +
-        '                   <li><a id="mylink" href="../srk2327/2327.html?id=details#details">Названия деталей (мониторить остаток)</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=prepare#prepare">Подготовка БД</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -228,7 +228,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkn/bdkn-01.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Проверка плат БДКН-01 / 04<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../bdkn/bdkn_01_03.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БДКН-01 / БДКН-03<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../bdkn/bdkn-01_03_plat.html">БДКН-01 / БДКН-03. Проверка плат</a></li>' +
-        '        <li><a href="../bdkn/bdkn_02.html">БДКН-02. Установить коэффициенты. Прошить</a></li>' +
+        '        <li><a href="../bdkn/bdkn_02.html">БДКН-02</a></li>' +
         '        <li><a href="../bdkn/bdkn-03.html">БДКН-03</a></li>' +
         '        <li><a href="../bdkn/bdkn-05_plat.html">БДКН-05. Проверка плат</a></li>' +
         '    </ul>' +
