@@ -476,6 +476,10 @@ ul {
     font-size: 18px;
 }
 
+ul ul {
+    padding-left: 40px;
+}
+
 ol {
     /*padding-left: 40px;*/
     text-indent: 10px;
