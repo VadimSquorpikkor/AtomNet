@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>943-й адаптер интерфейсный. Старая версия</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="2327.html">СРК-АТ2327 </a>
+    <a href="943.html">Адаптер интерфейсный АИ-АТ943</a>
+    <a href="">943-й адаптер интерфейсный. Старая версия</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+<div class="main_div">
+
+    <h1>943-й адаптер интерфейсный. Старая версия</h1>
+
+    <div class="left_align">
+        <a href="943_by_cat32.html">Настройка адаптера АИ-АТ943 посредством CAT32_БАРК</a><br>
+        <a href="sark2_pxr.html">SARK2 PXR</a><br>
+        <a href="../imgs/943/943_principal.jpg">Схема принципиальная</a><br>
+        <a href="../imgs/943/dorab.jpg">Что дорабатывать в старых платах</a><br>
+        <a href="../imgs/943/plata_s_dorabotkoi.jpg">Плата с доработкой</a>
+    </div>
+
+    <p>При перепрошивке <span class="attention">ОБЯЗАТЕЛЬНО</span> стирать предыдущую прошивку
+
+        <img src="../imgs/943/adapter%20prosh.jpg" width="700" alt="изображение не найдено"/>
+    <ul>
+
+        <li>Подключить плату программатора: BLS разъем к плате адаптера, mini-USB к компьютеру</li>
+        <li>К плате адаптера подключить питание 12V: 1(-) 2(+)</li>
+        <li>Открыть STM32 ST-Link</li>
+
+        <!--suppress CheckImageSize -->
+        <img src="../imgs/943/943-progr.png" width="600" alt="изображение не найдено"/>
+        <li>Target &longrightarrow; Connect</li>
+        <li>Target &longrightarrow; Program & Verify</li>
+        <li>Выбрать прошивку <i>943/adapter.hex (13.07.17)</i></li>
+        <li><span class="mark_green">После прошивки на плате загорится второй красный светодиод</span></li>
+    </ul>
+
+    <h3>Подключение и настройка</h3>
+
+    <img src="../imgs/943/5.jpg" width="900" alt="изображение не найдено"/>
+    <ul>
+        <li>К 5-х колодке подключается 1123</li>
+        <li>бел-кор-жел-зел-экр (<span class="attention">желтый и зеленый подключаются наоборот!</span>)</li>
+        <li><span class="attention">Питание+ (коричневый) на 5х колодке НЕ ПОДКДЮЧАЕТСЯ!!</span>
+            на 1123 приборе будут сбои на адаптере. Запитывать от преобразователя!
+        </li>
+        <li>бел-кор-жел-зел-экр-сер-роз</li>
+        <li><span class="mark_green">СРК с 943-им подключается к компу с помощью SARK2_PXR</span></li>
+
+        <div class="tips_and_tricks">Через Sark PXR нельзя ни посмотреть адрес адаптера, ни установить желаемый. Для этих целей необходимо
+            <a href="943_by_cat32.html">воспользоваться программой CAT32</a>.</div>
+
+        <li>Проверить работу СРК-ЛУЭ <a href="sark2_pxr.html">с ПО SARK2_PXR</a></li>
+    </ul>
+
+</div>
+</div>
+</body>
+</html>

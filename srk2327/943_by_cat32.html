@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Настройка адаптера АИ-АТ943 посредством CAT32_БАРК</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="2327.html">СРК-АТ2327 </a>
+    <a href="943.html">943-й адаптер интерфейсный(Сало)</a>
+    <a href="">Настройка адаптера АИ-АТ943 посредством CAT32_БАРК</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+
+    <h1>Настройка адаптера АИ-АТ943 посредством CAT32_БАРК</h1>
+
+    <ul>
+        <li>Запустить CAT32_БАРК (/bin/release/Connections_automatic_tester.exe)</li>
+        <li>Выбрать порт и следующие настройки:</li>
+
+        <img src="../imgs/943/cat1.png" width="351" alt="изображение не найдено"/>
+        <li>В окне Сценариев установить следующие параметры</li>
+
+        <img src="../imgs/943/cat2.png" width="1079" alt="изображение не найдено"/>
+
+
+        <li>Для того, чтобы узнать, какой адрес адаптера, нужно ввести такую команду:</li>
+        <div class="yellow_back">256 > [i=0-255] 03 10 01 00 01 < [x] 03 [LB]</div>
+
+        <br>(Иногда необходимо проверить только, например 5 адресов (когда точно известно, что адрес не больше пяти,
+        но при этом не хочется ждать перебора всех 256-и адресов), тогда команда будет такой:<br>
+        <div class="yellow_back">5 > [i=0-5] 03 10 01 00 01 < [x] 03 [LB]</div>
+        )
+
+        <li>В поле сценариев скопипастить команду и нажать кнопку "Одну команду"</li>
+        <li>В окне "Результат обмена" появится такой список:</li>
+
+        <img src="../imgs/943/cat4.png" width="1087" alt="изображение не найдено"/>
+
+        <li>Одна из строк будет белой и с индификатором "ОК", это значит, что на запрос этого адреса адаптер ответил,
+            остается посмотреть, какой адрес вызывался (на картинке стрелкой указано, где), на картинке это цифра 02,
+            значит у адаптера второй адрес
+        </li>
+
+        <li>Для того, чтобы поменять адрес адаптеру, например со второго на первый, ввести такую команду (02 в начале
+            каждого кода — текущий адрес, 01 в конце каждого кода — номер адреса, т.е. вводить адреса нужно дважды,
+            после ">" и после "<"):
+            <div class="yellow_back">1 > 02 06 10 01 00 01 < 02 06 10 01 00 01</div></li>
+        <li>Вот такой будет ответ:</li>
+        <img src="../imgs/943/АИ-АТ943.png" width="1005" alt="изображение не найдено"/>
+
+
+        <li><a href="../docs/adapter_test_cat32_new3.txt">Здесь</a> можно посмотреть список всех команд для Cat32</li>
+    </ul>
+
+</div>
+</div>
+</body>
+</html>

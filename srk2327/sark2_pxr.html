@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>SARK2 PXR</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="2327.html">СРК-АТ2327 </a>
+    <a href="943.html">943-й адаптер интерфейсный(Сало)</a>
+    <a href="">SARK2 PXR</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+
+    <h1>SARK2 PXR</h1>
+
+    <ul>
+        <li>Адаптеры с подключенными дозиметрами 1123 работают и настраиваются в программе SARK2 PXR.
+            Чтобы настроить дозиметры, надо:
+        </li>
+        <ul>
+            <li>Если система работает через Ethernet адаптер Moxa-5130, то, прежде всего, его необходимо
+                <a href="../docs/NPort_5130-12107098061.pdf">настроить.</a></li>
+            <li>В программе SARK2 PXR выбрать "административный режим" (если конфигурация запускается впервые, этот
+                режим включится автоматически)</li>
+            <img src="../imgs/943/8.PNG" width="800" alt="изображение не найдено">
+            <li>Выбрать COM-порт для подключения</li>
+            <li>Выбрать схему (рисунок на задний план)</li>
+            <li>В окне администратора нажать поиск. Искать будет долго</li>
+            <li>Выбрать поочередно все адаптеры и назначить им пороги</li>
+            <li>Нажать "сохранить"</li>
+
+            <li>Перезапустить программу, теперь она запустится в пользовательском режиме. Проверить присутствие всех
+                датчиков, наличие счета на каждом из них</li>
+            <img src="../imgs/943/7.PNG" width="800" alt="изображение не найдено">
+        </ul>
+    </ul>
+
+    <div class="tips_and_tricks">Если нужно установить новые блоки с другими адресами, единственный способ
+    &mdash; удалить конфигурационный файл, C:\\ProgramData\ATOMTEX\SARK2_LUE\
+        <a href="file://///C:/ProgramData/ATOMTEX/SARK2_LUE/">здесь</a>:
+    <img src="../imgs/943/conf.jpg" width="700" alt="изображение не найдено">
+    </div>
+
+</div>
+</div>
+</body>
+</html>
