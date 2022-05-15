@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>     <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <META charset="utf8">
+    <title>Настройка АИ-АТ943</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <script>window.addEventListener('scroll', trackScroll)</script>
+</head>
+
+<body>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="2327.html">СРК-АТ2327 </a>
+    <a href="943.html">Адаптер интерфейсный АИ-АТ943</a>
+    <a href="">Настройка АИ-АТ943</a>
+
+    <div class="spoiler_menu" id="menu" style="display: none"></div>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+
+    <h1>Настройка АИ-АТ943</h1>
+
+    <div class="nice_details">
+        <details>
+            <summary><h3 style="display:inline; padding: 20px">Установка программы Network Enabler Administrator</h3></summary>
+            <div class="tips_and_tricks">Скачать актуальную версию программы Network Enabler Administrator для версий Windows 7,
+                Server 2008 R2 или выше можно по следующей ссылке: <a href="https://moxa.com/">https://moxa.com/</a></div>
+            <p>После скачивания программы установить на ПК к которому будет подключен для настройки АИ-АТ943.
+                <span class="attention">Для установки Network Enabler Administrator необходимо обладать правами администратора.</span>
+            <ul>
+                <li>Запустите программу Network Enabler Administrator.</li>
+                <li>Нажмите Next, чтобы установить программу, используя имя программы по умолчанию, или выберите другое имя.</li>
+                <li>Нажмите Install, для выполнения процесса установки.</li>
+                <li>Окно установки сообщает о ходе процесса установки. Дождитесь окончания установки.</li>
+                <li>Нажмите Finish, чтобы завершить установку Network Enabler Administrator.</li>
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details open>
+            <summary><h3 style="display:inline; padding: 20px">Настройка модуля NE-4120A с Network Enabler Administrator</h3></summary>
+            <p>Для настройки адаптера необходимо подключить к нему питание от сетевого адаптера 12V-1А на разъём X1, а также
+                подключить сетевой кабель Ethernet (под обжим EIA/TIA-568B) на разъём X2. После этого необходимо запустить
+                программу Network Enabler  Administrator. Если Ваша учетная запись не имеет прав администратора, то необходимо
+                обратиться к системному администратору.
+            <ul>
+                <li>После запуска программы появится ее главное окно.</li>
+                <img src="../imgs/943/settings/01.png"  width="600" alt="изображение не найдено"/>
+                <li>Нажимаем на кнопку Broadcast для поиска всех подключенных к локальной сети устройств NE-4120A. После поиска
+                    появится список устройств.</li>
+                <img src="../imgs/943/settings/02.png"  width="600" alt="изображение не найдено"/>
+            </ul>
+            <p>Необходимое для настройки устройство NE-4120A можно идентифицировать по MAC Address, находящемся в
+                соответствующем поле. MAC Address устройства нанесен на обратной стороне устройства на наклейке.
+                В нашем случае это: <span class="yellow_back_small">00:90:E8:7A:AC:08</span>.</p>
+            <ul>
+                <li>Далее нажимаем правой кнопкой мыши по строке c необходимым устройством и выбираем <i>Configuration/Configure</i>.
+                    Изменение нужно внести в три вкладки 1. Network, 2. Operating Mode, 3. Serial.</li>
+                <img src="../imgs/943/settings/03.png"  width="600" alt="изображение не найдено"/>
+                <li>Раздел Network установить IP-адрес устройства. Получите действительный IP-адрес для модуля у сетевого
+                    администратора. Для изменения соответствующего параметра, надо установить опцию Modify напротив IP адреса.</li>
+                    <img src="../imgs/943/settings/04.png"  width="600" alt="изображение не найдено"/>
+                    <img src="../imgs/943/settings/05.png"  width="600" alt="изображение не найдено"/>
+                <li>Далее выбираем из меню жмем кнопку Operating Mode.</li>
+                    <img src="../imgs/943/settings/06.png"  width="600" alt="изображение не найдено"/>
+                <li>Откроется окно настройки установить опцию Modify, нажимаем Settings. Устанавливаем режим - TCP Client Mode,
+                TCP IP Server (Destination Host), Force Tx Timeout (10 ms). Для примера адрес IP-host <i>93.125.106.138</i> (atomtex.com).</li>
+                    <img src="../imgs/943/settings/07.png"  width="600" alt="изображение не найдено"/>
+                <li>Переходим на вкладку Serial, ставим галочку в поле Modify рядом со строкой и нажимаем Settings.</li>
+                    <img src="../imgs/943/settings/08.png"  width="600" alt="изображение не найдено"/>
+                <li>Устанавливаем параметры интерфейса: 9600, None, 8, 1, None, Enable, RS-485, 2 wire.</li>
+                    <img src="../imgs/943/settings/09.png"  width="600" alt="изображение не найдено"/>
+                <li>Вводим данные как пример и нажимаем кнопку Ok. Данные настройки должны быть согласованы с реальным
+                подключенным оборудованием. После ввода всех настроек необходимо перезапустить модуль, чтобы новые настройки
+                вступили в силу.</li>
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary><h3 style="display:inline; padding: 20px">Настройка модуля NE-4120A в консольном режиме (через web-browser)</h3></summary>
+            <ul>
+                <li>В окне браузера набираем адрес устройства (например 192.168.200.117) и запускаем на соединение.
+                    По умолчанию, если пароль установлен, логин admin пароль moxa. Надо учитывать для соединения, чтобы адрес
+                    устройства попадал в подсеть данной локальной сети, по умолчанию заводские настройки модуля 192.168.127.254</li>
+                    <img src="../imgs/943/settings/10-2.png"  width="1000" alt="изображение не найдено"/>
+                <li>Далее как и в программе Network Enabler  Administrator по такой же технологии устанавливаем последовательно
+                необходимые настройки. В окне Network Settings устанавливаем IP-адрес устройства и нажимаем кнопку Submit.</li>
+                    <img src="../imgs/943/settings/11-2.png"  width="1000" alt="изображение не найдено"/>
+                <li>После переходим на вкладку Operating Settings и устанавливаем следующие настройки. Нажимаем кнопку Submit.</li>
+                    <img src="../imgs/943/settings/12-2.png"  width="1000" alt="изображение не найдено"/>
+                <li>Переходим на вкладку Serial Settings и задаем параметры интерфейса. Нажимаем кнопку Submit.</li>
+                    <img src="../imgs/943/settings/13-2.png"  width="1000" alt="изображение не найдено"/>
+                <li>После ввода всех настроек необходимо перезапустить модуль Save/Restart.</li>
+            </ul>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary><h3 style="display:inline; padding: 20px">Настройка модуля NE-4120A с помощью команды ARP</h3></summary>
+            <p>Чтобы использовать ARP, ваш компьютер и модуль должны быть подключены к одной локальной сети. Вы также можете
+                использовать перекрестный кабель Ethernet для прямого подключения модуля к порту Ethernet вашего компьютера с
+                установленным MS-DOS и открытом ClientTelnet.</p>
+            <p>Ваш модуль должен быть настроен с заводским IP-адресом по умолчанию 192.168.127.254 перед выполнением команды ARP.</p>
+            <p>Чтобы настроить IP-адрес с помощью ARP, выполните следующие действия.</p>
+            <ol>
+                <li>Получите действительный IP-адрес для модуля у сетевого администратора.</li>
+                <li>MAC-адрес модуля из ярлыка на модуле.</li>
+                <li>Выполните команду «arp -s» в командной строке CMD вашего компьютера, набрав:
+                    <span class="yellow_back_small">arp –s &lt;новый IP-адрес&gt; 00-90-E8-tt-tt-tt</span><br>
+                    Например: <span class="yellow_back_small">arp –s 192.168.200.117 00-90-E8-7А-АС-08</span><br>
+                    Начальная конфигурация IP-адреса серии NE-4120A 192.168.127.254.<br>
+                    В приведенном выше примере 192.168.200.117 - это новый IP-адрес, а 00-90-E8-7А-АС-08 - это MAC-адрес модуля,
+                    полученный на шагах 1 и 2.</li>
+                <li>Выполните специальную команду Telnet, набрав:
+                telnet &lt;новый IP-адрес&gt; 6000
+                    Например,
+                    telnet 192.168.200.117 6000
+                    После выполнения этой команды появится сообщение «Ошибка подключения». После перезагрузки модуля его
+                    IP-адрес будет обновлен до нового адреса, и вы можете восстановить соединение, используя Telnet, Интернет
+                    WEB Console или Network Enabler Administrator, чтобы убедиться, что обновление прошло успешно.</li>
+            </ol>
+        </details>
+    </div>
+
+    <div class="nice_details">
+        <details>
+            <summary><h3 style="display:inline; padding: 20px">Консоль Telnet</h3></summary>
+            <p>В зависимости от конфигурации вашего компьютера и сети вам может быть удобно использовать сетевой доступ для
+                настройки IP-адреса вашего модуля. Это можно сделать с помощью программы Telnet, которая требует наличия у
+                модуля сетевого подключения и IP-адреса.</p>
+            <ol>
+                <li>На рабочем столе Windows нажмите «Пуск» и выберите «Выполнить».</li>
+                    <img src="../imgs/943/settings/14.png"  width="300" alt="изображение не найдено"/>
+                <li>Telnet к текущему IP-адресу модуля. Если вы настраиваете модуль в первый раз, вы можете подключиться к
+                    IP-адресу по умолчанию, набрав telnet 192.168.127.254</li>
+                <li>Выберите Настройки сети, нажав 2, а затем Enter.</li>
+            </ol>
+            <pre>
+                << Главное меню >>
+                (1) Базовая настройка
+                (2) Сетевые настройки
+                (3) Серийные настройки
+                (4) Настройка DIO
+                (5) Рабочие настройки
+                (6) Доступные настройки IP
+                (7) Настройки автоматического предупреждения
+                (8) монитор
+                (9) Пинг
+                (а) Изменить пароль
+                (b) Загрузить заводские настройки по умолчанию
+                (v) Просмотр настроек
+                (s) Сохранить/перезапустить
+                (q) Выйти</pre>
+        </details>
+    </div>
+
+</div>
+</div>
+</body>
+</html>
