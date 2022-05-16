@@ -107,6 +107,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../srk2327/942.html">Адаптер интерфейсный АИ-АТ942</a></li>' +
         '        <li><a href="../srk2327/943.html">Адаптер интерфейсный АИ-АТ943</a></li>' +
         '        <li><a href="../srk2327/p900.html">Пульт управления ПУ-АТ900</a></li>' +
+        '        <li><a href="../srk2327/991.html">Устройство сигнализации УС-АТ991</a></li>' +
         '        <li><a href="../srk2327/sark2mrp.html">SARK2 и МРП</a></li>' +
         '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
         '        <li><a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a></li>' +

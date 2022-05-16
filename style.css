@@ -685,6 +685,14 @@ pre {
     margin: 20px auto;
 }
 
+.attention_block ul {
+    font-size: 14px;
+}
+
+.attention_block td {
+    background: white;
+}
+
 /*Контейнер для ссылок в начале страницы под заголовком */
 .left_align {
     text-align: left;
