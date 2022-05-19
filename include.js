@@ -345,7 +345,7 @@ function getRegMenu(mode, id) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../other/flash_magic.html">Инструкция по прошивке LPC11U67</a></li>' +
-        '        <li><a href="../other/bdrm-05m.html">БДРМ-05М. Настройка</a></li>' +
+        '        <li><a href="../other/bdrm-05m.html">БДРМ-05М/ БДРМ-11. Настройка</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/6130_prosh.html">АТ6130 Прошивка</a></li>' +
