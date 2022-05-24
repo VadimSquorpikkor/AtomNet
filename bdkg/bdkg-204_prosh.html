@@ -4,6 +4,7 @@
     <META charset="utf8">
     <title>БДКГ-204</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../jquery-3.6.0.js"></script>
     <script type="text/javascript" src="../include.js"></script>
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <script>window.addEventListener('scroll', trackScroll)</script>
@@ -41,17 +42,30 @@
 
     <h1>Прошивка БДКГ-204</h1>
 
-    <p>
-
     <ul>
-        <li>Подключить питание через ODU разъем &rarr; USB-COM адаптер. (На этапе прошивки &mdash; как питание, на этапе
-            проверки
-            работы &mdash; как обмен)
-        </li>
+        <li>Подключить питание через ODU разъем &rarr; USB-COM адаптер. (На этапе прошивки — как питание, на этапе проверки работы — как обмен, потребление рабочее блока ~75 мА).</li>
         <li>Подключить программатор</li>
     </ul>
 
-    <img src="../imgs/204/204-8.jpg" width="800" alt="изображение не найдено">
+<!--    <img src="../imgs/204/204-8.jpg" width="800" alt="изображение не найдено">-->
+    <img class="resizable" src="../imgs/204/Настройка_БДКГ-204_Прошивка 1.jpg" width="300" alt="изображение не найдено">
+    <figcaption>Подключение</figcaption>
+
+    <div class="attention_block">
+        При подключении обращать внимание на расположение 1-ого вывода как при подключении к переходнику, так и при
+        подключении к плате обработки БД:
+
+        <div class="image_div" style="background: inherit">
+            <figure style="float: left; padding-right: 10px; margin: 0">
+                <img class="resizable" src="../imgs/204/Настройка_БДКГ-204_Прошивка 2.jpg" width="300" alt="изображение не найдено">
+                <figcaption>Переходник</figcaption>
+            </figure>
+            <figure style="float: left; padding-right: 10px; margin: 0">
+                <img class="resizable" src="../imgs/204/Настройка_БДКГ-204_Прошивка 3.jpg" width="300" alt="изображение не найдено">
+                <figcaption>Плата обработки БД</figcaption>
+            </figure>
+        </div>
+    </div>
 
     <p>
     <ul>
@@ -67,7 +81,6 @@
         <img src="../imgs/204/mem2.jpg" width="700" alt="изображение не найдено"/>
         <li>Нажать "Start"</li>
     </ul>
-
 
     <div class="yellow_back">
         <details>
@@ -111,6 +124,17 @@
             другой блок и т. д. Окна не закрывать.
             <img src="../imgs/204/201_10.png" width="800" alt="изображение не найдено">
     </div>
+
+
+    <script type="text/javascript">
+
+        $(".resizable").click(function () {
+            // $(this).css('transform', 'scale(1.8)');// то же но хз как уменьшить
+            $(this).toggleClass("bigger");//но так ещё пришлось стиль в css дописывать
+        })
+
+    </script>
+
 </div>
 </div>
 </body>
