@@ -918,6 +918,7 @@ summary div ul {
 
 /*region ------- ГЛАВНОЕ МЕНЮ (СПОЙЛЕРЫ) ---------------------------------------------------------------------------------------- */
 .spoiler_menu {
+    text-indent: 5px;
     margin: 0 auto;
     padding: 0;
     color: white;
@@ -1003,13 +1004,13 @@ summary div ul {
 }
 
 .spoiler_menu li:hover div {
-    margin: -5px;
+    margin: -25px;
     display: block;
     position: absolute;
-    left: 250px;
+    left: 350px;
     color: #444;
     padding: 0;
-    text-indent: 0;
+    text-indent: 10px;
     background-color: #444444;
     border-radius: 10px;
     width: 370px;
@@ -1017,10 +1018,18 @@ summary div ul {
 }
 
 .spoiler_menu #title {
+    padding-left: 25px;
     font-size: 23px;
-    text-indent: 0;
+    text-indent: 10px;
     color: gold;
 }
+.spoiler_menu #title_button {
+    float: right;
+    margin: 5px
+}
+
+
+
 /*endregion*/
 
 /*region ------- left_side_menu, index_menu_div, #main_menu ---------------------------------------------------------------------*/
@@ -1211,12 +1220,13 @@ summary div ul {
     transform:scale(1.8);
     transition: transform 0.25s ease;
 }*/
+.resizable {
+    cursor: zoom-in;
+}
 .bigger{
     transform:scale(2.2);
     transition: transform 0.25s ease;
-}
-.resizable {
-    cursor: pointer;
+    cursor: zoom-out;
 }
 /* Clear floats after image container */
 .image_div::after {

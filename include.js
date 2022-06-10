@@ -9,6 +9,30 @@ const COLOR_RED = "#ff3333";
 const СВЕРНУТЬ = "Свернуть"
 const РАЗВЕРНУТЬ = "Развернуть"
 
+/**Добавляет кнопку "Вверх" если пролистать страницу вниз*/
+window.addEventListener('scroll', trackScroll);
+
+/**При клике по элементу класса .resizable увеличивает его, при повторном клике — уменьшает. Если в момент, когда
+ * элемент увеличен, кликнуть вне элемента, элемент уменьшится. Если более точно — при клике по элементу к нему
+ * добавляется класс .bigger (увеличение, анимация смена курсора).
+ * Чтобы добавить такую функциональность для элемента (картинки), достаточно указать ей класс .resizable*/
+window.onclick = function(event) {
+    if (!event.target.matches('.resizable')) {
+        let dropdowns = document.getElementsByClassName('resizable');
+        let i;
+        for (i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('bigger')) {
+                openDropdown.classList.remove('bigger');
+            }
+        }
+    } else {
+        let classes = event.target.classList;
+        if (classes.contains('bigger')) classes.remove('bigger');
+        else classes.add('bigger');
+    }
+}
+
 /**Открыть папку в отдельной вкладке, путь должен быть вида: Fileserver/Manufacture/Uchastok.RIR */
 function openFile(path) {
     window.open("file://///"+path);
@@ -80,7 +104,7 @@ function switchMenuStateGrad(state, id) {
  */
 function getRegMenu(mode, id) {
     return '' +
-        '<span id="title">Регулировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin-bottom: 3px" id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Регулировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -404,7 +428,7 @@ function getRegMenu(mode, id) {
  * */
 function getGradMenu(mode, id) {
     return '' +
-        '<span id="title">Градуировка</span><span style="width:40%; text-align: right; display:inline-block "><input style="margin-bottom: 3px" id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Градуировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +
