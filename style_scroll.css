@@ -1004,7 +1004,7 @@ summary div ul {
     margin-left: 20px;
 }
 
-.spoiler_menu li:hover div {
+.spoiler_menu li/*:hover*/ div {
     margin: -25px;
     display: block;
     position: absolute;
@@ -1016,6 +1016,7 @@ summary div ul {
     border-radius: 10px;
     width: 370px;
     z-index: 3;
+    overflow: auto;
 }
 
 .spoiler_menu #title {
@@ -1042,7 +1043,7 @@ summary div ul {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
 }
 
-.left_side_menu {
+/*.left_side_menu {
     margin-left: auto;
     float: left;
     width: 450px;
@@ -1051,10 +1052,10 @@ summary div ul {
     display: none;
     padding: 0;
     border-radius: 25px;
-    /*opacity: .9;*/
-}
+    !*opacity: .9;*!
+}*/
 
-/*[1].left_side_menu {
+.left_side_menu {
     background-color: #444444;
     position: fixed;
     float: left;
@@ -1065,7 +1066,8 @@ summary div ul {
     top: 0;
     overflow-y: auto;
     z-index: 1;
-}*/
+    /*border-radius: 25px;*/
+}
 
 .index_menu_div {
     /*float: left;*/
@@ -1080,7 +1082,7 @@ summary div ul {
 /*для всех страниц, кроме главной*/
 @media (min-width: 1500px){/*1300*/
     .main_div {
-        /*[2]margin-left: 470px;*/
+        margin-left: 470px;
         float: none;
         overflow: hidden;
     }
@@ -1252,7 +1254,7 @@ summary div ul {
 
 
 
-/*[3].left_side_menu {
+.left_side_menu {
     scrollbar-color: orange #444444;
     scrollbar-width: thin;
 
@@ -1268,5 +1270,4 @@ summary div ul {
     border-radius: 100px;
     background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
     box-shadow: inset 2px 2px 5px 0 rgba(255, 0, 0, 0.5);
-}*/
-/*[4]Ништяк! сделал боковое меню фикированным и с прокруткой по высоте: теперь меню и основной контент скролятся <i>НЕЗАВИСИМО</i> друг от друга, т.е. даже если значительно пролистать контент, меню всегда остается видимым. Сам скрол сделан узким, без кнопок и в цвет (оранжевый+темно-серый), сам скролл появляется только при переполнении по высоте. Всё это с сохранением прежних ништяков*/
+}
