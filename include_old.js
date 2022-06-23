@@ -124,19 +124,19 @@ function getRegMenu(mode, id) {
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../srk2327/mrp.html">МРП (Пешеходный монитор)</a></li>' +
-        '        <li><a href="../srk2327/portal.html">Портальный монитор</a></li>' +
-        '        <li><a href="../srk2327/BR.html">ДРГ. Блок регистрации</a></li>' +
+        '        <li><a href="../srk2327/mrp.html">&bullet; МРП (Пешеходный монитор)</a></li>' +
+        '        <li><a href="../srk2327/portal.html">&bullet; Портальный монитор</a></li>' +
+        '        <li><a href="../srk2327/BR.html">&bullet; ДРГ. Блок регистрации</a></li>' +
         '        <li><a href="../srk2327/941adapter.html">Адаптер интерфейсный АИ-АТ941</a></li>' +
         '        <li><a href="../srk2327/942.html">Адаптер интерфейсный АИ-АТ942</a></li>' +
         '        <li><a href="../srk2327/943.html">Адаптер интерфейсный АИ-АТ943</a></li>' +
         '        <li><a href="../srk2327/p900.html">Пульт управления ПУ-АТ900</a></li>' +
         '        <li><a href="../srk2327/991.html">Устройство сигнализации УС-АТ991</a></li>' +
         '        <li><a href="../srk2327/sark2mrp.html">SARK2 и МРП</a></li>' +
-        // '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
-        // '        <li><a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a></li>' +
-        // '        <li><a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a></li>' +
-        // '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a></li>' +
+        '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
+        '        <li><a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a></li>' +
+        '        <li><a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a></li>' +
+        '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
@@ -171,22 +171,22 @@ function getRegMenu(mode, id) {
         '                    <li><a href="../bdkg02/bdkg-02rem.html">РЕМОНТ</a></li>' +
         '                    <li><a href="../bdkg02/bdkg-02_100-200.html">Как поменять напряжение 100 &rarr; 200 вольт</a></li>' +
         '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Калибровка по фону и градуировочное число</a></li>' +
-        // '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
-        // '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a></li>' +
-        // '                    <li><a href="../templates/BDKG-02_template.odt">Шаблон для записи данных</a></li>' +
-        // '                    <li><a href="//Inv-996/журналы градуировок/BDKG02.ods">Журнал градуировки БДКГ-02</a></li>' +
+        '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
+        '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a></li>' +
+        '                    <li><a href="../templates/BDKG-02_template.odt">Шаблон для записи данных</a></li>' +
+        '                    <li><a href="//Inv-996/журналы градуировок/BDKG02.ods">Журнал градуировки БДКГ-02</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
         '        <li><a href="../bdkg/bdkg_3_5_7_11.html">БДКГ-03 -05 -07 -11</a></li>' +
         '        <li><a href="../bdkg/bdkg04.html">БДКГ-04</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a></li>' +
-        // '                    <li><a href="../other/flash_magic.html">Инструкция по прошивке блоков</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a></li>' +
+        '                    <li><a href="../other/flash_magic.html">Инструкция по прошивке блоков</a></li>' +
+        '                </ul>' +
+        '            </div>' +
         '        </li>' +
         '        <li><a href="../bdkg/bdkg11m.html">БДКГ-11М</a></li>' +
         '        <li><a href="../bdkg22/bdkg22.html">БДКГ-22/23. Прошивка и настройка</a>' +
@@ -197,15 +197,15 @@ function getRegMenu(mode, id) {
         '                    <li><a href="../bdkg22/bdkg22diap.html">Как принудительно переключать диапазоны</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22newfon.html">Как настраивать фон</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22serial.html">Как записать серийный номер в память БД</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_prot.odt">Протокол поверки 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_sr.odt">Калибровочный сертификат 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_se.odt">Calibration Sertificate 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg-23.1_raschet.ods">Расчет протокола 23/1</a></li>' +
-        // '                    <li><a href="../docs/bdkg22/bdkg-23-bg.ods">Таблица записи фона</a></li>' +
-        // '                    <li><a href="../docs/bdkg22/perechen_bdkg22.odt">Перечень</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал градуировок БДКГ-22</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23.ods">Журнал градуировок БДКГ-23</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23_1.ods">Журнал градуировок БДКГ-23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_prot.odt">Протокол поверки 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_sr.odt">Калибровочный сертификат 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_se.odt">Calibration Sertificate 23/1</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg-23.1_raschet.ods">Расчет протокола 23/1</a></li>' +
+        '                    <li><a href="../docs/bdkg22/bdkg-23-bg.ods">Таблица записи фона</a></li>' +
+        '                    <li><a href="../docs/bdkg22/perechen_bdkg22.odt">Перечень</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал градуировок БДКГ-22</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23.ods">Журнал градуировок БДКГ-23</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23_1.ods">Журнал градуировок БДКГ-23/1</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -222,20 +222,20 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
         '        <li><a href="../bdkg/bdkr-01.html">БДКР-01</a></li>' +
         '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="../bdmg/bdmg_trouble.html">Если не подключается</a></li>' +
-        // '                    <li><a href="../bdmg/static.html">Защита от статики</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_separate.html">Посмотреть работу каждого счетчика</a></li>' +
-        // '                    <li><a href="../templates/BDMG_template.odt">Шаблон для распечатывания коэффициентов</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_trouble2.html">Если не прошел линейку</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_call.html">Как сделать автокалибровку</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_pult.html">Как сделать проверку "пультом"</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_osh.html">Как снять показания с "ошейником"</a></li>' +
-        // '                    <li><a href="../docs/БДМГ%20Паспорт.docx">Паспорт настройки</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="../bdmg/bdmg_trouble.html">Если не подключается</a></li>' +
+        '                    <li><a href="../bdmg/static.html">Защита от статики</a></li>' +
+        '                    <li><a href="../bdmg/bdmg_separate.html">Посмотреть работу каждого счетчика</a></li>' +
+        '                    <li><a href="../templates/BDMG_template.odt">Шаблон для распечатывания коэффициентов</a></li>' +
+        '                    <li><a href="../bdmg/bdmg_trouble2.html">Если не прошел линейку</a></li>' +
+        '                    <li><a href="../bdmg/bdmg_call.html">Как сделать автокалибровку</a></li>' +
+        '                    <li><a href="../bdmg/bdmg_pult.html">Как сделать проверку "пультом"</a></li>' +
+        '                    <li><a href="../bdmg/bdmg_osh.html">Как снять показания с "ошейником"</a></li>' +
+        '                    <li><a href="../docs/БДМГ%20Паспорт.docx">Паспорт настройки</a></li>' +
+        '                    <li><a href="../docs/protocol_sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
+        '                </ul>' +
+        '            </div>' +
         '        </li>' +
         '        <li><a href="../bdkg/bdks-07.html">БДКС-07</a>' +
         '' +
@@ -265,30 +265,30 @@ function getRegMenu(mode, id) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../11xx/1103_new.html">ДКР-АТ1103М</a>' +
-        // '        <li><a href="../1103/1103.html">ДКР-АТ1103М (старый вариант)</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
-        // '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
-        // '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
-        // '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
-        // '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
-        // '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
-        // '        </li>' +
+        '        <li><a href="../1103/1103.html">ДКР-АТ1103М (старый вариант)</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
+        '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
+        '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
+        '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
+        '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
+        '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+        '        </li>' +
         '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/АТ1121.ods">Данные с линейки</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a></li>' +
+        '                    <li><a href="file://///Inv-996/журналы градуировок/АТ1121.ods">Данные с линейки</a></li>' +
+        '                </ul>' +
+        '            </div>' +
         '        </li>' +
         '        <li><a href="../11xx/1123.html">ДКС-АТ1123</a>' +
         '            <div>' +
         '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a></li>' +
+        '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a></li>' +
         '                    <li><a href="../11xx/1123_umnoz.html">Проверка умножителя</a></li>' +
         '                </ul>' +
         '            </div>' +
