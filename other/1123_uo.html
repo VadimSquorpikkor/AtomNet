@@ -11,20 +11,22 @@
 
 <body>
 
+<div id="left_side_panel" class="left_side_panel">
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
 <a class="to_page_top" title="Наверх">&uparrow;</a>
 
 <div class="menu_and_main_div">
 
 <div class="header_div_2">
-    <input title="" name="menu_btn" type="button" value="Меню" onclick="show_menu()" class="menu_button"
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
            id="menu_button">
 
     <a href="../menu/index.html">Главная</a>
     <a href="../11xx/1121.html"> ДКС-АТ1121</a>
     <a href="">ДКС-АТ1121, АТ1123. Проверка УО</a>
-
-    <div class="spoiler_menu" id="menu" style="display: none"></div>
-
 </div>
 
 <div class="left_side_menu">
@@ -32,7 +34,7 @@
 </div>
 
 <script>
-    includeMenu("menu_left", REG_MENU, OPEN);
+    includeMenu("menu_left", REG_MENU, CLOSE);
     includeMenu("menu", REG_MENU, CLOSE);
 </script>
 

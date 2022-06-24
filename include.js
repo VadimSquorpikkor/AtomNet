@@ -19,6 +19,36 @@ function closeNav() {
     document.getElementById("left_side_panel").style.left = "-450px";
 }
 
+
+function trackScroll() {
+    'use strict';
+
+    function trackScroll() {
+        let scrolled = window.pageYOffset;
+        let coords = document.documentElement.clientHeight;
+
+        if (scrolled > coords) {
+            goTopBtn.classList.add('to_page_top-show');
+        }
+        if (scrolled < coords) {
+            goTopBtn.classList.remove('to_page_top-show');
+        }
+    }
+
+    function backToTop() {
+        if (window.pageYOffset > 0) {
+            window.scrollBy(0, -80);
+            setTimeout(backToTop, 0);
+        }
+    }
+
+    let goTopBtn = document.querySelector('.to_page_top');
+
+    window.addEventListener('scroll', trackScroll);
+    goTopBtn.addEventListener('click', backToTop);
+}
+
+
 /**Добавляет кнопку "Вверх" если пролистать страницу вниз*/
 window.addEventListener('scroll', trackScroll);
 
@@ -439,7 +469,8 @@ function getRegMenu(mode, id) {
  * */
 function getGradMenu(mode, id) {
     return '' +
-        '<span id="title">Градуировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        // '<span id="title">Градуировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Градуировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>БОИ</span>' +
@@ -541,33 +572,7 @@ function left_menu_visibility_2(){
     }
 }
 
-function trackScroll() {
-    'use strict';
 
-    function trackScroll() {
-        let scrolled = window.pageYOffset;
-        let coords = document.documentElement.clientHeight;
-
-        if (scrolled > coords) {
-            goTopBtn.classList.add('to_page_top-show');
-        }
-        if (scrolled < coords) {
-            goTopBtn.classList.remove('to_page_top-show');
-        }
-    }
-
-    function backToTop() {
-        if (window.pageYOffset > 0) {
-            window.scrollBy(0, -80);
-            setTimeout(backToTop, 0);
-        }
-    }
-
-    let goTopBtn = document.querySelector('.to_page_top');
-
-    window.addEventListener('scroll', trackScroll);
-    goTopBtn.addEventListener('click', backToTop);
-}
 
 function insertCalculatorCode() {
     document.getElementById('activity_calculator_block').innerHTML = ''+
