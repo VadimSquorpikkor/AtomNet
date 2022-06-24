@@ -97,6 +97,11 @@ th {
 
 /*region ------- Дивы и вложенные в дивы элементы -------------------------------------------------------------------------------*/
 
+body {
+    margin: 0;
+    /*padding: 0;*/
+}
+
 .logo_div {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
@@ -134,6 +139,8 @@ th {
 }
 
 .main_div{
+    margin: 0;
+    /*padding: 0;*/
     min-height: 100vh;
 
     /*todo попробовать (если не нужен скрол, то не показывает, но добавляет для него место) overflow: visible*/
@@ -169,7 +176,7 @@ body>div>div {
 }
 
 .menu_and_main_div {
-
+    padding: 10px;
     max-width: 1700px;
     margin: auto;
     visibility: hidden;
@@ -407,7 +414,7 @@ img {
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
-/*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY PRE------------------------------------------------------------------------*/
+/*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY PRE---------------------------------------------------------------------*/
 
 div {
     /*padding: 5px 20px;*/
@@ -1268,7 +1275,7 @@ summary div ul {
     background: #444444 url("imgs/main_menu/n2.png") 5px 5px no-repeat;
     background-size: 65px;
 }*/
-
+/*region ------- Картинки -------------------------------------------------------------------------------------------------------*/
 .image_div {
     width: fit-content;
     margin: auto;
@@ -1292,11 +1299,14 @@ summary div ul {
     clear: both;
     display: table;
 }
+/*endregion -----------------------------------------------------------------------------------------------------------*/
 
-
-
+/*region ------- Узкий цветной скрол для меню -----------------------------------------------------------------------------------*/
 .left_side_menu {
+    transition: top 0.3s;
+    /*noinspection CssUnknownProperty*/
     scrollbar-color: orange #444444;
+    /*noinspection CssUnknownProperty*/
     scrollbar-width: thin;
 }
 .left_side_menu::-webkit-scrollbar {
@@ -1309,4 +1319,91 @@ summary div ul {
 .left_side_menu::-webkit-scrollbar-thumb {
     background-color: darkorange;
 }
-/*[4]Ништяк! сделал боковое меню фикированным и с прокруткой по высоте: теперь меню и основной контент скролятся <i>НЕЗАВИСИМО</i> друг от друга, т.е. даже если значительно пролистать контент, меню всегда остается видимым. Сам скрол сделан узким, без кнопок и в цвет (оранжевый+темно-серый), сам скролл появляется только при переполнении по высоте. Всё это с сохранением прежних ништяков*/
+/*endregion -----------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Для панельки которая вываливается сверху -----------------------------------------------------------------------*/
+/*НЕ ИСПОЛЬЗУЕТСЯ*/
+
+/*вставить в html*/
+/*<div id="top_slide_panel">*/
+/*    <a style="padding: 3px 15px" onclick="openNav()">&#9776;</a>*/
+/*    <a href="../menu/index.html">Главная</a>*/
+/*    <a href="">БДКГ-02</a>*/
+/*</div>*/
+
+#top_slide_panel {
+    visibility: visible;
+    background-color: #333333; /* Black background color */    /*var(--background_color_dark)*/
+    position: fixed; /* Make it stick/fixed */
+    top: -50px; /* Hide the navbar 50 px outside of the top view */
+    width: 100%; /* Full width */
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+    padding: 5px 20px;
+    border-radius: 0;
+    text-indent: 0;
+}
+
+#top_slide_panel a {
+    float: left;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 4px 15px;
+    margin-left: 4px;
+    border-radius: 0 0 0 0;
+    z-index: 9;
+}
+
+#top_slide_panel a:hover {
+    background-color: #ddd;
+    color: #222222;
+}
+
+/*endregion -----------------------------------------------------------------------------------------------------------*/
+
+/*region ------- Меню выезжающее слева ------------------------------------------------------------------------------------------*/
+
+/* The sidepanel menu */
+.left_side_panel {
+    padding-left: 0;
+    padding-right: 0;
+    height: 100%; /* Specify a height */
+    /*width: 0; !* 0 width - change this with JavaScript *!*/
+    width: 420px;
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Stay on top */
+    top: 0px;
+    left: -450px;
+    background-color: #333333;/*#111;*/ /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.2s; /* 0.5 second transition effect to slide in the sidepanel */
+
+    box-shadow: none;
+    overflow-y: scroll;
+    /*transition: top 0.1s;*/
+}
+.left_side_panel>div {
+    box-shadow: none;
+}
+
+/* Position and style the close button (top right corner) */
+.left_side_panel .close_btn {
+    position: absolute;
+    top: 0;
+    color: white;
+    right: 25px;
+    font-size: 40px;
+}
+.left_side_panel > a {
+    text-indent: 0;
+    color: white;
+    background: none;
+    transition: none;
+    /*background-color: #333333;*/
+}
+.left_side_panel > a:hover {
+    color: #cccccc;
+    transition: none;
+}
+/*endregion -----------------------------------------------------------------------------------------------------------*/

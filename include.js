@@ -9,6 +9,16 @@ const COLOR_RED = "#ff3333";
 const СВЕРНУТЬ = "Свернуть"
 const РАЗВЕРНУТЬ = "Развернуть"
 
+/**Открыть боковое меню*/
+function openNav() {
+    document.getElementById("left_side_panel").style.left = "0px";/*todo поменять на left*/
+}
+
+/**Закрыть боковое меню*/
+function closeNav() {
+    document.getElementById("left_side_panel").style.left = "-450px";
+}
+
 /**Добавляет кнопку "Вверх" если пролистать страницу вниз*/
 window.addEventListener('scroll', trackScroll);
 
@@ -104,7 +114,8 @@ function switchMenuStateGrad(state, id) {
  */
 function getRegMenu(mode, id) {
     return '' +
-        '<span id="title">Регулировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        // '<span id="title">Регулировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
+        '<span id="title">Регулировка</span>' +
         '<details ' + mode + '>' +
         '    <summary>' +
         '        <span>Система радиационного контроля</span>' +
@@ -116,7 +127,7 @@ function getRegMenu(mode, id) {
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=usb-com-adapter#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=moxa#moxa">Настройка Ethernet адаптера MOXA</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=cabel#cabel">Кабель для Устройства Сигнализации</a></li>' +
-        '                   <li><a id="mylink" href="../srk2327/2327.html?id=source#source">Вот так укладывается контрольный источник</a></li>' +
+        '                   <li><a id="mylink" href="../srk2327/2327.html?id=source#source">Как укладывать контрольный источник</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=cabel_type#cabel_type">Какие бывают кабели для блоков</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=pu_900#pu_900">Адаптер питания для ПУ-АТ900</a></li>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=adapter#adapter">Как самому сделать адаптер</a></li>' +
