@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="RU">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
-    <title>Инструкции УРиР</title>
+    <title>Содержание</title>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <script type="text/javascript" src="../SqrLibrary.js"></script>
     <script type="text/javascript" src="../activity_new.js"></script>
@@ -21,23 +21,17 @@
 
 <div class="menu_and_main_div">
 
-    <div class="logo_div">
-        <a class="index_menu_button" onclick="openNav()">&#9776;</a>
-    </div>
+    <div class="logo_div"></div>
 
-    <div id="left_side_menu" class="left_side_menu" style="top: 140px">
-        <div id="menu_left" class="spoiler_menu"></div>
+    <div id="main" class="index_menu_div">
+        <div id="index_menu" class="spoiler_menu" style="visibility: visible"></div>
+        <div id="index_menu_2" class="spoiler_menu" style="visibility: visible; margin-top: 5px"></div>
     </div>
 
     <script>
-        includeMenu("menu_left", REG_MENU, CLOSE);
-        includeMenu("menu_left", GRAD_MENU, CLOSE);
-        includeMenu("menu", REG_MENU, CLOSE);
-        includeMenu("menu", GRAD_MENU, CLOSE);
+        includeMenu("index_menu", REG_MENU, CLOSE);
+        includeMenu("index_menu_2", GRAD_MENU, CLOSE);
     </script>
-
-<!--    <div class="main_div">-->
-<!--    </div>-->
 
     <div class="yellow_back_index_right" style="text-align: left; padding-left:30px; background: antiquewhite; background-size:400px">
         <span class="red_light_title" style="float: right; font-size: 12px; text-decoration: underline">Версия 23.06.22</span><br>
@@ -66,31 +60,17 @@
         • Вышла новая версия <a href="../sertif_prosh/macro.html">макросов для протоколов поверки и сертификатов</a> &mdash; 3.44.
         Что нового читаем <a href="../sertif_prosh/macro_version.html">тут</a><br>
         • Глобально обновил инструкцию для <a href="../srk2327/943.html">Адаптер 943</a>.<br>
-        <!--        • Инструкции теперь доступны в интернет по <a href="https://uchastokrir2.web.app/menu/index.html">ссылке</a><br>-->
+<!--        • Инструкции теперь доступны в интернет по <a href="https://uchastokrir2.web.app/menu/index.html">ссылке</a><br>-->
         • Добавлена инструкция <a href="../srk2327/941adapter.html">Адаптер 941 (новая версия)</a><br>
         • Добавлена инструкция <a href="../srk2327/991.html">Устройство сигнализации УС-АТ991</a><br>
-        <!--        • Для "Проверка умножителя 1123" обновлены данные для проверки: добавлена таблица напряжений как для статика, так и для мультика <a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a><br>-->
-        <!--        • Исправлено: были неправильные показания активности для 831, 832, 833 источников (была указана неправильная дата поверки)<br>-->
-        <!--        • В выпадающие списки источников (1121, 1123, калькулятор активности и т.д.) добавлен 832-й источник<br>-->
+<!--        • Для "Проверка умножителя 1123" обновлены данные для проверки: добавлена таблица напряжений как для статика, так и для мультика <a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a><br>-->
+<!--        • Исправлено: были неправильные показания активности для 831, 832, 833 источников (была указана неправильная дата поверки)<br>-->
+<!--        • В выпадающие списки источников (1121, 1123, калькулятор активности и т.д.) добавлен 832-й источник<br>-->
 
         <!--    • Добавлена инструкция <a href="../grad/bdkg-02.html">Градуировка БДКГ-02</a><br>-->
     </div>
 
     <div id="div_for_menu_block" class="div_for_menu_block"></div>
-
-    <script type="text/javascript">
-        window.onscroll = function () {
-            scrollFunction()
-        };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-                document.getElementById('left_side_menu').style.top = "0"
-            } else {
-                document.getElementById('left_side_menu').style.top = "140px"
-            }
-        }
-    </script>
 
 </div>
 </body>

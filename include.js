@@ -526,8 +526,8 @@ function includeMenu(menu_id, menu_type, menu_state) {
     if (menu_state === OPEN) state = 'open';
     if (menu_state === CLOSE) state = '';
 
-    if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML = getRegMenu(state, menu_id);
-    if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML = getGradMenu(state, menu_id);
+    if (menu_type === REG_MENU) document.getElementById(menu_id).innerHTML += getRegMenu(state, menu_id);
+    if (menu_type === GRAD_MENU) document.getElementById(menu_id).innerHTML += getGradMenu(state, menu_id);
 
     // left_menu_visibility(false);
 }
