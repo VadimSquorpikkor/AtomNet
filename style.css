@@ -874,126 +874,61 @@ summary div ul {
 /*region ------- ГЛАВНОЕ МЕНЮ (СПОЙЛЕРЫ) ---------------------------------------------------------------------------------------- */
 .spoiler_menu {
     text-indent: 5px;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     color: white;
     border-radius: 15px;
     background-color: #444444;
 }
-
 .spoiler_menu ul {
     list-style-type: none;
-    /*отступ выделенного пункта меню*/
-    /*padding-left: 60px;*/
     margin: 0;
-    position: relative; /*сделано для того чтобы меню со свойством position:absolute и top:0 считали за нулевую отметку spoiler menu */
-
+    position: relative;
 }
-
 .spoiler_menu summary {
     background-color: #333;
     padding: 8px;
-    margin: 0;
 }
-
-.spoiler_menu details:first-child summary {
-    border-radius: 15px 15px 0 0;
-}
-
-.spoiler_menu details:last-child summary {
-    border-radius: 0 0 15px 15px;
-}
-
-.spoiler_menu details:last-child {
-    /*padding-bottom: 15px;*/
-}
-
 .spoiler_menu summary :hover {
     color: orange;
 }
-
-.spoiler_menu details details summary {
-    border-radius: 0 0 0 0;
-    font-size: 15px;
-    background-color: #383838;
-}
-
-.spoiler_menu details details:last-child summary, .spoiler_menu details details:first-child summary {
-    border-radius: 0 0 0 0;
-    background-color: #383838;
-}
-
 .spoiler_menu a {
     font-size: 15px;
-    display: block;
+    display: block;/*вобщем то зачем?*/
     width: 350px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 3px;/*вобщем то зачем?*/
+    padding-bottom: 3px;/*вобщем то зачем?*/
 }
-
 .spoiler_menu a:hover {
     padding-left: 18px;
     color: black;
     background-color: darkorange;
 }
-
-.spoiler_menu li div ul {
-    padding: 0;
-}
-
-/*для второго уровня спойлеров в главном меню*/
-.spoiler_menu details details li{
-    /*text-indent: 20px;*/
-}
-
-.spoiler_menu details details a  {
-    text-indent: 20px;
-    padding-left: 5px;
-    margin-left: 20px;
-}
-
 .spoiler_menu li div a{
     font-size: 14px;
     color: #ffa600;
     font-style: italic;
-
 }
 .spoiler_menu li div a::before{
-    content: '• ';/*&bullet;*/
+    content: '• ';
 }
-
 .spoiler_menu li div {
     margin: 0 0 0 5px;
     padding: 0 0 0 25px;
-
     display: block;
     color: #444;
     text-indent: 10px;
     background-color: #444444;
-
-    /*color: #555555;*/
-    /*background-color: #4d4d4d;*/
-    /*border-radius: 10px;*/
     box-shadow: none;
-
-    /*box-shadow: inset 4px 0 0 #707070;*/
-    /*box-shadow: inset 3px 0 0 darkorange;*/
 }
-
-
+.spoiler_menu ul ul {
+    padding: 0;
+}
 .spoiler_menu #title {
     padding-left: 25px;
     font-size: 23px;
-    text-indent: 10px;
     color: gold;
 }
-.spoiler_menu #title_button {
-    float: right;
-    margin: 5px
-}
-
-
-
 /*endregion*/
 
 /*region ------- left_side_menu, index_menu_div, #main_menu ---------------------------------------------------------------------*/
