@@ -252,12 +252,6 @@ function getRegMenu(mode, id) {
         '        </li>' +
         '        <li><a href="../bdkg/bdkg-25.html">БДКГ-25</a></li>' +
         '        <li><a href="../bdkg/bdkg27.html">БДКГ-27. Как сделать протокол поверки.</a>' +
-        '            <div>' +
-        '                <ul>' +
-        '' +
-        '                </ul>' +
-        '            </div>' +
-        '        </li>' +
         '        <li><a href="../bdkg/bdkg35.html">БДКГ-35</a></li>' +
         '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>' +
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
@@ -369,28 +363,15 @@ function getRegMenu(mode, id) {
         '        <span>БОИ</span>' +
         '    </summary>' +
         '    <ul>' +
-        '       <details ' + mode + '>' +
-        '       <summary>' +
-        '       <span>БОИ</span>' +
-        '   </summary>' +
-        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
-        '               <li><a href="../boi/boi.html">Преобразователь напряжения</a></li>' +
-        '       </details>' +
-        '       <details ' + mode + '>' +
-        '           <summary>' +
-        '               <span>БОИ 2</span>' +
-        '           </summary>' +
+        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БОИ. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
+        '               <li><a href="../boi/boi.html">БОИ. Преобразователь напряжения</a></li>' +
+
         '               <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
-        '               <li><a href="../boi/boi2-prog.html">Прошивка</a></li>' +
-        '               <li><a href="../boi/boi2-prov.html">Проверка Устройства обработки</a></li>' +
-        '       </details>' +
-        '       <details ' + mode + '>' +
-        '           <summary>' +
-        '               <span>БОИ 4</span>' +
-        '           </summary>' +
-        '               <li><a href="../boi/boi4_pp_prosh.html">Прошивка платы преобразователя</a></li>' +
+        '               <li><a href="../boi/boi2-prog.html">БОИ2. Прошивка</a></li>' +
+        '               <li><a href="../boi/boi2-prov.html">БОИ2. Проверка Устройства обработки</a></li>' +
+
+        '               <li><a href="../boi/boi4_pp_prosh.html">БОИ-4. Прошивка платы преобразователя</a></li>' +
         '               <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ-4</a></li>' +
-        '       </details>' +
         '    </ul>' +
         '</details>' +
         '' +
@@ -427,25 +408,29 @@ function getRegMenu(mode, id) {
         '        <span>Файлы, документы, макросы</span>' +
         '    </summary>' +
         '    <ul>' +
-        '       <details ' + mode + '>' +
-        '           <summary>' +
-        '               <span>Макросы</span>' +
-        '           </summary>' +
-        '           <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a></li>' +
-        '           <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
-        '           <li><a href="../docs/AtomtexLibrary.zip">Макрос для протоколов и сертификатов - 3.44</a></li>' +
-        '           <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
-        '       </details>' +
-        '       <details ' + mode + '>' +
-        '           <summary>' +
-        '               <span>AdjustmentDB</span>' +
-        '           </summary>' +
-        '               <li><a href="../other/adjustment_db.html">AdjustmentDB</a></li>' +
+
+        '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '               <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.44</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+
+        '        </li>' +
+        '        <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
+        '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
+        // '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
+
+        '        <li><a href="../other/adjustment_db.html">AdjustmentDB</a>' +
+        '            <div>' +
+        '                <ul>' +
         '               <li><a href="../other/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
         '               <li><a href="../other/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
-        '       </details>' +
+        '                </ul>' +
+        '            </div>' +
+        '        </li>' +
+
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
-        '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +

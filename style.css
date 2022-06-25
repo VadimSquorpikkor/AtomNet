@@ -97,11 +97,6 @@ th {
 
 /*region ------- Дивы и вложенные в дивы элементы -------------------------------------------------------------------------------*/
 
-body {
-    margin: 0;
-    /*padding: 0;*/
-}
-
 .logo_div {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
@@ -121,29 +116,12 @@ body {
     /*margin-bottom: 10px;*/
 }
 
-/*ul {
-    list-style-position: inside;
-}*/
-
-.li_div, .li_div:hover {
-    padding-top: 0;
-    text-indent: 0;
-    padding-left: 30px;
-    box-shadow: none;
-    margin-left: 10px;
-}
-
-/*После добавления .menu_and_main_div (в котором есть visibility: hidden), все вложенные элементы тоже стали
-  не видны (каскадность). Чтобы вернуть видимость для вложенных элементов и был добавлен этот стиль*/
-.main_div, .header_div_2, .left_side_menu, .logo_div, .index_menu_div, .yellow_back_index_right, .red_back_index_right {
-    visibility: visible;
-}
-
 .main_div{
     margin: 0;
     /*padding: 0;*/
     min-height: 100vh;
 
+    /*для ul -- list-style-position: inside; -- это что такое? чисто интересно*/
     /*todo попробовать (если не нужен скрол, то не показывает, но добавляет для него место) overflow: visible*/
 
     /*min-height: calc(100vh + 10px);*/
@@ -180,7 +158,7 @@ body>div>div {
     padding: 10px;
     max-width: 1700px;
     margin: auto;
-    visibility: hidden;
+    background: none;
 }
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/
@@ -231,12 +209,6 @@ input[type="text"], input[type="date"], select {
 
 select {
     border-radius: 6px 0 0 6px;
-}
-
-input[type="text"]:hover, input[type="date"]:hover {
-    /*transform: scale(1.03);*/
-    /*transition-property: all;*/
-    /*transition-duration: .2s;*/
 }
 
 input[type="button"] {
@@ -507,11 +479,8 @@ figcaption {
 }
 
 body {
-    /*background-image: url("main_bg.jpg");*/
-    /*background: #ddd url("bg_main_transp_dark.png");*/
-    /*background: #444 url("bg_main_transp_dark.png");*/
+    margin: 0;
     background: #888 url("bg_main_transp.png");
-    /*background: #ccc url("bg_main_transp.png");*/
 }
 
 pre {
@@ -568,30 +537,6 @@ pre {
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
 /*region ------- Контейнеры: yellow_back, tips_and_tricks, attentions, menu_block и т.д. ----------------------------------------*/
-
-/*.upper_div {
-    z-index: 100;
-    position: fixed;
-    width:100%;
-    !*margin: -30px -10px 10px -10px;*!
-    margin: -10px -10px 10px -10px;
-    background: #333333;
-    padding: 5px;
-}
-
-.upper_div a, a:hover{
-    font-size: 14px;
-    background: none;
-    cursor: pointer;
-}
-
-.upper_div a:hover{
-    color: darkorange;
-}
-
-.upper_div a{
-    color: white;
-}*/
 
 .yellow_back_right {
     font-size: 14px;
@@ -650,10 +595,7 @@ pre {
     float: left;
     padding: 2px 4px;
     font-size: 12px;
-    /*background-color: #3333ff;*/
     background-color: #4CAF50;
-    /*box-shadow: 2px 1px 3px 0 rgba(0, 0, 0, 0.43);*/
-    /*color: antiquewhite;*/
     color: white;
 }
 
@@ -995,12 +937,6 @@ summary div ul {
     background-color: darkorange;
 }
 
-.spoiler_menu li div {
-    display: none;
-    margin: 0;
-    text-indent: 0;
-}
-
 .spoiler_menu li div ul {
     padding: 0;
 }
@@ -1016,37 +952,6 @@ summary div ul {
     margin-left: 20px;
 }
 
-/*.spoiler_menu li!*:hover*! div {
-    margin: -25px;
-    display: block;
-    position: absolute;
-    left: 200px;!*350*!
-    color: #444;
-    padding: 0;
-    text-indent: 10px;
-    background-color: #444444;
-    border-radius: 10px;
-    width: 370px;
-    z-index: 3;
-}*/
-
-/*.spoiler_menu li:hover div {
-    position: absolute;
-    top: 0;
-    left: 250px;
-    width: 250px;
-    z-index: 10;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    display: block;
-    color: #444;
-    text-indent: 10px;
-    background-color: #444444;
-    border-radius: 10px;
-}*/
-
 .spoiler_menu li div a{
     font-size: 14px;
     color: #ffa600;
@@ -1058,14 +963,21 @@ summary div ul {
 }
 
 .spoiler_menu li div {
+    margin: 0 0 0 5px;
     padding: 0 0 0 25px;
 
     display: block;
     color: #444;
     text-indent: 10px;
     background-color: #444444;
-    border-radius: 10px;
+
+    /*color: #555555;*/
+    /*background-color: #4d4d4d;*/
+    /*border-radius: 10px;*/
     box-shadow: none;
+
+    /*box-shadow: inset 4px 0 0 #707070;*/
+    /*box-shadow: inset 3px 0 0 darkorange;*/
 }
 
 
@@ -1112,10 +1024,12 @@ summary div ul {
     padding: 0;
     width: 460px;
     display: none;
-    height: 100%;
+    /*height: 100%;*/
     top: 0;
+    bottom: 0;
     overflow-y: auto;
     z-index: 1;
+    margin: 10px 0px 10px 0px;
 }
 
 .index_menu_div {
