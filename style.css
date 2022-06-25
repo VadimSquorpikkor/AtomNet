@@ -1110,7 +1110,7 @@ summary div ul {
     position: fixed;
     float: left;
     padding: 0;
-    width: 450px;
+    width: 460px;
     display: none;
     height: 100%;
     top: 0;
@@ -1128,72 +1128,23 @@ summary div ul {
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
 /*region ------- @MEDIA @KEYFRAMES @FONT-FACE -----------------------------------------------------------------------------------*/
-/*для всех страниц, кроме главной*/
-@media (min-width: 1500px){/*1300*/
+@media (min-width: 1500px){
     .main_div {
         margin-left: 470px;
-        float: none;
-        overflow: hidden;
     }
-
     .left_side_menu {
-        width: 460px;
         display: block;
-        float: left;
-        margin-right: 10px;
+    }
+    .red_back_index_right, .yellow_back_index_right, .div_for_menu_block {
+        margin-left: 470px;
+    }
+    .index_menu_button, #menu_button {
+        display: none;
     }
     .header_div_2 {
         margin-left: 470px;
         position: absolute;
-
-        /*float: none;*/
-        /*overflow: hidden;*/
-        /*padding-top: 5px;*/
-
-        /*margin-top: -40px;*/
-        /*margin-right: auto;*/
-
-        /*float: none;*/
-        /*overflow: hidden;*/
-
     }
-    #menu_button {
-        display: none;
-        position: fixed;
-    }
-    .red_back_index_right, .yellow_back_index_right, .div_for_menu_block {
-        margin-left: 470px;
-    }
-    .index_menu_button {
-        display: none;
-    }
-
-}
-
-@media (max-width: 500px) {
-    #menu {
-        float: none;
-    }
-}
-
-@media (max-width: 800px) {
-
-}
-/*для главной страницы*/
-@media (min-width: 800px) {
-    #index_menu {
-        width: 420px;
-    }
-
-    .index_menu_div {
-        float: left;
-        width: 420px;
-    }
-
-    .red_back_index_right, .yellow_back_index_right, .div_for_menu_block {
-        /*margin-left: 470px;*/
-    }
-
 }
 
 @keyframes slideDown {
