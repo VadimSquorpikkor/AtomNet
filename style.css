@@ -100,28 +100,24 @@ th {
 .logo_div {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
-    /*background: #333333;*/
-    /*background-image: url("logo2.png"), url("logo_pcb2.png");*/
-    /*background-position: center;*/
-    /*background-repeat: no-repeat, repeat;*/
-
     /*ДЛЯ НОВОГО ГОДА*/
     /*background: #333333;
     background-image: url("logo2.png"), url("sneg.jpg");
     background-position: center, right top;
     background-repeat: no-repeat, repeat;*/
 
-    height: 80px;
-    margin: 0 0 10px 0;
-    /*margin-bottom: 10px;*/
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 10px;
+    height: 110px;
+    margin: 5px;
+    border-radius: 10px;
 }
 
 .main_div{
     margin: 0;
-    /*padding: 0;*/
+    padding: 10px;
     min-height: 100vh;
 
-    /*для ul -- list-style-position: inside; -- это что такое? чисто интересно*/
     /*todo попробовать (если не нужен скрол, то не показывает, но добавляет для него место) overflow: visible*/
 
     /*min-height: calc(100vh + 10px);*/
@@ -145,17 +141,8 @@ th {
     margin-bottom: 5px;
 }
 
-/*.main_div {*/ /*todo выбрать правильный селектор*/
-body>div>div {
-    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
-    padding: 30px 15px 20px;
-    margin: 10px auto 20px;
-    border-radius: 10px;
-    /*max-width: 1200px;*/
-}
-
 .menu_and_main_div {
-    padding: 10px;
+    padding: 0px;
     max-width: 1700px;
     margin: auto;
     background: none;
@@ -184,7 +171,6 @@ body>div>div {
     text-decoration: none;
     text-shadow: 0 1px 0 #2f6627;
     box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.53), inset 1px 1px 6px 6px rgba(0, 0, 0, 0.25);
-
 }
 
 #menu_button :hover {
@@ -204,7 +190,6 @@ input[type="text"], input[type="date"], select {
     padding-left: 8px;
     padding-right: 8px;
     margin-left: 9px;
-    /*background-color: #dddddd;*/
 }
 
 select {
@@ -244,33 +229,24 @@ input[type="button"]:active {
 /*region ------- header_div_2 ---------------------------------------------------------------------------------------------------*/
 .header_div_2 {
     text-indent: 0;
-    margin: -10px 0 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 10px;
     background-color: rgba(0, 0, 0, 0);
     position: fixed;
-    /*width: 100%;*/
     box-shadow: none;
     text-align: left;
 }
 
 .header_div_2 > a, .header_div_2 > a:hover {
-    /*text-shadow: 0 1px 0 #2f6627;*/
     border-radius: 0 0 0 0;
     font-family: Arial, sans-serif;
     box-shadow: 4px 1px 11px 1px rgba(0, 0, 0, 0.53);
     display: inline-block;
-    /*background-color: orange;*/
-    /*background: linear-gradient(to bottom, #f4ff3a 5%, #f5a208 100%);*/
     background: linear-gradient(to bottom, #fed53f 5%, #f57506 100%);
     color: white;
     font-size: 14px;
-    /*text-shadow: 0 1px 1px #000000;*/
-    margin-top: 19px;
     padding: 4px 15px;
     text-indent: 0;
     margin-left: 0;
-
 }
 
 .header_div_2 > a:last-of-type {
@@ -290,11 +266,6 @@ input[type="button"]:active {
 
 /*region ------- БЛОЧНЫЕ ССЫЛКИ НА ГЛАВОЙ СТРАНИЦЕ ------------------------------------------------------------------------------*/
 
-img {
-    /*width: 700px;*/
-}
-
-
 .menu_block {
     box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.75);
     text-align: center;
@@ -303,7 +274,6 @@ img {
     width: 144px;
     text-indent: 0;
     margin: 3px;
-    /*margin: 9px 0 0 9px;*/
     padding: 0;
     float: left;
     line-height: 0.9;
@@ -346,8 +316,6 @@ img {
     vertical-align: middle;
     padding-top: 5px;
     padding-left: 0;
-
-    /*color: #4CAF50;*/
 }
 
 .menu_block_footer {
@@ -365,16 +333,13 @@ img {
 }
 
 .menu_block div {
-
     padding: 0 0;
     text-indent: 0;
     margin: 0;
     text-align: center;
-    /*height: 35px;*/
 }
 
 .menu_block a {
-
     border-radius: 0;
     padding: 0;
 }
@@ -390,7 +355,6 @@ img {
 /*region ------- A DIV P IMG H1 H3 UL OL FIGCAPTION BODY PRE---------------------------------------------------------------------*/
 
 div {
-    /*padding: 5px 20px;*/
     text-align: justify;
     text-indent: 30px;
     font-size: 18px;
@@ -431,12 +395,6 @@ img {
     font-style: italic;
 }
 
-
-
-/*img::after {
-    content: "Изображение не найдено";
-}*/
-
 h1, h3 {
     font-size: 26px;
     color: #bd7400;
@@ -457,7 +415,6 @@ ul {
     padding-left: 10px;
     padding-right: 10px;
     list-style-position: inside;
-    /*text-indent: 10px;*/
     font-size: 18px;
 }
 
@@ -466,7 +423,6 @@ ul ul {
 }
 
 ol {
-    /*padding-left: 40px;*/
     text-indent: 10px;
     font-size: 18px;
 }
@@ -487,7 +443,6 @@ pre {
     font-size: 14px;
     margin-left: 50px;
     margin-right: 50px;
-    /*max-width: 500px;*/
     background: #333333;
     color: #dddddd;
 }
@@ -550,6 +505,9 @@ pre {
 
 /*И red и yellow используются только на главной странице*/
 .red_back_index_right, .yellow_back_index_right {
+    box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+    padding: 10px;
+    border-radius: 10px;
     margin: 5px;
     font-size: 14px;
     background-color: antiquewhite;
@@ -784,7 +742,6 @@ a[href$='.ods'], a[href$='.odt'], a[href$='.docx'], a[href$='.xlsx'], a[href$='.
     padding-left: 25px;
     transition-duration: 150ms;
     margin-left: 2px;
-    /*transition-property: none;*/
 }
 
 a[href$='.ods']:hover, a[href$='.odt']:hover, a[href$='.docx']:hover, a[href$='.xlsx']:hover, a[href$='.xls']:hover, a[href$='.pdf']:hover, a[href$='.doc']:hover, a[href$='.rar']:hover, a[href$='.zip']:hover {
@@ -806,7 +763,6 @@ ol > li > div, .nice_details{
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 5px 15px 5px 15px;
     margin: 10px 10px 10px 10px;
-    /*border-radius: 20px 0 20px 0;*/
     border-radius: 8px;
     transition-property: all;
     transition-duration: 350ms;
@@ -829,7 +785,6 @@ summary:hover::marker {
     box-shadow: 3px 2px 10px 3px rgba(0, 0, 0, 0.23);
     padding: 3px 10px;
     margin: 5px;
-    /*border-radius: 20px 0 20px 0;*/
     border-radius: 8px;
 }
 
@@ -857,7 +812,6 @@ details details p {
 }
 
 details div {
-    /*box-shadow: 3px 3px 4px gray;*/
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 20px 15px 20px;
     margin: 10px 20px 10px;
@@ -866,7 +820,6 @@ details div {
 summary div ul {
     text-indent: 0;
     padding-left: 0;
-
 }
 
 /*endregion ----------------------------------------------------------------------------------------------------------*/
@@ -877,7 +830,6 @@ summary div ul {
     margin: 0;
     padding: 0;
     color: white;
-    border-radius: 15px;
     background-color: #444444;
 }
 .spoiler_menu ul {
@@ -940,18 +892,6 @@ summary div ul {
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
 }
 
-/*.left_side_menu {
-    margin-left: auto;
-    float: left;
-    width: 450px;
-    margin-top: 0;
-    height: 100%;
-    display: none;
-    padding: 0;
-    border-radius: 25px;
-    !*opacity: .9;*!
-}*/
-
 .left_side_menu {
     background-color: #444444;
     position: fixed;
@@ -959,19 +899,17 @@ summary div ul {
     padding: 0;
     width: 460px;
     display: none;
-    /*height: 100%;*/
     top: 0;
     bottom: 0;
     overflow-y: auto;
     z-index: 1;
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0 10px 0;
+    border-radius: 10px;
 }
 
 .index_menu_div {
-    /*float: left;*/
     margin: 0; padding: 0;
     visibility: hidden;
-    /*opacity: .9;*/
 }
 
 /*endregion ------------------------------------------------------------------------------------------------------------*/
@@ -980,6 +918,9 @@ summary div ul {
 @media (min-width: 1500px){
     .main_div {
         margin-left: 470px;
+        box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
+        padding: 30px 15px 20px;
+        border-radius: 10px;
     }
     .left_side_menu {
         display: block;
@@ -993,6 +934,12 @@ summary div ul {
     .header_div_2 {
         margin-left: 470px;
         position: absolute;
+    }
+    .menu_and_main_div {
+        padding: 10px;
+    }
+    .logo_div {
+        margin: 0 0 10px 0;
     }
 }
 
@@ -1059,16 +1006,12 @@ summary div ul {
 /*endregion ------------------------------------------------------------------------------------------------------------*/
 
 .hidden_menu_div {
-    /*width: 100px;*/
     text-indent: 5px;
-    /*margin: 5px;*/
     margin-bottom: -20px;
     padding: 17px;
     color: white;
     border-radius: 15px;
     background-color: #444444;
-    /*float: none;*/
-    /*overflow: hidden;*/
     visibility: visible;
 }
 
@@ -1216,12 +1159,11 @@ summary div ul {
 }
 /*endregion -----------------------------------------------------------------------------------------------------------*/
 .index_menu_button {
-    padding: 3px 3px;
     font-size: 50px;
     background: none;
     color: #dddddd;
     cursor: pointer;
-    /*display: block;*/
+    margin-top: 12px;
 }
 .index_menu_button:hover {
     color: white;
