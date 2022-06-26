@@ -142,7 +142,7 @@ th {
 }
 
 .menu_and_main_div {
-    padding: 0px;
+    padding: 0;
     max-width: 1700px;
     margin: auto;
     background: none;
@@ -411,7 +411,7 @@ h1, h3 {
 h3 {
     font-size: 22px;
     text-transform: none;
-    font-family: Arial;
+    font-family: sans-serif, Arial;
 }
 
 ul {
@@ -514,13 +514,10 @@ pre {
     margin: 5px;
     font-size: 14px;
     background-color: antiquewhite;
-    align-self: center;
-    text-align: center;
     text-indent: 0;
 }
 
 .red_back_index_right {
-    text-align: left;
     padding-left: 40px;
     background-color: #ffdddd;
 }
@@ -537,7 +534,7 @@ pre {
 
 /*Прямоугольник для <span>, применяется для отображения команды ("01 13 08 ff 24 00 04 00 0A 12 20")*/
 .yellow_back_small, .yellow_back_small_clickable {
-    padding: 0px 20px;
+    padding: 0 20px;
 }
 
 .yellow_back_small_clickable {
@@ -572,11 +569,9 @@ pre {
 }
 
 .tips_and_tricks {
-    background: url("imgs/lamp.png") no-repeat;
-    background-position: 20px;
+    background: #ddddff url("imgs/lamp.png") no-repeat 20px;
     background-size: 50px 60px;
     padding-left: 100px;
-    background-color: #ddddff;
     min-height: 50px;
     border-radius: 5px;
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -587,11 +582,9 @@ pre {
 }
 
 .attention_block{
-    background: url("imgs/attention.png") no-repeat;
-    background-position: 20px;
+    background: #fed53f url("imgs/attention.png") no-repeat 20px;
     background-size: 60px 50px;
     padding-left: 100px;
-    background-color: #fed53f;
     min-height: 50px;
     border-radius: 5px;
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -699,7 +692,6 @@ pre {
 .big_one {
     color: orangered;
     font-size: 36px;
-    padding-left: 100px;
 }
 
 .underline_italic {
@@ -1127,7 +1119,7 @@ summary div ul {
     width: 420px;
     position: fixed; /* Stay in place */
     z-index: 5; /* Stay on top */
-    top: 0px;
+    top: 0;
     left: -450px;
     background-color: #333333;/*#111;*/ /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
