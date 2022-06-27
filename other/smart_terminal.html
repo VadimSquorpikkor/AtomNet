@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>SmartTerminal</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">SmartTerminal</a>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, CLOSE);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>Smart Terminal</h1>
+
+        <div class="left_align">
+            <a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a>
+        </div>
+
+        <p>
+            Терминал под Android. Соединение — по Bluetooth.
+        </p>
+
+        <figure>
+            <img src="../imgs/smart_terminal/main_num.png" width="450" alt="изображение не найдено">
+            <figcaption>Рисунок 1</figcaption>
+        </figure>
+
+        <ul>
+            <li>1 — поле отображения введенной команды</li>
+            <li>2 — включить вибро (<i>не работает</i>)</li>
+            <li>3 — Имя подключенного устройства</li>
+            <li>4 — выключить вибро (<i>не работает</i>)</li>
+            <li>5 — включить светлую тему (<i>не работает</i>)</li>
+            <li>6 — включить темную тему (<i>не работает</i>)</li>
+            <li>7 — открыть диалог поиска устройств Bluetooth</li>
+            <li>8 — индикатор подключения. Если горит красным, устройство не подключено, если зеленым — подключено</li>
+            <li>9 — закрыть программу (<i>не работает</i>)</li>
+            <li>10 — индикатор неправильно введенной команды. Если ввести команду, состоящую из менее чем из 4-х символов или из нечетного количества, то такая команда не будет отправлена и загорится такой символ. При вводе или удалении символа индикатор исчезает</li>
+            <li>11 — отправленная в устройство команда</li>
+            <li>12 — полученный ответ</li>
+            <li>13 — включение CRC (<i>не работает</i>). Включено по умолчанию</li>
+            <li>14 — выбор типа CRC (<i>не работает</i>)</li>
+            <li>15 — открыть проводник, чтобы открыть txt файл с командами. Если при выборе файла поставить флаг "Открывать автоматом", то эта кнопка сразу будет открывать этот выбранный файл в виде диалога со списком команд (без открывания проводника с поиском и выбором файла)</li>
+            <li>16 — символы команды. При наборе команды не нужно вводить "пробел", после каждого второго символа "пробел" будет подставляться автоматом</li>
+            <li>17 — отправка введенной команды</li>
+            <li>18 — открыть список избранных команд</li>
+            <li>19 — стереть последний символ</li>
+            <li>20 — очистить поле введенной команды [1]</li>
+            <li>21 — если включено, то к введенной команде будет добавлен префикс [22]</li>
+            <li>22 — префикс</li>
+        </ul>
+
+        <figure>
+            <img src="../imgs/smart_terminal/options.png" width="350" alt="изображение не найдено">
+            <figcaption>Рисунок 2</figcaption>
+        </figure>
+
+        <figure>
+            <img src="../imgs/smart_terminal/explorer.png" width="350" alt="изображение не найдено">
+            <figcaption>Проводник</figcaption>
+        </figure>
+
+        <figure>
+            <img src="../imgs/smart_terminal/command_dialog.png" width="350" alt="изображение не найдено">
+            <figcaption>Диалог команд из файла</figcaption>
+        </figure>
+
+        <figure>
+            <img src="../imgs/smart_terminal/add_to_favorite.png" width="350" alt="изображение не найдено">
+            <figcaption>Добавить к избранным</figcaption>
+        </figure>
+
+        <figure>
+            <img src="../imgs/smart_terminal/favorite.png" width="350" alt="изображение не найдено">
+            <figcaption>Избранное</figcaption>
+        </figure>
+
+    </div>
+</div>
+</body>
+</html>

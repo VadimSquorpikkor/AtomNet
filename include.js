@@ -430,6 +430,14 @@ function getRegMenu(mode, id) {
         '            </div>' +
         '        </li>' +
 
+        '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '               <li><a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+
+
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
         '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
