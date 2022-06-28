@@ -1140,7 +1140,7 @@ summary div ul {
     top: 0;
     color: white;
     right: 25px;
-    font-size: 40px;
+    font-size: 45px;
 }
 .left_side_panel > a {
     text-indent: 0;
@@ -1164,4 +1164,17 @@ summary div ul {
 .index_menu_button:hover {
     color: white;
     background: none;
+}
+
+.home_button {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    cursor: pointer;
+}
+.home_button::before {
+    content: url("home-circle-outline.png");
+}
+.home_button:hover {
+    content: url("home-circle-outline_darkgray.png");
 }
