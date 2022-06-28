@@ -436,11 +436,20 @@ function getRegMenu(mode, id) {
         '               <li><a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a></li>' +
         '                </ul>' +
         '            </div>' +
-
+        '        </li>' +
 
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
-        '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
-        '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
+        // '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
+        // '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
+
+        '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '               <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Открыть папку с прошивками</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+        '        </li>' +
+
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +

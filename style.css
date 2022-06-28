@@ -116,7 +116,7 @@ th {
 .main_div{
     margin: 0;
     padding: 50px 10px 10px 10px;
-    min-height: 100vh;
+    min-height: calc(100vh - 60px);
 
     /*todo попробовать (если не нужен скрол, то не показывает, но добавляет для него место) overflow: visible*/
 
@@ -515,6 +515,9 @@ pre {
     font-size: 14px;
     background-color: antiquewhite;
     text-indent: 0;
+}
+.yellow_back_index_right hr {
+    border: 1px solid #ff6633;
 }
 
 .red_back_index_right {
@@ -1114,7 +1117,7 @@ summary div ul {
 .left_side_panel {
     padding-left: 0;
     padding-right: 0;
-    height: 100%; /* Specify a height */
+    height: calc(100% - 60px); /* - 60 -- это я компенсирую padding-top: 60px иначе 60 пикселей меню "заедут" вниз за экран*/
     /*width: 0; !* 0 width - change this with JavaScript *!*/
     width: 420px;
     position: fixed; /* Stay in place */
