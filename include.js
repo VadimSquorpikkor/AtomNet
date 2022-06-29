@@ -400,6 +400,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/flip.html">Flip. Как шить</a></li>' +
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
+        '        <li><a href="../other/5351_plis.html">Прошивка ПЛИС в ДКС-АТ5351</a></li>' +
         '' +
         '    </ul>' +
         '</details>' +

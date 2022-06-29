@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>Прошивка ПЛИС в ДКС-АТ5351</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a class="home_button" href="../menu/index.html"></a>
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Прошивка ПЛИС в ДКС-АТ5351</a>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, CLOSE);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>Прошивка ПЛИС в ДКС-АТ5351</h1>
+
+        <ul>
+            <li>1. Соединить программатор Lattice-USB-2A с ПК и ДКС-АТ5351 как на фото:</li>
+            <li>2. Запустить программу Lattice Diamond.</li>
+            <li>3. File &rarr; Open &rarr; Project &rarr; выбрать файл  DKS_5351_MACHXO2_2000.ldf</li>
+            <li>4. Tools &rarr; Programmer</li>
+            <li>5. В поле "Device Family" выбрать  "MachXO2",  в поле "Device"  выбрать LCMXO2-2000ZE,
+                в поле "Operation" выбрать FLASH Erase, Program, Verify, в поле "File name" DKS_5351_MACHXO2_2000_impl1.jed</li>
+            <li>6. Нажать "Program"</li>
+            <li>7. По окончанию программирования в логе: Operation: successful.</li>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>
