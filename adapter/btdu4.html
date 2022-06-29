@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>Настройка BT-DU 4</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a class="home_button" href="../menu/index.html"></a>
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+    <div class="header_div_2">
+        <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+               id="menu_button">
+
+        <a href="../menu/index.html">Главная</a>
+        <a href="">Настройка BT-DU 4</a>
+    </div>
+
+    <div class="left_side_menu">
+        <div id="menu_left" class="spoiler_menu"></div>
+    </div>
+
+    <script>
+        includeMenu("menu_left", REG_MENU, CLOSE);
+        includeMenu("menu", REG_MENU, CLOSE);
+    </script>
+
+    <div class="main_div">
+
+        <h1>Настройка BT-DU 4</h1>
+
+        <ul>
+            <li>1. После получения плат с панелью и разъёмами проверить качество пайки стабилизаторов питания 3.3 В(D12)
+                и 5 В(D11).
+                <figure>
+                    <img src="../imgs/btdu4/01.jpg" width="800" alt="изображение не найдено">
+                    <figcaption>Рисунок 1</figcaption>
+                </figure>
+            <li>2. Запрограммируйте платы: Подключите АКБ к разъёму X2, подсоедините кабель обмена от адаптера USB к
+                разъёму отходящему от 5-8 контактов разъёма X8.
+
+                <figure>
+                    <img src="../imgs/btdu4/02.jpg" width="800" alt="изображение не найдено">
+                    <figcaption>Рисунок 2</figcaption>
+                </figure>
+
+                Открыть программу FlashMagic, выставить параметры согласно картинке (Скорость, тип микроконтроллера и т.д.).
+                Выбрать COM порт к которому вы подсоединили прибор, и указать путь к прошивке(hex файл). Нажать на
+                кнопку включения прибора, затем нажать Start в программе, дождаться сообщения Finished внизу окна.
+
+                <figure>
+                    <img src="../imgs/btdu4/03.png" width="492" alt="изображение не найдено">
+                    <figcaption>Рисунок 3</figcaption>
+                </figure>
+
+                Выключите прибор длительным нажатием на клавишу включения.
+
+            <li>3. Проведите второй этап программирования: Включите прибор, ожидайте 1 мин, затем выключите прибор
+                длительным нажатием клавиши включения. Снова включите прибор, откройте программу Terminal,
+                <ul>
+                    <li>Выберите COM порт к которому подсоединён прибор,</li>
+                    <li>установите скорость 115200 и Prefix – 50,</li>
+                    <li>отправьте команду «режим настройки»:
+                        <span onclick="copyToClipboard('05 00 07 FF 00')" class="yellow_back_small_clickable">05 00 07 FF 00</span>,
+                    </li>
+                    <li>затем отправьте команду «внутрисхемный загрузчик»:
+                        <span onclick="copyToClipboard('08 00 83 00 00')" class="yellow_back_small_clickable">08 00 83 00 00</span>.
+                    </li>
+                </ul>
+
+                <figure>
+                    <img src="../imgs/btdu4/04.png" width="317" alt="изображение не найдено">
+                    <figcaption>Рисунок 4</figcaption>
+                </figure>
+
+                Закройте Terminal, запустите программу Teraterm (версия 4.97). Тип соединения Serial, выберите COM порт
+                к которому подсоединён прибор, нажмите ок.
+
+                <figure>
+                    <img src="../imgs/btdu4/05.png" width="498" alt="изображение не найдено">
+                    <figcaption>Рисунок 5</figcaption>
+                </figure>
+
+                В меню "Setup" выберите пункт "Serial port" и установите скорость (Baud rate) — 115200.
+
+                <figure>
+                    <img src="../imgs/btdu4/06.png" width="396" alt="изображение не найдено">
+                    <figcaption>Рисунок 6</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="../imgs/btdu4/07.png" width="839" alt="изображение не найдено">
+                    <figcaption>Рисунок 7</figcaption>
+                </figure>
+
+                Перейдите в меню File/Transfer/XMODEM/Send, укажите путь к прошивке (App.bin), по окончании прошивки
+                выключите прибор и проведите процедуру описанную в начале пункта 3. Затем выключите прибор.
+
+            <li>4. Отсоедините АКБ и проведите доработку по заряду прибора: запаять конденсатор 1 мкФ (0805) между
+                фильтрами Z20 и Z21 со стороны АКБ. Подсоедините АКБ.
+
+                <figure>
+                    <img src="../imgs/btdu4/08.jpg" width="800" alt="изображение не найдено">
+                    <figcaption>Рисунок 8</figcaption>
+                </figure>
+
+            <li>5. Запись номера прибора: Включите прибор, подсоедините к ПК через адаптер. Откройте программу Terminal
+                (настройки в п.3), отправьте команду «режим настройки»:
+                <span onclick="copyToClipboard('05 00 07 FF 00')" class="yellow_back_small_clickable">05 00 07 FF 00</span>
+                , затем необходимо отправить команду «писать ID код»:
+                <span onclick="copyToClipboard('13 08 FF 24 00 04 00 00 00 00')" class="yellow_back_small_clickable">13 08 FF 24 00 04 00 00 00 00</span>
+
+                , номер прибора зашифрован в 7 и 8 бите команды в шестнадцатеричной системе исчисления, 9 и 10 бит это
+            месяц и год (для окончательного внесения инд. данных). К примеру если номер прибора 120 то команда выглядит так:
+                <span onclick="copyToClipboard('13 08 FF 24 00 04 00 78 00 00')" class="yellow_back_small_clickable">13 08 FF 24 00 04 00 78 00 00</span>
+                .
+            <li>6. Проверить работу схемы заряда прибора — подключить прибор к зарядному устройству на 12 В, убедиться
+                что индикатор «12V» горит красным, а индикатор батарей горит жёлтым.
+            <li>7. Записать скорость обмена 19200. В программе Terminal необходимо отправить команду «режим настройки»:
+                <span onclick="copyToClipboard('05 00 07 FF 00')" class="yellow_back_small_clickable">05 00 07 FF 00</span>
+                , затем «Писать скорость(19200)»:
+                <span onclick="copyToClipboard('13 05 FF 02 00 01 06')" class="yellow_back_small_clickable">13 05 FF 02 00 01 06</span>
+                . После перезапуска прибора обмен будет на скорости 19200, это необходимо для работы с датчиками.
+            <li>8. Проверить работу Bluetooth – при помощи устройства с Bluetooth обнаружить прибор и убедиться в
+                правильном отображении его номера и типа прибора. Процедуру производить с отключённым кабелем обмена к ПК.
+            <li>9. Провести калибровку заряда — Зарядите прибор до максимума (жёлтый индикатор батареи гаснет), затем
+                включите прибор при подключённом БД, дождитесь полного разряда прибора и зарядите его снова до
+                максимума. Убедитесь что при подключении к КПК отображается 100% заряда.
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>

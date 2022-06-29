@@ -539,6 +539,10 @@ pre {
 .yellow_back_small, .yellow_back_small_clickable {
     padding: 0 20px;
 }
+div.yellow_back_small_clickable {
+    width: max-content;
+    margin: 0 auto;
+}
 
 .yellow_back_small_clickable {
     cursor: pointer;

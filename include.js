@@ -341,6 +341,7 @@ function getRegMenu(mode, id) {
         '    </summary>' +
         '    <ul>' +
         '        <li><a href="../adapter/dtdu3.html">Настройка БТ-ДУ3</a></li>' +
+        '        <li><a href="../adapter/btdu4.html">Настройка БТ-ДУ4</a></li>' +
         '   </ul>' +
         '</details>' +
         '' +
