@@ -1,6 +1,7 @@
 /**Период полураспада в днях*/
 const T_POL_CS_137 = 365.2422 * 30.167;
 const T_POL_CD_109 = 461.4;
+const T_POL_AM_241 = 365.2422 * 432.6;
 
 /**День поверки источника (начало отсчета распада)*/
 //yyyy.mm.dd  месяц начинается с 0, февраль — это 1
@@ -12,6 +13,7 @@ const POV_DATE_CD_1080 = new Date(2018, 10, 13);
 const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
 const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для удельной активности 1125
 const POV_DATE_595 = new Date(2021, 6, 29);
+const POV_DATE_1075 = new Date(2022, 9, 12);
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -32,17 +34,20 @@ const A0_93 = 0.880;
 const A0_3668 = 7.932;
 const A0_595 = 97.070;
 
+const A0_1075 = 54.660;//Am-241
+
 /**Химические элементы*/
-let CS_137, CD_109;
+let CS_137, CD_109, AM_241;
 
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
-let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595;
+let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595, am_1075;
 
 /**Инициализация объектов класса источников и элементов*/
 function initializeSource() {
     //Создание объектов класса элементов
     CS_137 = new RA_Element("Cs", 137, T_POL_CS_137);
     CD_109 = new RA_Element("Cd", 109, T_POL_CD_109);
+    AM_241 = new RA_Element("Am", 241, T_POL_AM_241);
     //Создание объектов класса источников
     cs_2910 = new RA_Source("№2910", CS_137, A0_2910, POV_DATE_2910);
     cs_516  = new RA_Source("№516",  CS_137, A0_516,  POV_DATE_CS);
@@ -62,6 +67,7 @@ function initializeSource() {
     cs_3668 = new RA_Source("№3668", CS_137, A0_3668, POV_DATE_FOR_UD_SRC);
     cs_595  = new RA_Source("№595",  CS_137, A0_595,  POV_DATE_595);
 
+    am_1075 = new RA_Source("№1075",  AM_241, A0_1075,  POV_DATE_1075);
 }
 //----------------------------------------------------------------------------------------------------------------------
 /**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
@@ -80,7 +86,8 @@ function set_main_activities() {
         cs_521.getActivityBlock()+
         cs_2910.getActivityBlock()+
         cd_1079.getActivityBlock()+
-        cd_1080.getActivityBlock();
+        cd_1080.getActivityBlock()+
+        am_1075.getActivityBlock();
 
     /**Вывод активностей для источников без периодической поверки на сегодняшний день*/
     document.getElementById('activities_div_bez_poverki').innerHTML =
@@ -197,21 +204,24 @@ function initialize_calc() {
 
 function setActivity_0() {
     switch (document.getElementById("ra_spinner").value) {
-        case '1': setA0_And_Period(100, CS_137.getPeriod); break;
-        case '2': setA0_And_Period(100, CD_109.getPeriod); break;
-        case '3': setA0_By_Element(cs_2910); break;
-        case '4': setA0_By_Element(cs_516); break;
-        case '5': setA0_By_Element(cs_517); break;
-        case '6': setA0_By_Element(cs_518); break;
-        case '7': setA0_By_Element(cs_519); break;
-        case '8': setA0_By_Element(cs_520); break;
-        case '9': setA0_By_Element(cs_521); break;
-        case '10': setA0_By_Element(cs_831); break;
-        case '11': setA0_By_Element(cs_832); break;
-        case '12': setA0_By_Element(cs_833); break;
-        case '13': setA0_By_Element(cs_595); break;
-        case '14': setA0_By_Element(cd_1079); break;
-        case '15': setA0_By_Element(cd_1080); break;
+        case '1':  setA0_And_Period(100, CS_137.getPeriod); break;
+        case '2':  setA0_And_Period(100, CD_109.getPeriod); break;
+        case '3':  setA0_And_Period(100, AM_241.getPeriod); break;
+        case '4':  setA0_By_Element(cs_2910); break;
+        case '5':  setA0_By_Element(cs_516); break;
+        case '6':  setA0_By_Element(cs_517); break;
+        case '7':  setA0_By_Element(cs_518); break;
+        case '8':  setA0_By_Element(cs_519); break;
+        case '9':  setA0_By_Element(cs_520); break;
+        case '10': setA0_By_Element(cs_521); break;
+        case '11': setA0_By_Element(cs_831); break;
+        case '12': setA0_By_Element(cs_832); break;
+        case '13': setA0_By_Element(cs_833); break;
+        case '14': setA0_By_Element(cs_595); break;
+        case '15': setA0_By_Element(cd_1079); break;
+        case '16': setA0_By_Element(cd_1080); break;
+        case '17': setA0_By_Element(am_1075); break;
+        //!!!После добавления новой строчки не забыть добавить в include->insertCalculatorCode()
     }
 }
 

@@ -595,18 +595,21 @@ function insertCalculatorCode() {
     '                <select id="ra_spinner" onchange="setActivity_0()">'+
     '                    <option value="1">137-Cs</option>'+
     '                    <option value="2">109-Cd</option>'+
-    '                    <option value="3">№2910</option>'+
-    '                    <option value="4">№516</option>'+
-    '                    <option value="5">№517</option>'+
-    '                    <option value="6">№518</option>'+
-    '                    <option value="7">№519</option>'+
-    '                    <option value="8">№520</option>'+
-    '                    <option value="9">№521</option>'+
-    '                    <option value="10">№831</option>'+
-    '                    <option value="11">№832</option>'+
-    '                    <option value="12">№833</option>'+
-    '                    <option value="13">№1079</option>'+
-    '                    <option value="14">№1080</option>'+
+    '                    <option value="3">241-Am</option>'+
+    '                    <option value="4">№2910</option>'+
+    '                    <option value="5">№516</option>'+
+    '                    <option value="6">№517</option>'+
+    '                    <option value="7">№518</option>'+
+    '                    <option value="8">№519</option>'+
+    '                    <option value="9">№520</option>'+
+    '                    <option value="10">№521</option>'+
+    '                    <option value="11">№831</option>'+
+    '                    <option value="12">№832</option>'+
+    '                    <option value="13">№833</option>'+
+    '                    <option value="14">№595</option>'+
+    '                    <option value="15">№1079</option>'+
+    '                    <option value="16">№1080</option>'+
+    '                    <option value="17">№1075</option>'+
     '                </select>'+
     '            </td><td style="border:none">'+
     '            <input id="activity_0" type="text" size="12" datatype="number"'+
