@@ -322,6 +322,13 @@ function set_activities_204() {
     setDropDownActivitiesCadmium(2, KOEF_CD_BDKG_204);
 }
 //----------------------------------------------------------------------------------------------------------------------
+const KOEF_CS_BDKG_35 = 102;
+const KOEF_AM_BDKG_35 = 40;
+ function set_activities_bdkg35() {
+    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_35, 'Минимальное значение скорости счёта для <sup>137</sup>Cs: ');
+    setDropDownActivitiesAmericium(2, KOEF_AM_BDKG_35, 'Минимальное значение скорости счёта для <sup>241</sup>Am: ');
+ }
+//----------------------------------------------------------------------------------------------------------------------
 function resistor_bdkn_03() {
     let res37 = parseInt(document.getElementById('r_37').value);
     let res36 = parseInt(document.getElementById('r_36').value);

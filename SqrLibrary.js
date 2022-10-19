@@ -113,15 +113,21 @@ class RA_Source {
 
 /**Просто обертка для document.getElementById(id).value, чтобы удобнее было писать код*/
 function setValue(id, source, koef) {
-    document.getElementById(id).value = (source.getActivityNow  * koef).toFixed(3);
+    let value = source.getActivityNow  * koef;
+    if (value<1000) document.getElementById(id).value = (value).toFixed(3);
+    else document.getElementById(id).value = (value).toFixed(1);
 }
 
-/**Добавление кода меню в страницу HTML*/
-function loadDropDownCesium(menu_id, output_id, fName) {
+/**Добавление кода меню в страницу HTML. title можно задать свой или не задавать вообще, тогда будет присвоена
+ * фраза по умолчанию*/
+function loadDropDownCesium(menu_id, output_id, fName, title) {
     let id = 'div_' + menu_id;
 
+    if (title=== 'undefined') title='Значение мощности дозы для <sup>137</sup>Cs: ';
+
     document.getElementById(id).innerHTML = '' +
-        'Значение мощности дозы для <sup>137</sup>Cs: ' +
+        title+
+        // 'Значение мощности дозы для <sup>137</sup>Cs: ' +
         '<select id=' + menu_id + ' onchange=' + fName + '> ' +
         '<option value="1">№2910</option>' +
         '<option value="2">№516</option>' +
@@ -154,20 +160,37 @@ function loadDropDownCadmium(menu_id, output_id, fName) {
         '<input type="text" id=' + output_id + ' size="5">';
 }
 
+/**Добавление кода меню в страницу HTML. title можно задать свой или не задавать вообще, тогда будет присвоена
+ * фраза по умолчанию*/
+function loadDropDownAmericium(menu_id, output_id, fName, title) {
+    let id = 'div_' + menu_id;
+
+    if (title=== 'undefined') title='Значение мощности дозы для <sup>241</sup>Am: ';
+
+    document.getElementById(id).innerHTML = '' +
+        title+
+        '<select id=' + menu_id + ' onchange=' + fName + '> ' +
+        '<option value="1">№1075</option>' +
+        '</select> ' +
+        '<input type="text" id=' + output_id + ' size="5">';
+}
+
 /**Вывод в поле результата в зависимости от выбранного пункта меню. Для Цезия
  * Если меню с таким id нет на странице, метод создает его и заполняет значением по умолчанию (case '1')
  * Можно было разделить методы, но так меньше кода.
  * @param drop_id id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
  * @param koef коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
+ * @param title надпись на форме: можно задать свою или не задавать вообще
+ * (например setDropDownActivitiesAmericium(drop_id, koef)), тогда будет присвоена фраза по умолчанию
  */
-function setDropDownActivitiesCesium(drop_id, koef) {
+function setDropDownActivitiesCesium(drop_id, koef, title) {
     initializeSource();
 
     let dropId = 'drop_down_' + drop_id;
     let outputId = 'output_' + drop_id;
     let fName = "" + setDropDownActivitiesCesium.name + "(" + drop_id + "," + koef + ")";
 
-    if (document.getElementById(dropId)==null)loadDropDownCesium(dropId, outputId, fName);
+    if (document.getElementById(dropId)==null)loadDropDownCesium(dropId, outputId, fName, title);
     switch (document.getElementById(dropId).value) {
         case '1': setValue(outputId, cs_2910, koef); break;
         case '2': setValue(outputId, cs_516,  koef); break;
@@ -199,6 +222,27 @@ function setDropDownActivitiesCadmium(drop_id, koef) {
     switch (document.getElementById(dropId).value) {
         case '1': setValue(outputId, cd_1079, koef); break;
         case '2': setValue(outputId, cd_1080, koef); break;
+    }
+}
+
+/**Вывод в поле результата в зависимости от выбранного пункта меню. Для Америция
+ * Если меню с таким id нет на странице, метод создает его и заполняет значением по умолчанию (case '1')
+ * Можно было разделить методы, но так меньше кода.
+ * @param drop_id id менюшки. Называется порядковым номером: 1, 2... или как угодно, главное, чтобы у разных меню на одной странице id были разными
+ * @param koef коэффициент, на который необходимо домножить, чтобы из активности получить мощность дозы
+ * @param title надпись на форме: можно задать свою или не задавать вообще
+ * (например setDropDownActivitiesAmericium(drop_id, koef)), тогда будет присвоена фраза по умолчанию
+ */
+function setDropDownActivitiesAmericium(drop_id, koef, title) {
+    initializeSource();
+
+    let dropId = 'drop_down_' + drop_id;
+    let outputId = 'output_' + drop_id;
+    let fName = "" + setDropDownActivitiesAmericium.name + "(" + drop_id + "," + koef + ")";
+
+    if (document.getElementById(dropId)==null)loadDropDownAmericium(dropId, outputId, fName, title);
+    switch (document.getElementById(dropId).value) {
+        case '1': setValue(outputId, am_1075, koef); break;
     }
 }
 //----------------------------------------------------------------------------------------------------------------------
