@@ -2,6 +2,7 @@
 const T_POL_CS_137 = 365.2422 * 30.167;
 const T_POL_CD_109 = 461.4;
 const T_POL_AM_241 = 365.2422 * 432.6;
+const T_POL_BA_133 = 3848.7;//  //365.2422 * 10.516 = 3840,886  //10,537 или 3848,7 дней  //или 10,551лет = 3853,67
 
 /**День поверки источника (начало отсчета распада)*/
 //yyyy.mm.dd  месяц начинается с 0, февраль — это 1
@@ -14,6 +15,7 @@ const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
 const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для удельной активности 1125
 const POV_DATE_595 = new Date(2021, 6, 29);
 const POV_DATE_1075 = new Date(2022, 9, 12);
+const POV_DATE_360_2020 = new Date(2022, 10, 28);
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -35,12 +37,13 @@ const A0_3668 = 7.932;
 const A0_595 = 97.070;
 
 const A0_1075 = 54.660;//Am-241
+const A0_360_2020 = 82.056;
 
 /**Химические элементы*/
-let CS_137, CD_109, AM_241;
+let CS_137, CD_109, AM_241, BA_133;
 
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
-let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595, am_1075;
+let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595, am_1075, ba_360_2020;
 
 /**Инициализация объектов класса источников и элементов*/
 function initializeSource() {
@@ -48,6 +51,7 @@ function initializeSource() {
     CS_137 = new RA_Element("Cs", 137, T_POL_CS_137);
     CD_109 = new RA_Element("Cd", 109, T_POL_CD_109);
     AM_241 = new RA_Element("Am", 241, T_POL_AM_241);
+    BA_133 = new RA_Element("Ba", 133, T_POL_BA_133);
     //Создание объектов класса источников
     cs_2910 = new RA_Source("№2910", CS_137, A0_2910, POV_DATE_2910);
     cs_516  = new RA_Source("№516",  CS_137, A0_516,  POV_DATE_CS);
@@ -68,6 +72,8 @@ function initializeSource() {
     cs_595  = new RA_Source("№595",  CS_137, A0_595,  POV_DATE_595);
 
     am_1075 = new RA_Source("№1075",  AM_241, A0_1075,  POV_DATE_1075);
+
+    ba_360_2020 = new RA_Source("360.2020",  BA_133, A0_360_2020,  POV_DATE_360_2020);
 }
 //----------------------------------------------------------------------------------------------------------------------
 /**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
@@ -97,7 +103,8 @@ function set_main_activities() {
         cs_483.getActivityBlock()+
         cs_93.getActivityBlock()+
         cs_3668.getActivityBlock()+
-        cs_595.getActivityBlock();
+        cs_595.getActivityBlock()+
+        ba_360_2020.getActivityBlock();
 
     /**Вывод блочных ссылок*/
     document.getElementById('div_for_menu_block').innerHTML =
@@ -202,6 +209,7 @@ function initialize_calc() {
     setActivity_0();
 }
 
+//!!!После добавления новой строчки не забыть добавить в include->insertCalculatorCode()
 function setActivity_0() {
     switch (document.getElementById("ra_spinner").value) {
         case '1':  setA0_And_Period(100, CS_137.getPeriod); break;
@@ -221,6 +229,7 @@ function setActivity_0() {
         case '15': setA0_By_Element(cd_1079); break;
         case '16': setA0_By_Element(cd_1080); break;
         case '17': setA0_By_Element(am_1075); break;
+        case '18': setA0_By_Element(ba_360_2020); break;
         //!!!После добавления новой строчки не забыть добавить в include->insertCalculatorCode()
     }
 }

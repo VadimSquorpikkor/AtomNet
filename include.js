@@ -610,6 +610,7 @@ function insertCalculatorCode() {
     '                    <option value="15">№1079</option>'+
     '                    <option value="16">№1080</option>'+
     '                    <option value="17">№1075</option>'+
+    '                    <option value="18">360.2020</option>'+
     '                </select>'+
     '            </td><td style="border:none">'+
     '            <input id="activity_0" type="text" size="12" datatype="number"'+
