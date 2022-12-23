@@ -1,5 +1,7 @@
 #AtomNet
 
+* <b>23.12.22</b>
+1. AtomtexLibrary 3.52 
 * <b>01.12.22</b>
 1. AtomtexLibrary 3.50
 * <b>01.12.22</b>
