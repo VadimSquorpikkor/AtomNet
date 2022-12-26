@@ -414,7 +414,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
-        '               <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.52</a></li>' +
+        '               <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.53</a></li>' +
         '                </ul>' +
         '            </div>' +
 

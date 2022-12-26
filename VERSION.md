@@ -1,5 +1,8 @@
 #AtomNet
 
+* <b>26.12.22</b>
+1. AtomtexLibrary 3.53
+2. Новогодняя тема вкл
 * <b>23.12.22</b>
 1. AtomtexLibrary 3.52 
 * <b>01.12.22</b>
