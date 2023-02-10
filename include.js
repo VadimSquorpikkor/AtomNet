@@ -146,12 +146,8 @@ function getRegMenu(mode, id) {
     return '' +
         // '<span id="title">Регулировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<span id="title">Регулировка</span>' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Система радиационного контроля</span>' +
-        '    </summary>' +
-        '    <ul>' +
-        '        <li><a href="../srk2327/2327.html">Настройка СРК</a>' +
+        '<details ' + mode + '><summary><span>Система радиационного контроля</span></summary>' +
+        '    <ul><li><a href="../srk2327/2327.html">Настройка СРК</a>' +
         '            <div>' +
         '                <ul>' +
         '                   <li><a id="mylink" href="../srk2327/2327.html?id=usb-com-adapter#usb-com-adapter">Настройка USB-COM адаптера</a></li>' +
@@ -174,37 +170,23 @@ function getRegMenu(mode, id) {
         '        <li><a href="../srk2327/p900.html">Пульт управления ПУ-АТ900</a></li>' +
         '        <li><a href="../srk2327/991.html">Устройство сигнализации УС-АТ991</a></li>' +
         '        <li><a href="../srk2327/sark2mrp.html">SARK2 и МРП</a></li>' +
-        // '        <li><a href="../docs/SRK_Title.odt">Шаблон листа заказов</a></li>' +
-        // '        <li><a href="../docs/Выходной%20контроль.doc">Выходной контроль СРК</a></li>' +
-        // '        <li><a href="../docs/АТ2327_РЭ_чI_2016.doc">AT2327 РЭ 2016</a></li>' +
-        // '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/Instruction/СРК_заказать.xls">ЗАКАЗАТЬ</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span><i>α</i> - БД альфа излучения</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span><i>α</i> - БД альфа излучения</span></summary>' +
         '    <ul>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span><i>β</i> - БД бета излучения</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span><i>β</i> - БД бета излучения</span></summary>' +
         '    <ul>' +
         '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span><i>γ</i> - БД гамма излучения </span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span><i>γ</i> - БД гамма излучения </span></summary>' +
         '    <ul>' +
-        '        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a>' +
-        '        </li>' +
+        '        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a></li>' +
         '        <li><a href="../bdkg02/bdkg02.html">БДКГ-02</a>' +
         /*'        <li onclick="toggleMenu()"><a>БДКГ-02</a>' +*/   <!--href="../bdkg02/bdkg02.html">-->
         '            <div>' +
@@ -212,23 +194,11 @@ function getRegMenu(mode, id) {
         '                    <li><a href="../bdkg02/bdkg-02rem.html">РЕМОНТ</a></li>' +
         '                    <li><a href="../bdkg02/bdkg-02_100-200.html">Как поменять напряжение 100 &rarr; 200 вольт</a></li>' +
         '                    <li><a href="../bdkg02/bdkg02-bgcalibration.html">Калибровка по фону и градуировочное число</a></li>' +
-        // '                    <li><a href="../docs/bdkg-02/Passport_Nastroiki_bdkg-02.doc">Паспорт настройки</a></li>' +
-        // '                    <li><a href="../docs/Расчет%20протоколов%20поверки%20БДКГ-02.ods">Расчет протокола поверки</a></li>' +
-        // '                    <li><a href="../templates/BDKG-02_template.odt">Шаблон для записи данных</a></li>' +
-        // '                    <li><a href="//Inv-996/журналы градуировок/BDKG02.ods">Журнал градуировки БДКГ-02</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
         '        <li><a href="../bdkg/bdkg_3_5_7_11.html">БДКГ-03 -05 -07 -11</a></li>' +
-        '        <li><a href="../bdkg/bdkg04.html">БДКГ-04</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/BDKG04.ods">База настройки БДКГ-04</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG04.ods">Данные с линейки</a></li>' +
-        // '                    <li><a href="../other/flash_magic.html">Инструкция по прошивке блоков</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
-        '        </li>' +
+        '        <li><a href="../bdkg/bdkg04.html">БДКГ-04</a></li>' +
         '        <li><a href="../bdkg/bdkg11m.html">БДКГ-11М</a></li>' +
         '        <li><a href="../bdkg22/bdkg22.html">БДКГ-22/23. Прошивка и настройка</a>' +
         '            <div>' +
@@ -238,15 +208,6 @@ function getRegMenu(mode, id) {
         '                    <li><a href="../bdkg22/bdkg22diap.html">Как принудительно переключать диапазоны</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22newfon.html">Как настраивать фон</a></li>' +
         '                    <li><a href="../bdkg22/bdkg22serial.html">Как записать серийный номер в память БД</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_prot.odt">Протокол поверки 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_sr.odt">Калибровочный сертификат 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg23.1_se.odt">Calibration Sertificate 23/1</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/bdkg22-23/bdkg-23.1_raschet.ods">Расчет протокола 23/1</a></li>' +
-        // '                    <li><a href="../docs/bdkg22/bdkg-23-bg.ods">Таблица записи фона</a></li>' +
-        // '                    <li><a href="../docs/bdkg22/perechen_bdkg22.odt">Перечень</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG22.ods">Журнал градуировок БДКГ-22</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23.ods">Журнал градуировок БДКГ-23</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/BDKG23_1.ods">Журнал градуировок БДКГ-23/1</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -256,32 +217,12 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>' +
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
         '        <li><a href="../bdkg/bdkr-01.html">БДКР-01</a></li>' +
-        '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="../bdmg/bdmg_trouble.html">Если не подключается</a></li>' +
-        // '                    <li><a href="../bdmg/static.html">Защита от статики</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_separate.html">Посмотреть работу каждого счетчика</a></li>' +
-        // '                    <li><a href="../templates/BDMG_template.odt">Шаблон для распечатывания коэффициентов</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_trouble2.html">Если не прошел линейку</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_call.html">Как сделать автокалибровку</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_pult.html">Как сделать проверку "пультом"</a></li>' +
-        // '                    <li><a href="../bdmg/bdmg_osh.html">Как снять показания с "ошейником"</a></li>' +
-        // '                    <li><a href="../docs/БДМГ%20Паспорт.docx">Паспорт настройки</a></li>' +
-        // '                    <li><a href="../docs/protocol_sertificate/2343_Pov_Rus.doc">Шаблон протокола поверки</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
-        '        </li>' +
+        '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a></li>' +
         '        <li><a href="../bdkg/bdks-07.html">БДКС-07</a>' +
-        '' +
-        '        <li><a href="../bdkg/bdkg_m_prosh.html">Программирование плат для -М блоков</a>' +
-        '    </ul>' +
+        '        <li><a href="../bdkg/bdkg_m_prosh.html">Программирование плат для -М блоков</a></ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span><i>n</i> - БД нейтронного излучения</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span><i>n</i> - БД нейтронного излучения</span></summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +
         '        <li><a href="../bdkn/6102_new.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">6102. Настройка <i>-n</i> детектора<span class="under_construction">В работе</span></a></li>' +
@@ -294,36 +235,13 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>1103M / 1121 / 1123</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>1103M / 1121 / 1123</span></summary>' +
         '    <ul>' +
         '        <li><a href="../11xx/1103_new.html">ДКР-АТ1103М</a>' +
-        // '        <li><a href="../1103/1103.html">ДКР-АТ1103М (старый вариант)</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="../1103/1103_prosh.html">Как прошить</a></li>' +
-        // '                    <li><a href="../1103/1103_new.html#prosh" onclick="openDetails(\'prosh\')">Как прошить 2</a></li>' +
-        // '                    <li><a href="../1103/1103_957.html">Как сделать инициализацию 957</a></li>' +
-        // '                    <li><a href="../1103/1103_potreb.html">Как проверить ток потребления и ток заряда</a></li>' +
-        // '                    <li><a href="../1103/1103_smesch.html">Смещение -3В...-5В</a></li>' +
-        // '                    <li><a href="../1103/1103_spectr.html">Как включить спектрометрический режим</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
-        // '        </li>' +
-        '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a>' +
-        // '            <div>' +
-        // '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1121.ods">База настройки АТ1121</a></li>' +
-        // '                    <li><a href="file://///Inv-996/журналы градуировок/АТ1121.ods">Данные с линейки</a></li>' +
-        // '                </ul>' +
-        // '            </div>' +
-        '        </li>' +
+        '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a></li>' +
         '        <li><a href="../11xx/1123.html">ДКС-АТ1123</a>' +
         '            <div>' +
         '                <ul>' +
-        // '                    <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/База настроек/AT1123.ods">База настройки АТ1123</a></li>' +
         '                    <li><a href="../11xx/1123_umnoz.html">Проверка умножителя</a></li>' +
         '                </ul>' +
         '            </div>' +
@@ -335,10 +253,7 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Адаптеры</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>Адаптеры</span></summary>' +
         '    <ul>' +
         '        <li><a href="../adapter/dtdu3.html">Настройка БТ-ДУ3</a></li>' +
         '        <li><a href="../adapter/btdu4.html">Настройка БТ-ДУ4</a></li>' +
@@ -359,37 +274,26 @@ function getRegMenu(mode, id) {
         '   </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>БОИ</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>БОИ</span></summary>' +
         '    <ul>' +
-        '               <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БОИ. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
-        '               <li><a href="../boi/boi.html">БОИ. Преобразователь напряжения</a></li>' +
-
-        '               <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
-        '               <li><a href="../boi/boi2-prog.html">БОИ2. Прошивка</a></li>' +
-        '               <li><a href="../boi/boi2-prov.html">БОИ2. Проверка Устройства обработки</a></li>' +
-
-        '               <li><a href="../boi/boi4_pp_prosh.html">БОИ-4. Прошивка платы преобразователя</a></li>' +
-        '               <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ-4</a></li>' +
+        '        <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БОИ. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
+        '        <li><a href="../boi/boi.html">БОИ. Преобразователь напряжения</a></li>' +
+        '        <li><a href="../boi/boi2.html">БОИ2 (Блок обработки информации)</a></li>' +
+        '        <li><a href="../boi/boi2-prog.html">БОИ2. Прошивка</a></li>' +
+        '        <li><a href="../boi/boi2-prov.html">БОИ2. Проверка Устройства обработки</a></li>' +
+        '        <li><a href="../boi/boi4_pp_prosh.html">БОИ-4. Прошивка платы преобразователя</a></li>' +
+        '        <li><a href="../boi/pda1120_pu4.html">КПК 1120 БОИ-4</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Проверка ПКИ</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>Проверка ПКИ</span></summary>' +
         '    <ul>' +
         '        <li><a href="../other/dgb-025.html">Входной контроль ДГБ-0,25</a></li>' +
         '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Всякое разное</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>Всякое разное</span></summary>' +
         '    <ul>' +
         '        <li><a href="../other/flash_magic.html">Инструкция по прошивке LPC11U67</a></li>' +
         '        <li><a href="../other/bdrm-05m.html">БДРМ-05М/ БДРМ-11. Настройка</a></li>' +
@@ -401,57 +305,43 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
         '        <li><a href="../other/5351_plis.html">Прошивка ПЛИС в ДКС-АТ5351</a></li>' +
-        '' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Файлы, документы, макросы</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>Файлы, документы, макросы</span></summary>' +
         '    <ul>' +
-
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
-        '               <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.53</a></li>' +
+        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.57</a></li>' +
         '                </ul>' +
         '            </div>' +
-
         '        </li>' +
         '        <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
         '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
-        // '        <li><a href="../docs/GMS%20for%20Corel.rar">Макрос для CorelDraw (наклейки)</a></li>' +
-
         '        <li><a href="../other/adjustment_db.html">AdjustmentDB</a>' +
         '            <div>' +
         '                <ul>' +
-        '               <li><a href="../other/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
-        '               <li><a href="../other/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
+        '                   <li><a href="../other/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
+        '                   <li><a href="../other/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-
         '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
         '            <div>' +
         '                <ul>' +
-        '               <li><a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a></li>' +
+        '                   <li><a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
-        // '        <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Актуальные прошивки</a></li>' +
-        // '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a></li>' +
-
         '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a>' +
         '            <div>' +
         '                <ul>' +
-        '               <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Открыть папку с прошивками</a></li>' +
+           '                <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Открыть папку с прошивками</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
@@ -475,20 +365,14 @@ function getGradMenu(mode, id) {
     return '' +
         // '<span id="title">Градуировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<span id="title">Градуировка</span>' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>БОИ</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>БОИ</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/boi_1.html">Градуировка БОИ</a></li>' +
         '        <li><a href="../grad/boi_2.html">Градуировка БОИ2</a></li>' +
         '        <li><a href="../grad/boi_4.html">Градуировка БОИ4</a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>γ - БД гамма излучения</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>γ - БД гамма излучения</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/bdkg-01.html">Градуировка БДКГ-01</a></li>' +
         '        <li><a href="../grad/bdkg-02.html">Градуировка БДКГ-02</a></li>' +
@@ -498,10 +382,7 @@ function getGradMenu(mode, id) {
         '        <li><a href="../grad/bdkg-204.html">Градуировка БДКГ-204</a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>11XX</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>11XX</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/1103.html">Градуировка ДКР-АТ1103M</a></li>' +
         '        <li><a href="../grad/1121.html">Градуировка ДКС-АТ1121</a></li>' +
@@ -509,10 +390,7 @@ function getGradMenu(mode, id) {
         '        <li><a href="../grad/1125a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 1125A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '>' +
-        '    <summary>' +
-        '        <span>Разное</span>' +
-        '    </summary>' +
+        '<details ' + mode + '><summary><span>Разное</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/2503a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +

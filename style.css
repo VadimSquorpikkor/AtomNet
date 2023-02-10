@@ -6,6 +6,9 @@
 
 /*todo для НОВОГО ГОДА и ДР см. .main_div и .logo_div и body*/
 
+/*todo для НОВОГО ГОДА (гирлянда) <div class="main_div">
+                     <img style="position: fixed; margin-top: -80px; margin-left: 90px" src="../imgs/girlanda_crop2.png"/>*/
+
 /*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -101,10 +104,10 @@ th {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #333333;
-    background-image: url("logo2.png"), url("sneg.jpg");
-    background-position: center, right top;
-    background-repeat: no-repeat, repeat;
+    /*background: #333333;*/
+    /*background-image: url("logo2.png"), url("sneg.jpg");*/
+    /*background-position: center, right top;*/
+    /*background-repeat: no-repeat, repeat;*/
 
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 10px;
@@ -125,8 +128,8 @@ th {
     /*margin-top: 25px;*/
 
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
-    background-size: 250px;
+    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
+    /*background-size: 250px;*/
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
@@ -439,9 +442,9 @@ figcaption {
 
 body {
     margin: 0;
-    /*background: #888 url("bg_main_transp.png");*/
+    background: #888 url("bg_main_transp.png");
     /*ДЛЯ НОВОГО ГОДА*/
-    background: #888 url("bg_main_transp_ng_2.png");
+    /*background: #888 url("bg_main_transp_ng_2.png");*/
 }
 
 pre {
