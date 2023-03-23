@@ -1,5 +1,7 @@
 #AtomNet
 
+* <b>21.03.23</b>
+1. Дополнены инструкции: "БДКГ-22/23" и "БДКГ-224" 
 * <b>10.02.23</b>
 1. AtomtexLibrary 3.57
 2. Почистил include.getRegMenu и include.getGradMenu
