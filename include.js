@@ -313,7 +313,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.61</a></li>' +
+        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.68</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
