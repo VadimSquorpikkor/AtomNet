@@ -1,5 +1,7 @@
 #AtomNet
 
+* <b>26.06.23</b>
+1. SmartTerminal 1.0.0.33
 * <b>17.05.23</b>
 1. AtomtexLibrary 3.68 
 * <b>05.04.23</b>

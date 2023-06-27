@@ -330,7 +330,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/SmartTerminal-v1.0.0.15.apk">Скачать последнюю версию</a></li>' +
+        '                   <li><a href="../docs/SmartTerminal-v1.0.0.30.apk">Скачать последнюю версию</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -343,7 +343,7 @@ function getRegMenu(mode, id) {
         '            </div>' +
         '        </li>' +
         '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
-        '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский.Радиационный контроль</a></li>' +
+        '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский. Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
         '' +
         '    </ul><br>' +
