@@ -313,7 +313,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.68</a></li>' +
+        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.69</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -330,7 +330,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/SmartTerminal-v1.0.0.30.apk">Скачать последнюю версию</a></li>' +
+        '                   <li><a href="../docs/SmartTerminal-v1.0.0.35.apk">Скачать последнюю версию</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
