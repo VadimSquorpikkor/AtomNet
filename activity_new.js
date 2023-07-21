@@ -16,6 +16,7 @@ const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для у
 const POV_DATE_595 = new Date(2021, 6, 29);
 const POV_DATE_1075 = new Date(2022, 9, 12);
 const POV_DATE_360_2020 = new Date(2022, 10, 28);
+const POV_DATE_361_2020 = new Date(2020, 7, 28);
 
 /**Активность источников в день поверки (кБк)*/
 const A0_516 = 91.3;
@@ -38,12 +39,13 @@ const A0_595 = 97.070;
 
 const A0_1075 = 54.660;//Am-241
 const A0_360_2020 = 82.056;
+const A0_361_2020 = 95.6;
 
 /**Химические элементы*/
 let CS_137, CD_109, AM_241, BA_133;
 
 /**Источники, которые будут использоваться в инструкциях (ссылки на объекты класса)*/
-let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595, am_1075, ba_360_2020;
+let cs_2910, cs_516, cs_517, cs_518, cs_519, cs_520, cs_521, cs_831, cs_832, cs_833, cd_1079, cd_1080, cs_483, cs_93, cs_3668, cs_595, am_1075, ba_360_2020, cs_361_2020;
 
 /**Инициализация объектов класса источников и элементов*/
 function initializeSource() {
@@ -74,6 +76,7 @@ function initializeSource() {
     am_1075 = new RA_Source("№1075",  AM_241, A0_1075,  POV_DATE_1075);
 
     ba_360_2020 = new RA_Source("360.2020",  BA_133, A0_360_2020,  POV_DATE_360_2020);
+    cs_361_2020 = new RA_Source("361.2020",  CS_137, A0_361_2020,  POV_DATE_361_2020);
 }
 //----------------------------------------------------------------------------------------------------------------------
 /**Вывод активностей для каждого из источников на сегодняшний день, вывод блочных ссылок и заполнение калькулятора*/
@@ -104,7 +107,8 @@ function set_main_activities() {
         cs_93.getActivityBlock()+
         cs_3668.getActivityBlock()+
         cs_595.getActivityBlock()+
-        ba_360_2020.getActivityBlock();
+        ba_360_2020.getActivityBlock()+
+        cs_361_2020.getActivityBlock();
 
     /**Вывод блочных ссылок*/
     document.getElementById('div_for_menu_block').innerHTML =
@@ -230,6 +234,7 @@ function setActivity_0() {
         case '16': setA0_By_Element(cd_1080); break;
         case '17': setA0_By_Element(am_1075); break;
         case '18': setA0_By_Element(ba_360_2020); break;
+        case '19': setA0_By_Element(cs_361_2020); break;
         //!!!После добавления новой строчки не забыть добавить в include->insertCalculatorCode()
     }
 }
