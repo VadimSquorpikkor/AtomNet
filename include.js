@@ -330,7 +330,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/SmartTerminal-v1.0.0.35.apk">Скачать последнюю версию</a></li>' +
+        '                   <li><a href="../docs/SmartTerminal-v1.0.0.38.apk">Скачать последнюю версию</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
