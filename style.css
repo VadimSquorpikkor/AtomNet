@@ -6,8 +6,7 @@
 
 /*todo для НОВОГО ГОДА и ДР см. .main_div и .logo_div и body*/
 
-/*todo для НОВОГО ГОДА (гирлянда) <div class="main_div">
-                     <img style="position: fixed; margin-top: -80px; margin-left: 90px" src="../imgs/girlanda_crop2.png"/>*/
+/*todo для НОВОГО ГОДА (гирлянда): в include в методе insertGirlanda установить isOn в true
 
 /*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
@@ -103,11 +102,12 @@ th {
 .logo_div {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
-    /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #333333;*/
-    /*background-image: url("logo2.png"), url("sneg.jpg");*/
-    /*background-position: center, right top;*/
-    /*background-repeat: no-repeat, repeat;*/
+    /*ДЛЯ НОВОГО ГОДА — снежинки на фоне логотипа на главной странице*/
+    background: #333333;
+    background-image: url("logo2.png"), url("sneg.jpg");
+    background-position: center, right top;
+    background-repeat: no-repeat, repeat;
+
 
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
     padding: 10px;
@@ -127,9 +127,9 @@ th {
     /*Для варианта с верхним дивом (upper_div)*/
     /*margin-top: 25px;*/
 
-    /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
-    /*background-size: 250px;*/
+    /*ДЛЯ НОВОГО ГОДА — (шарик в углу)*/
+    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
@@ -443,8 +443,8 @@ figcaption {
 body {
     margin: 0;
     background: #888 url("bg_main_transp.png");
-    /*ДЛЯ НОВОГО ГОДА*/
-    /*background: #888 url("bg_main_transp_ng_2.png");*/
+    /*ДЛЯ НОВОГО ГОДА — ёлочки на сером бэкграунде*/
+    background: #888 url("bg_main_transp_ng_2.png");
 }
 
 pre {
