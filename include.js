@@ -418,7 +418,7 @@ function includeMenu(menu_id, menu_type, menu_state) {
 function insertGirlanda() {
     let isOn = true;
     if (isOn) {
-        document.getElementById("girlanda").innerHTML = '<img style="position: fixed; margin-top: -80px; margin-left: 0px" src="../imgs/girlanda_crop2.png"/>';
+        document.getElementById("girlanda").innerHTML = '<img style="position: fixed; pointer-events: none; margin-top: -80px; margin-left: 0px" src="../imgs/girlanda_crop2.png"/>';
     }
 }
 
