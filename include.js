@@ -146,7 +146,7 @@ function getRegMenu(mode, id) {
     return '' +
         // '<span id="title">Регулировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateReg(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<span id="title">Регулировка</span>' +
-        '<details ' + mode + '><summary><span>Система радиационного контроля</span></summary>' +
+        '<details ' + openIfContains("/srk2327/") + '><summary><span>Система радиационного контроля</span></summary>' +
         '    <ul><li><a href="../srk2327/2327.html">Настройка СРК</a>' +
         '            <div>' +
         '                <ul>' +
@@ -173,18 +173,18 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span><i>α</i> - БД альфа излучения</span></summary>' +
+        '<details ' + openIfContains("/alpha/") + '><summary><span><i>α</i> - БД альфа излучения</span></summary>' +
         '    <ul>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span><i>β</i> - БД бета излучения</span></summary>' +
+        '<details ' + openIfContains("/beta/") + '><summary><span><i>β</i> - БД бета излучения</span></summary>' +
         '    <ul>' +
-        '        <li><a href="../other/bdpb-01.html">БДПБ-01</a></li>' +
+        '        <li><a href="../beta/bdpb-01.html">БДПБ-01</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span><i>γ</i> - БД гамма излучения </span></summary>' +
+        '<details ' + openIfContains("/bdkg") + '><summary><span><i>γ</i> - БД гамма излучения </span></summary>' +
         '    <ul>' +
         '        <li><a href="../bdkg/bdkg01.html">БДКГ-01</a></li>' +
         '        <li><a href="../bdkg02/bdkg02.html">БДКГ-02</a>' +
@@ -222,7 +222,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg_m_prosh.html">Программирование плат для -М блоков</a></ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span><i>n</i> - БД нейтронного излучения</span></summary>' +
+        '<details ' + openIfContains("/bdkn") + '><summary><span><i>n</i> - БД нейтронного излучения</span></summary>' +
         '    <ul id="neutron">' +
         '        <li><a href="../bdkn/6102.html">6102. Настройка <i>-n</i> детектора (старая плата)</a></li>' +
         '        <li><a href="../bdkn/6102_new.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">6102. Настройка <i>-n</i> детектора<span class="under_construction">В работе</span></a></li>' +
@@ -235,14 +235,14 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>1103M / 1121 / 1123</span></summary>' +
+        '<details ' + openIfContains("/11xx") + '><summary><span>1103M / 1121 / 1123</span></summary>' +
         '    <ul>' +
         '        <li><a href="../11xx/1103_new.html">ДКР-АТ1103М</a>' +
         '        <li><a href="../11xx/1121.html">ДКС-АТ1121</a></li>' +
         '        <li><a href="../11xx/1123.html">ДКС-АТ1123</a>' +
         '            <div>' +
         '                <ul>' +
-        '                    <li><a href="../11xx/1123_umnoz.html">Проверка умножителя</a></li>' +
+        '                    <li><a href="../umnozhitel/1123_umnoz.html">Проверка умножителя</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -253,28 +253,28 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>Адаптеры</span></summary>' +
+        '<details ' + openIfContains("/adapter/") + '><summary><span>Адаптеры</span></summary>' +
         '    <ul>' +
         '        <li><a href="../adapter/dtdu3.html">Настройка БТ-ДУ3</a></li>' +
         '        <li><a href="../adapter/btdu4.html">Настройка БТ-ДУ4</a></li>' +
         '   </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '>' +
+        '<details ' + openIfContains("/umnozhitel/") + '>' +
         '    <summary>' +
         '        <span>Умножители / делители</span>' +
         '    </summary>' +
         '    <ul>' +
-        '        <li><a href="../other/delitel.html">Проверка делителя</a></li>' +
-        '        <li><a href="../other/umnoz_1121.html">Проверка умножителя 1121,α,β,1103,1125</a></li>' +
-        '        <li><a href="../11xx/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
-        '        <li><a href="../other/umnoz_1315.html">Проверка умножителя 1315</a></li>' +
-        '        <li><a href="../other/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
-        '        <li><a href="../other/umnoz_201m.html">Проверка умножителя БДКГ-201М</a></li>' +
+        '        <li><a href="../umnozhitel/delitel.html">Проверка делителя</a></li>' +
+        '        <li><a href="../umnozhitel/umnoz_1121.html">Проверка умножителя 1121,α,β,1103,1125</a></li>' +
+        '        <li><a href="../umnozhitel/1123_umnoz.html">Проверка умножителя 1123</a></li>' +
+        '        <li><a href="../umnozhitel/umnoz_1315.html">Проверка умножителя 1315</a></li>' +
+        '        <li><a href="../umnozhitel/umnoz_1321.html">Проверка умножителя 1321</a></li>' +
+        '        <li><a href="../umnozhitel/umnoz_201m.html">Проверка умножителя БДКГ-201М</a></li>' +
         '   </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>БОИ</span></summary>' +
+        '<details ' + openIfContains("/boi/") + '><summary><span>БОИ</span></summary>' +
         '    <ul>' +
         '        <li><a href="../boi/boi1-uo.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">БОИ. Устройство Обработки<span class="under_construction">В работе</span></a></li>' +
         '        <li><a href="../boi/boi.html">БОИ. Преобразователь напряжения</a></li>' +
@@ -286,14 +286,14 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>Проверка ПКИ</span></summary>' +
+        '<details ' + openIfContains("/pki/") + '><summary><span>Проверка ПКИ</span></summary>' +
         '    <ul>' +
-        '        <li><a href="../other/dgb-025.html">Входной контроль ДГБ-0,25</a></li>' +
-        '        <li><a href="../other/beta.html">Проверка БЕТА счетчиков</a></li>' +
+        '        <li><a href="../pki/dgb-025.html">Входной контроль ДГБ-0,25</a></li>' +
+        '        <li><a href="../pki/beta.html">Проверка БЕТА счетчиков</a></li>' +
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>Всякое разное</span></summary>' +
+        '<details ' + openIfContains("/other/") + '><summary><span>Всякое разное</span></summary>' +
         '    <ul>' +
         '        <li><a href="../other/flash_magic.html">Инструкция по прошивке LPC11U67</a></li>' +
         '        <li><a href="../other/bdrm-05m.html">БДРМ-05М/ БДРМ-11. Настройка</a></li>' +
@@ -308,26 +308,26 @@ function getRegMenu(mode, id) {
         '    </ul>' +
         '</details>' +
         '' +
-        '<details ' + mode + '><summary><span>Файлы, документы, макросы</span></summary>' +
+        '<details ' + openIfContains("/doc_macro/") + '><summary><span>Файлы, документы, макросы</span></summary>' +
         '    <ul>' +
-        '        <li><a href="../sertif_prosh/macro.html">Макрос для протоколов и сертификатов</a>' +
+        '        <li><a href="../doc_macro/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
         '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 3.69</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../other/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
-        '        <li><a href="../other/plotter.html">Как делать наклейки на плоттере</a></li>' +
-        '        <li><a href="../other/adjustment_db.html">AdjustmentDB</a>' +
+        '        <li><a href="../doc_macro/atomtex_tools.html">Инструкция для работы с макросом наклеек</a></li>' +
+        '        <li><a href="../doc_macro/plotter.html">Как делать наклейки на плоттере</a></li>' +
+        '        <li><a href="../doc_macro/adjustment_db.html">AdjustmentDB</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../other/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
-        '                   <li><a href="../other/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
+        '                   <li><a href="../doc_macro/adjustment_db_service.html">AdjustmentDB. Описание сервиса</a></li>' +
+        '                   <li><a href="../doc_macro/adjustment_db_admin.html">AdjustmentDB. Администрирование</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../other/smart_terminal.html">Smart Terminal</a>' +
+        '        <li><a href="../doc_macro/smart_terminal.html">Smart Terminal</a>' +
         '            <div>' +
         '                <ul>' +
         '                   <li><a href="../docs/SmartTerminal-v1.0.0.38.apk">Скачать последнюю версию</a></li>' +
@@ -335,19 +335,26 @@ function getRegMenu(mode, id) {
         '            </div>' +
         '        </li>' +
         '        <li><a href="../architector/architector.html">Architector</a></li>' +
-        '        <li><a href="../sertif_prosh/prosh.html">Список актуальных прошивок</a>' +
+        '        <li><a href="../doc_macro/prosh.html">Список актуальных прошивок</a>' +
         '            <div>' +
         '                <ul>' +
            '                <li><a href="file://///FILESERVER/Manufacture/Uchastok.RIR/programming/">Открыть папку с прошивками</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
-        '        <li><a href="../sertif_prosh/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
+        '        <li><a href="../doc_macro/sertificate.html">Сертификаты и протоколы поверки</a></li>' +
         '        <li><a href="../docs/gurachevskiy-vl-radiacionnyy-kontrol-fizicheskie-osnovy-i-pribornaya-baza.pdf">Гурачевский. Радиационный контроль</a></li>' +
         '        <li><a href="../docs/catalogue_ru.pdf">Каталог продукции АТОМТЕХ</a></li>' +
         '' +
         '    </ul><br>' +
         '</details>';
+}
+
+/**меню автоматом раскрывается до ссылки на открытую в данный момент страницу*/
+function openIfContains(path) {
+    let pagePath = window.location.href;
+    if (pagePath.includes(path)) return "open";
+    else return "";
 }
 
 /**Загружает HTML код меню для Градуировки
@@ -365,14 +372,14 @@ function getGradMenu(mode, id) {
     return '' +
         // '<span id="title">Градуировка</span><span id="title_button"><input id="switchButton" type="button" onclick=switchMenuStateGrad(\'' + mode + '\',"' + id + '") value=' + getTextByMode(mode) + '></span>' +
         '<span id="title">Градуировка</span>' +
-        '<details ' + mode + '><summary><span>БОИ</span></summary>' +
+        '<details ' + openIfContains("/grad/boi") + '><summary><span>БОИ</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/boi_1.html">Градуировка БОИ</a></li>' +
         '        <li><a href="../grad/boi_2.html">Градуировка БОИ2</a></li>' +
         '        <li><a href="../grad/boi_4.html">Градуировка БОИ4</a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '><summary><span>γ - БД гамма излучения</span></summary>' +
+        '<details ' + openIfContains("/grad/bdkg") + '><summary><span>γ - БД гамма излучения</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/bdkg-01.html">Градуировка БДКГ-01</a></li>' +
         '        <li><a href="../grad/bdkg-02.html">Градуировка БДКГ-02</a></li>' +
@@ -382,7 +389,7 @@ function getGradMenu(mode, id) {
         '        <li><a href="../grad/bdkg-204.html">Градуировка БДКГ-204</a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '><summary><span>11XX</span></summary>' +
+        '<details ' + openIfContains("/grad/11") + '><summary><span>11XX</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/1103.html">Градуировка ДКР-АТ1103M</a></li>' +
         '        <li><a href="../grad/1121.html">Градуировка ДКС-АТ1121</a></li>' +
@@ -390,7 +397,7 @@ function getGradMenu(mode, id) {
         '        <li><a href="../grad/1125a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 1125A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
         '</details>' +
-        '<details ' + mode + '><summary><span>Разное</span></summary>' +
+        '<details ' + openIfContains("/grad/25") + '><summary><span>Разное</span></summary>' +
         '    <ul>' +
         '        <li><a href="../grad/2503a.html" onmouseover="setTextColor(this.lastChild,COLOR_WHITE)" onmouseout="setTextColor(this.lastChild,COLOR_RED)">Градуировка 2503A<span class="under_construction">В работе</span></a></li>' +
         '    </ul>' +
