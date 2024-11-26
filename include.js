@@ -219,7 +219,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkr-01.html">БДКР-01</a></li>' +
         '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a></li>' +
         '        <li><a href="../bdkg/bdks-07.html">БДКС-07</a>' +
-        '        <li><a href="../bdkg/bdkg_m_prosh.html">Программирование плат для -М блоков</a></ul>' +
+        '        <li><a href="../bdkg/bdrm-05m.html">БДРМ-05М/ БДРМ-11. Настройка</a></li>' +
         '</details>' +
         '' +
         '<details ' + openIfContains("/bdkn") + '><summary><span><i>n</i> - БД нейтронного излучения</span></summary>' +
@@ -296,7 +296,6 @@ function getRegMenu(mode, id) {
         '<details ' + openIfContains("/other/") + '><summary><span>Всякое разное</span></summary>' +
         '    <ul>' +
         '        <li><a href="../other/flash_magic.html">Инструкция по прошивке LPC11U67</a></li>' +
-        '        <li><a href="../other/bdrm-05m.html">БДРМ-05М/ БДРМ-11. Настройка</a></li>' +
         '        <li><a href="../other/adapter.html">Адаптер USB-БД</a></li>' +
         '        <li><a href="../other/6130.html">АТ6130</a></li>' +
         '        <li><a href="../other/6130_prosh.html">АТ6130 Прошивка</a></li>' +
@@ -305,6 +304,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
         '        <li><a href="../other/5351_plis.html">Прошивка ПЛИС в ДКС-АТ5351</a></li>' +
+        '        <li><a href="../other/bdkg_m_prosh.html">Программирование плат для М-блоков</a></ul>' +
         '    </ul>' +
         '</details>' +
         '' +

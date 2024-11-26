@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>БДРМ-05М и БДРМ-11. Настройка</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<!--<body onload="get_cd_1121()">-->
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a class="home_button" href="../menu/index.html"></a>
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">БДРМ-05М и БДРМ-11. Настройка</a>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, CLOSE);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+    <span id="girlanda"><script> insertGirlanda(); </script></span>
+
+    <h1>БДРМ-05М и БДРМ-11. Настройка</h1>
+
+    <ul>
+        <li>1. В перечень записать дату настройки, серийный номер и ФИО регулировщика, наклеить на прибор наклейку с номером.</li>
+        <li>2. При необходимости внести нести изменения в схему:</li>
+        <ul>
+            <li>Установить параллельно С47 конденсатор 0,47 мкФ;</li>
+            <li>Выпаять R24, С10;</li>
+            <li>Заменить R35 и R38 на 1 кОм, R26 - 4,7 кОм, R32 - 51 кОм, R3 – 0 Ом, R5 – 9,1 кОм, С14 - 15 пФ;</li>
+        </ul>
+        <li>3. Записать внутренние номера и дату:</li>
+        <ul>
+            <li>Подключить БД к ПК через необходимый адаптер.</li>
+            <li>Запустить программу ATAS или ATAS TECH. БД должен подключится автоматически.</li>
+            <li>Записать серийный номер, месяц и год производства в меню <i>Блок детектирования &rarr; Свойства</i>.</li>
+        </ul>
+        <li>4. Проверить версию прошивки, при необходимости перепрошить.</li>
+        <li>5. Выбрать <i>Блок детектирования &rarr; Параметры стабилизации</i>.</li>
+        <ul>
+            <li>Установить дискриминаторы 0, 15, 2, 2 подтвердить установку.</li>
+            <li>Выключить светодиод (нажать LED OFF).</li>
+            <li>Установить пороги: Выбрать Блок детектирования — Пороги: нижний порог 1050, верхний 850.</li>
+        </ul>
+        <li>6. Выставить высокое: Выбрать Блок детектирования — Высокое 12000.
+            Проверить высокое на C49. Значение высокого должно быть около 95-96В. При необходимости скорректировать высокое с помощью R44, R46.</li>
+        <li>7. Установить на отметку блока детектирования <sup>137</sup>Cs.</li>
+        <li>8. Настроить пик в 150 канал по <sup>137</sup>Cs с активностью 105 Бк подстройкой R27, R31.</li>
+
+        <img src="../imgs/bdrm-05m/01.png" width="900" alt="изображение не найдено"/>
+
+        <li>9.  Установить на отметку блока детектирования 228Th.
+        Выставить 750 канал ±30 каналов R33, R34. Необходимо контролировать положение <sup>137</sup>Cs</li>
+        <li>10. Поставить на приработку.</li>
+        <li>11. Снять чувствительности на УДГ-АТ110 на расстоянии 2800мм. При необходимости скорректировать чувствительность по <sup>241</sup>Am нижним порогом.</li>
+    </ul>
+        <table style="max-width: 900px; margin: auto">
+<!--            <caption style="caption-side:top">Чувствительность блока детектирования должна быть</caption>-->
+            <tr>
+                <th colspan="3">Чувствительность блока детектирования должна быть</th>
+            </tr>
+            <tr>
+                <td><sup>137</sup>Cs</td>
+                <td>≈32500</td>
+                <td>≈66000</td>
+            </tr>
+            <tr>
+                <td><sup>241</sup>Am</td>
+                <td>≈66000</td>
+                <td>≈115000</td>
+            </tr>
+            <tr>
+                <td><sup>60</sup>Co</td>
+                <td>≈17000</td>
+                <td>≈36000</td>
+            </tr>
+        </table>
+    <ul>
+        <li>12. Провести термо-калибровку и построить температурную зависимость.</li>
+        <li>13. При поставке блока детектирования в составе МКС-АТ6103, МКС-АТ6110 или УРК передать на участок радиометрии для проведения калибровки по энергии и сигме.
+            Зашить окна для алгоритма категоризации с помощью ПО SDL.</li>
+        <li>14.  Для поставки блока детектирования в составе СРК-АТ2327 или МРП-АТ930 установить скорость обмена 19200.</li>
+    </ul>
+
+</div>
+</div>
+</body>
+</html>
