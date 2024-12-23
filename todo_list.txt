@@ -1,6 +1,7 @@
 
 
-8 12:10 Привет Вадим! Подправь, пожалуйста, инструкции для БДРМ-05М/БДРМ-11 (file://///Fileserver/manufacture/Uchastok.RIR/%D0%91%D0%B0%D0%B7%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA/Instruction/GitHub/HTML/bdkg/bdrm-05m.html), а именно:
+Подправь, пожалуйста, инструкции для БДРМ-05М/БДРМ-11
+(file://///Fileserver/manufacture/Uchastok.RIR/%D0%91%D0%B0%D0%B7%D0%B0%20%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BA/Instruction/GitHub/HTML/bdkg/bdrm-05m.html), а именно:
 - заменить пункт
 "12. Провести термо-калибровку и построить температурную зависимость."
 на
