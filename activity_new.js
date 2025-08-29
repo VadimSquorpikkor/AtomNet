@@ -11,7 +11,7 @@ const POV_DATE_2910 = new Date(2016, 4, 17);
 const POV_DATE_800 = new Date(2019,9,17);
 const POV_DATE_CD_1079 = new Date(2018, 10, 13);
 const POV_DATE_CD_1080 = new Date(2018, 10, 13);
-const POV_DATE_FOR_DISTANCE = new Date(2021, 0, 25);
+const POV_DATE_FOR_DISTANCE = new Date(2025, 7, 29);
 const POV_DATE_FOR_UD_SRC = new Date(2021, 9, 13);//источники для удельной активности 1125
 const POV_DATE_595 = new Date(2021, 6, 29);
 const POV_DATE_1075 = new Date(2022, 9, 12);
@@ -147,15 +147,15 @@ function insertDistanceCalculator() {
         '           </tr>'+
         '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
         /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
-        getDistanceStroke("0.7 мкЗв/ч", "ОНА", 232.30, koefCs) +
-        getDistanceStroke("7 мкЗв/ч",   "ОНА", 74.58,  koefCs) +
-        getDistanceStroke("70 мкЗв/ч",  "9ХК", 161.37, koefCs) +
-        getDistanceStroke("0.7 мЗв/ч",  "9ХК", 51.81,  koefCs) +
-        getDistanceStroke("7 мЗв/ч",    "043", 348.90, koefCs) +
-        getDistanceStroke("70 мЗв/ч",   "043", 112.10, koefCs) +
-        getDistanceStroke("0.7 Зв/ч",   "163", 231.28, koefCs) +
-        getDistanceStroke("7 Зв/ч",     "163", 74.51,  koefCs) +
-        getDistanceStroke("40 Зв/ч",    "163", 32.25,  koefCs) +
+        getDistanceStroke("0.7 мкЗв/ч", "28C", 263,184, koefCs) +
+        getDistanceStroke("7 мкЗв/ч",   "28C", 84.435,  koefCs) +
+        getDistanceStroke("70 мкЗв/ч",  "39T", 215.727, koefCs) +
+        getDistanceStroke("0.7 мЗв/ч",  "39T", 69.072,  koefCs) +
+        getDistanceStroke("7 мЗв/ч",    "043", 342.625, koefCs) +
+        getDistanceStroke("70 мЗв/ч",   "043", 109.907, koefCs) +
+        getDistanceStroke("0.7 Зв/ч",   "163", 218.465, koefCs) +
+        getDistanceStroke("7 Зв/ч",     "163", 70.323,  koefCs) +
+        getDistanceStroke("40 Зв/ч",    "163", 30.246,  koefCs) +
         '   </table></div>';
 }
 
@@ -176,15 +176,15 @@ function insertKermaDistanceCalculator() {
         '           </tr>'+
         '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
         /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
-        getDistanceStroke("0.7 мкГр/ч", "ОНА", 212.08, koefCs) +
-        getDistanceStroke("7 мкГр/ч",   "ОНА", 68.04,  koefCs) +
-        getDistanceStroke("70 мкГр/ч",  "9ХК", 147.28, koefCs) +
-        getDistanceStroke("0.7 мГр/ч",  "9ХК", 47.26,  koefCs) +
-        getDistanceStroke("7 мГр/ч",    "9ТН", 52.92, koefCs) +
-        getDistanceStroke("70 мГр/ч",   "043", 102.29, koefCs) +
-        getDistanceStroke("0.7 Гр/ч",   "163", 211.21, koefCs) +
-        getDistanceStroke("7 Гр/ч",     "163", 67.99,  koefCs) +
-        getDistanceStroke("40 Гр/ч",    "163", 29.42,  koefCs) +
+        getDistanceStroke("0.7 мкГр/ч", "28C", 239.522, koefCs) +
+        getDistanceStroke("7 мкГр/ч",   "28C", 76.786,  koefCs) +
+        getDistanceStroke("70 мкГр/ч",  "39T", 196.292, koefCs) +
+        getDistanceStroke("0.7 мГр/ч",  "39T", 62.811,  koefCs) +
+        getDistanceStroke("7 мГр/ч",    "043", 311.922, koefCs) +
+        getDistanceStroke("70 мГр/ч",   "043", 99.926, koefCs) +
+        getDistanceStroke("0.7 Гр/ч",   "163", 198.786, koefCs) +
+        getDistanceStroke("7 Гр/ч",     "163", 63.949,  koefCs) +
+        getDistanceStroke("40 Гр/ч",    "163", 27.5,  koefCs) +
         '   </table></div>';
 }
 

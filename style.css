@@ -490,7 +490,7 @@ pre {
 .red_light_title {
     font-size: 20px;
     color: #FF6633;
-    text-shadow: 1px 4px 5px #aba8a8;
+    text-shadow: 1px 4px 5px rgba(171, 168, 168, 0.32);/*#aba8a8;*/
 }
 
 .no_markers {
