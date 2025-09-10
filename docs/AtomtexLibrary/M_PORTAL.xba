@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_PORTAL" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim Overall as new Overall 
+dim oDialogPortal as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionBDKG11 as object
+dim oOptionBDKG19 as object
+dim oOptionBDKG35 as object
+dim oOptionBDRM05 as object
+dim oOptionBDRM05_2000 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim oNumericFieldModel as object
+dim oActivityCombo as object
+dim layoutPosition as integer
+&apos;ВНИМАНИЕ теперь ПОРТАЛЬНИК переделан так, что добавлять в протокол можно только одинаковые блоки (раньше можно было разные)
+rem---------------------------------------------------------------------------------------------------------
+Sub Portal_Dialog_Show
+	maxBDCount = 4
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogPortal = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_PORTAL )
+	
+	oDialogPortal.Model.getByName(&quot;Fura&quot;).ImageURL = sertPath &amp; &quot;portal\fura_transp.png&quot;
+	&apos;oDialogPortal.Model.getByName(&quot;radImage&quot;).ImageURL = sertPath &amp; &quot;portal\radiation.png&quot;
+	
+	oListBox = oDialogPortal.getControl(&quot;ListBoxBD&quot;)
+	
+	oActivityCombo = oDialogPortal.getControl(&quot;SourceCombo&quot;)
+	Overall.dialogShowInitialize(maxBDCount, oDialogPortal, oDateFieldModel, &quot;Версия 1.15 &quot;, oListBox, 5)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	Overall.initializeActivityCombo(oActivityCombo)
+	
+	oNumericFieldModel = oDialogPortal.Model.getByName(&quot;ActivityField&quot;)
+	oNumericFieldModel.DECIMALACCURACY = 2
+	Overall.comboChanged(oActivityCombo, oNumericFieldModel, oDateFieldModel)
+
+	oDialogPortal.getControl(&quot;RemoveButton&quot;).setEnable(false)
+	oDialogPortal.getControl(&quot;NextButton&quot;).setEnable(false)
+	oDialogPortal.getControl(&quot;PrevButton&quot;).setEnable(false)
+	oDialogPortal.getControl(&quot;DoneButton&quot;).setEnable(false)
+	oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(false)	
+	oDialogPortal.getControl(&quot;Serial&quot;).Text = &quot;S/N&quot;
+	oDialogPortal.getControl(&quot;BDtype&quot;).Text = &quot;type&quot;
+	
+	oOptionBDKG11 = oDialogPortal.Model.getByName(&quot;isBDKG11&quot;)
+	oOptionBDKG19 = oDialogPortal.Model.getByName(&quot;isBDKG19&quot;)
+	oOptionBDKG35 = oDialogPortal.Model.getByName(&quot;isBDKG35&quot;)
+	oOptionBDRM05 = oDialogPortal.Model.getByName(&quot;isBDRM05&quot;)
+	oOptionBDRM05_2000 = oDialogPortal.Model.getByName(&quot;isBDRM05_2000&quot;)
+	oOptionBDKG11.State = 0
+	oOptionBDKG19.State = 0
+	oOptionBDKG35.State = 0
+	oOptionBDRM05.State = 0
+	oOptionBDRM05_2000.State = 0
+	
+	oListBox.setEnable(false)
+	
+	for i=1 to 5
+		oDialogPortal.getControl(&quot;BGField&quot; + i).setEnable(false)
+		oDialogPortal.getControl(&quot;SRCField&quot; + i).setEnable(false)		
+	next i
+	
+	&apos;remontCheckBoxListener
+	
+	oDialogMain.endexecute()   
+	oDialogPortal.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Не используется
+sub remontCheckBoxListener
+	if oDialogPortal.getControl(&quot;forRemont&quot;).state then
+		oDialogPortal.getControl(&quot;isBDKG11&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDKG19&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDKG35&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDRM05&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDRM05_2000&quot;).setEnable(true)
+	else
+		oDialogPortal.getControl(&quot;isBDKG11&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDKG19&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDKG35&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDRM05&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDRM05_2000&quot;).setEnable(false)
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	Overall.comboChanged(oActivityCombo, oNumericFieldModel, oDateFieldModel)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogPortal.getControl(&quot;TextFieldNUM&quot;))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim serial as string
+	dim nCount as integer
+	
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	&apos;if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+		
+	
+	for i=1 to 5
+		oDialogPortal.getControl(&quot;BGField&quot; + i).setEnable(true)
+		oDialogPortal.getControl(&quot;SRCField&quot; + i).setEnable(true)		
+	next i
+	oListBox.setEnable(true)
+	oDialogPortal.getControl(&quot;RemoveButton&quot;).setEnable(true)
+		
+	serial = oDialogPortal.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogPortal.getControl(&quot;TextFieldNUM&quot;).text
+	oDialogPortal.getControl(&quot;FULL_NUM&quot;).text = oDialogPortal.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogPortal.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
+	
+	dim bd as new CUnit
+	if oOptionBDKG11.state  then bd.setAsBDKG11container
+	if oOptionBDKG19.state  then bd.setAsBDKG19container
+	if oOptionBDKG35.state  then bd.setAsBDKG35container
+	if oOptionBDRM05.state  then bd.setAsBDRM05
+	if oOptionBDRM05_2000.state  then bd.setAsBDRM05_2000
+	
+	bd.setSerial(serial)
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( serial + &quot; ( &quot; + bd.getType + &quot; ) &quot;, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialogPortal.getControl(&quot;TextFieldNUM&quot;))
+	layoutPosition = layoutPosition + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	dim newBGValues as new Collection
+	dim newSRCValues as new Collection
+	for i=1 to BDList.item(num).getBGList.count
+		newBGValues.add(oDialogPortal.getControl(&quot;BGField&quot; + i).Value)
+		newSRCValues.add(oDialogPortal.getControl(&quot;SRCField&quot; + i).Value)
+	next i
+	BDList.item(num).setBGList(newBGValues)
+	BDList.item(num).setSRCList(newSRCValues)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	oDialogPortal.getControl(&quot;Serial&quot;).Text = bd.getSerial
+	oDialogPortal.getControl(&quot;BDtype&quot;).Text = bd.getType
+	for i=1 to bd.getBGList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
+		oDialogPortal.getControl(&quot;BGField&quot; + i).Text = bd.getBGList.item(i)
+		oDialogPortal.getControl(&quot;SRCField&quot; + i).Text = bd.getSRCList.item(i)
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	oListBox.selectItemPos( layoutPosition-1, True )
+	if BDList.count = 0 then
+		oDialogPortal.getControl(&quot;NextButton&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;PrevButton&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;DoneButton&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;Serial&quot;).Text = &quot;S/N&quot;
+		oDialogPortal.getControl(&quot;BDtype&quot;).Text = &quot;type&quot;
+		oListBox.setEnable(false)
+		for i=1 to 5
+			oDialogPortal.getControl(&quot;BGField&quot; + i).setEnable(false)
+			oDialogPortal.getControl(&quot;BGField&quot; + i).value = 0
+			oDialogPortal.getControl(&quot;SRCField&quot; + i).setEnable(false)
+			oDialogPortal.getControl(&quot;SRCField&quot; + i).value = 0
+		next i
+	end if
+	if BDList.count &lt;&gt; 0 then
+		oListBox.setEnable(true)
+		oDialogPortal.getControl(&quot;DoneButton&quot;).setEnable(true)
+		
+		
+		oDialogPortal.getControl(&quot;isBDKG11&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDKG19&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDKG35&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDRM05&quot;).setEnable(false)
+		oDialogPortal.getControl(&quot;isBDRM05_2000&quot;).setEnable(false)
+	
+	end if
+	if BDList.count &gt; layoutPosition then
+		oDialogPortal.getControl(&quot;DoneButton&quot;).setEnable(false)
+	end if
+	if layoutPosition = BDList.count then
+		oDialogPortal.getControl(&quot;NextButton&quot;).setEnable(false)
+		&apos;oDialogG02N.getControl(&quot;DoneButton&quot;).setEnable(true)
+	end if
+	if layoutPosition &lt; BDList.count AND BDList.count &lt;&gt; 0 then
+		oDialogPortal.getControl(&quot;NextButton&quot;).setEnable(true)
+	end if
+	if BDList.count &gt; 1 then
+		oDialogPortal.getControl(&quot;PrevButton&quot;).setEnable(true)
+	end if
+	if layoutPosition = 1 then
+		oDialogPortal.getControl(&quot;PrevButton&quot;).setEnable(false)
+	end if
+	if BDList.count = maxBDCount then oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(false)
+	if BDList.count &lt;&gt; maxBDCount then oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(true)
+	if BDList.count = 0 then
+		oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(true)
+		
+		oDialogPortal.getControl(&quot;isBDKG11&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDKG19&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDKG35&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDRM05&quot;).setEnable(true)
+		oDialogPortal.getControl(&quot;isBDRM05_2000&quot;).setEnable(true)
+	end if	
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility	
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	if layoutPosition = BDList.count then layoutPosition = layoutPosition - 1
+	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
+	BDList.remove(BDList.count)
+	if oListBox.getItemCount()=0 then
+		oDialogPortal.getControl(&quot;RemoveButton&quot;).setEnable(false)
+	else 
+		makeLayoutFromBD(BDList.item(BDList.count))
+	end if
+	setButtonVisibility
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+
+sub insertRecordsToTemplate
+	dim srk_serial, strokeForSaving, path as string
+	srk_serial = oDialogPortal.getControl(&quot;FULL_NUM&quot;).text
+	dim bgAverage, srcAverage, sensitivity, activity as double
+	activity = oDialogPortal.getControl(&quot;ActivityField&quot;).value
+	dim bd as new CUnit
+	saveCurentBDValue(layoutPosition)
+	path = Overall.PathForProtocol(&quot;portal\portal&quot;)
+	
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate	
+	&apos;dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
+	&apos;percentOtk = 3 rem %
+	
+	for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+		Overall.deleteTable(&quot;t&quot; + (k))
+	next k
+		
+	for i=1 to BDList.count
+		bd = BDList.item(i)
+		findAndRename(&quot;$type&quot; + i, bd.getType)
+		for j=1 to bd.getBGList.count
+			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), bd.getBGList.item(j))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j), bd.getSRCList.item(j))
+		next j
+		findAndRename(&quot;$bd_num&quot; + i + &quot;$&quot;, bd.getSerial)
+		findAndRename(&quot;$bg_avr&quot; + i, Format(bd.getBgAverage, &quot;0.0&quot;))
+		findAndRename(&quot;$sr_avr&quot; + i, Format(bd.getSrcAverage, &quot;0.0&quot;))
+		findAndRename(&quot;$pogr&quot; + i, Format(bd.getDelta - bd.getSensitivity(activity), &quot;0.00&quot;))
+		findAndRename(&quot;$sence&quot; + i, Format(bd.getSensitivity(activity), &quot;0.00&quot;))  &apos;Расчетное значение чувствительности БД
+	next i
+
+	&apos;общие для всех блоков в протоколе
+	findAndRename(&quot;$delt&quot;, BDList.item(1).getDelta)	&apos;(таблица &quot;Абсолютная погрешность чувствительности БД...&quot; ==&gt; Чувствительность СРК-АТ2327 к гамма-излучению 137CS типа ОСГИ-3
+	findAndRename(&quot;$type&quot;, BDList.item(1).getType)	&apos;тип БД (БДКГ-11)
+	findAndRename(&quot;$en_type&quot;, BDList.item(1).getEngType)	&apos;тип БД (BDKG-11)
+	findAndRename(&quot;$pog_delt&quot;, Format(BDList.item(1).getPogDelta, &quot;0.0&quot;)) &apos;Условие соответствия по ТУ Δ, не более
+	
+	findAndRename(&quot;$activity&quot;, Format(activity, &quot;0.00&quot;))
+	findAndRename(&quot;$source&quot;, Replace (oActivityCombo.text,&quot;№&quot;,&quot;&quot;))
+	findAndRename(&quot;$srk_serial&quot;, srk_serial)
+	findAndRename(&quot;$pogdelta&quot;, bd.getPogDelta)
+
+	&apos;если это БД в контейнере, то писать, что в контейнере, если нет — не надо
+	if bd.isContainer then
+		findAndRename(&quot;$container&quot;, &quot; в корпусе герметичного контейнера с защитным экраном&quot;)
+		findAndRename(&quot;$en_container&quot;, &quot; in sealed container with protective shield&quot;)
+	else
+		findAndRename(&quot;$container&quot;, &quot;&quot;)
+		findAndRename(&quot;$en_container&quot;, &quot;&quot;)
+	end if
+	findAndRename(&quot;$type&quot;, bd.getType)
+	
+	strokeForSaving = &quot;&quot; + bd.getType &amp; &quot; ( &quot; &amp; srk_serial &amp; &quot; ) &quot; &amp; Overall._stringTypeForCertificate
+	CopyVariableToClipboard(strokeForSaving+&quot; - &quot;+getCurrentDateString())
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogPortal.getControl(&quot;AddButton&quot;).setEnable(true)
+end sub	
+
+</script:module>

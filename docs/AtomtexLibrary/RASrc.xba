@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="RASrc" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+private _name as string
+private _povDate as string
+private _element as Element
+private _a0 as double
+private _p0 as double
+private _s as integer
+private _dr_h10 as double
+
+&apos; Конструктор
+Sub Class_Initialize()
+	_p0 = 0
+	_s = 1
+End Sub
+    
+&apos; Деструктор
+Sub Class_Terminate()
+End Sub
+
+&apos;	sname — имя источника
+&apos;	povDate — дата поверки в формате &quot;2016.12.22&quot; (String)
+&apos;	химический элемент (type Element)
+&apos;	a0 — активность на день поверки
+&apos;	p0 — поток на день поверки, с-1
+&apos;	s — площадь, см^2
+public sub initBeta(sname as string, povDate as string, element as Element, a0 as double, p0 as double, s as integer)
+	_name = sname
+	_povDate = povDate
+	_element = element
+	_a0 = a0
+	_p0 = p0
+	_s = s
+end sub
+
+&apos;	sname — имя источника
+&apos;	povDate — дата поверки в формате &quot;2016.12.22&quot; (String)
+&apos;	химический элемент (type Element)
+&apos;	a0 — активность на день поверки
+public sub initGamma(sname as string, povDate as string, element as Element, a0 as double)
+	_name = sname
+	_povDate = povDate
+	_element = element
+	_a0 = a0
+end sub
+
+function getPovDate as string
+	getPovDate = _povDate
+end function
+
+function getName as string
+	getName = _name
+end function
+
+function getElement as Element
+	getElement = _element
+end function
+
+function getA0 as double
+	getA0 = _a0
+end function
+
+function getP0 as double
+	getP0 = _p0
+end function
+
+function getS as integer
+	getS = _s
+end function
+
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;Из строки вида &quot;2016.12.22&quot; возвращает int массив [год, месяц, день]
+Function ParseDateString(dateString As String) As Variant
+    Dim result(2) As Integer
+    
+    If Len(dateString) &lt;&gt; 10 Then
+        ParseDateString = Array(0, 0, 0)
+        Exit Function
+    End If
+    
+    result(0) = CInt(Left(dateString, 4))    &apos; Год
+    result(1) = CInt(Mid(dateString, 6, 2))  &apos; Месяц
+    result(2) = CInt(Mid(dateString, 9, 2))  &apos; День
+        
+    ParseDateString = result
+End Function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+function getDaysLeft(povDate as string, nowDate1)
+	Dim dateParts As Variant
+    dateParts = ParseDateString(povDate)
+    getDaysLeft = cdatefromiso(nowDate1.date) - DateSerial(dateParts(0),dateParts(1),dateParts(2))
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;активность
+&apos;	nowDate — объект интерфейса с датой
+function getActivity(nowDate) as double
+	getActivity = _a0 * exp(-0.693147/_element.halflife * getDaysLeft(_povDate, nowDate))
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;поверхностная активность
+&apos;	nowDate — объект интерфейса с датой
+function getSurActivity(nowDate)
+	getSurActivity = getActivity(nowDate) / _s
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;поток, с-1
+&apos;	nowDate — объект интерфейса с датой
+function getFlux(nowDate)
+	getFlux = _p0 * exp(-0.693147/_element.halflife * getDaysLeft(_povDate, nowDate))
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;Плотность потока (см^2 * мин^-1):
+&apos;	nowDate — объект интерфейса с датой
+function getFDensity(nowDate)
+	getFDensity = getFlux(nowDate) * 60 / _s
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;плотность потока для БДПБ-03. источник меньше чем бета, поэтому при расчете делится на 2.83
+&apos;	nowDate — объект интерфейса с датой
+function getFDensityB3(nowDate)
+	getFDensityB3 = getFDensity(nowDate) / 2.83
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+&apos;Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426
+&apos;Conventionally true value of external solid angle radiation 2πav, cps
+&apos;	nowDate — объект интерфейса с датой
+function getCpsActivity(nowDate)
+	getCpsActivity = getSurActivity(nowDate) * 1.426
+end function
+&apos;——————————————————————————————————————————————————————————————————————————————————————
+</script:module>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_BDKN" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogBDKN as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOption02 as object
+dim oOption04 as object
+dim oOption05 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim path, calibName, techName as string
+rem---------------------------------------------------------------------------------------------------------
+Sub BDKN_Dialog_Show
+	maxBDCount = 50
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogBDKN = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_BDKN )
+	oListBox = oDialogBDKN.getControl(&quot;bdListBox&quot;)
+	Overall.dialogShowInitialize(maxBDCount, oDialogBDKN, oDateFieldModel, &quot;Версия 2.12 &quot;, oListBox, 5)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+
+	oOption02 = oDialogBDKN.getControl(&quot;is02&quot;)
+	oOption04 = oDialogBDKN.getControl(&quot;is04&quot;)
+	oOption05 = oDialogBDKN.getControl(&quot;is05&quot;)
+
+	isComboCollection.add(oOption02)
+	isComboCollection.add(oOption04)
+	isComboCollection.add(oOption05)
+	oOption02.State = 0
+
+	oDialogBDKN.Model.getByName(&quot;bdknLogo&quot;).ImageURL = sertPath &amp; &quot;bdkn\bdkn_all.png&quot;
+
+	oDialogMain.endexecute()   
+	oDialogBDKN.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogBDKN.getControl(&quot;addButton&quot;).setEnable(true)
+	if oOption02.state then
+		oDialogBDKN.Model.getByName(&quot;bdknLogo&quot;).ImageURL = sertPath &amp; &quot;bdkn\bdkn02.png&quot;
+	end if	
+	if oOption04.state then
+		oDialogBDKN.Model.getByName(&quot;bdknLogo&quot;).ImageURL = sertPath &amp; &quot;bdkn\bdkn04.png&quot;	
+	end if	
+	if oOption05.state then
+		oDialogBDKN.Model.getByName(&quot;bdknLogo&quot;).ImageURL = sertPath &amp; &quot;bdkn\bdkn05.png&quot;
+	end if 	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	if oOption02.state then bd.addData2(&quot;БДКН-02&quot;,	&quot;BDKN-02&quot;,	&quot;&quot;,	Array(0.5,5.9, 57, 235, 1019),	Array(&quot;(фон) &quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),											&quot;n-PP&quot;,		Array(0.1,10000),	20)
+	if oOption04.state then bd.addData2(&quot;БДКН-04&quot;,	&quot;BDKN-04&quot;,	&quot;&quot;,	Array(0.5,8.3, 80, 331, 1434),	Array(&quot;(фон) &quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),											&quot;n-MD&quot;,		Array(0.1,10),		20)
+	if oOption05.state then bd.addData2(&quot;БДКН-05&quot;,	&quot;BDKN-05&quot;,	&quot;&quot;,	Array(0.16, 250, 3090),			Array(&quot;(ск. счета фона) &quot;,&quot;(п. потока фон) &quot;,&quot;(п. потока 2.5-500) &quot;),	&quot;n-PP&quot;,		Array(0.1,0.2),		20)
+		
+	bdName = oDialogBDKN.getControl(&quot;srkNum&quot;).text &amp; &quot;.&quot; &amp; oDialogBDKN.getControl(&quot;bdNum&quot;).text
+	oDialogBDKN.getControl(&quot;fullNum&quot;).text = oDialogBDKN.getControl(&quot;srkNum&quot;).text + &quot;.&quot; + Left(oDialogBDKN.getControl(&quot;bdNum&quot;).text, 1) + &quot;00&quot;
+	bd.setSerial(bdName)
+
+	oDialogBDKN.getControl(&quot;removeButton&quot;).setEnable(true)
+
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	increment
+		
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	
+	setButtonVisibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub increment as string
+	dim inc as string
+	dim value as integer
+	value = oDialogBDKN.getControl(&quot;bdNum&quot;).text
+	if value &lt; 9 then inc = (&quot;00&quot; &amp; (value + 1))
+	if value &lt; 99 and value &gt; 8 then inc = &quot;0&quot; &amp; (value + 1)
+	if value &gt; 98 then inc = &quot;&quot; &amp; (value + 1)
+	oDialogBDKN.getControl(&quot;bdNum&quot;).text = inc
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+	setButtonVisibility
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	dim newValues as new Collection
+	for i=1 to BDList.item(num).valueList.count
+		newValues.add(oDialogBDKN.getControl(&quot;ValueField&quot; + i).Value)
+	next i
+	BDList.item(num).setValueList(newValues)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility	
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	Overall.setButtonVisibility(layoutPosition)
+	if BDList.count = 0 then
+		oDialogBDKN.Model.getByName(&quot;bdknLogo&quot;).ImageURL = sertPath &amp; &quot;bdkn\bdkn_all.png&quot;
+		oOption02.State = 0
+		oOption04.State = 0
+		oOption05.State = 0
+		oDialogBDKN.getControl(&quot;addButton&quot;).setEnable(false)
+	end if	
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	saveCurentBDValue(layoutPosition)
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;	
+		
+	if oOption02.state  then path = Overall.getPathAndSetName(&quot;bdkn\bdkn02&quot;, &quot;БДКН-02&quot;)
+	if oOption04.state  then path = Overall.getPathAndSetName(&quot;bdkn\bdkn04&quot;, &quot;БДКН-04&quot;)
+	if oOption05.state  then path = Overall.getPathAndSetName(&quot;bdkn\bdkn05&quot;, &quot;БДКН-05&quot;)
+
+	dim bd as new DUnit
+	dim bdkn as new NUnit
+		
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	Overall.CreateTablesFromTemplate(BDList.count)
+	Overall.CreateTablesFromTemplateCustom(BDList.count, &quot;tf1&quot;, &quot;bd_num_n&quot;, &quot;bd_num&quot;, &quot;$f&quot;)
+	
+	for i=1 to BDList.count
+		bd = BDList.item(i)
+		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
+		
+		if bd.BdName=&quot;БДКН-02&quot; then	bdkn.neutron_02_ToTemplateStep(i, bd)
+		if bd.BdName=&quot;БДКН-04&quot; then	bdkn.neutron_04_ToTemplateStep(i, bd)	
+		if bd.BdName=&quot;БДКН-05&quot; then	bdkn.neutron_05_ToTemplateStep(i, bd)
+		
+		findAndRename(&quot;$bd_num&quot; + i + &quot;$&quot;, bd.getSerial)
+	next i
+	
+	findAndRename(&quot;$serial&quot;, oDialogBDKN.getControl(&quot;fullNum&quot;).text)
+	Overall.setSerialWithStroke(&quot;$serial&quot;, strokeForSaving)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+
+</script:module>

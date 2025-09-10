@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="DU" script:language="StarBasic">REM  *****  BASIC  *****
+
+
+function BDKG_02
+	dim bd as new DUnit
+	bd.addData2(&quot;БДКГ-02&quot;,	 &quot;BDKG-02&quot;,	 &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000), 15) rem TODO уточнить границы
+	BDKG_02 = bd
+end function
+
+function getDU(name as string) as DUnit
+	dim bd as new DUnit
+	select case name
+		case &quot;БДКГ-02&quot;
+			bd.addData2(&quot;БДКГ-02&quot;,	 &quot;BDKG-02&quot;,	 &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000), 15) rem TODO уточнить границы
+		&apos;case &quot;БДКГ-00&quot;
+		&apos;	bd.addData2(&quot;БДКГ-00&quot;,	 &quot;BDKG-00&quot;,	 &quot;Зв/ч&quot;, Array(&quot;0.7мк&quot;,&quot;7мк&quot;,&quot;70мк&quot;,&quot;0.7м&quot;,&quot;7м&quot;,&quot;70м&quot;,&quot;0.7&quot;,&quot;7&quot;), &quot;gamma&quot;, Array(0.1,10000), 15) rem TODO уточнить границы	
+	end select
+	getDU = bd
+end function
+
+</script:module>

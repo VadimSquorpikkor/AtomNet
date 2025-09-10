@@ -1,0 +1,148 @@
+'----------------------------------------------------------------
+'Источники 110: 263 ОНА 9ХК, 430(Am)
+'Источники 130: 9ТН УП4 043 К/СГ3 163
+function sourceDistanceArray(point as double, prefix as string, bdType as string, mDate)
+	dim koef as double
+	koefCs = getDistanceKoef(mDate, CS_137_HALF_LIFE)'коэффициент для источников с Цезием-137
+	koefAm = getDistanceKoef(mDate, AM_241_HALF_LIFE)'коэффициент для источников с Америцием-241
+	dim ar(1) as variant
+	'Перерасчет расстояний - 25.1.2021
+	ar = Array("Неизв","Неизв") rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+	if bdType = "gamma-rem" then 'rem
+		select case prefix
+		case "мк"
+				if point = 70 	then ar = dynDistanceAr("0НА", 232.30, koefCs)'===0.7мкЗв
+				if point = 700 	then ar = dynDistanceAr("0НА", 74.58,  koefCs)'===7мкЗв
+		case "м"
+				if point = 0.7	then ar = dynDistanceAr("0НА", 74.58,  koefCs)'===7мкЗв
+				if point = 7	then ar = dynDistanceAr("9ХК", 161.37, koefCs)'===70мкЗв
+				if point = 70 	then ar = dynDistanceAr("9ХК", 51.81,  koefCs)'===0.7m
+				if point = 700 	then ar = dynDistanceAr("043", 348.90, koefCs)'===7m
+		case ""
+				if point = 0.7 	then ar = dynDistanceAr("043", 112.10, koefCs)'===70m
+		end select
+	end if
+	rem если это гамма блок:
+	if bdType = "gamma" then 'Мощность амбиентной дозы Н*(10) Зв/ч
+		select case prefix
+		case "мк"
+				if point = 0.03 then ar = dynDistanceAr("263", 300.37, koefCs)
+				if point = 0.06 then ar = dynDistanceAr("263", 213.25, koefCs)
+				if point = 0.07 then ar = dynDistanceAr("263", 197.58, koefCs)
+				if point = 0.24 then ar = dynDistanceAr("263", 107.15, koefCs)
+				if point = 0.7 	then ar = dynDistanceAr("0НА", 232.30, koefCs)
+				if point = 0.8  then ar = dynDistanceAr("0НА", 217.45, koefCs)
+				if point = 4 	then ar = dynDistanceAr("0НА", 97.7,   koefCs)
+				if point = 7 	then ar = dynDistanceAr("0НА", 74.58,  koefCs)
+				if point = 8 	then ar = dynDistanceAr("0НА", 69.78,  koefCs)
+				if point = 70	then ar = dynDistanceAr("9ХК", 161.37, koefCs)
+				if point = 20 	then ar = dynDistanceAr("9ХК", 295.68, koefCs)
+				if point = 40 	then ar = dynDistanceAr("9ХК", 212.83, koefCs)
+				if point = 240 	then ar = dynDistanceAr("9ХК", 87.61,  koefCs)
+				if point = 700 	then ar = dynDistanceAr("9ХК", 51.81,  koefCs)
+		case "м"
+				if point = 0.5 	then ar = dynDistanceAr("9ХК", 61.01,  koefCs)
+				if point = 0.7 	then ar = dynDistanceAr("9ХК", 51.81,  koefCs)
+				if point = 4 	then ar = dynDistanceAr("043", 462.21, koefCs)
+				if point = 7 	then ar = dynDistanceAr("043", 348.90, koefCs)'''''''''''''''''''''''''''''
+				if point = 20 	then ar = dynDistanceAr("043", 208.06, koefCs)
+				if point = 70 	then ar = dynDistanceAr("043", 112.10, koefCs)
+				if point = 80 	then ar = dynDistanceAr("043", 104.89, koefCs)
+				if point = 200 	then ar = dynDistanceAr("043", 66.83,  koefCs)
+				if point = 400 	then ar = dynDistanceAr("163", 305.29, koefCs)
+				if point = 800 	then ar = dynDistanceAr("163", 216.55, koefCs)
+		case ""
+				if point = 0.35	then ar = dynDistanceAr("163", 326.06, koefCs)
+				if point = 0.5 	then ar = dynDistanceAr("163", 272.84, koefCs)
+				if point = 0.7 	then ar = dynDistanceAr("163", 231.28, koefCs)
+				if point = 4 	then ar = dynDistanceAr("163", 97.78,  koefCs)
+				if point = 7 	then ar = dynDistanceAr("163", 74.51,  koefCs)
+				if point = 8 	then ar = dynDistanceAr("163", 69.72,  koefCs)
+				if point = 40 	then ar = dynDistanceAr("163", 32.25,  koefCs)
+		end select
+	end if
+	if bdType = "gamma-Gy" then 'Мощность кермы в воздухе, Ка, Гр/ч
+		select case prefix
+		case "н"
+				if point = 75	then ar = dynDistanceAr("263", 174.29, koefCs)
+		case "мк"
+				if point = 0.03	then ar = dynDistanceAr("263", 274.30, koefCs)
+				if point = 0.075 then ar= dynDistanceAr("263", 174.29, koefCs)
+				if point = 0.7	then ar = dynDistanceAr("0НА", 212.08, koefCs)
+				if point = 0.75	then ar = dynDistanceAr("0НА", 204.96, koefCs)
+				if point = 7 	then ar = dynDistanceAr("0НА", 68.04,  koefCs)
+				if point = 7.5 	then ar = dynDistanceAr("0НА", 65.74,  koefCs)
+				if point = 70 	then ar = dynDistanceAr("9ХК", 147.28, koefCs)
+				if point = 75 	then ar = dynDistanceAr("9ХК", 142.32, koefCs)
+		case "м"
+				if point = 0.5 	then ar = dynDistanceAr("9XK", 55.90,  koefCs)
+				if point = 0.7	then ar = dynDistanceAr("9ХК", 47.26,  koefCs)				
+				if point = 0.75	then ar = dynDistanceAr("9XK", 45.66,  koefCs)
+				if point = 7	then ar = dynDistanceAr("9TH", 52.92,  koefCs)
+				if point = 7.5 	then ar = dynDistanceAr("9TH", 51.13,  koefCs)
+				if point = 70	then ar = dynDistanceAr("043", 102.29, koefCs)
+				if point = 75 	then ar = dynDistanceAr("043", 98.84,  koefCs)
+				if point = 200 	then ar = dynDistanceAr("043", 60.97,  koefCs)
+		case ""
+				if point = 0.7	then ar = dynDistanceAr("163", 211.21, koefCs)
+				if point = 0.75	then ar = dynDistanceAr("163", 204.12, koefCs)
+				if point = 7	then ar = dynDistanceAr("163", 67.99,  koefCs)
+				if point = 7.5 	then ar = dynDistanceAr("163", 65.69,  koefCs)
+				if point = 40 	then ar = dynDistanceAr("163", 29.42,  koefCs)
+		end select
+	end if
+	if bdType = "gamma007" then 'мощность направленного эквивалента дозы H'(0.07)
+		select case prefix
+		case "мк"
+				if point = 0.07	then ar = dynDistanceAr("430_3", 248.17, koefAm)' в SourceCalculation выбрать "Am с экраном" -- 3мм
+				if point = 0.7	then ar = dynDistanceAr("430_3", 77.25,  koefAm)	' в SourceCalculation выбрать "Am с экраном" -- 3мм
+				if point = 7 	then ar = dynDistanceAr("430", 165.65,   koefAm)	' без экрана
+				if point = 40	then ar = dynDistanceAr("430", 69.98,    koefAm)	' без экрана
+				if point = 70 	then ar = dynDistanceAr("430", 52.61,    koefAm)	' без экрана
+		end select
+	end if
+	if bdType = "gammaHp007" then 'мощность индивидуального эквивалента дозы Hp(0.07)
+		select case prefix
+		case "мк"
+				if point = 40	then ar = dynDistanceAr("430", 72.58, koefAm)	rem без экрана				
+		end select
+	end if
+	sourceDistanceArray = ar
+end function
+rem----------------------------------------------------------------
+'Метод возвращает расстояние до источника на выбранную дату, 
+'по выбранной дате (mdate - это DateField, из которого получается дата), начальному расстоянию до источника и периоду полураспада
+'	╔═══════════════════════════════╗
+'	║	R = R0 * 2^( -ΔT / 2*Tpol )	║█
+'	╚═══════════════════════════════╝█
+'	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+function getDistance(r0 as double, mdate, t_pol)
+	dim DISTANCE_DATE as Date
+	DISTANCE_DATE = DateSerial (2021,1,25)
+	dim daysLeft as double
+	daysLeft = cdatefromiso(mdate.date) - DISTANCE_DATE '23-го Января -- день перепроверки расстояний до источников
+	
+	getDistance = Format(r0 * (2 ^ (-1*( daysleft / (2*t_pol) ))), "0.0"
+end function	
+rem----------------------------------------------------------------
+' В отличии от getDistance возвращает не само расстояние, а коэффициент, на которое нужно домножить R0, чтобы получить R
+' Сделан, чтобы не засорять метод sourceDistanceArray, иначе получается длинная строка в кейзе: 
+' с getDistance:  if point = 7 	then ar = dynDistanceAr("043", 351.3, mDate, CS_137_HALF_LIFE))
+' с этим методом: if point = 7 	then ar = dynDistanceAr("043", 351.3, koef)
+' в методе sourceDistanceArray вызывается в начале и присвается переменной koef
+'	╔═══════════════════════════╗
+'	║	k = 2^( -ΔT/ 2*Tpol )	║█
+'	╚═══════════════════════════╝█
+'	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+function getDistanceKoef(mdate, t_pol) as double
+	dim DISTANCE_DATE as Date
+	DISTANCE_DATE = DateSerial (2021,1,25)
+	dim daysLeft as double
+	dim koef as double
+	dim i as integer
+	daysLeft = cdatefromiso(mdate.date) - DISTANCE_DATE '23-го Января -- день перепроверки расстояний до источников
+	
+	koef = 2 ^ (-1.0*( daysleft/(2*t_pol) ) )
+	
+	getDistanceKoef = koef
+end function

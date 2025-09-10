@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
+<library:library xmlns:library="http://openoffice.org/2000/library" library:name="AtomtexLibrary" library:readonly="false" library:passwordprotected="false">
+ <library:element library:name="Sensor"/>
+ <library:element library:name="Overall"/>
+ <library:element library:name="_Ver"/>
+ <library:element library:name="M_PORTAL"/>
+ <library:element library:name="Meas"/>
+ <library:element library:name="CUnit"/>
+ <library:element library:name="M_MRP_N"/>
+ <library:element library:name="M_6130"/>
+ <library:element library:name="_TODO"/>
+ <library:element library:name="M_G02N"/>
+ <library:element library:name="M1121"/>
+ <library:element library:name="Tab"/>
+ <library:element library:name="Activity"/>
+ <library:element library:name="DUnit"/>
+ <library:element library:name="Facility"/>
+ <library:element library:name="M_1125"/>
+ <library:element library:name="_OverAll"/>
+ <library:element library:name="M_G23N"/>
+ <library:element library:name="M224"/>
+ <library:element library:name="M_1117M"/>
+ <library:element library:name="M_BDKN"/>
+ <library:element library:name="NUnit"/>
+ <library:element library:name="M2503"/>
+ <library:element library:name="Gen2503"/>
+ <library:element library:name="Generator"/>
+ <library:element library:name="M3509"/>
+ <library:element library:name="AtomMath"/>
+ <library:element library:name="ModuleMain"/>
+ <library:element library:name="M_G25"/>
+ <library:element library:name="b_new"/>
+ <library:element library:name="BaseC"/>
+ <library:element library:name="M2140"/>
+ <library:element library:name="MWatsNew"/>
+ <library:element library:name="_t_note"/>
+ <library:element library:name="Module1"/>
+ <library:element library:name="m_herm"/>
+ <library:element library:name="M_6131"/>
+ <library:element library:name="RASrc"/>
+ <library:element library:name="DU"/>
+ <library:element library:name="_old_MMain"/>
+ <library:element library:name="_src"/>
+</library:library>

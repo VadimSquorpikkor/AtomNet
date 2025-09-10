@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M1121" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialog1121 as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOption1103 as object
+dim oOption1121 as object
+dim oOption1123 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim path, calibName, techName as string
+rem---------------------------------------------------------------------------------------------------------
+Sub AT1121_Dialog_Show
+	maxBDCount = 50
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog1121 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1121 )
+	oListBox = oDialog1121.getControl(&quot;bdListBox&quot;)
+	Overall.dialogShowInitialize(maxBDCount, oDialog1121, oDateFieldModel, &quot;Версия 2.21 &quot;, oListBox, 9)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+
+	oOption1103 = oDialog1121.getControl(&quot;is1103&quot;)	
+	oOption1121 = oDialog1121.getControl(&quot;is1121&quot;)
+	oOption1123 = oDialog1121.getControl(&quot;is1123&quot;)
+
+	isComboCollection.add(oOption1103)
+	isComboCollection.add(oOption1121)
+	isComboCollection.add(oOption1123)
+	oOption1121.State = 0
+
+	oOption1103.state = 1
+	setButtonEnabled
+
+	oDialogMain.endexecute()   
+	oDialog1121.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialog1121.getControl(&quot;addButton&quot;).setEnable(true)
+	if oOption1103.state then
+		oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1103_bg.png&quot;
+	else
+		oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+	end if	
+	
+	&apos;ВРЕМЕННО, ПОКА НОВЫЙ СЕРТИФИКАТ ТОЛЬКО ДЛЯ 1121
+	if oOption1121.state then
+		oDialog1121.getControl(&quot;isSertificateEngNew&quot;).setEnable(true)
+	else
+		oDialog1121.getControl(&quot;isSertificateEngNew&quot;).setEnable(false)
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	if oOption1103.state then bd.addData2(&quot;AT1103M&quot;,	&quot;AT1103M&quot;,	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;)	,					&quot;gamma007&quot;,	Array(0.05,0.1),	15)
+	if oOption1121.state then bd.addData2(&quot;AT1121&quot;,		&quot;AT1121&quot;,	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.1,10000), 	15) rem TODO уточнить границы
+	if oOption1123.state then bd.addData2(&quot;AT1123&quot;, 	&quot;AT1123&quot;, 	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.1,10000), 	15) rem TODO уточнить границы
+
+	if oOption1103.state then
+		oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1103_bg.png&quot;
+	else
+		oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+	end if	
+
+	oDialog1121.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialog1121.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	oDialog1121.getControl(&quot;bdSerial&quot;).value = oDialog1121.getControl(&quot;bdSerial&quot;).value + 1
+	
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Overall.listBoxListener(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.showNextBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.showPrevBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	if oOption1103.state  then path = Overall.getPathAndSetName(&quot;1121\1103&quot;, &quot;AT1103M&quot;)
+	if oOption1121.state  then path = Overall.getPathAndSetName(&quot;1121\1121&quot;, &quot;AT1121&quot;)
+	if oOption1123.state  then path = Overall.getPathAndSetName(&quot;1121\1121&quot;, &quot;AT1123&quot;)
+	Overall.createCertificate(layoutPosition, path)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+
+</script:module>

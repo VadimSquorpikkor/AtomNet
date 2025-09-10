@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G02N" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogG02N as object
+dim oDateFieldModel as object
+dim oNumericFieldModel as object
+dim oNumericFieldModelAll as object
+dim oListBox as object
+
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+
+dim oOptionBDKG02 as object
+dim oOptionBDKG204 as object
+dim oOptionBDMG as object
+dim oOptionBDKG11 as object
+
+dim BDList as new Collection
+dim mainCount as integer
+dim layoutPosition as integer
+&apos;dim rusItems1, engItems1, rusItems2, engItems2 as variant
+dim maxBDCount as integer
+dim oComboBox, oComboBox1, oComboBox2 as object
+
+dim Overall as new Overall
+dim Facility as new Facility
+
+dim insertButton, insertButtonBDMG as object
+dim isComboCollection as new Collection
+&apos;ТАК НАДО СДЕЛАТЬ ДЛЯ АЛЬТЕРНАТИВНЫХ ТОЧЕК!!!
+&apos;на будущее: как я сделал индивидуальное значение фона для каждого БД:
+&apos;нужно было: для каждого БД значение фона (который выводится в таблице) изначально был один общий, нужно было сделать, 
+&apos;чтобы для каждого БД можно было выбирать значение фона индивидуально, по аналогии ввода значения в точке
+&apos;я хотел сделать, чтобы на форме был checkBox, чтобы можно было выбрать, делать фон общим для всех блоков (значение берется из bgValue, т.е. фон общий для всего макроса)
+&apos;или ставить каждому блоку свой индивидуальный
+&apos;Как я это сделал: общий фон (bgValue) остался, как и был. В классе DUnit создал переменную _bdBackground (double) и геттер/сеттер к ней
+&apos;при переходе между БД ЕСЛИ флаг стоит &quot;Для каждого БД свой фон&quot; сохраняю значение из EditText, если флаг == false -- не сохраняю
+&apos;при формировании лэйаута ЕСЛИ флаг стоит &quot;Для каждого БД свой фон&quot; загружаю значение переменной, если флаг == false -- загружаю общий фон
+&apos;Вывод протокола: в классе Overall добавлена boolean переменная _separateBGround (и сеттер к ней), при вызове insertRecordsToTemplate заношу в эту переменную значение checkBox&apos;а (true или false)
+&apos;при вызове метода вывода протокола templateStep (общий метод для всех приборов) заменил строку &lt;...&gt;Format(bgValue, &quot;0.0&quot;) на &lt;...&gt;Format(valueOfBg, &quot;0.0&quot;) -- 
+&apos;т.е. вместо общей переменной поставил локальную, которая определяется: if _separateBGround=true then valueOfBg=bd.getBdBackground else valueOfBg=bgValue
+&apos;получается если чекБокс стоит, то в templateStep фон берется из конкретного БД, если НЕ стоит -- выбирается общий фон для всего макроса
+&apos;при добавлении нового БД добавил установку индивидуального фона по умолчанию bd.setBdBackground(100)
+&apos;Плюс такого подхода: 1) простота реализации 2) для каждого нового прибора мало кода добавляется (надо ещё, наверное, вынести в Overall строку Overall.setSeparateBG(oDialogG02N.Model.getByName(&quot;BGCheckBox&quot;).state))
+&apos;3) самое главное -- все старые приборы, которые не использует индивидуальное значение фона для каждого БД, будут продолжать работать как ни в чем не бывало, для них значение _separateBGround будет всегда = false
+&apos;по сути получается в любой момент времени я сохраняю оба варианта фона и уже при выводе протокола выбираю, какой из вариантов выбрать
+&apos;ТАК НАДО СДЕЛАТЬ ДЛЯ АЛЬТЕРНАТИВНЫХ ТОЧЕК!!!
+dim shouldShowGrad as boolean
+rem---------------------------------------------------------------------------------------------------------
+Sub G02N_Dialog_Show
+	maxBDCount = 40
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG02N = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G02N )
+	oDialogG02N.Model.getByName(&quot;dragonLogo&quot;).ImageURL = sertPath &amp; &quot;bdkg02\dragon.png&quot;
+	oListBox = oDialogG02N.getControl(&quot;ListBoxBD&quot;)
+	oComboBox = oDialogG02N.getControl(&quot;ActivityCombo&quot;)
+	
+	Overall.dialogShowInitialize(maxBDCount, oDialogG02N, oDateFieldModel, &quot;Версия 3.36 &quot;, oListBox, 11)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	Overall.setButtonVisibility(layoutPosition)
+	Overall.initializeActivityCombo(oComboBox)
+	
+	oNumericFieldModel = oDialogG02N.Model.getByName(&quot;ActivityField&quot;)
+	oNumericFieldModel.DECIMALACCURACY = 2
+	Overall.comboChanged(oComboBox, oNumericFieldModel, oDateFieldModel)
+
+	oNumericFieldModelAll = oDialogG02N.Model.getByName(&quot;ActivityAll&quot;)
+	oNumericFieldModelAll.DECIMALACCURACY = 2
+	oNumericFieldModelAll.value = get_activity_cs(&quot;all&quot;, oDateFieldModel)
+		
+	oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)
+	oDialogG02N.Model.getByName(&quot;BGValueField&quot;).value = bgValue
+	oDialogG02N.Model.getByName(&quot;BGValueField&quot;).valueStep = 0.1
+	oDialogG02N.Model.getByName(&quot;BGValueField&quot;).DecimalAccuracy = 1
+	oDialogG02N.getControl(&quot;ActivityAll&quot;).setEnable(false)
+	
+	oOptionBDKG02  = oDialogG02N.getControl(&quot;isBDKG-02&quot;)
+	oOptionBDKG204 = oDialogG02N.getControl(&quot;isBDKG-204&quot;)
+	oOptionBDMG    = oDialogG02N.getControl(&quot;isBDMG&quot;)
+	oOptionBDKG11  = oDialogG02N.getControl(&quot;isBDKG-11&quot;)
+	oOptionBDKG02.State  = 1
+	isComboCollection.add(oOptionBDKG02)
+	isComboCollection.add(oOptionBDKG204)
+	isComboCollection.add(oOptionBDMG)
+	isComboCollection.add(oOptionBDKG11)
+	
+	oListBox.setEnable(false)
+
+	for i=1 to 8
+		oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = false
+		oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = false
+	next i
+
+	oDialogG02N.model.getByName(&quot;insertButton&quot;).ImageURL = sertPath &amp; &quot;imgs/down_arr.png&quot;
+	insertButton = oDialogG02N.getControl(&quot;insertButton&quot;)
+	insertButton.visible = false
+	insertButtonBDMG = oDialogG02N.getControl(&quot;insertButtonBDMG&quot;)
+	insertButtonBDMG.visible = false
+
+	oDialogG02N.Model.getByName(&quot;ValueBDMG1&quot;).value = 80
+	oDialogG02N.Model.getByName(&quot;ValueBDMG1&quot;).valueStep = 0.1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG1&quot;).DecimalAccuracy = 1
+	oDialogG02N.Model.getByName(&quot;ValueBDMG2&quot;).value = 500
+	oDialogG02N.Model.getByName(&quot;ValueBDMG2&quot;).valueStep = 1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG2&quot;).DecimalAccuracy = 0
+	oDialogG02N.Model.getByName(&quot;ValueBDMG3&quot;).value = 25
+	oDialogG02N.Model.getByName(&quot;ValueBDMG3&quot;).valueStep = 0.1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG3&quot;).DecimalAccuracy = 1
+	oDialogG02N.Model.getByName(&quot;ValueBDMG4&quot;).value = 200
+	oDialogG02N.Model.getByName(&quot;ValueBDMG4&quot;).valueStep = 1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG4&quot;).DecimalAccuracy = 0
+	oDialogG02N.Model.getByName(&quot;ValueBDMG5&quot;).value = 800
+	oDialogG02N.Model.getByName(&quot;ValueBDMG5&quot;).valueStep = 1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG5&quot;).DecimalAccuracy = 0
+	oDialogG02N.Model.getByName(&quot;ValueBDMG6&quot;).value = 8
+	oDialogG02N.Model.getByName(&quot;ValueBDMG6&quot;).valueStep = 0.01	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG6&quot;).DecimalAccuracy = 2
+	oDialogG02N.Model.getByName(&quot;ValueBDMG7&quot;).value = 15
+	oDialogG02N.Model.getByName(&quot;ValueBDMG7&quot;).valueStep = 0.1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG7&quot;).DecimalAccuracy = 1
+	oDialogG02N.Model.getByName(&quot;ValueBDMG8&quot;).value = 15
+	oDialogG02N.Model.getByName(&quot;ValueBDMG8&quot;).valueStep = 0.1	
+	oDialogG02N.Model.getByName(&quot;ValueBDMG8&quot;).DecimalAccuracy = 1
+		
+	oDialogG02N.getControl(&quot;CheckBoxShowGrad&quot;).setEnable(false)	
+		
+	oDialogMain.endexecute()   
+	oDialogG02N.Execute()
+
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	Overall.comboChanged(oComboBox, oNumericFieldModel, oDateFieldModel)
+	oNumericFieldModelAll.value = get_activity_cs(&quot;all&quot;, oDateFieldModel)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enableLastTreeFields(visibility1 as boolean, visibility2 as boolean, visibility3 as boolean, visibility4 as boolean)
+	oDialogG02N.getControl(&quot;ValueField6&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;ValueField7&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;ValueField8&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;ValueField9&quot;).visible = visibility1
+	oDialogG02N.getControl(&quot;ValueField10&quot;).visible = visibility2
+	oDialogG02N.getControl(&quot;ValueField11&quot;).visible = visibility3
+	oDialogG02N.getControl(&quot;Label6&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;Label7&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;Label8&quot;).visible = visibility4
+	oDialogG02N.getControl(&quot;Label9&quot;).visible = visibility1
+	oDialogG02N.getControl(&quot;Label10&quot;).visible = visibility2
+	oDialogG02N.getControl(&quot;Label11&quot;).visible = visibility3
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enableBDMG(visibility as boolean)
+	for i=1 to 8
+		oDialogG02N.getControl(&quot;ValueBDMG&quot; + i).visible = visibility
+		oDialogG02N.getControl(&quot;LabelBDMG&quot; + i).visible = visibility
+	next i
+	oDialogG02N.getControl(&quot;ActivityAll&quot;).setEnable(visibility)
+	insertButtonBDMG.visible = visibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	rem добавляю в коллекцию несколько БДКГ-02 (до ввода значений: у всех значения по-умолчанию)
+	rem в переменную имени БД сохраняю номер (&quot;452.002&quot;)
+	dim bdName as string
+	dim nCount as integer
+	
+	if layoutPosition = 0 then
+			
+		if oOptionBDKG204.state then
+			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = true
+			enableBDMG(false)
+			enableLastTreeFields(true, false, false, true)
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)
+		end if
+		if oOptionBDKG02.state then
+			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = true
+			enableBDMG(false)
+			enableLastTreeFields(false, false, false, true)
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(true)						
+		end if
+		if oOptionBDMG.state then
+			oDialogG02N.getControl(&quot;addButton&quot;).setEnable(false)
+			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = false
+			enableBDMG(true)
+			enableLastTreeFields(true, true, true, true)
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)						
+		end if
+		if oOptionBDKG11.state then
+			oDialogG02N.getControl(&quot;dragonLogo&quot;).visible = true
+			enableBDMG(false)
+			enableLastTreeFields(false, false, false, false)
+			oDialogG02N.getControl(&quot;GradValueField&quot;).setEnable(false)						
+		end if
+	end if
+	
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+		
+	rem TODO сериал нужно записывать через setSerial, а в bdMame записывать тип БД (&quot;БДКГ-02&quot; например)	
+	oDialogG02N.getControl(&quot;removeButton&quot;).setEnable(true)
+	bdName = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text
+	oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text = oDialogG02N.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogG02N.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
+	
+	dim bd as new DUnit
+	&apos;if oOptionBDKG02.state  then bd = DU.BDKG_02
+	&apos;if oOptionBDKG02.state  then bd.addData(&quot;БДКГ-02&quot; ,   &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000)) rem TODO уточнить границы
+	if oOptionBDKG02.state  then bd.addData2(&quot;БДКГ-02&quot;,	 &quot;BDKG-02&quot;,	 &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000), 15) rem TODO уточнить границы
+	&apos;if oOptionBDKG02.state  then bd = DU.getDU(&quot;БДКГ-02&quot;)
+	if oOptionBDKG204.state then bd.addData2(&quot;БДКГ-204&quot;, &quot;BDKG-204&quot;, &quot;Зв/ч&quot;, Array(0.07,0.7,7,70,0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	&quot;gamma&quot;, Array(0.1,10000), 20) rem TODO уточнить границы
+	if oOptionBDMG.state 	then bd.addData2(&quot;БДМГ-2343&quot;,&quot;BDMG-2343&quot;,&quot;Гр/ч&quot;, Array(75,0.75,7.5,75,0.5,0.75,7.5,75,200,0.75,7.5), Array(&quot;н&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma-Gy&quot;, Array(0.1,10000), 15) rem TODO уточнить границы
+	if oOptionBDKG11.state  then bd.addData2(&quot;БДКГ-11&quot;,  &quot;BDKG-11&quot;,	 &quot;Зв/ч&quot;, Array(0.03,0.07,0.7,7,70),			  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),				&quot;gamma&quot;, Array(0.01, 0.1), 20) 
+	oDialogG02N.getControl(&quot;typeLabel&quot;).text = bd.getName
+	bd.setSerial(bdName)
+	bd.setBdBackground(100)
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bdName, nCount )
+	BDList.add(bd)
+	increment
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	if layoutPosition = BDList.count then layoutPosition = layoutPosition - 1
+	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
+	BDList.remove(BDList.count)
+	if oListBox.getItemCount()=0 then
+		oDialogG02N.getControl(&quot;removeButton&quot;).setEnable(false)
+		
+	else 
+		makeLayoutFromBD(BDList.item(BDList.count))
+	end if
+	Overall.setButtonVisibility(layoutPosition)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+sub increment as string
+	Overall.increment(oDialogG02N.getControl(&quot;TextFieldNUM&quot;))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	if BDList.count=0 then
+		oDialogG02N.getControl(&quot;CheckBoxShowGrad&quot;).setEnable(false)	
+	else	
+		oDialogG02N.getControl(&quot;CheckBoxShowGrad&quot;).setEnable(true)	
+	endif
+	Overall.makeLayoutFromBD(bd)
+	oDialogG02N.getControl(&quot;GradValueField&quot;).Text = bd.getGradValue
+	if oDialogG02N.Model.getByName(&quot;BGCheckBox&quot;).state then
+		oDialogG02N.Model.getByName(&quot;BGValueField&quot;).value = bd.getBdBackground
+	else
+		oDialogG02N.Model.getByName(&quot;BGValueField&quot;).value = bgVAlue
+	end if		
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	dim newValues as new Collection
+	for i=1 to BDList.item(num).valueList.count
+		newValues.add(oDialogG02N.getControl(&quot;ValueField&quot; + i).Value)
+		&apos;oDialogG02N.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(0, 0, 0)
+	next i
+	BDList.item(num).setValueList(newValues)
+	BDList.item(num).setGradValue(oDialogG02N.getControl(&quot;GradValueField&quot;).text
+	if oDialogG02N.Model.getByName(&quot;BGCheckBox&quot;).state then BDList.item(num).setBdBackground(oDialogG02N.getControl(&quot;BGValueField&quot;).value
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	Overall.setButtonVisibility(layoutPosition)
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	Overall.setButtonVisibility(layoutPosition)
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	saveCurentBDValue(layoutPosition)
+	Overall.setSeparateBG(oDialogG02N.Model.getByName(&quot;BGCheckBox&quot;).state)
+	dim path as string
+	
+	if oOptionBDKG02.state   then path = Overall.getPathAndSetName(&quot;bdkg02\bdkg02&quot;, &quot;БДКГ-02&quot;)
+	if oOptionBDKG204.state  then path = Overall.getPathAndSetName(&quot;bdkg204\bdkg204&quot;, &quot;БДКГ-204&quot;)
+	if oOptionBDMG.state     then path = Overall.getPathAndSetName(&quot;bdmg2343\bdmg2343&quot;, &quot;БДМГ-2343&quot;)
+	if oOptionBDKG11.state   then path = Overall.getPathAndSetName(&quot;bdkg11\bdkg11&quot;, &quot;БДКГ-11&quot;)
+	
+	dim bd as new DUnit
+	
+	OpenTemplate(sertPath &amp; path)
+		
+	if shouldShowGrad = true then
+		for k=(BDList.count+1) to maxBDCount rem удаление таблиц сделано в отдельном цикле для ускорения поиска по таблицам в основном цикле, не придется перебирать ненужные таблицы
+			&apos;deleteTable(&quot;t&quot; + (k))
+			Overall.deleteTable(&quot;tgrad&quot; + (k))
+		next k
+	else
+		Overall.deleteTable(&quot;tgradtitle&quot;)
+		Overall.deleteTable(&quot;tgradhead&quot;)
+		for k=(0) to maxBDCount
+			Overall.deleteTable(&quot;tgrad&quot; + (k))
+		next k
+	endif
+		
+	
+	
+	
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	Overall.CreateTablesFromTemplate(BDList.count)
+		
+	for i=1 to BDList.count
+		bd = BDList.item(i)
+		findAndRename(&quot;$grad&quot; + i + &quot;$&quot;, bd.getGradValue)
+		findAndRename(&quot;$bd_num_g&quot; + i + &quot;$&quot;, bd.getSerial)
+		Overall.insertToTemplateStepDoted(i)
+	next i
+	
+	if oOptionBDMG.state then
+		dim bgFormat as string
+		for k=1 to 8
+			mg_point = oDialogG02N.getControl(&quot;ValueBDMG&quot; + k).value
+			if mg_point &gt;= 100 	then bgFormat = &quot;0&quot;
+			if mg_point &lt; 100   then bgFormat = &quot;0.0&quot;
+			if mg_point &lt; 10 	then bgFormat = &quot;0.00&quot;
+			findAndRename(&quot;$bdmg&quot; + k, Format(mg_point, bgFormat(mg_point))
+		next k
+		findAndRename(&quot;$sum_act&quot;, oDialogG02N.getControl(&quot;ActivityAll&quot;).text)
+	end if
+	
+	findAndRename(&quot;$activity&quot;, oDialogG02N.getControl(&quot;ActivityField&quot;).text)
+	findAndRename(&quot;$source&quot;, Replace (oDialogG02N.getControl(&quot;ActivityCombo&quot;).text, &quot;№&quot;, &quot;&quot;))
+	findAndRename(&quot;$serial&quot;, oDialogG02N.getControl(&quot;FULL_NUMBER&quot;).text)
+
+	Overall.setClipboardWithType(&quot;$serial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub BgCheckBoxListener
+	if oDialogG02N.Model.getByName(&quot;BGCheckBox&quot;).state then
+		oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(true)
+		oDialogG02N.Model.getByName(&quot;BGValueField&quot;).value = BDList.item(layoutPosition).getBdBackground
+	else oDialogG02N.getControl(&quot;BGValueField&quot;).setEnable(false)
+		oDialogG02N.Model.getByName(&quot;BGValueField&quot;).value = bgValue
+	end if
+	if oDialogG02N.getControl(&quot;CheckBoxShowGrad&quot;).state then
+		shouldShowGrad = true
+	else
+		shouldShowGrad = false	
+		&apos;msgbox &quot;on&quot;
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueListBDMG()
+	dim list as new Collection
+    for i=0 to 7
+    	list.add(0)
+    next i
+	Overall.insertClipBoardToBDValueListBDMG(list)
+end function
+
+
+
+</script:module>

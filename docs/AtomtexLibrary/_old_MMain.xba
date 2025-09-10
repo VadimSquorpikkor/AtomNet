@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="_old_MMain" script:language="StarBasic">REM  *****  BASIC  *****
+
+
+rem-------------------------------------------------------------------------
+sub subInsertString(oDoc, sString, bReplace)
+	oVC = oDoc.getCurrentSelection
+	xText.insertString( xTextCursor, &quot;more text ...&quot;, false )
+end sub
+
+rem-------------------------------------------------------------------------
+Function MySubstitute(sText1 as string, sText2 as string, sText3 as string) as string
+   FuncAcc = createunoservice(&quot;com.sun.star.sheet.FunctionAccess&quot;)
+   MySubstitute = FuncAcc.callFunction(&quot;SUBSTITUTE&quot;, array(sText1,sText2,sText3))
+End function
+rem-------------------------------------------------------------------------
+Function ComboItemPosition(ComboBox as variant)
+   For x = 0 to ComboBox.ItemCount - 1
+      If ComboBox.Items(x) = ComboBox.Text Then
+         ComboItemPosition = x
+      end if
+   next x
+end Function
+
+</script:module>

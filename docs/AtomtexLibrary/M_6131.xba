@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_6131" script:language="StarBasic">REM  *****  BASIC  *****
+
+Sub Main
+
+End Sub
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim Facility as new Facility
+dim oDialog6131 as object
+dim oDateFieldModel as object
+dim oListBox as object
+
+dim PrSwitch as object
+dim SEnSwitch as object
+dim SRuSwitch as object
+
+dim image6131 as object
+dim altCheckBox as object
+
+dim oOption6131  as object
+dim oOption6131a  as object
+dim oOption6131b  as object
+
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+
+dim maxPointCount as integer
+
+dim altValuesForAll(3) as double &apos;общие альтернативные значения беты для всех БД 
+
+dim oComboBETAUnit as object
+rem---------------------------------------------------------------------------------------------------------
+Sub AT6131_Dialog_Show
+	maxBDCount = 50
+	maxPointCount = 6
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog6131 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6131 )
+	oListBox = oDialog6131.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialog6131, oDateFieldModel, &quot;Версия 1.05 &quot;, oListBox, maxPointCount)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	
+	oDialog6131.Model.getByName(&quot;catImage&quot;).ImageURL = sertPath &amp; &quot;6131\blackcat.png&quot;
+	oDialog6131.Model.getByName(&quot;6131Logo&quot;).ImageURL = sertPath &amp; &quot;6131\6131.png&quot;
+	oOption6131  = oDialog6131.getControl(&quot;is6131&quot;)
+	oOption6131a = oDialog6131.getControl(&quot;is6131a&quot;)
+	oOption6131b = oDialog6131.getControl(&quot;is6131b&quot;)
+	oOption6131.State = 1
+	
+	PrSwitch  = oDialog6131.getControl(&quot;isProtocol&quot;)
+	SEnSwitch = oDialog6131.getControl(&quot;isSertificateEng&quot;)
+	SRuSwitch = oDialog6131.getControl(&quot;isSertificateRus&quot;)
+	
+	isComboCollection.add(oOption6131)
+	isComboCollection.add(oOption6131a)
+	isComboCollection.add(oOption6131b)
+
+	image6131   = oDialog6131.Model.getByName(&quot;6131Logo&quot;)
+	altCheckBox = oDialog6131.getControl(&quot;altCheckBox&quot;)
+
+	oDialog6131.getControl(&quot;addButton&quot;).setEnable(true)	
+	&apos;altCheckBox.setEnable(false)
+	&apos;oOption6131.setEnable(false)
+	&apos;oOption6131b.setEnable(false)
+	oDialog6131.getControl(&quot;betaLabel&quot;).visible = false&apos;временно
+	
+	for i=1 to 4
+		oDialog6131.getControl(&quot;betaField&quot; + i).visible = false
+		oDialog6131.getControl(&quot;betaField&quot; + i).setEnable(false)
+		oDialog6131.getControl(&quot;altField&quot; + i).visible = false
+	next i
+	
+	oDialog6131.getControl(&quot;alphaField1&quot;).visible = false
+	oDialog6131.getControl(&quot;alphaSourceLabel&quot;).visible = false
+	oDialog6131.getControl(&quot;alphaLabel&quot;).visible = false
+	
+	oDialog6131.getControl(&quot;gammaLabel&quot;).visible = false
+	altCheckBox.visible = false
+	
+	oComboBETAUnit = oDialog6131.getControl(&quot;betaUnitCombo&quot;)
+			
+	oDialogMain.endexecute()   
+	oDialog6131.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	if BDList.count&lt;&gt;0 then
+		setBetaLayout(BDList.item(layoutPosition))
+	end if	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	if oComboBETAUnit.text = &quot;П/П&quot; then
+		PrSwitch.setEnable(true)
+		SRuSwitch.setEnable(true)
+		PrSwitch.state = 1
+	else 
+		PrSwitch.setEnable(false)
+		SRuSwitch.setEnable(false)
+		SEnSwitch.state = 1
+		&apos;altCheckBox.visible = true
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialog6131.getControl(&quot;bdSerial&quot;))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+
+	&apos;для МКС-АТ6131  – от 0,1 мкЗв/ч до 10  мЗв/ч;
+	&apos;для МКС-АТ6131А – от 0,1 мкЗв/ч до 100 мЗв/ч;
+	&apos;для МКС-АТ6131B – от 0,1 мкЗв/ч до 10  мЗв/ч;
+		
+	&apos;TODO ТОЧКИ ДЛЯ БЕТЫ СЕЙЧАС ОТ БАЛДЫ НАДО ПОСТАВИТЬ РЕАЛЬНЫЕ
+	dim betaArray as object
+	if oComboBETAUnit.text = &quot;П/П&quot; then
+		betaArray = Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;)
+	elseif oComboBETAUnit.text = &quot;CPS&quot; then
+		betaArray = Array(&quot;0660BqCps&quot;,&quot;0578BqCps&quot;,&quot;0661BqCps&quot;,&quot;0662BqCps&quot;)
+	elseif oComboBETAUnit.text = &quot;Bq&quot; then
+		betaArray = Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;)
+	else
+		betaArray = Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;,&quot;0662Bq&quot;)
+	endif	
+	
+	if oOption6131.state   then       bd.addDataWithSrc(&quot;6131&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),	  &quot;gamma&quot;, Array(0.1,10000),  betaArray) 	&apos;границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	if oOption6131a.state  then       bd.addDataWithSrc(&quot;6131A&quot;,&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),&quot;gamma&quot;, Array(0.1,100000), Array()) 						&apos;границы от 0.1 мкЗв/ч до 100 мЗв/ч
+	if oOption6131b.state  then bd.addDataWithBetaAlpha(&quot;6131B&quot;,&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),	  &quot;gamma&quot;, Array(0.1,10000),  betaArray, Array(&quot;2131&quot;)) 	&apos;границы от 0.1 мкЗв/ч до 10 мЗв/ч
+	
+	if oOption6131.state OR oOption6131b.state then
+		dim list as new Collection
+		for i=1 to bd.getBetaValues.count
+			list.add(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel))
+		next i	
+		bd.setBetaValues(list)
+		bd.setAltList(list)
+	end if
+	
+	if oOption6131b.state then
+		dim list2 as new Collection
+		for i=1 to bd.getAlphaValues.count
+			list2.add(Activity.get_activity_alpha(bd.getAlphaSources.item(i)))
+		next i	
+		bd.setAlphaValues(list2)
+		bd.setAlphaAltList(list2)
+	end if
+
+	oDialog6131.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialog6131.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialog6131.getControl(&quot;bdSerial&quot;))
+	
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	
+	&apos;setButtonVisibility(layoutPosition)
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+
+&apos;sub insertBetaValuesTo
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+	setButtonVisibility
+	
+	altCheckBox.state = 0
+	for i=1 to 4
+		oDialog6131.getControl(&quot;altField&quot; + i).Visible = false
+	next i	
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub altCheckBoxListener(oEvent As Object)
+	Dim oCheckbox As Object
+    oCheckbox = oEvent.source.model
+    BDList.item(layoutPosition).setAlternative(oCheckbox.state)
+    if BDList.item(layoutPosition).isAlternativePoints = true then
+    	trySetSavedAlternateValues
+    	for i=1 to BDList.item(layoutPosition).getBetaValues.count
+    		oDialog6131.getControl(&quot;altField&quot; + i).Visible = true	
+    		oDialog6131.getControl(&quot;betaLabel&quot; + i).Visible = false
+    	next i
+    else
+    	for i=1 to BDList.item(layoutPosition).getBetaValues.count
+    		oDialog6131.getControl(&quot;altField&quot; + i).Visible = false	
+    		oDialog6131.getControl(&quot;betaLabel&quot; + i).Visible = true
+    	next i
+    	Overall.saveCurentBDValue(layoutPosition)
+    	&apos;makeLayout(BDList.item(layoutPosition))
+    	makeLayoutFromBD(BDList.item(layoutPosition))
+    end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setAlphaLayout(bd as new DUnit)
+	dim pointList as new collection
+	dim point as double
+	for i=1 to bd.getAlphaSources.count
+		&apos;if bd.isAlternativePoints then
+		&apos;	point = bd.getAlphaAltList.item(i)
+		&apos;	oDialog6131.Model.getByName(&quot;alphaLabel&quot; + i).textColor = RGB(0, 0, 200)
+		&apos;else
+			point = Activity.get_activity_alpha(bd.getAlphaSources.item(i))
+		&apos;	oDialog6131.Model.getByName(&quot;alphaLabel&quot; + i).textColor = RGB(0, 0, 0)
+		&apos;end if
+	
+		oDialog6131.getControl(&quot;alphaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; Бк&quot;
+		&apos;oDialog6131.Model.getByName(&quot;alphaField&quot; + i).valueStep = 0.1
+		&apos;oDialog6131.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+		oDialog6131.getControl(&quot;alphaField&quot; + i).value = bd.getAlphaValues.item(i)
+		&apos;oDialog6131.getControl(&quot;altField&quot; + i).value = bd.getAltList.item(i)
+		pointList.add(point)
+		&apos;oDialog6131.getControl(&quot;altAlphaField&quot; + i).Visible = false
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+rem---------------------------------------------------------------------------------------------------------
+sub setBetaLayout(bd as new DUnit)
+	dim pointList as new collection
+	dim point as double
+	if bd.isAlternativePoints then
+		altCheckBox.state = 1
+	else	
+		altCheckBox.state = 0
+	end if	
+
+	&apos;msgbox bd.getBetaSources.count
+
+	for i=1 to bd.getBetaSources.count
+		
+		if bd.isAlternativePoints then
+			&apos;altPoint = bd.getAltList.item(i)
+			point = bd.getAltList.item(i)
+			oDialog6131.Model.getByName(&quot;betaLabel&quot; + i).textColor = RGB(0, 0, 200)
+		else
+			point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
+			oDialog6131.Model.getByName(&quot;betaLabel&quot; + i).textColor = RGB(0, 0, 0)
+		end if
+	
+		if oComboBETAUnit.text = &quot;Bq&quot; then
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; Бк/см2 &quot;
+		elseif oComboBETAUnit.text = &quot;Bq (Япония)&quot; then
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; Бк/см2 &quot;	
+		elseif oComboBETAUnit.text = &quot;CPS&quot; then
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; cps &quot;
+		else
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; &quot;
+		end if
+		
+		oDialog6131.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
+		oDialog6131.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+		oDialog6131.getControl(&quot;betaField&quot; + i).value = bd.getBetaValues.item(i)  &apos;Format(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;)
+		oDialog6131.getControl(&quot;altField&quot; + i).value = bd.getAltList.item(i)
+		pointList.add(point)
+		oDialog6131.getControl(&quot;altField&quot; + i).Visible = false
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Если значения уже были сохранены (значения altValuesForAll не = 0), то в поля альтернативных значений диалога (НЕ В ПЕРЕМЕННЫЕ) будут занесены 
+sub trySetSavedAlternateValues
+	for i=1 to BDList.item(layoutPosition).getAltList.count
+		if altValuesForAll(i-1) &lt;&gt; 0 then oDialog6131.getControl(&quot;altField&quot; + i).value = altValuesForAll(i-1)
+	next i
+	BDList.item(layoutPosition).getAltList
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Если altCheck активен, то при переходе к следующему БД (или выводе сертификата) значения alt полей сохраняются в отдельный массив ОБЩИЙ ДЛЯ ВСЕХ БД, 
+&apos;такой массив не обнуляется после удаления всех БД, когда нужно сделать следующий сертификат не закрывая диалога, так можно использовать значения 
+&apos;alt полей для следующего сертификата (так как эти значения будут одинаковы для сертификатов)
+&apos;
+&apos;Конечно можно было сделать с двумя листами, что-то типа altValuesForAll = BDList.item(layoutPosition).getAltList
+&apos;НО. В разных БД размер листа отличается, при присвоении меньшего листа от 6130(п/п) к листу 6130(cps) при 
+&apos;последующем переборе листа в цикле (в trySetSavedAlternateValues) будет приводить к O.ofB.E. Поэтому использую массив с максимальным числом бета-точек (4)
+sub trySaveAlternateValues
+	if BDList.item(layoutPosition).isAlternativePoints then
+		dim arr(3) as double
+		&apos;Обнуление массива
+		arr(0) = 0
+		arr(1) = 0
+		arr(2) = 0
+		arr(3) = 0
+	
+		for i=1 to BDList.item(layoutPosition).getAltList.count
+			arr(i-1) = oDialog6131.getControl(&quot;altField&quot; + i).Value
+		next i
+
+		altValuesForAll = arr		
+	end if
+
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	Overall.makeLayoutFromBD(bd)
+	setBetaLayout(bd)
+	setAlphaLayout(bd)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	trySaveAlternateValues
+	Overall.saveCurentBDValue(num)
+	Overall.saveCurentBDBetaValues(num)
+	Overall.saveCurentBDAlphaValues(num)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility	
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	Overall.setButtonVisibility(layoutPosition)
+	oDialog6131.getControl(&quot;betaField4&quot;).visible = false
+	oDialog6131.getControl(&quot;betaLabel4&quot;).visible = false
+	
+	if oDialog6131.getControl(&quot;is6131a&quot;).state then	
+		oDialog6131.getControl(&quot;betaLabel&quot;).visible = false
+		for i=1 to 4
+			oDialog6131.getControl(&quot;betaField&quot; + i).visible = false
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).visible = false
+		next i
+		oDialog6131.getControl(&quot;alphaField1&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaSourceLabel&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaLabel&quot;).visible = false
+	end if
+	if oDialog6131.getControl(&quot;is6131&quot;).state OR oDialog6131.getControl(&quot;is6131b&quot;).state then	
+		altCheckBox.visible = true
+		oDialog6131.getControl(&quot;betaLabel&quot;).visible = true
+		dim betaSourceCount as integer
+		if oComboBETAUnit.text = &quot;CPS&quot; then betaSourceCount = 4
+		if oComboBETAUnit.text = &quot;П/П&quot; then betaSourceCount = 3
+		if oComboBETAUnit.text = &quot;Bq&quot; then betaSourceCount = 3
+		if oComboBETAUnit.text = &quot;Bq (Япония)&quot; then betaSourceCount = 4
+		for i=1 to betaSourceCount
+			oDialog6131.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).visible = true
+		next i
+		oDialog6131.getControl(&quot;alphaField1&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaSourceLabel&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaLabel&quot;).visible = false
+	end if
+	if oDialog6131.getControl(&quot;is6131b&quot;).state then	
+		altCheckBox.visible = true
+		oDialog6131.getControl(&quot;alphaLabel&quot;).visible = true
+		oDialog6131.getControl(&quot;alphaField1&quot;).visible = true
+		oDialog6131.getControl(&quot;alphaLabel1&quot;).visible = true
+		oDialog6131.getControl(&quot;alphaSourceLabel&quot;).visible = true
+	end if	
+	
+	if BDList.count&gt;0 then
+		oDialog6131.getControl(&quot;gammaLabel&quot;).visible = true
+		oComboBETAUnit.setEnable(false)
+		altCheckBox.setEnable(true)
+		for j=1 to BDList.item(layoutPosition).valueList.count
+			oDialog6131.getControl(&quot;ValueField&quot; + j).visible = true
+			oDialog6131.getControl(&quot;Label&quot; + j).visible = true
+		next j
+		for j=BDList.item(layoutPosition).valueList.count+1 to maxPointCount
+			oDialog6131.getControl(&quot;ValueField&quot; + j).visible = false
+			oDialog6131.getControl(&quot;Label&quot; + j).visible = false
+		next j
+		for i=1 to 4
+			oDialog6131.getControl(&quot;betaField&quot; + i).setEnable(true)
+		next i
+	end if
+	
+	if BDList.count=0 then
+		oComboBETAUnit.setEnable(true)
+		oDialog6131.getControl(&quot;gammaLabel&quot;).visible = false
+		oDialog6131.getControl(&quot;betaLabel&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaLabel&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaLabel1&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaField1&quot;).visible = false
+		oDialog6131.getControl(&quot;alphaSourceLabel&quot;).visible = false
+		altCheckBox.visible = false
+		altCheckBox.setEnable(false)
+		for i=1 to 4
+			oDialog6131.getControl(&quot;betaField&quot; + i).visible = false
+			oDialog6131.getControl(&quot;betaLabel&quot; + i).visible = false
+		next i
+	end if	
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	saveCurentBDValue(layoutPosition)
+	
+	if oComboBETAUnit.text = &quot;П/П&quot; then
+		if oOption6131.state   then path = Overall.getPathAndSetName(&quot;6131\6131&quot;, &quot;6131&quot;)
+		if oOption6131a.state  then path = Overall.getPathAndSetName(&quot;6131\6131a&quot;,&quot;6131A&quot;)
+		if oOption6131b.state  then path = Overall.getPathAndSetName(&quot;6131\6131b&quot;,&quot;6131B&quot;)
+	elseif oComboBETAUnit.text = &quot;CPS&quot; then
+		if oOption6131.state   then path = Overall.getPathAndSetName(&quot;6131\6131cps&quot;, &quot;6131 cps&quot;)
+		if oOption6131a.state  then path = Overall.getPathAndSetName(&quot;6131\6131a&quot;,&quot;6131A&quot;)
+		if oOption6131b.state  then path = Overall.getPathAndSetName(&quot;6131\6131b_cps&quot;,&quot;6131B cps&quot;)
+	elseif oComboBETAUnit.text = &quot;Bq&quot; then
+		if oOption6131.state   then path = Overall.getPathAndSetName(&quot;6131\6131bq&quot;, &quot;6131 Бк&quot;)
+		if oOption6131a.state  then path = Overall.getPathAndSetName(&quot;6131\6131a&quot;,&quot;6131A&quot;)
+		if oOption6131b.state  then path = Overall.getPathAndSetName(&quot;6131\6131b_bq&quot;,&quot;6131B Бк&quot;)
+	else &apos;if oComboBETAUnit.text = &quot;Bq (Япония)&quot; then
+		if oOption6131.state   then path = Overall.getPathAndSetName(&quot;6131\6131bq_jp&quot;, &quot;6131 Бк (Япония)&quot;)
+		if oOption6131a.state  then path = Overall.getPathAndSetName(&quot;6131\6131a&quot;,&quot;6131A&quot;)
+		if oOption6131b.state  then path = Overall.getPathAndSetName(&quot;6131\6131b_bq&quot;,&quot;6131B Бк&quot;)	
+	end if	
+		
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	findAndRename(&quot;$facility_6130beta&quot;, Facility.getFacilityText(&quot;beta6130&quot;))
+	findAndRename(&quot;$facility_6130r_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta&quot;))
+	findAndRename(&quot;$facility_6130e_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta_eng&quot;))
+		
+	Overall.CreateTablesFromTemplate(BDList.count)
+	Overall.CreateTablesFromTemplateCustom(BDList.count, &quot;b1&quot;, &quot;bd_num_b&quot;, &quot;bd_num&quot;, &quot;β&quot;)
+	Overall.CreateTablesFromTemplateCustom(BDList.count, &quot;a1&quot;, &quot;bd_num_a&quot;, &quot;bd_num&quot;, &quot;α&quot;)
+		
+	for i=1 to BDList.count
+		dim point as double
+		dim alphaPoint as double
+		dim pointList as new Collection 
+		for j=1 to BDList.item(1).getBetaSources.count
+			point = Activity.get_activity_Sr(BDList.item(i).getBetaSources.item(j), oDateFieldModel)
+			pointList.add(point)
+		next j
+		&apos;альфа точка толька одна, поэтому не заморачивался с циклом
+		dim pointAlphaList as new Collection
+		for j=1 to BDList.item(1).getAlphaSources.count
+			alphaPoint = Activity.get_activity_alpha(BDList.item(i).getAlphaSources.item(j))
+			pointAlphaList.add(alphaPoint)
+		next j	
+		
+		Overall.insertBetaToTemplateStep(i, BDList.item(i).getBetaSources, pointList, BDList.item(i).getBetaValues, &quot;β&quot;, THREE_POINTS)
+		Overall.insertAlphaToTemplateStep(i, BDList.item(i).getAlphaSources, pointAlphaList, BDList.item(i).getAlphaValues, &quot;α&quot;)
+		Overall.insertToTemplateStep(i)
+	next i
+	
+	Overall.setClipboard(&quot;$allSerial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+end function
+
+</script:module>

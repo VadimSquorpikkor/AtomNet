@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="MWatsNew" script:language="StarBasic">REM  *****  BASIC  *****
+
+
+rem 	╔═══════════════════════════════════════════════════╗
+rem		║	Диалог со списком версий						║█
+rem		║	Сам файл со списком версий находится			║█
+rem		║ 	на FileServer — так не нужно скачивать  		║█
+rem		║ 	последнюю версию, чтобы посмотреть, что нового	║█
+rem		╚═══════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+
+dim Sensor as new Sensor
+dim oDialogAbout as object 
+
+Sub Start
+	dim list as new Collection
+	dim names as new Collection
+	dim values as new Collection
+	dim oListBox as object
+	
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogAbout = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DWhatsNew )
+	
+	dim pathAbout as String
+	&apos;pathAbout = sertPath &amp; &quot;version.txt&quot;
+	pathAbout = &quot;\\Fileserver\Manufacture\Uchastok.RIR\База настроек\Instruction\_Макрос для протоколов\version.txt&quot;
+	if FileExists(pathAbout) then list = Sensor.DataFromFile(pathAbout)
+	oListBox = oDialogAbout.getControl(&quot;ListBox1&quot;)
+	
+	dim i as integer
+	for i=1 to list.count
+		oListBox.addItem( list.item(i), oListBox.getItemCount() )
+	next i
+	
+	oDialogAbout.Execute()
+End Sub
+</script:module>

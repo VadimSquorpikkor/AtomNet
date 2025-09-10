@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="NUnit" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+dim Overall as new Overall 
+
+sub neutron_01_ToTemplateStep(i as integer, bd as BUnit)
+	neutron(i, bd, Array(0.6, 0.6, 0.863, 0.965), Array(6, 57, 235, 986), 5)
+end sub
+
+sub neutron_02_ToTemplateStep(i as integer, bd as BUnit)
+	neutron(i, bd, Array(0.6, 0.6, 0.863, 0.957), Array(5.9, 57, 235, 1019), 5)
+end sub
+
+sub neutron_03_ToTemplateStep(i as integer, bd as BUnit)
+	neutron(i, bd, Array(0.922, 0.922, 0.980, 0.995), Array(9, 80, 330, 1460), 7)
+end sub
+
+sub neutron_04_ToTemplateStep(i as integer, bd as BUnit)
+	neutron(i, bd, Array(0.866, 0.866, 0.957, 0.991), Array(8.3, 80, 331, 1434), 7)
+end sub
+
+sub neutron_05_ToTemplateStep(i as integer, bd as BUnit)
+	dim threePointArray_1(2), threePointArray_2(2), threePointArray_3(2) as double
+	dim m_point, p1, p2, p3 as double
+	dim j as integer
+	p1 = bd.valueList.item(1)
+	p2 = bd.valueList.item(2)
+	p3 = bd.valueList.item(3)
+
+	dim s as double &apos;Чувствительность
+	dim N as double &apos;
+	dim f as double &apos;
+	dim k as double &apos;коэффициент
+
+	N = p3
+	f = p2
+	k = 0.6815
+	
+	&apos;Расчет чувствительности
+	s = n / f * k
+	
+	rem Процент отклонения здесь свой, так как он сильно отличается от процента в других приборах (7%) -- от 3% до 25% 
+	threePointArray_1 = Math.avaragePointsRndArray(p1, 25) &apos;OverAll.percentOtk)
+	threePointArray_2 = Math.avaragePointsRndArray(p2, 10) &apos;OverAll.percentOtk)
+	threePointArray_3 = Math.avaragePointsRndArray(p3, 3) &apos;OverAll.percentOtk)
+	
+	for j=0 to bd.getPointList.count-1
+		findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j), Format(threePointArray_1(j), &quot;0.00&quot;)) rem рандом 1
+		findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j), Format(threePointArray_2(j), &quot;0&quot;)) rem рандом 2
+		findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j), Format(threePointArray_3(j), &quot;0&quot;)) rem рандом 3
+	next j		
+	
+	findAndRename((&quot;$&quot; + i + &quot;-20&quot;), Format(p1, &quot;0.00&quot;)) rem среднее по трем измерениям 1
+	findAndRename((&quot;$&quot; + i + &quot;-40&quot;), Format(p2, &quot;0&quot;)) rem среднее по трем измерениям 2
+	findAndRename((&quot;$&quot; + i + &quot;-60&quot;), Format(p3, &quot;0&quot;)) rem среднее по трем измерениям 3
+	findAndRename((&quot;$&quot; + i + &quot;-70&quot;), Format(s,  &quot;0.00&quot;)) 
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub neutron(i as integer, bd as new BUnit, point_br_array as variant, point_fio_array as variant, percent as double)
+	dim j, n as integer
+ 	dim m_point, point, fon, p1, p2, p3 as double
+ 	dim MyFormat as string
+	dim threePointArray(2) as double
+	
+	for j=0 to bd.getPointList.count-1		
+		m_point = bd.valueList.item(j+1)
+		threePointArray = Math.avaragePointsRndArray(m_point, 7) &apos;OverAll.getPercentOtk)
+			
+		if m_point &lt; 0.1 and m_point &gt; 0  then MyFormat = &quot;0.000&quot;
+		if m_point &lt; 1 and m_point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+		if m_point &lt; 100 and m_point &gt;= 1 then MyFormat = &quot;0.0&quot;	
+		if m_point &gt;= 100 				  then MyFormat = &quot;0&quot;
+					
+		findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+		findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+		findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
+			
+		findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
+	next j
+		
+	fon = bd.valueList.item(1)	rem фон		
+	for n = 1 to 4
+		point = bd.valueList.item(n+1)
+		p1 = (point-fon)*point_br_array(n-1)
+		findAndRename((&quot;$&quot; + i + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, &quot;0.00&quot;))
+		p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+		findAndRename((&quot;$&quot; + i + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, &quot;0.00&quot;))
+		p3 = 1.1 * sqr(p2 * p2 + percent*percent)
+		findAndRename((&quot;$&quot; + i + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, &quot;0.00&quot;))
+	next n
+	
+
+end sub
+
+</script:module>

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Activity" script:language="StarBasic">REM  *****  BASIC  *****
+
+&apos; 	╔═══════════════════════════════════════════════════════════════╗
+&apos;	║																║█
+&apos;	║		АКТИВНОСТЬ ИСТОЧНИКОВ									║█
+&apos;	║	_________________________________________________________	║█
+&apos;	║																║█
+&apos;	║	Методы расчета, константы начальных значений активностей, 	║█
+&apos;	║	периоды полураспада, даты поверок и т.д.					║█
+&apos;	╚═══════════════════════════════════════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+
+
+&apos;═══════════════════════════════════════════════════════════════════════════════╗
+																			&apos;	║█
+public const CS_137_HALF_LIFE as double = 365.2425 * 30.167					&apos;	║█
+public const SR_90_HALF_LIFE as double  = 365.2425 * 28.7967 				&apos;	║█
+public const AM_241_HALF_LIFE as double = 365.2425 * 432.6					&apos;	║█
+public const CD_109_HALF_LIFE as double = 461.4								&apos;	║█
+public const BA_133_HALF_LIFE as double = 365.2425 * 10.5156				&apos;	║█
+											 								&apos;	║█
+&apos;═══════════════════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+&apos;Класс радиоактивного элемента
+Type Element
+	&apos;Название химического элемента
+	ename as string
+	&apos;Период полураспада
+	halflife as double
+end type
+&apos; Конструктор
+Function newElement(ename as string, halflife as double) as Element
+    Dim r As Element
+    r.ename = ename
+    r.halflife = halflife
+    newElement = r
+End Function
+
+Dim betaSrcMap As New Collection
+
+dim SC_137 as Element
+dim SR_90 as Element
+
+dim BETA_0660 as new RASrc
+dim BETA_0661 as new RASrc
+dim BETA_0662 as new RASrc
+dim BETA_0663 as new RASrc
+dim BETA_0664 as new RASrc
+dim BETA_0665 as new RASrc
+dim BETA_0666 as new RASrc
+dim BETA_0667 as new RASrc
+dim BETA_2124 as new RASrc
+dim BETA_2125 as new RASrc
+dim BETA_2126 as new RASrc
+dim BETA_2127 as new RASrc
+dim BETA_2128 as new RASrc
+dim BETA_2129 as new RASrc
+dim BETA_0578 as new RASrc
+dim BETA_0579 as new RASrc
+dim BETA_0580 as new RASrc
+dim BETA_0581 as new RASrc
+
+dim GAMMA_516 as new RASrc
+dim GAMMA_517 as new RASrc
+dim GAMMA_518 as new RASrc
+dim GAMMA_519 as new RASrc
+dim GAMMA_520 as new RASrc
+dim GAMMA_521 as new RASrc
+dim GAMMA_2910 as new RASrc
+dim GAMMA_ALL as new RASrc
+dim GAMMA_595 as new RASrc
+dim GAMMA_483 as new RASrc
+dim GAMMA_93 as new RASrc
+dim GAMMA_3668 as new RASrc
+dim GAMMA_832 as new RASrc
+
+sub initSources()
+	CS_137 = newElement(&quot;Cs-137&quot;, CS_137_HALF_LIFE)
+	SR_90 = newElement(&quot;Sr-90&quot;, SR_90_HALF_LIFE)
+	&apos;бета-источники	
+	BETA_0660.initBeta(&quot;0660&quot;, &quot;2025.07.22&quot;, SR_90, 154,     58.2,    40)
+	BETA_0661.initBeta(&quot;0661&quot;, &quot;2025.07.22&quot;, SR_90, 9070,    3420,    40)
+	BETA_0662.initBeta(&quot;0662&quot;, &quot;2025.07.22&quot;, SR_90, 85500,   32300,   40)
+	BETA_0663.initBeta(&quot;0663&quot;, &quot;2021.06.01&quot;, SR_90, 73.3,    21.4,    100)
+	BETA_0664.initBeta(&quot;0664&quot;, &quot;2024.07.30&quot;, SR_90, 272,     101,     100)
+	BETA_0665.initBeta(&quot;0665&quot;, &quot;2023.09.06&quot;, SR_90, 2020,    762,     100)
+	BETA_0666.initBeta(&quot;0666&quot;, &quot;2025.01.29&quot;, SR_90, 22800,   8570,    100)
+	BETA_0667.initBeta(&quot;0667&quot;, &quot;2023.09.06&quot;, SR_90, 211000,  79900,   100)
+	BETA_2124.initBeta(&quot;2124&quot;, &quot;2025.01.29&quot;, SR_90, 11.3,    4.26,    1)
+	BETA_2125.initBeta(&quot;2125&quot;, &quot;2025.01.29&quot;, SR_90, 1070,    401,     1)
+	BETA_2126.initBeta(&quot;2126&quot;, &quot;2025.01.29&quot;, SR_90, 58.4,    21.9,    10)
+	BETA_2127.initBeta(&quot;2127&quot;, &quot;2025.01.29&quot;, SR_90, 589,     222,     10)
+	BETA_2128.initBeta(&quot;2128&quot;, &quot;2025.01.29&quot;, SR_90, 6680,    2520,    10)
+	BETA_2129.initBeta(&quot;2129&quot;, &quot;2025.01.29&quot;, SR_90, 66.3,    25,      100)
+	BETA_0578.initBeta(&quot;0578&quot;, &quot;2025.01.29&quot;, SR_90, 504,     191,     40)
+	BETA_0579.initBeta(&quot;0579&quot;, &quot;2025.01.29&quot;, SR_90, 302000,  113000,  40)
+	BETA_0580.initBeta(&quot;0580&quot;, &quot;2025.01.29&quot;, SR_90, 736000,  277000,  40)
+	BETA_0581.initBeta(&quot;0581&quot;, &quot;2025.01.29&quot;, SR_90, 3010000, 1130000, 40)
+	
+	GAMMA_516.initGamma (&quot;№516&quot;,  &quot;2016.10.12&quot;, CS_137, 91.3)
+	GAMMA_517.initGamma (&quot;№517&quot;,  &quot;2016.10.12&quot;, CS_137, 88.8)
+	GAMMA_518.initGamma (&quot;№518&quot;,  &quot;2016.10.12&quot;, CS_137, 94.6)
+	GAMMA_519.initGamma (&quot;№519&quot;,  &quot;2016.10.12&quot;, CS_137, 88.2)
+	GAMMA_520.initGamma (&quot;№520&quot;,  &quot;2016.10.12&quot;, CS_137, 91.3)
+	GAMMA_521.initGamma (&quot;№521&quot;,  &quot;2016.10.12&quot;, CS_137, 93.5)
+	GAMMA_2910.initGamma(&quot;№2910&quot;, &quot;2016.05.17&quot;, CS_137, 67.7)
+	GAMMA_ALL.initGamma (&quot;All&quot;,   &quot;2016.10.12&quot;, CS_137, 547.7)&apos;deprecated
+	GAMMA_595.initGamma (&quot;№595&quot;,  &quot;2021.07.29&quot;, CS_137, 95.588)
+	GAMMA_483.initGamma (&quot;483&quot;,   &quot;2021.10.13&quot;, CS_137, 86.8)
+	GAMMA_93.initGamma  (&quot;93&quot;,    &quot;2021.10.13&quot;, CS_137, 880)
+	GAMMA_3668.initGamma(&quot;3669&quot;,  &quot;2021.10.13&quot;, CS_137, 7932)
+	GAMMA_832.initGamma (&quot;832&quot;,   &quot;2021.10.13&quot;, CS_137, 9494)
+	
+	betaSrcMap.add(BETA_0660, &quot;0660&quot;)
+	betaSrcMap.add(BETA_0661, &quot;0661&quot;)
+	betaSrcMap.add(BETA_0662, &quot;0662&quot;)
+	betaSrcMap.add(BETA_0663, &quot;0663&quot;)
+	betaSrcMap.add(BETA_0664, &quot;0664&quot;)
+	betaSrcMap.add(BETA_0665, &quot;0665&quot;)
+	betaSrcMap.add(BETA_0666, &quot;0666&quot;)
+	betaSrcMap.add(BETA_0667, &quot;0667&quot;)
+	betaSrcMap.add(BETA_2124, &quot;2124&quot;)
+	betaSrcMap.add(BETA_2125, &quot;2125&quot;)
+	betaSrcMap.add(BETA_2126, &quot;2126&quot;)
+	betaSrcMap.add(BETA_2127, &quot;2127&quot;)
+	betaSrcMap.add(BETA_2128, &quot;2128&quot;)
+	betaSrcMap.add(BETA_2129, &quot;2129&quot;)
+	betaSrcMap.add(BETA_0578, &quot;0578&quot;)
+	betaSrcMap.add(BETA_0579, &quot;0579&quot;)
+	betaSrcMap.add(BETA_0580, &quot;0580&quot;)
+	betaSrcMap.add(BETA_0581, &quot;0581&quot;)
+end sub
+
+&apos; 	╔═══════════════════════════════╗
+&apos;	║							    ║█
+&apos;	║		АЛЬФА источники			║█
+&apos;	║	________________________	║█
+&apos;	║								║█
+&apos;	╚═══════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+public const ALPHA_2131 as double = 846 &apos;Бк
+&apos;-------------------------------------------------------------
+&apos; альфа, плотность потока частиц, част/(см^2*мин)
+&apos; бдпс-02 и альфа-01
+public const ALPHA_0645 as double = 62.7
+public const ALPHA_0646 as double = 681
+public const ALPHA_0773 as double = 8655
+public const ALPHA_0648 as double = 61800
+public const ALPHA_0774 as double = 201000 &apos;только бдпс-02
+&apos; альфа-02
+public const ALPHA_0651 as double = 73.2
+public const ALPHA_0652 as double = 624
+public const ALPHA_0653 as double = 5136
+public const ALPHA_0655 as double = 36120
+&apos;-------------------------------------------------------------
+function get_activity_alpha(srcName as string)
+	select case srcName
+		case &quot;2131&quot;: get_activity_alpha = ALPHA_2131
+		case else:   get_activity_alpha = 0.0
+	end select
+end function
+
+&apos; 	╔═══════════════════════════════╗
+&apos;	║							    ║█
+&apos;	║		БЕТА источники			║█
+&apos;	║	________________________	║█
+&apos;	║								║█
+&apos;	╚═══════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+&apos;-------------------------------------------------------------
+&apos;Функция возвращает расчитанную на выбранную дата величину в зависимости от формата src переменной:
+&apos;	строка вида &quot;0660&quot; 		возвращает ПЛОТНОСТЬ ПОТОКА
+&apos;	строка вида &quot;0660Bq&quot; 	возвращает ПОВЕРХНОСТНУЮ АКТИВНОСТЬ (Бк/см2)
+&apos;	строка вида &quot;0660Act&quot; 	возвращает Активность (Бк)
+&apos;	строка вида &quot;0660/S&quot; 	возвращает плотность потока для БДПБ-03
+&apos;	строка вида &quot;0660BqCps&quot; возвращает поверхностную активность для 6130cps
+function get_activity_Sr(src as string, nowDate)
+	dim s as string
+	On Error Goto ErrorHandler
+	&apos;поверхностная активность
+	if InStr(src, &quot;Bq&quot;)&gt;0 then &apos;0660Bq 
+		s = Replace (src,&quot;Bq&quot;,&quot;&quot;)
+		get_activity_Sr = betaSrcMap(s).getSurActivity(nowDate)
+	&apos;активность (нигде не используется, так, на всякий)
+	elseif InStr(src, &quot;Act&quot;)&gt;0 then &apos;0660Act
+		s = Replace (src,&quot;Act&quot;,&quot;&quot;)
+		get_activity_Sr = betaSrcMap(s).getActivity(nowDate)
+	&apos;плотность потока для БДПБ-03. источник меньше чем бета, поэтому при расчете делится на 2.83
+	elseif InStr(src, &quot;/S&quot;)&gt;0 then &apos;0660/S
+		s = Replace (src,&quot;/S&quot;,&quot;&quot;)
+		get_activity_Sr = betaSrcMap(s).getFDensityB3(nowDate)
+	&apos;Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426	
+	elseif InStr(src, &quot;BqCps&quot;)&gt;0 then &apos;0660BqCps
+		s = Replace (src,&quot;BqCps&quot;,&quot;&quot;)
+		get_activity_Sr = betaSrcMap(s).getCpsActivity(nowDate)
+	else &apos;0660Bq
+	&apos;плотность потока
+		get_activity_Sr = betaSrcMap(src).getFDensity(nowDate)
+	end if
+	Exit function
+	ErrorHandler:
+	get_activity_Sr = 0.0
+end function
+&apos;-------------------------------------------------------------
+public const BETA_BG as double    = 11.9
+&apos;-------------------------------------------------------------
+
+&apos; 	╔═══════════════════════════════╗
+&apos;	║							    ║█
+&apos;	║		ГАММА источники			║█
+&apos;	║	________________________	║█
+&apos;	║								║█
+&apos;	╚═══════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+function get_activity_Cs(src as string, nowDate)
+	dim s as string
+	On Error Goto ErrorHandler
+	&apos;поверхностная активность
+	if InStr(src, &quot;Bq&quot;)&gt;0 then &apos;0660Bq 
+		s = Replace (src,&quot;Bq&quot;,&quot;&quot;)
+		get_activity_Sr = sourcesMap(s).getSurActivity(nowDate)
+	&apos;активность (нигде не используется, так, на всякий)
+	elseif InStr(src, &quot;Act&quot;)&gt;0 then &apos;0660Act
+		s = Replace (src,&quot;Act&quot;,&quot;&quot;)
+		get_activity_Sr = sourcesMap(s).getActivity(nowDate)
+	&apos;плотность потока для БДПБ-03. источник меньше чем бета, поэтому при расчете делится на 2.83
+	elseif InStr(src, &quot;/S&quot;)&gt;0 then &apos;0660/S
+		s = Replace (src,&quot;/S&quot;,&quot;&quot;)
+		get_activity_Sr = sourcesMap(s).getFDensityB3(nowDate)
+	&apos;Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426	
+	elseif InStr(src, &quot;BqCps&quot;)&gt;0 then &apos;0660BqCps
+		s = Replace (src,&quot;BqCps&quot;,&quot;&quot;)
+		get_activity_Sr = sourcesMap(s).getCpsActivity(nowDate)
+	else &apos;0660Bq
+	&apos;плотность потока
+		get_activity_Sr = sourcesMap(src).getFDensity(nowDate)
+	end if
+	Exit function
+	ErrorHandler:
+	get_activity_Sr = 0.0
+end function
+
+function get_activity_Cs_old(src as string, nowDate)
+	&apos;msgbox &quot;get_activity_Sr - &quot;+src
+	select case src
+	&apos;—————————————————————————————————————————————————————————————————		
+	&apos;активность
+		case &quot;№516&quot;:  get_activity_Cs = GAMMA_516.getActivity(nowDate)
+		case &quot;№517&quot;:  get_activity_Cs = GAMMA_517.getActivity(nowDate)
+		case &quot;№518&quot;:  get_activity_Cs = GAMMA_518.getActivity(nowDate)
+		case &quot;№519&quot;:  get_activity_Cs = GAMMA_519.getActivity(nowDate)
+		case &quot;№520&quot;:  get_activity_Cs = GAMMA_520.getActivity(nowDate)
+		case &quot;№521&quot;:  get_activity_Cs = GAMMA_521.getActivity(nowDate)
+		case &quot;№2910&quot;: get_activity_Cs = GAMMA_2910.getActivity(nowDate)
+		case &quot;№595&quot;:  get_activity_Cs = GAMMA_595.getActivity(nowDate)
+		case &quot;483&quot;:   get_activity_Cs = GAMMA_483.getActivity(nowDate)
+		case &quot;93&quot;:    get_activity_Cs = GAMMA_93.getActivity(nowDate)
+		case &quot;3668&quot;:  get_activity_Cs = GAMMA_3668.getActivity(nowDate)
+		case &quot;516&quot;:   get_activity_Cs = GAMMA_516.getActivity(nowDate)
+		case &quot;832&quot;:   get_activity_Cs = GAMMA_832.getActivity(nowDate)
+		case &quot;all&quot;:   get_activity_Cs = GAMMA_ALL.getActivity(nowDate)
+	&apos;—————————————————————————————————————————————————————————————————		
+		case else: get_activity_Cs = 0.0
+	end select
+end function
+&apos;----------------------------------------------------------------
+&apos;Источники 110: 28C, 39T, 2AA, 430(Am)
+&apos;Источники 130: 7AT 07T 043 08T 163
+function sourceDistanceArray(point as double, prefix as string, bdType as string, mDate)
+	dim koef as double
+	koefCs = getDistanceKoef(mDate, CS_137_HALF_LIFE)&apos;коэффициент для источников с Цезием-137
+	koefAm = getDistanceKoef(mDate, AM_241_HALF_LIFE)&apos;коэффициент для источников с Америцием-241
+	dim ar(1) as variant
+	&apos;Перерасчет расстояний - 29.8.2025
+	ar = Array(&quot;Неизв&quot;,&quot;Неизв&quot;) rem если точка не будет найдена, останется значение по умолчанию -- не найдено
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	&apos;ДЛЯ ИЗМЕРЕНИЯ В РЕМАХ. Эквивалентная доза рентгена (бэр). 100 rem == 1 Зв 
+	if bdType = &quot;gamma-rem&quot; then
+		select case prefix
+		case &quot;мк&quot;
+				&apos;----------------- УДГ-110 -----------------------------------
+				&apos;if point = 70 	then ar = sourceDistanceArray(0.7, &quot;мк&quot;, &quot;gamma&quot;, mDate)
+				if point = 70 	then ar = dynDistanceAr(&quot;28C&quot;, 263.184, koefCs)&apos;===0.7мкЗв
+				if point = 700 	then ar = dynDistanceAr(&quot;28C&quot;, 84.435,  koefCs)&apos;===7мкЗв
+		case &quot;м&quot;
+				if point = 0.7	then ar = dynDistanceAr(&quot;28C&quot;, 84.435,  koefCs)&apos;===7мкЗв
+				if point = 7	then ar = dynDistanceAr(&quot;39T&quot;, 215.727, koefCs)&apos;===70мкЗв
+				if point = 70 	then ar = dynDistanceAr(&quot;39T&quot;, 69.072,  koefCs)&apos;===0.7m
+				&apos;----------------- УДГ-130 -----------------------------------
+				if point = 700 	then ar = dynDistanceAr(&quot;043&quot;, 342.625, koefCs)&apos;===7m
+		case &quot;&quot;
+				if point = 0.7 	then ar = dynDistanceAr(&quot;043&quot;, 109.907, koefCs)&apos;===70m
+		end select
+	end if
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	&apos;мощность амбиентного эквивалента дозы Н*(10) Зв/ч
+	if bdType = &quot;gamma&quot; then
+		select case prefix
+		case &quot;мк&quot;
+				&apos;----------------- УДГ-110 -----------------------------------
+				if point = 0.03 then ar = dynDistanceAr(&quot;2AA&quot;, 440.387, koefCs)
+				if point = 0.06 then ar = dynDistanceAr(&quot;2AA&quot;, 313.242, koefCs)
+				if point = 0.07 then ar = dynDistanceAr(&quot;2AA&quot;, 290.315, koefCs)
+				if point = 0.24 then ar = dynDistanceAr(&quot;2AA&quot;, 153.241, koefCs)
+				if point = 0.7 	then ar = dynDistanceAr(&quot;28C&quot;, 263.184, koefCs)
+				if point = 0.8  then ar = dynDistanceAr(&quot;28C&quot;, 246.379, koefCs)
+				if point = 4 	then ar = dynDistanceAr(&quot;28C&quot;, 110.88,  koefCs)
+				if point = 7 	then ar = dynDistanceAr(&quot;28C&quot;, 84.435,  koefCs)
+				if point = 8 	then ar = dynDistanceAr(&quot;28C&quot;, 79.002,  koefCs)
+				if point = 70	then ar = dynDistanceAr(&quot;39T&quot;, 215.727, koefCs)
+				if point = 20 	then ar = dynDistanceAr(&quot;28C&quot;, 51.096,  koefCs)&apos;&quot;39T&quot; 394.613
+				if point = 40 	then ar = dynDistanceAr(&quot;39T&quot;, 280.515, koefCs)
+				if point = 240 	then ar = dynDistanceAr(&quot;39T&quot;, 117.15,  koefCs)
+				if point = 700 	then ar = dynDistanceAr(&quot;39T&quot;, 69.072,  koefCs)
+		case &quot;м&quot;
+				if point = 0.5 	then ar = dynDistanceAr(&quot;39T&quot;, 81.679,  koefCs)
+				if point = 0.7 	then ar = dynDistanceAr(&quot;39T&quot;, 69.072,  koefCs)
+				&apos;----------------- УДГ-130 -----------------------------------
+				if point = 4 	then ar = dynDistanceAr(&quot;08T&quot;, 78.604,  koefCs)&apos;&quot;043&quot; 453.144
+				if point = 7 	then ar = dynDistanceAr(&quot;043&quot;, 342.625, koefCs)
+				if point = 20 	then ar = dynDistanceAr(&quot;043&quot;, 204.139, koefCs)
+				if point = 70 	then ar = dynDistanceAr(&quot;043&quot;, 109.907, koefCs)
+				if point = 80 	then ar = dynDistanceAr(&quot;043&quot;, 102.842, koefCs)
+				if point = 200 	then ar = dynDistanceAr(&quot;163&quot;, 406.345, koefCs)
+				if point = 400 	then ar = dynDistanceAr(&quot;163&quot;, 287.142, koefCs)
+				if point = 800 	then ar = dynDistanceAr(&quot;163&quot;, 204.488, koefCs)
+		case &quot;&quot;
+				if point = 0.35	then ar = dynDistanceAr(&quot;163&quot;, 306.689, koefCs)
+				if point = 0.5 	then ar = dynDistanceAr(&quot;163&quot;, 257.118, koefCs)
+				if point = 0.7 	then ar = dynDistanceAr(&quot;163&quot;, 218.465, koefCs)
+				if point = 4 	then ar = dynDistanceAr(&quot;163&quot;, 92.196,  koefCs)
+				if point = 7 	then ar = dynDistanceAr(&quot;163&quot;, 70.323,  koefCs)
+				if point = 8 	then ar = dynDistanceAr(&quot;163&quot;, 65.795,  koefCs)
+				if point = 40 	then ar = dynDistanceAr(&quot;163&quot;, 30.246,  koefCs)
+		end select
+	end if
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	&apos;мощность кермы в воздухе, Ка, Гр/ч
+	if bdType = &quot;gamma-Gy&quot; then
+		select case prefix
+		case &quot;н&quot;
+				&apos;----------------- УДГ-110 -----------------------------------
+				if point = 75	then ar = dynDistanceAr(&quot;2AA&quot;, 248.119, koefCs)
+		case &quot;мк&quot;
+				if point = 0.03	then ar = dynDistanceAr(&quot;2AA&quot;, 401.082, koefCs)
+				if point = 0.075 then ar= dynDistanceAr(&quot;2AA&quot;, 248.119, koefCs)
+				if point = 0.7	then ar = dynDistanceAr(&quot;28C&quot;, 239.522, koefCs)
+				if point = 0.75	then ar = dynDistanceAr(&quot;28C&quot;, 231.486, koefCs)
+				if point = 7 	then ar = dynDistanceAr(&quot;28C&quot;, 76.786,  koefCs)
+				if point = 7.5 	then ar = dynDistanceAr(&quot;28C&quot;, 74.192,  koefCs)
+				if point = 70 	then ar = dynDistanceAr(&quot;39T&quot;, 196.292, koefCs)
+				if point = 75 	then ar = dynDistanceAr(&quot;39T&quot;, 189.694, koefCs)
+		case &quot;м&quot;
+				if point = 0.5 	then ar = dynDistanceAr(&quot;39T&quot;, 74.279,  koefCs)
+				if point = 0.7	then ar = dynDistanceAr(&quot;39T&quot;, 62.811,  koefCs)				
+				if point = 0.75	then ar = dynDistanceAr(&quot;39T&quot;, 60.687,  koefCs)
+				&apos;----------------- УДГ-130 -----------------------------------
+				if point = 7	then ar = dynDistanceAr(&quot;043&quot;, 311.922, koefCs)
+				if point = 7.5 	then ar = dynDistanceAr(&quot;043&quot;, 301.491, koefCs)
+				if point = 70	then ar = dynDistanceAr(&quot;043&quot;, 99.962,  koefCs)
+				if point = 75 	then ar = dynDistanceAr(&quot;043&quot;, 96.587,  koefCs)
+				if point = 200 	then ar = dynDistanceAr(&quot;163&quot;, 370.027, koefCs)
+		case &quot;&quot;
+				if point = 0.7	then ar = dynDistanceAr(&quot;163&quot;, 198.786, koefCs)
+				if point = 0.75	then ar = dynDistanceAr(&quot;163&quot;, 192.106, koefCs)
+				if point = 7	then ar = dynDistanceAr(&quot;163&quot;, 63.949,  koefCs)
+				if point = 7.5 	then ar = dynDistanceAr(&quot;163&quot;, 61.786,  koefCs)
+				if point = 40 	then ar = dynDistanceAr(&quot;163&quot;, 27.5,    koefCs)
+		end select
+	end if
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	&apos;мощность направленного эквивалента дозы H&apos;(0.07)
+	if bdType = &quot;gamma007&quot; then 
+		select case prefix
+		case &quot;мк&quot;
+				&apos;----------------- УДГ-110 -----------------------------------
+				if point = 0.07	then ar = dynDistanceAr(&quot;430_3&quot;, 247.287, koefAm)	&apos; в SourceCalculation выбрать &quot;Am с экраном&quot; -- 3мм
+				if point = 0.7	then ar = dynDistanceAr(&quot;430_3&quot;, 76.971,  koefAm)	&apos; в SourceCalculation выбрать &quot;Am с экраном&quot; -- 3мм
+				if point = 7 	then ar = dynDistanceAr(&quot;430&quot;, 163.04,    koefAm)	&apos; без экрана
+				if point = 40	then ar = dynDistanceAr(&quot;430&quot;, 69.13,     koefAm)	&apos; без экрана
+				if point = 70 	then ar = dynDistanceAr(&quot;430&quot;, 52.106,    koefAm)	&apos; без экрана
+		end select
+	end if
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	&apos;мощность индивидуального эквивалента дозы Hp(0.07)
+	if bdType = &quot;gammaHp007&quot; then &apos;мощность индивидуального эквивалента дозы Hp(0.07)
+		select case prefix
+		case &quot;мк&quot;
+				&apos;----------------- УДГ-110 -----------------------------------	
+				if point = 40	then ar = dynDistanceAr(&quot;430&quot;, 71.696, koefAm)	&apos; без экрана				
+		end select
+	end if
+	&apos;—————————————————————————————————————————————————————————————————————————————————————————————————————————
+	sourceDistanceArray = ar
+end function
+rem----------------------------------------------------------------
+&apos;Метод возвращает расстояние до источника на выбранную дату, 
+&apos;по выбранной дате (mdate - это DateField, из которого получается дата), начальному расстоянию до источника и периоду полураспада
+&apos;	╔═══════════════════════════════╗
+&apos;	║	R = R0 * 2^( -ΔT / 2*Tpol )	║█
+&apos;	╚═══════════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+function getDistance(r0 as double, mdate, t_pol)
+	dim DISTANCE_DATE as Date
+	DISTANCE_DATE = DateSerial (2025,8,29)&apos;2021,1,25 &apos;2025,8,29
+	dim daysLeft as double
+	daysLeft = cdatefromiso(mdate.date) - DISTANCE_DATE &apos;23-го Января -- день перепроверки расстояний до источников
+	
+	getDistance = Format(r0 * (2 ^ (-1*( daysleft / (2*t_pol) ))), &quot;0.0&quot;
+end function	
+rem----------------------------------------------------------------
+&apos; В отличии от getDistance возвращает не само расстояние, а коэффициент, на которое нужно домножить R0, чтобы получить R
+&apos; Сделан, чтобы не засорять метод sourceDistanceArray, иначе получается длинная строка в кейзе: 
+&apos; с getDistance:  if point = 7 	then ar = dynDistanceAr(&quot;043&quot;, 351.3, mDate, CS_137_HALF_LIFE))
+&apos; с этим методом: if point = 7 	then ar = dynDistanceAr(&quot;043&quot;, 351.3, koef)
+&apos; в методе sourceDistanceArray вызывается в начале и присвается переменной koef
+&apos;	╔═══════════════════════════╗
+&apos;	║	k = 2^( -ΔT/ 2*Tpol )	║█
+&apos;	╚═══════════════════════════╝█
+&apos;	  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+function getDistanceKoef(mdate, t_pol) as double
+	dim DISTANCE_DATE as Date
+	DISTANCE_DATE = DateSerial (2025,8,29)
+	dim daysLeft as double
+	dim koef as double
+	dim i as integer
+	daysLeft = cdatefromiso(mdate.date) - DISTANCE_DATE &apos;23-го Января -- день перепроверки расстояний до источников
+	
+	koef = 2 ^ (-1.0*( daysleft/(2*t_pol) ) )
+	
+	getDistanceKoef = koef
+end function
+rem----------------------------------------------------------------
+&apos;Обертка, чтобв сократить строку:
+&apos; без обертки:  if point = 7 then ar = Array(&quot;043&quot;, Format(koef*351.3, &quot;0.0&quot;) — и это без замены &quot;,&quot; на &quot;.&quot;
+&apos; с оберткой: 	if point = 7 then ar = dynDistanceAr(&quot;043&quot;, 351.3, koef)
+function dynDistanceAr(name as string, dist as double, koef as double)
+	dim ar(1) as string
+	if name = &quot;&quot; then 
+		ar(0) = &quot;---&quot;
+		ar(1) = &quot;---&quot;
+	else
+		ar(0) = name
+		ar(1) = Math.round(dist*koef, 1) &apos;округление до 1 знака после запятой
+		ar(1) = Replace (ar(1),&quot;,&quot;,&quot;.&quot;) &apos;345,6 -&gt; 345.6
+		ar(1) = Format(ar(1), &quot;0.0&quot;) &apos;68 -&gt; 68.0	
+	endif
+	dynDistanceAr = ar
+end function
+
+</script:module>

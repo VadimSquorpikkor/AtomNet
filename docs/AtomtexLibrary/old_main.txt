@@ -1,0 +1,162 @@
+REM  *****  BASIC  *****
+
+'dim Sensor as new Sensor
+
+'dim oDialogMain as object 
+';dim oDialogMain as object 
+';global sertPath as String
+';global bgValue as double
+';global tempValue as double
+';global vlaghValue as double
+
+';const XPPath as string= &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
+';------------------------------------------------------------------------------------------------------------------------
+function userExists(user_name as String) as boolean
+	userExists = FileExists("c:\Users\" + user_name + "\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\" & "АТОМТЕХ.png")
+end function
+';------------------------------------------------------------------------------------------------------------------------
+function getPath(user_name as String)
+	getPath = "file:///c:\Users\" + user_name + "\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\"
+end function
+';------------------------------------------------------------------------------------------------------------------------
+Sub MainDialog_Show
+	dim user_name as String
+	dim serthPath as String
+	dim i as integer
+	dim users as new Collection
+'═══════════════════════════════════════════════════════════════════╗
+'		Список пользователь. Если надо добавить нового --   		║█
+'	просто добавить строчку users.add("ИМЯ_ПОЛЬЗОВАТЕЛЯ")			║█
+'																	║█
+	users.add("Serikov_VA")										'	║█
+	users.add("Squorpikkor")									'	║█
+	users.add("Krechko_AI")										'	║█
+	users.add("Kurbatova")										'	║█
+	users.add("Leshkevich_SV")									'	║█
+	users.add("Rusakevich_AV")									'	║█
+	users.add("Tarasenko_VV")									'	║█
+	users.add("Stsiapanau_MS")									'	║█
+																'	║█
+'═══════════════════════════════════════════════════════════════════╝█
+'▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+	sertPath = ""
+	i=0
+	while i<users.count
+		i=i+1
+		if userExists(users.item(i)) then
+			sertPath = getPath(users.item(i))
+			i = users.count
+		end if
+	wend
+   	
+   	'путь для XP 
+   	if FileExists(XPPath & "АТОМТЕХ.png") then sertPath=XPPath
+   	
+	if sertPath = "" then
+		InputVal = InputBox("Нет пользователя с таким именем! Для продолжения работы введите имя пользователя. Это сообщение будет появляться каждый раз при запуске макроса, пока пользователь не будет добавлен в список пользователей макроса", "Неизвестный пользователь", "Serikov_VA")
+		sertPath = getPath(InputVal)
+		if userExists(InputVal) then
+			startMacro(sertPath)
+		else	
+			msgbox "Некорректное имя пользователя!"
+		end if	
+	else
+		startMacro(sertPath)	
+	end if	
+		
+End sub
+rem-------------------------------------------------------------------------
+sub startMacro(sertPath as String)
+	DialogLibraries.LoadLibrary( "AtomtexLibrary" )
+	
+	Sensor.setValues
+	
+	bgValue = Sensor.getBackground
+	tempValue = Sensor.getTemperature
+	vlaghValue = Sensor.getHumidity
+			
+	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
+	oDialogMain.getControl("versionLabel").text = "Версия 2.85"
+	oDialogMain.Model.getByName("ImageControl1").ImageURL = sertPath & "АТОМТЕХ.png"
+	oDialogMain.Model.getByName("ImageControl2").ImageURL = sertPath & "elkaHalf.png"
+	oDialogMain.Execute()
+end sub
+rem-------------------------------------------------------------------------
+sub subInsertString(oDoc, sString, bReplace)
+	oVC = oDoc.getCurrentSelection
+	xText.insertString( xTextCursor, "more text ...", false )
+end sub
+
+rem-------------------------------------------------------------------------
+Function MySubstitute(sText1 as string, sText2 as string, sText3 as string) as string
+   FuncAcc = createunoservice("com.sun.star.sheet.FunctionAccess")
+   MySubstitute = FuncAcc.callFunction("SUBSTITUTE", array(sText1,sText2,sText3))
+End function
+rem-------------------------------------------------------------------------
+Function ComboItemPosition(ComboBox as variant)
+   For x = 0 to ComboBox.ItemCount - 1
+      If ComboBox.Items(x) = ComboBox.Text Then
+         ComboItemPosition = x
+      end if
+   next x
+end Function
+
+sub sharpFunction
+	MsgBox getLibraryLinkUrl("AtomtexLibrary")
+end sub
+
+
+rem================standard methods from oo=====================
+'Retrieves the mere filename out of a whole path
+Function FileNameoutofPath(ByVal Path as String, Optional Separator as String) as String
+Dim i as Integer
+Dim SepList() as String
+	If IsMissing(Separator) Then
+		Path = ConvertFromUrl(Path)
+		Separator = GetPathSeparator()		
+	End If
+	SepList() = ArrayoutofString(Path, Separator,i)
+	FileNameoutofPath = SepList(i)
+End Function
+
+
+Function GetFileNameExtension(ByVal FileName as String)
+Dim MaxIndex as Integer
+Dim SepList() as String
+	SepList() = ArrayoutofString(FileName,".", MaxIndex)
+	GetFileNameExtension = SepList(MaxIndex)
+End Function
+
+
+Function GetFileNameWithoutExtension(ByVal FileName as String, Optional Separator as String)
+Dim MaxIndex as Integer
+Dim SepList() as String
+	If not IsMissing(Separator) Then
+		FileName = FileNameoutofPath(FileName, Separator)
+	End If
+	SepList() = ArrayoutofString(FileName,".", MaxIndex)
+	GetFileNameWithoutExtension = RTrimStr(FileName, "." & SepList(MaxIndex)
+End Function
+
+
+Function DirectoryNameoutofPath(sPath as String, Separator as String) as String
+Dim LocFileName as String
+	LocFileName = FileNameoutofPath(sPath, Separator)
+	DirectoryNameoutofPath = RTrimStr(sPath, Separator & LocFileName)
+End Function
+
+sub generateMath
+	OpenTemplate(sertPath & "math.odt")
+	dim a, b, c, d, fst, sec as integer
+	for i=1 to 80
+		a=int(rnd()*7+2) 
+		b=int(rnd()*7+1)	
+		c=int(rnd()*(a-1)+1)	
+		d=int(rnd()*(8-b) +(b+1))
+	
+		fst=a*10+b
+		sec=c*10+d
+	
+		findAndRename("$math"+i+"$", ""+fst+" – "+sec+" = ")
+	next i
+end sub

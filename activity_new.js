@@ -147,7 +147,7 @@ function insertDistanceCalculator() {
         '           </tr>'+
         '           <tr><td colSpan="3" style="border:none"><hr color="ff6633"></td></tr>'+
         /*как будет отображаться МД; как будет отображаться имя источника; R0;  коэффициент, на который домножить, чтобы получить расстояние на текущий день*/
-        getDistanceStroke("0.7 мкЗв/ч", "28C", 263,184, koefCs) +
+        getDistanceStroke("0.7 мкЗв/ч", "28C", 263.184, koefCs) +
         getDistanceStroke("7 мкЗв/ч",   "28C", 84.435,  koefCs) +
         getDistanceStroke("70 мкЗв/ч",  "39T", 215.727, koefCs) +
         getDistanceStroke("0.7 мЗв/ч",  "39T", 69.072,  koefCs) +

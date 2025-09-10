@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M2140" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogAT2140 as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOptionAT2140 as object
+dim oOptionAT2140a as object
+dim oOptionAT2140a_1 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+dim points_count as integer
+dim Math as new AtomMath
+rem---------------------------------------------------------------------------------------------------------
+Sub AT2140_Dialog_Show
+	points_count = 6
+	maxBDCount = 100 &apos;В принципе ограничено только ресурсами компа, времени и integer. Поставил 100 просто для красоты
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogAT2140 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D2140 )
+	oListBox = oDialogAT2140.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialogAT2140, oDateFieldModel, &quot;Версия 1.08 &quot;, oListBox, points_count)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	
+	oOptionAT2140 = oDialogAT2140.getControl(&quot;isAT2140&quot;)
+	oOptionAT2140a = oDialogAT2140.getControl(&quot;isAT2140a&quot;)
+	oOptionAT2140a_1 = oDialogAT2140.getControl(&quot;isAT2140a_1&quot;)
+	oOptionAT2140.State = 1
+	isComboCollection.add(oOptionAT2140)
+	oDialogAT2140.getControl(&quot;addButton&quot;).setEnable(true)
+
+	oDialogAT2140.Model.getByName(&quot;Image&quot;).ImageURL = sertPath &amp; &quot;imgs\2140.png&quot;
+		
+	oDialogMain.endexecute()   
+	oDialogAT2140.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogAT2140.getControl(&quot;addButton&quot;).setEnable(true)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	&apos;if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if oOptionAT2140.state 		then bd.addData2(&quot;AT2140&quot; , 	&quot;AT2140&quot;,		&quot;Зв/ч&quot;, Array(0.7,7,70,700,7),		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;), 	&quot;gamma&quot;, Array(0.1,10),		15)
+	if oOptionAT2140a.state 	then bd.addData2(&quot;AT2140A&quot; , 	&quot;AT2140A&quot; , 	&quot;Зв/ч&quot;, Array(0.7,7,70,700,7,70),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,100),	15)
+	if oOptionAT2140a_1.state 	then bd.addData2(&quot;AT2140A/1&quot; , 	&quot;AT2140A/1&quot; , 	&quot;Зв/ч&quot;, Array(0.7,7,70,700,7,70),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;, Array(0.1,100),	15)
+	
+	oDialogAT2140.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialogAT2140.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialogAT2140.getControl(&quot;bdSerial&quot;))
+
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	makeSimpleLayoutFromBD_2140(BDList.item(layoutPosition))
+	
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+	if oListBox.getItemCount()&lt;&gt;0 then makeSimpleLayoutFromBD_2140(BDList.item(layoutPosition))
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Overall.listBoxListener(layoutPosition)
+	makeSimpleLayoutFromBD_2140(BDList.item(layoutPosition))
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.showNextBD(layoutPosition)
+	makeSimpleLayoutFromBD_2140(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.showPrevBD(layoutPosition)
+	makeSimpleLayoutFromBD_2140(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	Overall.saveCurentBDValue(layoutPosition)
+
+	if oOptionAT2140.state     then path = Overall.getPathAndSetName(&quot;2140\2140&quot;,  &quot;AT2140&quot;)
+	if oOptionAT2140a.state    then path = Overall.getPathAndSetName(&quot;2140\2140a&quot;, &quot;AT2140А&quot;)
+	if oOptionAT2140a_1.state  then path = Overall.getPathAndSetName(&quot;2140\2140a&quot;, &quot;AT2140А/1&quot;)
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	Overall.CreateTablesFromTemplate(BDList.count)
+	
+	findAndRename(&quot;$type&quot;, BDList.item(1).getName)
+	findAndRename(&quot;$min_limit&quot;, BDList.item(1).minLimit)
+	findAndRename(&quot;$max_limit&quot;, BDList.item(1).maxLimit)
+	
+	dim ar(9) as double
+	for i=1 to BDList.count
+		ar = Math.avaragePointsRndTenArray(BDList.item(i).valueList.item(1), Overall.percentOTK)	
+		findAndRename(&quot;$&quot;+i+&quot;-6a&quot;, ar(0))
+		findAndRename(&quot;$&quot;+i+&quot;-6b&quot;, ar(1))
+		findAndRename(&quot;$&quot;+i+&quot;-6c&quot;, ar(2))
+		findAndRename(&quot;$&quot;+i+&quot;-6d&quot;, ar(3))
+		findAndRename(&quot;$&quot;+i+&quot;-6e&quot;, ar(4))
+		findAndRename(&quot;$&quot;+i+&quot;-6f&quot;, ar(5))
+		findAndRename(&quot;$&quot;+i+&quot;-6g&quot;, ar(6))
+		findAndRename(&quot;$&quot;+i+&quot;-6h&quot;, ar(7))
+		findAndRename(&quot;$&quot;+i+&quot;-6i&quot;, ar(8))
+		findAndRename(&quot;$&quot;+i+&quot;-6j&quot;, ar(9))
+		Overall.insertToTemplateStep(i)
+	next i
+	
+	Overall.setClipboard(&quot;$allSerial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos; после вызова Overall.makeLayoutFromBD запускается этот метод, чтобы скорректировать Step и Accuracy — эти параметры для 2140 отличаются от стандартных
+sub makeSimpleLayoutFromBD_2140(bd as new DUnit)
+	dim i as integer
+	dim point, nStep, value as double
+	dim MyFormat as string
+	for i=1 to bd.valueList.count
+		point = bd.pointList.item(i)
+		nStep = Overall.rightStep2140(point)
+		value = bd.valueList.item(i)
+		MyFormat = Overall.getRightFormat(point)
+	
+		oDialogAT2140.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(0, 0, 0)
+		oDialogAT2140.getControl(&quot;ValueField&quot; + i).Text = Format(value, MyFormat)
+		oDialogAT2140.Model.getByName(&quot;ValueField&quot; + i).valueStep = nStep
+		oDialogAT2140.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = Overall.rightDecimalAccuracy(MyFormat)
+		oDialogAT2140.getControl(&quot;Label&quot; + i).Text = &quot; &quot; + Format(point, Overall.getRightFormat(point)) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+	next i
+end sub
+</script:module>

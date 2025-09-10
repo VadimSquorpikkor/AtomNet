@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G23N" script:language="StarBasic">REM  *****  BASIC  *****
+
+&apos;------------------------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogG23N as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionBDKG22 as object
+dim oOptionBDKG23 as object
+dim oOptionBDKG231 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim path as string	
+dim isComboCollection as new Collection
+dim serial_22, serial_23, serial_231 as integer
+&apos;------------------------------------------------------------------------------------------------------------------------
+Sub G23N_Dialog_Show
+	maxBDCount = 50
+	maxPointCount = 9
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG23N = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_G23N )
+	oListBox = oDialogG23N.getControl(&quot;bdListBox&quot;)	
+	Overall.dialogShowInitialize(maxBDCount, oDialogG23N, oDateFieldModel, &quot;Версия 3.07 &quot;, oListBox, maxPointCount)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	Overall.setButtonVisibility(layoutPosition)
+	
+	oOptionBDKG22  = oDialogG23N.getControl(&quot;isBDKG22&quot;)
+	oOptionBDKG23  = oDialogG23N.getControl(&quot;isBDKG23&quot;)
+	oOptionBDKG231 = oDialogG23N.getControl(&quot;isBDKG231&quot;)
+	oOptionBDKG22.State = 1
+	isComboCollection.add(oOptionBDKG22)
+	isComboCollection.add(oOptionBDKG23)
+	isComboCollection.add(oOptionBDKG231)
+	
+	serial_22  = 114
+	serial_23  = 222
+	serial_231 = 50
+	oDialogG23N.getControl(&quot;bdSerial&quot;).text = serial_22
+	
+	oDialogMain.endexecute()   
+	oDialogG23N.Execute()
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogG23N.getControl(&quot;bdSerial&quot;))
+end sub	
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+	
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	if oOptionBDKG22.state then bd.addData2(&quot;БДКГ-22&quot; , 	&quot;BDKG-22&quot;, 	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.1,10000),	20) rem TODO уточнить границы
+	if oOptionBDKG23.state then bd.addData2(&quot;БДКГ-23&quot; , 	&quot;BDKG-23&quot;, 	&quot;Гр/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7,40),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma-Gy&quot;, Array(0.1,10000),	20) rem TODO уточнить границы
+	if oOptionBDKG231.state then bd.addData2(&quot;БДКГ-23/1&quot;,	&quot;BDKG-23/1&quot;,&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7,40),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;), &quot;gamma&quot;,	Array(0.1,10000),	20) rem TODO уточнить границы
+	
+	bd.setSerial(Overall.integerTo3String(oDialogG23N.getControl(&quot;bdSerial&quot;).text))
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialogG23N.getControl(&quot;bdSerial&quot;))
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+end Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	Overall.saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	Overall.setButtonVisibility(layoutPosition)
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	Overall.setButtonVisibility(layoutPosition)
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	if oOptionBDKG22.state  then path = Overall.getPathAndSetName(&quot;bdkg22-23\bdkg22&quot;, &quot;БДКГ-22&quot;)
+	if oOptionBDKG23.state  then path = Overall.getPathAndSetName(&quot;bdkg22-23\bdkg23&quot;, &quot;БДКГ-23&quot;)
+	if oOptionBDKG231.state then path = Overall.getPathAndSetName(&quot;bdkg22-23\bdkg231&quot;, &quot;БДКГ-23-1&quot;)
+	Overall.createCertificate(layoutPosition, path)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub setSerialNumberToForm
+	if oOptionBDKG22.state  then oDialogG23N.getControl(&quot;bdSerial&quot;).text = Overall.integerTo3String(serial_22)
+	if oOptionBDKG23.state  then oDialogG23N.getControl(&quot;bdSerial&quot;).text = Overall.integerTo3String(serial_23)
+	if oOptionBDKG231.state then oDialogG23N.getControl(&quot;bdSerial&quot;).text = Overall.integerTo3String(serial_231)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+</script:module>

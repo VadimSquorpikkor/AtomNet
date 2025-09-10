@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="_src" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim oDialogSources as object
+dim oDateFieldModel as object
+dim Overall as new Overall
+&apos;------------------------------------------------------------------------------------------------------------------------
+Sub Sources_Dialog_Show
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogSources = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_SRC )
+	oDateFieldModel = oDialogSources.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+		
+	oDialogSources.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.00 &quot;
+	
+	oDialogMain.endexecute()   
+	oDialogSources.Execute()
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	dim i as integer
+	dim s as new RASrc
+	dim MyFormat as string
+	i=1
+	MyFormat = &quot;0.00&quot;
+	
+	OpenTemplate(sertPath &amp; &quot;sources.odt&quot;) 
+	
+	findAndRename(&quot;$date&quot;, getDate(oDateFieldModel))
+        
+    while i&lt;=Activity.betaSrcMap.count
+    	s = Activity.betaSrcMap.item(i)
+  		findAndRename(&quot;$&quot;+i+&quot;-10&quot;, s.getName)
+  		findAndRename(&quot;$&quot;+i+&quot;-20&quot;, s.getPovDate)
+  		findAndRename(&quot;$&quot;+i+&quot;-30&quot;, s.getA0)
+  		findAndRename(&quot;$&quot;+i+&quot;-40&quot;, s.getP0)
+  		findAndRename(&quot;$&quot;+i+&quot;-50&quot;, s.getS)
+  		findAndRename(&quot;$&quot;+i+&quot;-60&quot;, Format(s.getActivity(oDateFieldModel), MyFormat))
+  		findAndRename(&quot;$&quot;+i+&quot;-70&quot;, Format(s.getSurActivity(oDateFieldModel), MyFormat))
+  		findAndRename(&quot;$&quot;+i+&quot;-80&quot;, Format(s.getFDensity(oDateFieldModel), MyFormat))
+  		findAndRename(&quot;$&quot;+i+&quot;-90&quot;, Format(s.getFDensityB3(oDateFieldModel), MyFormat))
+		i = i+1
+	wend
+	
+	for j=i to 20
+		for k=1 to 9
+		findAndRename(&quot;$&quot;+j+&quot;-&quot;+k+&quot;0&quot;, &quot;&quot;)
+		next k
+	next j
+		
+	oDialogSources.endexecute()
+	msgbox &quot;Готово!&quot;
+end sub
+</script:module>

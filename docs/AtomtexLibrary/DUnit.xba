@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="DUnit" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _BDname As String
+private _BDnameEn As String
+private _measUnit As String
+private _pointValue as new Collection
+private _pointText as new Collection
+private _BDType as string
+private _measLimit(1) as double
+private _measMinLimit as double
+private _measMaxLimit as double
+private _isPrintable as boolean
+private _measuredValue as new Collection &apos;0.71, 6.9, 75
+private _pointCount as integer
+private _emptyCollection as new Collection
+private _relativeError as new Collection
+private _confidenceLimit as new Collection
+private _gradValue as integer
+private _serial as string
+private _betaSources as new Collection
+private _betaValues as new Collection
+private _betaPoints as new Collection
+private _measuredMultiValue as new Collection &apos;(0.71, 0.69, 0.75) (7.2, 6.8, 7.0) (69, 71, 71) 
+private _dose as double
+private _isAlternativePoints as boolean
+&apos;private _sourceNameList as new Collection
+private _doseArray(2) as double
+private _bdTypeArray as new Collection
+private _altValueList as new Collection
+private _bdBackground as double &apos;фон для каждого БД -- в протоколе для каждого БД будет свой фон, а не общий, как в шапке протокола
+private _relLimit as double &apos;погрешность измерения (%)
+
+private _alphaSources as new Collection
+private _alphaValues as new Collection
+private _alphaPoints as new Collection
+private _altAlphaValueList as new Collection
+
+REM --- CONSTRUCTORS / DESTRUCTORS                                                                    
+Private Sub Class_Initialize()
+	
+End Sub
+
+Private Sub Class_Terminate()
+end sub
+
+rem отличие от addData заключается в единственном -- у каждой точки меряется не одно значение (measuredValue), а несколько, соответственно вместо коллекции значений используется коллекция коллекции (2-мерный массив типа) 
+public sub addDataWithMultiPoint(ByVal BDname as string, ByVal multiMeasCount as variant, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	dim arr(0) as double
+	dim ar2(0) as double
+	dim ar3(1) as double
+	dim ar4(0) as double
+	_BDname = BDname
+	_measUnit = measUnit
+	_BDType = BDType
+	arr = pointValue
+	ar2 = pointText
+	ar3 = measLimit
+	ar4 = multiMeasCount &apos;Array(3, 3, 3) 
+	_measMinLimit = ar3(0)
+	_measMaxLimit = ar3(1)
+	dim i as integer
+	dim j as integer
+	for i=0 to uBound(arr)
+		dim ar5 as new Collection
+		_pointValue.add(arr(i))
+		_pointText.add(ar2(i))
+		
+		for j=1 to ar4(i) &apos;от 0 до количества измерений для данной точки -- берется в массиве multiMeasCount
+			&apos;msgbox &quot;&quot; + arr(i) + &quot; &quot; + ar4(i)
+			&apos;msgbox &quot;&quot; + arr(i)
+			ar5.add(arr(i))
+		next j
+		_measuredMultiValue.add(ar5)	
+	next i
+	_pointCount = uBound(arr)+1
+	_dose = 0 
+end sub
+
+&apos;для приборов с альа/бета/гамма (6131B например)
+public sub addDataWithBetaAlpha(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant, ByVal alphaSources as variant)
+	addDataWithSrc(BDname, measUnit, pointValue, pointText, BDType, measLimit, betaSources)
+	dim arr(0) as double
+	arr = alphaSources
+	dim i as integer
+	for i=0 to uBound(arr)
+		_alphaSources.add(arr(i))
+		_altAlphaValueList.add(arr(i))
+		_alphaValues.add(0)
+	next i
+	_alphaSources.count
+end sub
+
+public sub addDataWithSrc(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal betaSources as variant)
+	addData(BDname, measUnit, pointValue, pointText, BDType, measLimit)
+	dim arr(0) as double
+	arr = betaSources
+	dim i as integer
+	for i=0 to uBound(arr)
+		_betaSources.add(arr(i))
+		_altValueList.add(arr(i))
+		_betaValues.add(0)
+	next i
+	_betaSources.count
+end sub
+
+
+rem BDname -- &quot;БДКГ-02&quot;
+rem measUnit -- &quot;Зв/ч&quot;
+rem pointValue -- контрольные точки: Array(0.07,0.7,7,70,0.7,7,70,0.7,7)
+rem pointText -- текст перед ед. измерения, а также множитель для точек (&quot;мк&quot;, &quot;м&quot;...)
+rem BDType -- тип измер (альфа/бета и т.д.)
+rem measLimit -- предел измерений (для гаммы -- от(мк) - до(м)) 
+
+REM --- CLASS METHODS
+Public Sub addData(ByVal BDname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	dim arr(0) as double
+	dim ar2(0) as double
+	dim ar3(1) as double
+	_BDname = BDname
+	_measUnit = measUnit
+	_BDType = BDType
+	arr = pointValue
+	ar2 = pointText
+	ar3 = measLimit
+	_measMinLimit = ar3(0)
+	_measMaxLimit = ar3(1)
+	dim i as integer
+	for i=0 to uBound(arr)
+		_pointValue.add(arr(i))
+		_pointText.add(ar2(i))
+		_measuredValue.add(arr(i))
+		_altValueList.add(arr(i))
+	next i
+	_pointCount = uBound(arr)+1
+	_gradValue = 10000
+	_isAlternativePoints = false
+	&apos;msgbox &quot;adddata - &quot; + BDName
+	rem msgbox _pointValue.item(2)
+End Sub
+
+&apos; bd.addData(&quot;БДКГ-02&quot; ,   &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7,7),	  Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma&quot;, Array(0.1,10000))
+Public Sub addData2(ByVal BDname as string, ByVal BDnameEn as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal relLimit as double)
+	dim arr(0) as double
+	dim ar2(0) as double
+	dim ar3(1) as double
+	_BDname = BDname
+	_BDnameEn = BDnameEn
+	_measUnit = measUnit
+	_BDType = BDType
+	arr = pointValue
+	ar2 = pointText
+	ar3 = measLimit
+	_measMinLimit = ar3(0)
+	_measMaxLimit = ar3(1)
+	dim i as integer
+	for i=0 to uBound(arr)
+		_pointValue.add(arr(i))
+		_pointText.add(ar2(i))
+		_measuredValue.add(arr(i))
+		_altValueList.add(arr(i))
+	next i
+	_pointCount = uBound(arr)+1
+	_gradValue = 10000
+	_isAlternativePoints = false
+	&apos;msgbox &quot;adddata - &quot; + BDName
+	rem msgbox _pointValue.item(2)
+	_relLimit = relLimit
+End Sub
+
+REM --- CLASS GET/LET/SET PROPERTIES                                                                 
+Public Property Get isPrintable As boolean
+   isPrintable = _isPrintable
+End Property
+
+Public Property Let isPrintable(ByVal pValue As boolean)
+   _isPrintable = pValue
+End property
+
+public function getBetaSources as Collection
+	getBetaSources = _betaSources
+end function
+
+public function getBetaValues as Collection
+	getBetaValues = _betaValues
+end function
+
+public function getBetaPoints as Collection
+	getBetaPoints = _betaPoints
+end function
+
+public function setBetaPoints(points as Collection)
+	_betaPoints = points
+end function
+
+public function setBetaValues(betaValues as Collection)
+	_betaValues = betaValues
+end function
+
+public function getMultiValueList as Collection  &apos;(0.71, 0.69, 0.75) (7.2, 6.8, 7.0) (69, 71, 71)
+	getMultiValueList = _measuredMultiValue
+end function
+
+public function setMultiValueList(pointList as Collection)
+	_measuredMultiValue = pointList
+end function
+
+public function setDose(dose as double)
+	_dose = dose
+end function
+  
+public function getDose()
+	getDose = _dose
+end function
+
+
+
+
+public function getAlphaSources as Collection
+	getAlphaSources = _alphaSources
+end function
+
+public function getAlphaValues as Collection
+	getAlphaValues = _alphaValues
+end function
+
+public function getAlphaPoints as Collection
+	getAlphaPoints = _alphaPoints
+end function
+
+public function setAlphaPoints(points as Collection)
+	_alphaPoints = points
+end function
+
+public function setAlphaValues(alphaValues as Collection)
+	_alphaValues = alphaValues
+end function
+
+public function setAlphaAltList(list as Collection)
+	_altAlphaValueList = list
+end function
+
+
+
+public function setBdTypeArray(points as Collection)&apos;gamma, gamma, gamma007
+	_bdTypeArray = points
+end function
+
+public function getBdTypeArray()
+	BdTypeArray = _bdTypeArray
+end function
+
+public function setDoseArray(p1 as double, p2 as double, p3 as double)&apos;для 3509 и 2503 -- накопленная доза (три точки)
+	dim arr(2) as double
+	&apos;_doseArray(0) = p1 &apos;так не работает!!!
+	&apos;_doseArray(1) = p2
+	&apos;_doseArray(2) = p3
+	arr(0) = p1
+	arr(1) = p2
+	arr(2) = p3
+	_doseArray = arr
+	&apos;msgbox &quot;set!!!-&quot;+_doseArray(0)+&quot; &quot;+_doseArray(1)+&quot; &quot;+_doseArray(2) + &quot; &quot; + _serial
+end function
+
+public function getDoseArray()
+	getDoseArray = _doseArray
+end function
+
+
+public function setAlternative(state as boolean)
+	_isAlternativePoints = state
+end function
+
+public function isAlternativePoints as boolean
+	isAlternativePoints = _isAlternativePoints
+end function
+
+public function setAltList(list as Collection)
+	_altValueList = list
+end function
+
+public function getAltList as Collection
+	getAltList = _altValueList
+end function
+
+Public Function BDName As string
+   BDName = _BDName
+   &apos;msgbox &quot;getter - &quot; + BDName
+End Function
+
+Public Function getName As string &apos;то же самое, но с нормальным именем
+   getName = _BDName
+End Function
+
+Public Function getSerial As string
+   getSerial = _serial
+End Function
+
+Public Function setSerial(serial As string)
+   _serial = serial
+End Function
+
+Public Function measUnit As string
+   measUnit = _measUnit
+End Function
+
+Public Function measUnitEn As string
+   measUnitEn = ruToEn(_measUnit)
+End Function
+
+Public Function BDType As string
+   BDType = _BDType
+End Function
+Public Function getType As string
+   getType = _BDType
+End Function
+
+Public Function pointCount As integer
+   pointCount = _pointCount
+End Function
+
+rem Список контрольных точек (0.7, 7, ...)
+Public Function pointList As Collection
+   pointList = _pointValue
+End Function
+Public Function getPointList As Collection
+   getPointList = _pointValue
+End Function
+
+
+rem Список префиксов контрольных точек (&quot;мк&quot;, &quot;м&quot;, ...)
+Public Function pointTextList As Collection
+   pointTextList = _pointText
+End Function
+Public Function getPointTextList As Collection
+   getPointTextList = _pointText
+End Function
+rem Список префиксов контрольных точек на английском (&quot;µ&quot;, &quot;m&quot;, ...)
+Public Function getPointTextListEn As Collection
+	dim newList as new Collection
+	for i=1 to _pointCount
+		newList.add(ruToEn(_pointText.item(i)))
+	next i
+   	getPointTextListEn = newList
+End Function
+
+function ruToEn(ru as string)
+	select case ru
+	case &quot;Зв&quot; 
+		ruToEn = &quot;Sv&quot;
+	case &quot;н&quot; 
+		ruToEn = &quot;n&quot;	
+	case &quot;м&quot; 
+		ruToEn = &quot;m&quot;	
+	case &quot;мк&quot; 
+		ruToEn = &quot;µ&quot;	
+	case &quot;Зв/ч&quot; 
+		ruToEn = &quot;Sv/h&quot;
+	end select
+end function
+
+Public Function setPointTextList(p_Array as Collection)
+   _pointText = p_Array
+End Function
+
+public function setValueList(measuredValue as Collection)
+	_measuredValue = measuredValue
+end function
+
+public function setPointList(pointValue as Collection)
+	_pointValue = pointValue
+end function
+
+rem список измеренных значений (0.67, 73, ...)
+public function valueList as Collection
+	&apos;dim valueList(8) as double
+	valueList = _measuredValue
+end function
+public function getValueList as Collection
+	getValueList = _measuredValue
+end function
+
+public function minLimit as double
+	minLimit = _measMinLimit
+end function
+
+public function maxLimit as double
+	maxLimit = _measMaxLimit
+end function
+
+public function setGradValue(gradValue as integer)
+	_gradValue = gradValue
+end function
+
+public function getGradValue
+	getGradValue = _gradValue
+end function
+
+public function setBdBackground(value as double)
+	_bdBackground = value
+end function
+
+public function getBdBackground
+	getBdBackground = _bdBackground
+end function
+
+public function getRelLimit
+	getRelLimit = _relLimit
+end function
+
+rem ВСЁ ЧТО ДАЛЬШЕ НЕ НУЖНО
+rem=======================================================================================
+&apos;function otn_pogreshnost(meas as double, contr_point as double)
+&apos;	otn_pogreshnost = ((meas - contr_point) / contr_point) * 100
+&apos;end function
+rem=======================================================================================
+&apos;function dov_granica(pogr as double, percent as integer)
+&apos;	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+&apos;end function
+rem=======================================================================================
+
+rem относительная погрешность измерения
+&apos;public function getRelativeError as Collection
+&apos;	dim i as integer
+&apos;	for i=1 to _pointValue.count
+&apos;		_relativeError.add (otn_pogreshnost(_measuredValue.item(i), _pointValue.item(i)))
+&apos;	next i
+&apos;	getRelativeError = _relativeError
+&apos;end function
+
+rem доверительная граница для 110 и 130 поверочной установки -- только для гамма (для БДКН и БДПА/Б результат не предсказуем)
+&apos;public function getConfidenceLimit as Collection
+&apos;	dim percent as integer
+&apos;	dim i as integer
+&apos;	for i=1 to _pointValue.count
+&apos;		if AbsoluteValue(_pointValue.item(i), _pointText.item(i))&lt;1000 then
+&apos;		percent = 5
+&apos;		else
+&apos;		percent = 4
+&apos;		end if
+&apos;		_confidenceLimit.add (dov_granica(_relativeError.item(i), percent))
+&apos;	next i
+&apos;	getConfidenceLimit = _confidenceLimit
+&apos;end function
+
+</script:module>

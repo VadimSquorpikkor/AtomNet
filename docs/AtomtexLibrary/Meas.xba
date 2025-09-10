@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Meas" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+private _name as string
+private _serl as string
+private _herm as string
+private _cont as string
+private _meas as string
+private _date as string
+
+public function getName As string
+   getName = _name
+End function
+public function getSerial As string
+   getSerial = _serl
+End function
+public function getResult As string
+   getResult = _herm
+End function
+public function getControl As string
+   getControl = _cont
+End function
+public function getMeasured As string
+   getMeasured = _meas
+End function
+public function getDate As string
+   getDate = _date
+End function
+
+public sub newMeasurement(ByVal nName as string, ByVal nSerial as string, ByVal nResult as string, ByVal nControl as string, ByVal nMeasured as string, ByVal nDate as string)
+	_name = nName
+	_serl = nSerial
+	_herm = nResult
+	_cont = nControl
+	_meas = nMeasured
+	_date = nDate
+end sub
+
+</script:module>

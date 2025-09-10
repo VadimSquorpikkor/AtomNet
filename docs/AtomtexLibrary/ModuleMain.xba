@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ModuleMain" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim Sensor as new Sensor
+
+dim oDialogMain as object 
+global sertPath as String
+global bgValue as double
+global tempValue as double
+global vlaghValue as double
+dim userName as String
+dim currentVersion as double
+const XPPath as string= &quot;file:///C:\Users\Public\Documents\AtomtexLibrary\sert_template\&quot;
+&apos;------------------------------------------------------------------------------------------------------------------------
+function userExists(user_name as String) as boolean
+	userExists = FileExists(&quot;c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot; &amp; &quot;АТОМТЕХ.png&quot;)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getPath(user_name as String)
+	getPath = &quot;file:///c:\Users\&quot; + user_name + &quot;\AppData\Roaming\OpenOffice\4\user\basic\AtomtexLibrary\sert_template\&quot;
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+Sub MainDialog_Show
+	&apos;BasicLibraries.loadLibrary(&quot;XrayTool&quot;)
+	&apos;xray thisComponent
+	dim user_name as String
+	dim serthPath as String
+	dim i as integer
+	dim users as new Collection
+&apos;═══════════════════════════════════════════════════════════════════╗
+&apos;		Список пользователь. Если надо добавить нового --   		║█
+&apos;	просто добавить строчку users.add(&quot;ИМЯ_ПОЛЬЗОВАТЕЛЯ&quot;)			║█
+&apos;	там внизу ещё в setUserName добавить надо						║█
+																&apos;	║█
+	currentVersion = 4.07										&apos;	║█
+																&apos;	║█
+	users.add(&quot;Serikov_VA&quot;)										&apos;	║█
+	users.add(&quot;Squorpikkor&quot;)									&apos;	║█
+	users.add(&quot;Krechko_AI&quot;)										&apos;	║█
+	users.add(&quot;Kurbatova&quot;)										&apos;	║█
+	users.add(&quot;Leshkevich_SV&quot;)									&apos;	║█
+	users.add(&quot;Rusakevich_AV&quot;)									&apos;	║█
+	users.add(&quot;Tarasenko_VV&quot;)									&apos;	║█
+	users.add(&quot;Stsiapanau_MS&quot;)									&apos;	║█
+	users.add(&quot;Germanenko_II&quot;)									&apos;	║█
+	users.add(&quot;Feklenkova_PA&quot;)									&apos;	║█
+	users.add(&quot;Karuk_IA&quot;)   									&apos;	║█
+	users.add(&quot;Bohush_SG&quot;)   									&apos;	║█
+	users.add(&quot;Vialutsich_ES&quot;) 									&apos;	║█
+	users.add(&quot;Sidorenko_AA&quot;)  									&apos;	║█
+&apos;═══════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+
+
+
+	userName = &quot;Неизвестный&quot;
+	sertPath = &quot;&quot;
+	i=0
+	while i&lt;users.count
+		i=i+1
+		if userExists(users.item(i)) then
+			sertPath = getPath(users.item(i))
+			setUserName(users.item(i))
+			i = users.count
+		end if
+	wend
+   	
+   	&apos;путь для XP 
+   	if FileExists(XPPath &amp; &quot;АТОМТЕХ.png&quot;) then sertPath=XPPath
+   	
+	if sertPath = &quot;&quot; then
+		InputVal = InputBox(&quot;Нет пользователя с таким именем! Для продолжения работы введите имя пользователя. Это сообщение будет появляться каждый раз при запуске макроса, пока пользователь не будет добавлен в список пользователей макроса&quot;, &quot;Неизвестный пользователь&quot;, &quot;Serikov_VA&quot;)
+		sertPath = getPath(InputVal)
+		if userExists(InputVal) then
+			startMacro(sertPath)
+		else	
+			msgbox &quot;Некорректное имя пользователя!&quot;
+		end if	
+	else
+		startMacro(sertPath)	
+	end if	
+		
+End sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub startMacro(sertPath as String)
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	
+	
+	On Error Goto ErrorHandler
+	Sensor.setValues
+	Sensor.getVersionFromFile
+	
+	bgValue = Sensor.getBackground
+	tempValue = Sensor.getTemperature
+	vlaghValue = Sensor.getHumidity
+			
+	oDialogMain = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DialogMain )
+	&apos;oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия &quot; &amp; Format(currentVersion, &quot;0.00&quot;)
+	oDialogMain.getControl(&quot;versionLabel&quot;).text = &quot;Версия &quot; &amp; currentVersionToString(currentVersion)
+	
+	&apos;msgbox &quot;&quot;+Sensor.getAvalableVersion
+	&apos;msgbox &quot;&quot;+currentVersion
+	if Sensor.getAvalableVersion &gt; currentVersion then oDialogMain.getControl(&quot;newVersionLabel&quot;).text = &quot;На FILESERVER доступна новая версия &quot; &amp; currentVersionToString(Sensor.getAvalableVersion)
+	
+	oDialogMain.getControl(&quot;bgLabel&quot;).text = &quot;Фон: &quot; + Format(bgValue, &quot;0.0&quot;) + &quot; нЗв/ч&quot;
+	oDialogMain.getControl(&quot;tempLabel&quot;).text = &quot;Темп: +&quot; + Format(tempValue, &quot;0.0&quot;) + &quot; С&quot;
+	oDialogMain.getControl(&quot;humLabel&quot;).text = &quot;Влажн: &quot; + Format(vlaghValue, &quot;0.0&quot;) + &quot; %&quot;
+	
+	oDialogMain.Model.getByName(&quot;CommandButton1117&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;1117s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton1125&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;1125s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton1103&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;1121s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton6131&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;6131s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton6130&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;6130s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButtonBDKN&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;BDKNs.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton02&quot;).ImageURL   = sertPath &amp; &quot;imgs/&quot; &amp; &quot;02s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton920&quot;).ImageURL  = sertPath &amp; &quot;imgs/&quot; &amp; &quot;MRPs.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButtonPRL&quot;).ImageURL  = sertPath &amp; &quot;imgs/&quot; &amp; &quot;PORTALs.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton22&quot;).ImageURL   = sertPath &amp; &quot;imgs/&quot; &amp; &quot;BDKG-22s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton25&quot;).ImageURL   = sertPath &amp; &quot;imgs/&quot; &amp; &quot;25s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton224&quot;).ImageURL  = sertPath &amp; &quot;imgs/&quot; &amp; &quot;224s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton2503&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;2503s.png&quot;
+	oDialogMain.Model.getByName(&quot;CommandButton3509&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;3509s.png&quot;	
+	oDialogMain.Model.getByName(&quot;CommandButton2140&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;2140s.png&quot;
+	
+	oDialogMain.Model.getByName(&quot;ImageControlHEAD&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp; &quot;MAIN_FORM_8.png&quot;
+	oDialogMain.Model.getByName(&quot;ImageControlLOGO&quot;).ImageURL = sertPath &amp; &quot;imgs/&quot; &amp;&quot;logo.png&quot;
+	
+	oDialogMain.getControl(&quot;LabelNAME&quot;).text = userName
+
+	initSources()
+
+	oDialogMain.Execute()
+	Exit sub
+	ErrorHandler:
+	msgbox &quot;Что-то пошло не так. Попробуйте ещё раз&quot;
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub setUserName(label as String)
+	select case label
+	case &quot;Serikov_VA&quot;
+		userName = &quot;Сериков В.А.&quot;
+	case &quot;Squorpikkor&quot;
+		userName = &quot;Squorpikkor&quot;
+	case &quot;Krechko_AI&quot;
+		userName = &quot;Кречко А.И.&quot;
+	case &quot;Kurbatova&quot;
+		userName = &quot;Курбатова Н.В.&quot;
+	case &quot;Leshkevich_SV&quot;
+		userName = &quot;Лешкевич С.В.&quot;
+	case &quot;Rusakevich_AV&quot;
+		userName = &quot;Русакевич А.В.&quot;
+	case &quot;Tarasenko_VV&quot;
+		userName = &quot;Тарасенко В.В.&quot;
+	case &quot;Stsiapanau_MS&quot;
+		userName = &quot;Степанов М.С.&quot;
+	case &quot;Germanenko_II&quot;
+		userName = &quot;Германенко И.И.&quot;
+	case &quot;Feklenkova_PA&quot;
+		userName = &quot;Фекленкова П.А.&quot;
+	case &quot;Karuk_IA&quot;
+		userName = &quot;Карук И.А.&quot;			
+	case &quot;Bohush_SG&quot;
+		userName = &quot;Богуш Сабрина&quot;	
+	case &quot;Vialutsich_ES&quot;
+		userName = &quot;Велютич Егор&quot;	
+	case &quot;Sidorenko_AA&quot;
+		userName = &quot;Сидоренко Артем&quot;		
+	end select
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;в разных локализациях версия отображается или с точкой, или с запятой. Функция переводит номер к виду всегда с точкой
+function currentVersionToString(version as double)
+	dim s as String
+	s = Format(version, &quot;0.00&quot;)
+	currentVersionToString = Replace (s,&quot;,&quot;,&quot;.&quot;)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;в разных локализациях версия отображается или с точкой, или с запятой. Функция переводит номер к виду всегда с точкой
+function currentVersionToStringOLD(version as double)
+	dim versionInt, versionInt_2 as integer
+	versionInt = version * 100 \ 100 &apos;2.92 -&gt; 2
+	versionInt_2 = (version - versionInt)*100 &apos;2.92 -&gt; 0.92 -&gt; 92
+	if versionInt_2 &lt; 10 then
+		currentVersionToString = &quot;&quot; &amp; versionInt &amp; &quot;.0&quot; &amp; versionInt_2
+	else
+		currentVersionToString = &quot;&quot; &amp; versionInt &amp; &quot;.&quot;  &amp; versionInt_2
+	end if	
+end function
+
+</script:module>

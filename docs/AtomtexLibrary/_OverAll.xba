@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="_OverAll" script:language="StarBasic">REM  *****  BASIC  *****
+rem ╔╗╚╝║═▄▌▀▌    αβγ   μ
+
+&apos;═══╝█
+&apos;  ▀▀▀
+rem----------------------------------------------------------------
+rem			ВСЯКИЕ МЕТОДЫ БУДУТ ХРАНИТЬСЯ ЗДЕСЬ
+&apos;---------------------------------------------------------------------------------------------------------
+rem -------------------------------------------------------------------------------------------
+Sub OpenTemplate(documentURL)
+	On Error Goto ErrorHandler
+    Dim Doc As Object
+    Dim Url As String
+    Dim Dummy() &apos;An (empty) array of PropertyValues
+    Url = documentURL
+    Doc = StarDesktop.loadComponentFromURL(Url, &quot;_blank&quot;, 0, Dummy)
+    Exit sub
+	ErrorHandler:
+	msgbox &quot;Нет такого файла!!! &quot;+documentURL
+End Sub
+rem------------------------------------------------------------
+Sub findAndRename(target as String, newName as String)
+    Dim oDescriptor &apos;Описатель поиска
+    Dim oFound &apos;Найденный диапазон
+    Dim oFoundAll &apos;Найденный диапазон
+    Dim n% &apos;Общая индексная переменная
+    oDescriptor = ThisComponent.createSearchDescriptor()
+    oDescriptor.SearchString = target
+    oFoundAll = ThisComponent.findAll(oDescriptor)
+    For n% = 0 to oFoundAll.getCount()-1
+        oFound = oFoundAll.getByIndex(n%)
+        oFound.setString(newName)
+    Next
+End Sub
+rem------------------------------------------------------------
+private function AbsoluteValue(value as double, pref as string) as double
+	select case pref
+	case &quot;мк&quot;
+		AbsoluteValue = value / 1000
+	case &quot;м&quot; 
+		AbsoluteValue = value 
+	case &quot;&quot;
+		AbsoluteValue = value * 1000
+	end select
+end function
+rem------------дата строкой с точками------------------------------
+function getDate(DateFieldModel) &apos;YYYYMMDD
+	dim dnum as long
+	dim year as integer
+	dim month as integer
+	dim day as integer
+	&apos;oDateFieldModel = oDialogBDKG02.Model.getByName(&quot;DateField1&quot;)
+	dnum = DateFieldModel.date
+	&apos;msgbox &quot;DATE: &quot; &amp; dnum
+	day = dnum mod 100
+	month = dnum \ 100 mod 100
+	year = dnum \ 10000
+	getDate = insertZero(day) &amp;&quot;.&quot;&amp; insertZero(month) &amp;&quot;.&quot;&amp; year
+end function
+rem------------дата строкой слэшами--------------------------------
+function getDateSlash(DateFieldModel) &apos;YYYYMMDD
+	dim dnum as long
+	dim year as integer
+	dim month as integer
+	dim day as integer
+	dnum = DateFieldModel.date
+	&apos;msgbox &quot;DATE: &quot; &amp; dnum
+	day = dnum mod 100
+	month = dnum \ 100 mod 100
+	year = dnum \ 10000
+	getDateSlash = insertZero(day) &amp;&quot;/&quot;&amp; insertZero(month) &amp;&quot;/&quot;&amp; year
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getCurrentDateString()
+    Dim currentDate As Date
+    Dim dateString As String
+    
+    currentDate = Now() &apos; или Date()
+    
+    &apos; Форматируем дату в нужный формат: год.месяц(число).день
+    dateString = Format(currentDate, &quot;yyyy.mm.dd&quot;)
+        
+    getCurrentDateString = dateString
+End function
+&apos;--------------------------------------------------------------------	
+function insertZero(number)
+	if number &gt; 9 then
+		insertZero = number
+	else 
+		insertZero = &quot;0&quot;&amp;number
+	end if
+end function
+rem-------------------------------------------------------------------------
+Sub CopyVariableToClipboard(text as string)
+text = Replace(text, &quot;/&quot;, &quot;_&quot;)
+dim document   as object
+dim dispatcher as object
+dim oDoc, oVC
+oDoc = ThisComponent
+oVC = oDoc.CurrentController.getViewCursor
+oVC.String = text
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
+oVC.String = &quot;&quot;
+
+End Sub
+rem-------------------------------------------------------------------------
+sub insertDate
+   dim document   as object
+   dim dispatcher as object
+   document   = ThisComponent.CurrentController.Frame
+   dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+   dim args1(0) as new com.sun.star.beans.PropertyValue
+   args1(0).Name = &quot;Text&quot;
+   args1(0).Value = getDate()
+   dispatcher.executeDispatch(document, &quot;.uno:InsertText&quot;, &quot;&quot;, 0, args1())
+end sub
+rem-------------------------------------------------------------------------
+function FillArrayFromSelection
+rem Супер метод -- заполняет массив данными из выделенной области в Calc и возвращает этот массив
+rem 
+    dim oCellRange as object
+    dim oCursor as object
+    dim oRange as object
+    dim oSheet as object
+    dim startRow as long, startColumn as long, endRow as long, endColumn as long
+    dim x,y as long
+    dim oRow, oArray
+
+    oSheet = thiscomponent.currentcontroller.activesheet
+    oCellRange = thiscomponent.getcurrentselection
+
+    startRow= oCellRange.getrangeaddress.startrow
+    startColumn = oCellRange.getrangeaddress.startcolumn
+    endRow = oCellRange.getrangeaddress.endrow
+    endColumn =oCellRange.getrangeaddress.endcolumn
+
+    oCellRange = thiscomponent.currentcontroller.getselection
+    oRange = oSheet.getcellrangebyposition(startColumn,startRow,endColumn,endRow)
+
+    oArray = oRange.getDataArray()
+      
+    dim RangeData(UBound(oArray),UBound(oArray(0)))
+   
+    for x = 0 to UBound(oArray)
+       for y = 0 to UBound(oArray(x))
+          RangeData(x,y) = oArray(x)(y)
+       next y
+    next x
+    FillArrayFromSelection = RangeData
+End function
+
+
+
+
+
+sub showDateMsg
+  dim sDate as string
+	sDate = &quot;&quot;+cDateToIso(Now+20) &apos; +20 это значит, здесь можно выбирать следующий день (+1) или +20 дней -- макрос сам пересчитает правильную дату (т.е. 31-е число +1 посчитает как 1-е число следующего месяца, а не 32-е число).
+  msgbox sDate + &quot; &quot; + Right(sDate, 2) + &quot;/&quot; + Mid(sDate, 5,2) + &quot;/&quot; + Left(sDate, 4)
+end sub
+
+sub showDateMsgBtn
+  Dim MyDate As Date
+  &apos;MyDate = &quot;24.1.2002&quot;
+  MyDate = getDate(oDialog.Model.getByName(&quot;DateField1&quot;))
+  msgbox &quot;&quot;+MyDate+&quot; &quot;+(MyDate+18)
+end sub
+
+
+function getDateNew(DateFieldModel)
+  dim sDate as string
+  sDate = &quot;&quot;+DateFieldModel.date
+  getDateNew = Right(sDate, 2) + &quot;/&quot; + Mid(sDate, 5,2) + &quot;/&quot; + Left(sDate, 4)
+end function
+
+function getDateNew2(DateFieldModel)&apos;можно (и нужно) добавить optional String (DATA_SLASH, DATA, WEEKDAY, WEEKDAY_NAME и т.д.) и возвращать соответствующую строку. По умолчанию (optional не задан) возвращать дату в виде &quot;03.12.2021&quot;. Заменить getDate 
+	Dim MyDate As Date
+  	MyDate = cdatefromiso(DateFieldModel.date)
+  	getDateNew2 Day(MyDate) + &quot;/&quot; + Month(MyDate) + &quot;/&quot; + Year(MyDate)
+end function
+
+
+
+
+
+Sub CopyNamedTableToEnd_ORIGINAL(sName As String)&apos;НЕ ИСПОЛЬЗУЕТСЯ
+Dim oTable        &apos;Table to copy
+Dim oText         &apos;Document&apos;s text object
+Dim oFrame        &apos;Current frame to use with the dispatcher
+Dim oVCursor      &apos;Current view cursor
+Dim oDispatcher   &apos;Dispatcher for clipboard commands
+oVCursor = ThisComponent.CurrentController.getViewCursor()
+oText = ThisComponent.getText()
+oFrame = ThisComponent.CurrentController.Frame
+oDispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+If NOT ThisComponent.getTextTables().hasByName(sName) Then
+	MsgBox &quot;Sorry, the document does not contain table &quot; &amp; sName
+	Exit Sub
+End If
+oTable = ThisComponent.getTextTables().getByName(sName)
+REM Place the cursor in the start of the first cell.
+REM This is very easy!
+ThisComponent.CurrentController.select(oTable)
+oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+REM Copy the table to the clipboard.
+oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+REM Move the cursor to the end of the document and then paste the table.
+oVCursor.gotoRange(oText.getEnd(), False)
+oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+End Sub
+rem------метод для сортировки столбцов в calc-------------------------------------------------
+sub sortColumns 
+	rem Сортировка выделенных столбцов в Calc 
+	dim document   as object
+	dim dispatcher as object
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+
+	dim args1(6) as new com.sun.star.beans.PropertyValue
+	args1(0).Name = &quot;ByRows&quot;
+	args1(0).Value = false
+	args1(1).Name = &quot;HasHeader&quot;
+	args1(1).Value = true
+	args1(2).Name = &quot;CaseSensitive&quot;
+	args1(2).Value = false
+	args1(3).Name = &quot;IncludeAttribs&quot;
+	args1(3).Value = true
+	args1(4).Name = &quot;UserDefIndex&quot;
+	args1(4).Value = 0
+	args1(5).Name = &quot;Col1&quot;
+	args1(5).Value = 1
+	args1(6).Name = &quot;Ascending1&quot;
+	args1(6).Value = true
+
+	dispatcher.executeDispatch(document, &quot;.uno:DataSort&quot;, &quot;&quot;, 0, args1())
+end sub
+
+
+Sub variableFromClipboard
+	msgbox getCollectionFromClipBoard.count
+end sub
+rem-------------------------------------------------------------------------
+Sub variableFromClipboard1
+dim RangeData(0,0)
+RangeData = FillArrayFromSelection
+msgbox RangeData(0,0)
+End Sub
+rem-------------------------------------------------------------------------
+&apos;Копирует выделенный текст и выводит его в msgbox
+Sub variableFromClipboardOLD 
+
+	dim document   as object
+	dim dispatcher as object
+	dim oDoc, oVC
+	oDoc = ThisComponent
+	oVC = oDoc.CurrentController.getViewCursor
+	document   = ThisComponent.CurrentController.Frame
+	&apos;dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	&apos;dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
+	msgbox oVC.string
+End Sub
+rem-------------------------------------------------------------------------
+&apos;Можно выделить в Calc несколько ячеек (или таблицу в Writer), скопировать её.
+&apos;Функция берет эту таблицу из буфера обмена и выводит её в writer как &quot;Вставить как -&gt; Форматированный текст&quot;
+&apos;т.е. можно копировать ячейки из Calc и с помощью этой функции вставлять их в Writer
+sub variableFromClipboard11
+	dim document   as object
+	dim dispatcher as object
+	rem get access to the document
+	document   = ThisComponent.CurrentController.Frame
+	dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+
+	dim args2(0) as new com.sun.star.beans.PropertyValue
+	args2(0).Name = &quot;SelectedFormat&quot;
+	args2(0).Value = 1
+
+	&apos;msgbox args2()
+
+	dispatcher.executeDispatch(document, &quot;.uno:ClipboardFormatItems&quot;, &quot;&quot;, 0, args2())
+end sub
+rem-------------------------------------------------------------------------
+
+
+
+
+&apos;==============================================================================================
+REM  *****  NON-MODAL DIALOG *****
+
+Option Explicit	
+
+Sub ID_CreateDialog
+
+	Dim oDlgModel As Variant
+	Dim sDialog As String
+	
+	sDialog = &quot;DocIdentify_31&quot;
+	
+	Dim oComponents As Variant
+	Dim oDoc As Variant
+	
+	oDlgModel = CreateUnoService(&quot;com.sun.star.awt.UnoControlDialogModel&quot;)
+	With oDlgModel
+		.Name = sDialog
+		.Title = &quot;Doc Identify 31&quot;
+		.PositionX = 170
+		.PositionY = 70
+		.Width = 190
+		.Height = 40
+		.DesktopAsParent = True
+	End With
+	
+	Dim oModel As Variant
+	oModel = oDlgModel.createInstance(&quot;com.sun.star.awt.UnoControlEditModel&quot;)
+	With oModel
+		.TabIndex = 0
+		.Name = &quot;TextField1&quot;
+		.PositionX = 10
+		.PositionY = 6
+		.Width = 170
+		.Height = 12
+	End With
+	oDlgModel.insertByName(oModel.Name, oModel)
+	
+	oModel = oDlgModel.createInstance(&quot;com.sun.star.awt.UnoControlButtonModel&quot;)
+	With oModel
+		.TabIndex = 1
+		.Name = &quot;CommandButton1&quot;
+		.Label = &quot;Identify Active Document&quot;
+		.PositionX = 55
+		.PositionY = 22
+		.Width = 80
+		.Height = 12
+	End With
+	oDlgModel.insertByName(oModel.Name, oModel)
+	
+	Dim oDlg As Variant
+	oDlg = CreateUnoService(&quot;com.sun.star.awt.UnoControlDialog&quot;)
+	oDlg.setModel(oDlgModel)
+	
+	Dim oListener As Variant
+	Dim oControl As Variant
+	oListener = CreateUnoListener(&quot;IDButton31_&quot;, &quot;com.sun.star.awt.XActionListener&quot;)
+	oControl = oDlg.getControl(&quot;CommandButton1&quot;)
+	ocontrol.addActionListener(oListener)
+	
+	Dim oWindow As Variant
+	oWindow = CreateUnoService(&quot;com.sun.star.awt.Toolkit&quot;)
+	
+	oDlg.createPeer(oWindow, null)
+	
+	oDlg.execute()
+End Sub
+
+Sub IDButton31_actionPerformed(oEvent As Variant)
+&apos;	Assign this macro to the button action event
+
+	Dim vTextfield As Variant
+	
+	vTextfield = oEvent.Source.Context.getControl(&quot;TextField1&quot;)
+	
+	vTextfield.Text = ThisComponent.URL
+End Sub
+&apos;=========================================================================================================
+
+&apos;=========NON-МОДАЛЬНЫЙ ДИАЛОГ==========================
+&apos;public myContinue
+
+&apos;myDialog.setVisible(true)
+&apos;while myContinue
+&apos;   wait(100)
+&apos;wend
+&apos;myDialog.setVisible(false)
+
+&apos;somewhere else
+
+&apos;sub myStopButton_click()
+&apos;   myContinue = false
+&apos;end sub
+
+
+
+Sub WindowListener_windowClosing(ev)
+   
+   &apos; Close window using the window bar close button
+&apos;   ev.Source.setVisible(FALSE)
+&apos;   closed = TRUE
+msgbox &quot;closing...&quot;
+ev.source.dispose
+End Sub
+
+
+
+
+rem ----------------------------------------------------------------------
+
+rem ----------------------------------------------------------------------
+
+
+&apos;═══════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+&apos;							Description:																&apos; 	║█
+&apos;		This macro pastes content from the clipboard as unformatted texts								&apos; 	║█
+&apos;		after removing the linebreaks and styling														&apos; 	║█
+&apos;																										&apos; 	║█
+&apos;Sub InsertClipboardTextInWriter()
+&apos;    Dim sText As String
+&apos;    sText= (getClipboardText)
+&apos;    sText = Replace (sText,Chr(10),&quot; &quot;) &apos; Replace line breaks with white spaces
+&apos;    sText = Replace (sText,Chr(13),&quot; &quot;) &apos; Replace paragraph breaks with white spaces
+&apos;    WriteCursorPosition(sText) &apos; Paste in Writer
+&apos;End Sub &apos; InsertClipboardTextInWriter
+&apos;
+&apos;
+&apos;Sub WriteCursorPosition(sText as String)
+    &apos;&apos;&apos;This sub is taken from http://www.oooforum.org/forum/viewtopic.phtml?t=75409&apos;&apos;&apos;
+    &apos;&apos;&apos;Paste text in Writer at the position of the cursor&apos;&apos;&apos;
+&apos;
+&apos;    Dim oViewCursor As Object &apos; com.sun.star.text.XTextViewCursor
+&apos;    Dim oText As Object
+&apos;    oViewCursor = ThisComponent.GetCurrentController.ViewCursor
+&apos;    If IsEmpty(oViewCursor.Cell) Then
+&apos;        oText = ThisComponent.text
+&apos;    Else
+&apos;        oText = oViewCursor.Cell.Text
+&apos;    End If
+&apos;    oText.insertString(oViewCursor, sText, false)
+&apos;
+&apos;End Sub &apos; WriteCursorPosition
+
+
+&apos;Function getClipboardText() As String
+    &apos;&apos;&apos;Returns a string of the current clipboard text&apos;&apos;&apos;
+
+&apos;    Dim oClip As Object &apos; com.sun.star.datatransfer.clipboard.SystemClipboard
+&apos;    Dim oConverter As Object &apos; com.sun.star.script.Converter
+&apos;    Dim oClipContents As Object
+&apos;    Dim oTypes As Object
+&apos;    Dim i%
+
+&apos;    oClip = createUnoService(&quot;com.sun.star.datatransfer.clipboard.SystemClipboard&quot;)
+&apos;    oConverter = createUnoService(&quot;com.sun.star.script.Converter&quot;)
+&apos;    On Error Resume Next
+&apos;    oClipContents = oClip.getContents
+&apos;    oTypes = oClipContents.getTransferDataFlavors
+
+&apos;    For i = LBound(oTypes) To UBound(oTypes)
+&apos;        If oTypes(i).MimeType = &quot;text/plain;charset=utf-16&quot; Then
+&apos;            Exit For
+&apos;        End If
+&apos;    Next
+
+&apos;    If (i &gt;= 0) Then
+&apos;        On Error Resume Next
+&apos;        getClipboardText = oConverter.convertToSimpleType _
+&apos;	        (oClipContents.getTransferData(oTypes(i)), com.sun.star.uno.TypeClass.STRING)
+	        &apos;(oClipContents.getTransferData(oTypes(i)), com.sun.star.uno.TypeClass.DOUBLE)
+&apos;            
+&apos;    End If
+
+&apos;End Function &apos; getClipboardText
+
+																										&apos;	║█
+&apos;═══════════════════════════════════════════════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+
+sub pasteRowAndData
+	CopyTableAndPasteAfter(&quot;t1&quot;, &quot;$1-&quot;, &quot;$2-&quot;, &quot;$bd_num1$&quot;, &quot;$bd_num2$&quot;)	
+end sub
+
+
+Sub CopyTableAndPasteAfter(sName As String, oldName as String, newName as String, oldName2 as String, newName2 as String)
+	Dim oTable        &apos;Table to copy
+	Dim oText         &apos;Document&apos;s text object
+	Dim oFrame        &apos;Current frame to use with the dispatcher
+	Dim oVCursor      &apos;Current view cursor
+	Dim oDispatcher   &apos;Dispatcher for clipboard commands
+	oVCursor = ThisComponent.CurrentController.getViewCursor()
+	oText = ThisComponent.getText()
+	oFrame = ThisComponent.CurrentController.Frame
+	oDispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	If NOT ThisComponent.getTextTables().hasByName(sName) Then
+		&apos;MsgBox &quot;Sorry, the document does not contain table &quot; &amp; sName
+		Exit Sub
+	End If
+	oTable = ThisComponent.getTextTables().getByName(sName)
+	REM Place the cursor in the start of the first cell.
+	REM This is very easy!
+	ThisComponent.CurrentController.select(oTable)
+	&apos;&apos;&apos;&apos;&apos;oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	&apos;&apos;&apos;&apos;&apos;oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+	REM Copy the table to the clipboard.
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+	
+	findAndRename(oldName, newName) 	&apos;&quot;$2-&quot; -&gt; &quot;$1-&quot;
+	findAndRename(oldName2, newName2) 	&apos;&quot;$bd_num2$&quot; -&gt; &quot;$bd_num1$&quot;
+
+	&apos;Поставить курсор после таблицы
+	oVCursor.godown(1,false)
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+
+end sub
+
+
+sub pasteRowAndData_old
+rem ----------------------------------------------------------------------
+rem define variables
+dim document   as object
+dim dispatcher as object
+Dim oVCursor
+
+findAndRename(&quot;$start&quot;, &quot;&quot;)
+
+oVCursor = ThisComponent.CurrentController.getViewCursor()
+rem get access to the document
+document   = ThisComponent.CurrentController.Frame
+dispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+&apos;dispatcher.executeDispatch(document, &quot;.uno:Copy&quot;, &quot;&quot;, 0, Array())
+CopyVariableToClipboard(&quot;qweqwe&quot;)
+dispatcher.executeDispatch(document, &quot;.uno:InsertRows&quot;, &quot;&quot;, 0, Array())
+dispatcher.executeDispatch(document, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+oVCursor.godown(1,false)
+
+
+
+
+
+end sub
+</script:module>

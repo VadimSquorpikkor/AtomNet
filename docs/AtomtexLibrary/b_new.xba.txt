@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="b_new" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim baseC as new BaseC
+
+Sub new_Dialog_Show
+	baseC = new BaseC
+	baseC.setNewDialog(DialogLibraries.AtomtexLibrary.D_1121)
+	baseC.setVersion(&quot;Версия 2.15 &quot;)
+	baseC.setMaxBDCount(20)
+	baseC.setLogo(&quot;1121\1121_bg.png&quot;)
+	baseC.initializeComboBox(&quot;provCombo&quot;, &quot;techCombo&quot;)
+	baseC.dialogStart
+
+	
+
+	&apos;oListBox = oDialog1121.getControl(&quot;bdListBox&quot;)
+	&apos;Overall.dialogShowInitialize(maxBDCount, oDialog1121, oDateFieldModel, &quot;Версия 2.15 &quot;, oListBox, 9)
+	&apos;Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	&apos;oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+
+	&apos;oOption1103 = oDialog1121.getControl(&quot;is1103&quot;)	
+	&apos;oOption1121 = oDialog1121.getControl(&quot;is1121&quot;)
+	&apos;oOption1123 = oDialog1121.getControl(&quot;is1123&quot;)
+
+	&apos;isComboCollection.add(oOption1103)
+	&apos;isComboCollection.add(oOption1121)
+	&apos;isComboCollection.add(oOption1123)
+	&apos;oOption1121.State = 0
+	
+	&apos;for i=1 to 9
+	&apos;	oDialog1121.getControl(&quot;ValueField&quot; + i).setEnable(false)
+	&apos;	oDialog1121.getControl(&quot;Label&quot; + i).setVisible(false)
+	&apos;next i
+
+	&apos;oDialogMain.endexecute()   
+	&apos;oDialog1121.Execute()
+End Sub
+</script:module>

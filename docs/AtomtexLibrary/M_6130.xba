@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_6130" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔═══════════════╗
+rem		║	AT6130		║█
+rem		╚═══════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+&apos; Сохранение и использование Бета точек
+
+&apos; В классе используются 3 типа бета точек и 3 места для их хранения
+
+&apos; Лист [1] - это точки, которые изначально заносятся в лэйаут. При добавлени нового блока Детектирования берется источник, указаный в addDataWithSrc и по его названию и дате рассчитывается активность, 
+&apos; которая заносится в список [1]. Если в процессе работы с диалогом изменить дату, это автоматически приведет к изменению активности (т.е. нет необходимости сразу устанавливать дату, а затем 
+&apos; добавлять БД. Всё будет перерасчитано и для БД, которые уже были добавлены). Для каждого БД свой список, который хранится в объекте БД
+
+&apos; Лист [2] - точки альтернативных значений. Бывает ситуация, когда нужно указать конкретную активность, отличающуюся от активности, которую расчитывает макрос на выбранную дату, например используется источник, которого уже нет 
+&apos; (сертификат для ремонтов), да и мало чего ещё. Для этого есть возможность установить активность вручную. Вариант использования одного и того же списка с возможностью редактирования не подходит —
+&apos; (не помню почему, потом допишу). Списки для значений по источникам и значения введенные вручную хранятся раздельно. Для каждого БД свой список, который хранится в объекте БД
+
+&apos; Оба значения выводятся в диалог всегда вместе, только в зависимости от положения переключателя будет включена видимость либо одного, либо другого поля
+&apos; При переходе к лэйауту, в котором уже были выбраны альтернативные значения, в поле для стандартных значений будет записано значение альтернативной точки, текст самого поля будет окрашен в синий цвет
+&apos; Если теперь снять флаг &quot;Свои значения&quot;, значения автоматом пересчитаются на выбранную дату по стандартному источнику
+
+&apos; Есть ньюанс, если добавить несколько БД, каждому из которых необходимо будет вводить значения вручную, то после ввода значений для первого БД и переходе к последующему придется вводить те же значения опять, и так для всех БД
+&apos; (как правило эти значения будут одинаковые для одного сертификата, или для нескольких сертификатов выведенных подряд). Так же, если вывести сертификат с альтернативными значениями, затем (для создания следующего сертификата)
+&apos; удалить все БД и добавить новые, альтернативные значения нужно будет вводить опять. (Можно было бы использовать и для [2] и для [3] один общий для всех БД список, но бывает что не все альтернативные значения совпадают у разных БД)
+
+&apos; Для этого используется 3-й список полей [3]. этот список ОБЩИЙ ДЛЯ ВСЕХ БД и хранится в самом M_6130. Если в диалоге добавлено несколько БД, при выборе в первом БД &quot;Своих значений&quot; (альтернативных), в момент 
+&apos; перехода в следующий БД значения альтернативных точек, кроме всего прочего, сохраняются в altValuesForAll (если же флаг не выбран, т.е. используются стандартные значения активностей, то значения сохраняться в altValuesForAll не будут)
+&apos; Теперь, при выборе в следующем БД флага &quot;Свои значения&quot;, будет проверено,  равны ли значения altValuesForAll 0, если нет, то будут вставлены в форме (в диалоге)
+&apos; Для пользователя теперь есть полезная фишка — после того, как были вручную введены значения для беты, при выборе в следующем БД &quot;Свои значения&quot; эти введенные в предыдущем БД значения будут автоматом  вставлены в текущем БД и их 
+&apos; не придется вводить вручную каждый раз при переходе к следующему. Если сформировать следующий сертификат НЕ ЗАКРЫВАЯ диалога (т.е. удалить все БД и добавить новые), то эти значения будут подставляться и для всех новых БД
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim Facility as new Facility
+dim oDialog6130 as object
+dim oDateFieldModel as object
+dim oListBox as object
+
+dim PrSwitch as object
+dim SEnSwitch as object
+dim SRuSwitch as object
+
+dim image6130 as object
+dim altCheckBox as object
+
+dim oOption6130pp  as object
+dim oOption6130cps  as object
+dim oOption6130bq  as object
+dim oOption6130a  as object
+dim oOption6130c  as object
+dim oOption6130d  as object
+dim oOption6130japan  as object
+
+dim oComboSVREM as object
+
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+
+dim maxPointCount as integer
+
+dim altValuesForAll(3) as double &apos;общие альтернативные значения беты для всех БД 
+rem---------------------------------------------------------------------------------------------------------
+Sub AT6130_Dialog_Show
+	maxBDCount = 50
+	maxPointCount = 6
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog6130 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_6130 )
+	oListBox = oDialog6130.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialog6130, oDateFieldModel, &quot;Версия 2.18 &quot;, oListBox, maxPointCount)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	
+	oDialog6130.Model.getByName(&quot;6130Logo&quot;).ImageURL = sertPath &amp; &quot;6130\6130.png&quot;
+	oDialog6130.Model.getByName(&quot;catImage&quot;).ImageURL = sertPath &amp; &quot;6130\blackcat.png&quot;
+	oOption6130pp  = oDialog6130.getControl(&quot;is6130pp&quot;)
+	oOption6130cps = oDialog6130.getControl(&quot;is6130cps&quot;)
+	oOption6130bq  = oDialog6130.getControl(&quot;is6130bq&quot;)
+	oOption6130a   = oDialog6130.getControl(&quot;is6130a&quot;)
+	oOption6130c   = oDialog6130.getControl(&quot;is6130c&quot;)
+	oOption6130d   = oDialog6130.getControl(&quot;is6130d&quot;)
+	oOption6130japan = oDialog6130.getControl(&quot;is6130japan&quot;)
+	oOption6130pp.State = 1
+	
+	oComboSVREM    = oDialog6130.getControl(&quot;sv_rem&quot;)
+	
+	PrSwitch  = oDialog6130.getControl(&quot;isProtocol&quot;)
+	SEnSwitch = oDialog6130.getControl(&quot;isSertificateEng&quot;)
+	SRuSwitch = oDialog6130.getControl(&quot;isSertificateRus&quot;)
+	
+	isComboCollection.add(oOption6130pp)
+	isComboCollection.add(oOption6130cps)
+	isComboCollection.add(oOption6130bq)
+	isComboCollection.add(oOption6130a)
+	isComboCollection.add(oOption6130c)
+	isComboCollection.add(oOption6130d)
+	isComboCollection.add(oOption6130japan)
+
+	image6130   = oDialog6130.Model.getByName(&quot;6130Logo&quot;)
+	altCheckBox = oDialog6130.getControl(&quot;altCheckBox&quot;)
+
+	oDialog6130.getControl(&quot;addButton&quot;).setEnable(true)	
+	altCheckBox.setEnable(false)
+	
+	for i=1 to 4
+		oDialog6130.getControl(&quot;betaField&quot; + i).visible = false
+		oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false)
+		oDialog6130.getControl(&quot;altField&quot; + i).visible = false
+	next i
+	
+	oDialog6130.getControl(&quot;AttentionLabel&quot;).visible = false
+			
+	oDialogMain.endexecute()   
+	oDialog6130.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	if BDList.count&lt;&gt;0 then
+		setBetaLayout(BDList.item(layoutPosition))
+	end if	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	if oOption6130a.state then
+		PrSwitch.setEnable(true)
+		SRuSwitch.setEnable(true)
+		PrSwitch.state = 1
+		altCheckBox.visible = false
+	end if
+	if oOption6130d.state then
+		PrSwitch.setEnable(true)
+		SRuSwitch.setEnable(true)
+		PrSwitch.state = 1
+		altCheckBox.visible = false
+	end if
+	if oOption6130c.State = true then
+		image6130.ImageURL = sertPath &amp; &quot;6130\6130c.png&quot;
+		PrSwitch.setEnable(true)
+		SRuSwitch.setEnable(true)
+		PrSwitch.state = 1
+		altCheckBox.visible = false
+	end if	
+	if oOption6130c.State = false then image6130.ImageURL = sertPath &amp; &quot;6130\6130.png&quot;
+	if oOption6130pp.state then
+		PrSwitch.setEnable(true)
+		SRuSwitch.setEnable(true)
+		PrSwitch.state = 1
+		altCheckBox.visible = true
+	end if
+	if oOption6130cps.state then
+		PrSwitch.setEnable(false)
+		SRuSwitch.setEnable(false)
+		SEnSwitch.state = 1
+		altCheckBox.visible = true
+	end if
+	if oOption6130bq.state then
+		PrSwitch.setEnable(false)
+		SRuSwitch.setEnable(false)
+		SEnSwitch.state = 1
+		altCheckBox.visible = true
+	end if
+	if oOption6130japan.state then
+		PrSwitch.setEnable(false)
+		SRuSwitch.setEnable(false)
+		SEnSwitch.state = 1
+		altCheckBox.visible = true
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialog6130.getControl(&quot;bdSerial&quot;))
+end sub	
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+
+	if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+
+	&apos;для МКС-АТ6130– от 100 нЗв/ч до 10 мЗв/ч;
+	&apos;для МКС-АТ6130 – от 10 ч/см2*мин до 1*104 ч/см2*мин.
+	&apos;для МКС-АТ6130А– от 0,1 мкЗв/ч до 10 мЗв/ч;
+	&apos;для МКС-АТ6130C– от 100 нЗв/ч до 1 мЗв/ч;
+	&apos;для МКС-АТ6130D – от 100 нЗв/ч до 100 мЗв/ч;
+	
+	if oComboSVREM.text = &quot;SIEVERT&quot; then
+		&apos;if BDList.count &lt;&gt; 0 then Overall.saveCurentBDValue(BDList.count) rem !!!!!НЕ использовать!!! сохраняет значение первого во втором ИСПОЛЬЗОВАТЬ: if layoutPosition&lt;&gt;0 then saveCurentBDValue(layoutPosition)
+		if oOption6130pp.state  then bd.addDataWithSrc(&quot;6130 п/п&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+		if oOption6130cps.state then bd.addDataWithSrc(&quot;6130 cps&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660BqCps&quot;,&quot;0578BqCps&quot;,&quot;0661BqCps&quot;,&quot;0662BqCps&quot;))
+		if oOption6130bq.state  then bd.addDataWithSrc(&quot;6130 Бк&quot;,	&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;))
+		if oOption6130a.state   then bd.addDataWithSrc(&quot;6130A&quot;,		&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;), 		&quot;gamma&quot;, Array(0.1,10000), Array())
+		if oOption6130c.state   then bd.addDataWithSrc(&quot;6130C&quot;,		&quot;Зв/ч&quot;, Array(0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;), 			&quot;gamma&quot;, Array(0.1,10000), Array())
+		if oOption6130d.state   then bd.addDataWithSrc(&quot;6130D&quot;,		&quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7,70), 	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),	&quot;gamma&quot;, Array(0.1,10000), Array()) 
+		if oOption6130japan.state then bd.addDataWithSrc(&quot;6130 Бк (Япония)&quot;, &quot;Зв/ч&quot;, Array(0.7,7,70,0.7,7), Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),	&quot;gamma&quot;, Array(0.1,10000), Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;,&quot;0662Bq&quot;))
+	else &apos;если в REMах
+		if oOption6130pp.state  then bd.addDataWithSrc(&quot;6130 п/п&quot;,	&quot;rem/ч&quot;, Array(70,0.7,7,70,0.7), 	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),			&quot;gamma-rem&quot;, Array(0.1,10000), Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;)) rem границы от 0.1 мкЗв/ч до 10 мЗв/ч
+		if oOption6130cps.state then bd.addDataWithSrc(&quot;6130 cps&quot;,	&quot;rem/ч&quot;, Array(70,0.7,7,70,0.7), 	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), 		&quot;gamma-rem&quot;, Array(0.1,10000), Array(&quot;0660BqCps&quot;,&quot;0578BqCps&quot;,&quot;0661BqCps&quot;,&quot;0662BqCps&quot;))
+		if oOption6130bq.state  then bd.addDataWithSrc(&quot;6130 Бк&quot;,	&quot;rem/ч&quot;, Array(70,0.7,7,70,0.7), 	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), 		&quot;gamma-rem&quot;, Array(0.1,10000), Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;))
+		if oOption6130a.state   then bd.addDataWithSrc(&quot;6130A&quot;,		&quot;rem/ч&quot;, Array(70,0.7,7,70,0.7), 	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), 		&quot;gamma-rem&quot;, Array(0.1,10000), Array())
+		if oOption6130c.state   then bd.addDataWithSrc(&quot;6130C&quot;,		&quot;rem/ч&quot;, Array(70,0.7,7,70), 		Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), 			&quot;gamma-rem&quot;, Array(0.1,10000), Array())
+		if oOption6130d.state   then bd.addDataWithSrc(&quot;6130D&quot;,		&quot;rem/ч&quot;, Array(70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),		&quot;gamma-rem&quot;, Array(0.1,10000), Array())
+		if oOption6130japan.state then bd.addDataWithSrc(&quot;6130 Бк (Япония)&quot;, &quot;rem/ч&quot;, Array(70,0.7,7,70,0.7), 	Array(&quot;мк&quot;,&quot;м&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;&quot;),&quot;gamma-rem&quot;, Array(0.1,10000), Array(&quot;0660Bq&quot;,&quot;0578Bq&quot;,&quot;0661Bq&quot;,&quot;0662Bq&quot;))
+	end if
+	
+	if oOption6130pp.state OR oOption6130cps.state OR oOption6130bq.state OR oOption6130japan.state then
+		dim list as new Collection
+		for i=1 to bd.getBetaValues.count
+			list.add(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel))
+		next i	
+		bd.setBetaValues(list)
+		bd.setAltList(list)
+	end if
+	
+	&apos;if oOption6130pp.state OR oOption6130cps.state OR oOption6130bq.state OR oOption6130japan.state then
+	&apos;	dim list as new Collection
+	&apos;	for i=1 to bd.getBetaValues.count
+	&apos;		&apos;Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426
+	&apos;		if oOption6130cps.state then
+	&apos;			list.add(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)*1.426)
+	&apos;		else
+	&apos;			list.add(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel))
+	&apos;		end if		
+	&apos;	next i	
+	&apos;	bd.setBetaValues(list)
+	&apos;	bd.setAltList(list)
+	&apos;end if
+	
+	oDialog6130.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialog6130.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialog6130.getControl(&quot;bdSerial&quot;))
+	
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	
+	&apos;setButtonVisibility(layoutPosition)
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+
+&apos;sub insertBetaValuesTo
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+
+	Overall.removeLastBD(layoutPosition)
+	setButtonVisibility
+	
+	altCheckBox.state = 0
+	for i=1 to 4
+		oDialog6130.getControl(&quot;altField&quot; + i).Visible = false
+		oDialog6130.getControl(&quot;betaField&quot; + i).Visible = false
+		oDialog6130.getControl(&quot;betaLabel&quot; + i).Visible = false
+	next i	
+
+
+	&apos;Overall.removeLastBD(layoutPosition)
+	&apos;setButtonVisibility
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(BDList.item(layoutPosition))
+	setButtonVisibility
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub altCheckBoxListener(oEvent As Object)
+	Dim oCheckbox As Object
+    oCheckbox = oEvent.source.model
+    BDList.item(layoutPosition).setAlternative(oCheckbox.state)
+    if BDList.item(layoutPosition).isAlternativePoints = true then
+    	trySetSavedAlternateValues
+    	for i=1 to BDList.item(layoutPosition).getBetaValues.count
+    		oDialog6130.getControl(&quot;altField&quot; + i).Visible = true	
+    		oDialog6130.getControl(&quot;betaLabel&quot; + i).Visible = false
+    	next i
+    else
+    	for i=1 to BDList.item(layoutPosition).getBetaValues.count
+    		oDialog6130.getControl(&quot;altField&quot; + i).Visible = false	
+    		oDialog6130.getControl(&quot;betaLabel&quot; + i).Visible = true
+    	next i
+    	Overall.saveCurentBDValue(layoutPosition)
+    	&apos;makeLayout(BDList.item(layoutPosition))
+    	makeLayoutFromBD(BDList.item(layoutPosition))
+    end if
+    
+    if oOption6130cps.state AND oCheckbox.state then
+		oDialog6130.getControl(&quot;AttentionLabel&quot;).visible = true
+	else
+		oDialog6130.getControl(&quot;AttentionLabel&quot;).visible = false
+	end if	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setBetaLayout(bd as new DUnit)
+	dim pointList as new collection
+	dim point as double
+	if bd.isAlternativePoints then
+		altCheckBox.state = 1
+	else	
+		altCheckBox.state = 0
+	end if	
+
+	for i=1 to bd.getBetaSources.count
+		
+		if bd.isAlternativePoints then
+			&apos;altPoint = bd.getAltList.item(i)
+			point = bd.getAltList.item(i)
+			oDialog6130.Model.getByName(&quot;betaLabel&quot; + i).textColor = RGB(0, 0, 200)
+		else
+			&apos;if oOption6130cps.state then
+			&apos;	point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel) * 1.426
+			&apos;else	
+				point = Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel)
+			&apos;end if	
+			oDialog6130.Model.getByName(&quot;betaLabel&quot; + i).textColor = RGB(0, 0, 0)
+		end if
+	
+		if oOption6130bq.state OR oOption6130japan.state then
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; Бк/см2 &quot;
+		elseif oOption6130cps.state then
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; cps &quot;
+		else
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).Text = Format(point, &quot;0.0&quot;) &amp; &quot; &quot;
+		end if	
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
+		oDialog6130.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+		oDialog6130.getControl(&quot;betaField&quot; + i).value = bd.getBetaValues.item(i)  &apos;Format(Activity.get_activity_Sr(bd.getBetaSources.item(i), oDateFieldModel), &quot;0.0&quot;)
+		oDialog6130.getControl(&quot;altField&quot; + i).value = bd.getAltList.item(i)
+		pointList.add(point)
+		oDialog6130.getControl(&quot;altField&quot; + i).Visible = false
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Если значения уже были сохранены (значения altValuesForAll не = 0), то в поля альтернативных значений диалога (НЕ В ПЕРЕМЕННЫЕ) будут занесены 
+sub trySetSavedAlternateValues
+	for i=1 to BDList.item(layoutPosition).getAltList.count
+		if altValuesForAll(i-1) &lt;&gt; 0 then oDialog6130.getControl(&quot;altField&quot; + i).value = altValuesForAll(i-1)
+	next i
+	BDList.item(layoutPosition).getAltList
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Если altCheck активен, то при переходе к следующему БД (или выводе сертификата) значения alt полей сохраняются в отдельный массив ОБЩИЙ ДЛЯ ВСЕХ БД, 
+&apos;такой массив не обнуляется после удаления всех БД, когда нужно сделать следующий сертификат не закрывая диалога, так можно использовать значения 
+&apos;alt полей для следующего сертификата (так как эти значения будут одинаковы для сертификатов)
+&apos;
+&apos;Конечно можно было сделать с двумя листами, что-то типа altValuesForAll = BDList.item(layoutPosition).getAltList
+&apos;НО. В разных БД размер листа отличается, при присвоении меньшего листа от 6130(п/п) к листу 6130(cps) при 
+&apos;последующем переборе листа в цикле (в trySetSavedAlternateValues) будет приводить к O.ofB.E. Поэтому использую массив с максимальным числом бета-точек (4)
+sub trySaveAlternateValues
+	if BDList.item(layoutPosition).isAlternativePoints then
+		dim arr(3) as double
+		&apos;Обнуление массива
+		arr(0) = 0
+		arr(1) = 0
+		arr(2) = 0
+		arr(3) = 0
+	
+		for i=1 to BDList.item(layoutPosition).getAltList.count
+			arr(i-1) = oDialog6130.getControl(&quot;altField&quot; + i).Value
+		next i
+
+		altValuesForAll = arr		
+	end if
+
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	Overall.makeLayoutFromBD(bd)
+	setBetaLayout(bd)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	trySaveAlternateValues
+	Overall.saveCurentBDValue(num)
+	Overall.saveCurentBDBetaValues(num)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility	
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility
+	makeLayoutFromBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	Overall.setButtonVisibility(layoutPosition)
+	oDialog6130.getControl(&quot;betaField4&quot;).visible = false
+	oDialog6130.getControl(&quot;betaLabel4&quot;).visible = false
+	if oDialog6130.getControl(&quot;is6130pp&quot;).state OR oDialog6130.getControl(&quot;is6130bq&quot;).state then
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = true
+		for i=1 to 3
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = true
+		next i
+	end if	
+	if oDialog6130.getControl(&quot;is6130cps&quot;).state then	
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = true
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = true
+		next i
+	end if
+	if oDialog6130.getControl(&quot;is6130japan&quot;).state then	
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = true
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = true 
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = true
+		next i
+	end if
+	if oDialog6130.getControl(&quot;is6130a&quot;).state OR oDialog6130.getControl(&quot;is6130c&quot;).state OR oDialog6130.getControl(&quot;is6130d&quot;).state then	
+		oDialog6130.getControl(&quot;betaLabel&quot;).visible = false
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).visible = false
+			oDialog6130.getControl(&quot;betaLabel&quot; + i).visible = false
+		next i
+	end if
+	
+	if BDList.count&gt;0 then
+		altCheckBox.setEnable(true)
+		for j=1 to BDList.item(layoutPosition).valueList.count
+			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = true
+			oDialog6130.getControl(&quot;Label&quot; + j).visible = true
+		next j
+		for j=BDList.item(layoutPosition).valueList.count+1 to maxPointCount
+			oDialog6130.getControl(&quot;ValueField&quot; + j).visible = false
+			oDialog6130.getControl(&quot;Label&quot; + j).visible = false
+		next j
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(true)
+		next i
+	end if
+	
+	if BDList.count=0 then
+		altCheckBox.setEnable(false)
+		for i=1 to 4
+			oDialog6130.getControl(&quot;betaField&quot; + i).setEnable(false)
+		next i
+	end if	
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	saveCurentBDValue(layoutPosition)
+	
+	if oComboSVREM.text = &quot;SIEVERT&quot; then
+		if oOption6130pp.state    then path = Overall.getPathAndSetName(&quot;6130\6130&quot;, 	&quot;6130 пп&quot;)
+		if oOption6130cps.state   then path = Overall.getPathAndSetName(&quot;6130\6130cps&quot;, &quot;6130 cps&quot;)
+		if oOption6130bq.state    then path = Overall.getPathAndSetName(&quot;6130\6130bq&quot;, 	&quot;6130 Бк&quot;)
+		if oOption6130a.state     then path = Overall.getPathAndSetName(&quot;6130\6130a&quot;, 	&quot;6130A&quot;)
+		if oOption6130c.state     then path = Overall.getPathAndSetName(&quot;6130\6130c&quot;, 	&quot;6130C&quot;)
+		if oOption6130d.state     then path = Overall.getPathAndSetName(&quot;6130\6130d&quot;, 	&quot;6130D&quot;)
+		if oOption6130japan.state then path = Overall.getPathAndSetName(&quot;6130\6130bq_japan&quot;, 	&quot;6130 Бк (Япония)&quot;)
+	else	
+		if oOption6130pp.state    then path = Overall.getPathAndSetName(&quot;6130\rem\6130&quot;, &quot;6130 пп&quot;)
+		if oOption6130cps.state   then path = Overall.getPathAndSetName(&quot;6130\rem\6130cps&quot;,&quot;6130 cps&quot;)
+		if oOption6130bq.state    then path = Overall.getPathAndSetName(&quot;6130\rem\6130bq&quot;, &quot;6130 Бк&quot;)
+		if oOption6130a.state     then path = Overall.getPathAndSetName(&quot;6130\rem\6130a&quot;, &quot;6130A&quot;)
+		if oOption6130c.state     then path = Overall.getPathAndSetName(&quot;6130\rem\6130c&quot;, &quot;6130C&quot;)
+		if oOption6130d.state     then path = Overall.getPathAndSetName(&quot;6130\rem\6130d&quot;, &quot;6130D&quot;)
+		if oOption6130japan.state then path = Overall.getPathAndSetName(&quot;6130\rem\6130bq_japan&quot;, 	&quot;6130 Бк (Япония)&quot;)
+	end if	
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	findAndRename(&quot;$facility_6130beta&quot;, Facility.getFacilityText(&quot;beta6130&quot;))
+	findAndRename(&quot;$facility_6130r_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta&quot;))
+	findAndRename(&quot;$facility_6130e_13+11+b&quot;, Facility.getFacilityText(&quot;6130_130+110+beta_eng&quot;))
+		
+	Overall.CreateTablesFromTemplate(BDList.count)
+	Overall.CreateTablesFromTemplateCustom(BDList.count, &quot;b1&quot;, &quot;bd_num_b&quot;, &quot;bd_num&quot;, &quot;β&quot;)
+		
+	if oComboSVREM.text = &quot;REM&quot; then
+		bgValue = bgValue/10
+	end if
+		
+		
+	for i=1 to BDList.count
+		dim point as double
+		dim pointList as new Collection 
+		for j=1 to BDList.item(1).getBetaSources.count
+			point = Activity.get_activity_Sr(BDList.item(i).getBetaSources.item(j), oDateFieldModel)
+			pointList.add(point)
+		next j
+		Overall.insertBetaToTemplateStep(i, BDList.item(i).getBetaSources, pointList, BDList.item(i).getBetaValues, &quot;β&quot;, THREE_POINTS)
+		&apos;if oComboSVREM.text = &quot;SIEVERT&quot; then
+			Overall.insertToTemplateStep(i)
+		&apos;else
+		&apos;	Overall.insertToTemplateStepRem(i)	
+		&apos;end if
+	next i
+	
+	Overall.setClipboard(&quot;$allSerial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+end function
+</script:module>

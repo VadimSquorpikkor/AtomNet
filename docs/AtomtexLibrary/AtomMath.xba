@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="AtomMath" script:language="StarBasic">REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+rem---------------------------------------------------------------------------------------------------------
+&apos;ОТНОСИТЕЛЬНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ S
+function avgSqrt(Array as variant, avg as double)
+	dim i as integer
+	dim nValue as integer
+	dim arr(0) as double
+	dim average as double
+	nValue = uBound(Array) + 1 
+	average = avg
+	dim sum as double
+	sum = 0
+		
+	for i=0 to nValue - 1
+		sum = sum + (Array(i) - average)*(Array(i) - average)
+	next i
+	
+	dim n as integer
+	n = nValue * (nValue - 1)
+	
+	avgSqrt = 1/average*sqr(sum/n)*100
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;СУММАРНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ SΣ
+function sSigma(avgSqrtRes as double, facilityPercent as double, relativeErr as double)
+	sSigma = sqr(avgSqrtRes*avgSqrtRes + facilityPercent*facilityPercent/3 + relativeErr*relativeErr/3)
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;МАССИВ ОТКЛИКОВ ДЛЯ ТЕКУЩЕЙ КОНТРОЛЬНОЙ ТОЧКИ ΣRiw
+&apos;Чтобы получить массив значений отклика я беру массив измеренных значений и каждое значение перевожу в отклик (Rw = G / Hp(10))
+function getOtclickArrayFromPointArray(p_Array as variant, contr_point as double)
+	dim j as integer
+	dim arr(uBound(p_Array)) as double
+	
+	for j=0 to uBound(p_Array)
+		arr(j) = p_Array(j)/contr_point
+	next j
+	getOtclickArrayFromPointArray = arr
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;СРЕДНИЙ ОТКЛИК Ṝw
+function getAverageOtk(o_Array as variant)
+	dim j as integer
+	dim summ as double
+	summ = 0
+	for j=0 to uBound(o_Array)
+		summ = summ + o_Array(j)
+	next j
+	getAverageOtk = summ / (uBound(o_Array)+1)
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;КОЭФФИЦИЕНТ ВАРИАЦИИ Vw (для английских сертификатов)
+function VariationsCoefficient(o_Array as variant, o_avg as double)
+	dim j as integer
+	dim sum as double
+	sum = 0
+	for j=0 to uBound(o_Array)
+		sum = sum + (o_Array(j)-o_avg)*(o_Array(j)-o_avg)
+		&apos;msgbox &quot;size = &quot; + (uBound(o_Array)+1) + &quot; &quot; + sum
+	next j
+	&apos;msgbox &quot;size = &quot; + (uBound(o_Array)+1) + &quot;, sum = &quot; + sum + &quot;, Arr(0) = &quot; + o_Array(0) + &quot;, Arr(1) = &quot; + o_Array(1) + &quot;, Arr(2) = &quot; + o_Array(2) + &quot;, Arr(3) = &quot; + o_Array(3) + &quot; AVG = &quot; + o_avg
+	VariationsCoefficient = 100/o_avg*(sqr(1/(uBound(o_Array))*sum))
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;ДОВЕРИТЕЛЬНАЯ ГРАНИЦА ОСНОВНОЙ ОТНОСИТЕЛЬНОЙ ПОГРЕШНОСТИ ДОЗИМЕТРА δ (δ = K * SΣ)
+function ConfLimit(koef as double, sSigmaRes as double)
+	ConfLimit = koef * sSigmaRes
+end function
+rem---------------------------------------------------------------------------------------------------------
+function roundOneDigitAfterDot(num as double)&apos;!!!@DEPRECATED!!!
+	&apos;ОКРУГЛЯЕТ ПО ПРАВИЛАМ МАТЕМАТИКИ ДО ОДНОГО ЗНАКА ПОСЛЕ ЗАПЯТОЙ
+	&apos;2.69 -&gt; 2.7
+	&apos;4.12 -&gt; 4.1 
+	dim a as double
+	a = num
+	a = a*100
+	if a mod 10 &gt;= 5 then a = a + 10
+	roundOneDigitAfterDot = int(a/10)/10
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;рандом от числа -- до числа
+function randValueFromTo(fromNum as double, toNum as double)
+	randValueFromTo = fromNum + rnd()*(toNum-fromNum)
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;ОКРУГЛЯЕТ ДАННОЕ ЧИСЛО ПО ПРАВИЛАМ МАТЕМАТИКИ ДО ВЫБРАННОГО ЗНАКА ПОСЛЕ ЗАПЯТОЙ, ОБРЕЗАЕТ ЧАСТЬ ЧИСЛА ПОСЛЕ ВЫБРАННОГО ЗНАКА ПОСЛЕ ЗАПЯТОЙ
+&apos;2.89 -&gt; 2.9; 3.45123 -&gt; 3.45; 246.9 -&gt; 247
+Function round(num as double,dec as integer)
+	Round = Int(num * 10 ^ dec + 0.5) / 10 ^ dec
+End Function
+rem---------------------------------------------------------------------------------------------------------
+function max(one as double, two as double)
+	if one &gt; two then
+		max = one
+	else
+		max = two
+	end if
+end function
+rem---------------------------------------------------------------------------------------------------------
+function min(one as double, two as double)
+	if one &gt; two then
+		min = two
+	else
+		min = one
+	end if
+end function
+rem---------------------------------------------------------------------------------------------------------
+function minimumAndMaximum(one as double, two as double, three as double)
+	&apos;TODO СДЕЛАТЬ -- НА ВХОД ПОДАВАТЬ КОЛЛЕКЦИЮ ИЗ ЛЮБОГО КОЛЛИЧЕСТВА ЭЛЕМЕНТОВ
+	dim ar(1) as double
+	ar(0) = min(min(one, two), three)
+	ar(1) = max(max(one, two), three)
+	minimumAndMaximum = ar
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;функция получает на вход три значения и возвращает пять значений так, что их среднее равно среднему полученных трех 
+function avarageFivePointsRndArray(coll as Collection, percent)
+	dim Overall as new Overall &apos;временно, чтобы работала строуа accuracy = Overall.rightDecimalAccuracy(Overall.rightStep2503(point)). Потом все Overall нужно из Math убрать
+	dim ar(4) as double
+	&apos;&apos;если приходит одно число -- генерим все пять
+	if coll.count = 1 then
+		ar = avaragePointsRndFiveArray(coll.item(1), percent)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;Overall.percentOTK)
+	&apos;&apos;если приходит 3 числа -- генерим оставшиеся 2 по хитрому рандому:	
+	else
+		&apos;TODO может есть смысл сделать функцию не на 5 значений, а на любое (тогда point будет складываться через for)
+		dim deviation as double
+		dim p4 as double
+		dim p5 as double
+		dim point as double
+		point = (coll.item(1) + coll.item(2) + coll.item(3))/3
+	
+		&apos;смысл такой -- процент отклонения от среднего не константа:
+		&apos;берём разницу между максимальным значением и минимальным минус минимальное
+		&apos;тогда четвертое значение рандомно выбирается из этого диапазона (минус минимальное нужно для того, чтобы пятое значение было не меньше минимального)
+		&apos;таким образом разброс значений никогда не будет выходить за границы макс и мин значений входящих трёх значений, т.е. процент отклонения считается автоматически на основании входных данных
+		dim maximum as double
+		dim minimum as double
+		maximum = minimumAndMaximum(coll.item(1), coll.item(2), coll.item(3))(1)
+		minimum = minimumAndMaximum(coll.item(1), coll.item(2), coll.item(3))(0)
+		p4 = minimum + rnd()*((point - minimum)*2)	
+
+		&apos;СКОЛЬКО ЦИФР ПОСЛЕ ЗАПЯТОЙ -- ОТРЕЗАЕТ ЛИШНИЕ ЦИФРЫ В СГЕНЕРИРОВАННОМ ЧИСЛЕ В ЗАВИСИМОСТИ ОТ НУЖНОГО КОЛИЧЕСТВА ЗНАКОВ ПОСЛЕ ЗАПЯТОЙ (4.123784253... -&gt; 4.12, 80.17852463... -&gt; 80.1, 398.758463812.... -&gt; 398)  
+		dim accuracy as integer
+		accuracy = Overall.rightDecimalAccuracy_old(Overall.rightStep2503(point))
+		dim temp as double
+		temp = p4
+		p4 = round(p4, accuracy)
+		&apos;msgbox &quot;до: &quot; + temp + &quot; после: &quot; + p4
+	
+		p5 = point*2 - p4 &apos;сокращенное от (point*5 - point*3)-p4
+		ar(3) = coll.item(1)
+		ar(1) = coll.item(2)
+		ar(2) = coll.item(3)
+		ar(0) = p4
+		ar(4) = p5
+		&apos;СГЕНЕРИРОВАННЫЕ ЧИСЛА СТАВЛЮ В НАЧАЛО И КОНЕЦ (0), (4)
+	end if	
+	avarageFivePointsRndArray = ar
+end function
+rem---------------------------------------------------------------------------------------------------------
+&apos;По техническим условиям дозу нужно мерить 4 раза.
+&apos;С одним значением нельзя считать коэф. вариации — получается бесконесность (деление на 0)
+&apos;Использовать 4 одинаковых значения дозы тоже нельзя — будет всегда 0% (R - Rсреднее = 0)
+&apos;Чтобы не &quot;мерить&quot; 4 раза я беру дозу и с помощью getRandomizedDoseArray получаю массив из четырех значений, полученных из значения дозы рандомом в диапазоне +- 5%
+function getRandomizedDoseArray(dose as double)
+	dim i as integer
+	dim arr(3) as double
+	dim SHIFT as double
+	SHIFT = dose/100*5 &apos;5% от дозы
+	for i=0 to uBound(arr)
+		arr(i) = randValue(dose, SHIFT)
+	next i
+	getRandomizedDoseArray = arr
+	&apos;msgbox &quot;arr(0) = &quot; + arr(0) +  &quot;arr(1) = &quot; + arr(1) + &quot;arr(2) = &quot; + arr(2) + &quot;arr(3) = &quot; + arr(3) + &quot; dose = &quot; + dose
+end function
+rem---------------------------------------------------------------------------------------------------------
+function roundTwoDigitAfterDot(num as double)&apos;!!!@DEPRECATED!!!
+	&apos;ОКРУГЛЯЕТ ПО ПРАВИЛАМ МАТЕМАТИКИ ДО 2 ЗНАКА ПОСЛЕ ЗАПЯТОЙ
+	&apos;msgbox &quot;before - &quot; + num
+	dim a as double
+	a = num
+	a = a*1000
+	if a mod 10 &gt;= 5 then a = a + 10
+	&apos;msgbox &quot;after - &quot; + int(a/10)/100
+	roundTwoDigitAfterDot = int(a/10)/100
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function avaragePointsRndFiveArray(point as double, o_percent as double)
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim p4 as double
+	dim p5 as double
+	dim ar(4) as double 
+	deviation = o_percent/100*point
+	p1 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p2 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p3 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p4 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p5 = point*5 - p1 - p2 - p3 - p4
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
+	ar(3) = p4
+	ar(4) = p5
+	avaragePointsRndFiveArray = ar
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function avaragePointsRndTenArray(point as double, o_percent as double)
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim p4 as double
+	dim p5 as double
+	dim p6 as double
+	dim p7 as double
+	dim p8 as double
+	dim p9 as double
+	dim p10 as double
+	dim ar(9) as double 
+	deviation = o_percent/100*point
+	p1 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p2 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p3 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p4 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p5 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p6 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p7 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p8 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p9 = roundTwoDigitAfterDot(randValue(point, deviation))
+	p10 = roundTwoDigitAfterDot(point*10 - p1 - p2 - p3 - p4 - p5 - p6 - p7 - p8 - p9)
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
+	ar(3) = p4
+	ar(4) = p5
+	ar(5) = p6
+	ar(6) = p7
+	ar(7) = p8
+	ar(8) = p9
+	ar(9) = p10
+	avaragePointsRndTenArray = ar
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function avaragePointsRndArray(point as double, o_percent as double)
+	rem TODO сделать по Гауссу!!!
+	dim deviation as double
+	dim p1 as double
+	dim p2 as double
+	dim p3 as double
+	dim ar(2) as double 
+	deviation = o_percent/100*point
+	p1 = Math.randValue(point, deviation)
+	p2 = Math.randValue(point, deviation)
+	p3 = point*3 - p1 - p2
+	ar(0) = p1
+	ar(1) = p2
+	ar(2) = p3
+	avaragePointsRndArray = ar	
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos; доверительная граница погрешности измерения
+function dov_granica(pogr as double, percent as double)
+	dov_granica = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos; относительная погрешность измерения
+function RelativeError(meas as double, contr_point as double)
+	&apos;msgbox &quot;relative error = &quot;+ (((meas - contr_point) / contr_point) * 100)
+	RelativeError = ((meas - contr_point) / contr_point) * 100
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;доверительная граница погрешности измерения
+function ConfidenceLimit(pogr as double, percent as double)
+	&apos;msgbox &quot;процент = &quot;+percent+&quot;, погрешность = &quot;+pogr	+&quot; &quot;+(pogr*pogr)
+	ConfidenceLimit = 1.1 * sqr(percent*percent + pogr*pogr)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function randValue(num as double, otklonenie as double) as double
+	randValue = (num - otklonenie) + rnd()*otklonenie*2
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos; проверяет, входит ли измеренное значение (meas) в точке (point) в заданную (percent) погрешность измерения
+function isInLimits(point as double, meas as double, percent as double) as boolean
+	dim rel as double
+	rel = RelativeError(meas, point)
+	if rel&lt;0 then
+		rel=rel*-1
+	end if
+	
+	if rel&lt;=percent then
+		isInLimits = true
+		
+	else
+		isInLimits = false
+		
+	end if
+end function
+
+</script:module>

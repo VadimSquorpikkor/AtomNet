@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="CUnit" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem 	╔═══════════════════════════════════════════════════════════════════════════════╗
+rem		║	Класс блоков детектирования для МРП и Портальных мониторов: в отличии		║█
+rem		║	от DUnit здесь нет контрольных точек, есть только 5 измерений скорости		║█
+rem		║	счета на фоне и от источника. Также для каждого типа БД свой коэффициент 	║█
+rem		║	Методы расчета среднего, инициализация блоков и т.д.						║█
+rem		╚═══════════════════════════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+REM --- Internal Variables                                                                           
+private _BDnumber As String					rem 452.000 -- номер блока
+private _pointBGValue as new Collection		rem 330 -- скорость счета на фоне
+private _pointSrcValue as new Collection	rem 10000 -- скорость счета от источника
+private _delta as double					rem 110.1 -- дельта
+private _pogDelta as double					rem 12.1 -- погрешность (которая не более +-) вторая дельта
+private _bdtype as string					rem &quot;БДКГ-11/1&quot; -- тип блока, как будет написан в протоколе
+private _bdEngtype as string				rem &quot;BDKG-11/1&quot; -- тип блока, как будет написан в протоколе
+&apos;&apos;private _MEASUREMENT_NUMBER as integer		rem 5
+private _isContainer as boolean				rem в контейнере или нет
+private _minLimit as String					rem минимальная граница
+private _maxLimit as String					rem максимальная граница
+
+REM --- CLASS METHODS
+public function getDelta	rem 110.1
+	getDelta = _delta
+end function
+
+public function getPogDelta	rem 12.1
+	getPogDelta = _pogDelta
+end function
+
+public function getType	rem &quot;БДКГ-11/1&quot;
+	getType = _bdtype
+end function
+
+public function getEngType	rem &quot;BDKG-11/1&quot;
+	getEngType = _bdEngtype
+end function
+
+public function getSerial	rem &quot;452.000&quot;
+	getSerial = _BDnumber
+end function
+
+public function setSerial(serial as string)	rem &quot;452.000&quot;
+	_BDnumber = serial
+end function
+
+&apos;public function getMinLimit	rem &quot;0.03&quot;
+&apos;	getMinLimit = _minLimit
+&apos;end function
+
+&apos;public function getMaxLimit	rem &quot;100&quot;
+&apos;	getMaxLimit = _maxLimit
+&apos;end function
+
+rem Каждый БД может устанавливаться как в контейнере (со свинцовой защитой), так и без него,
+rem соответственно есть два разных набора параметров для каждого блока
+
+private function setBdType(bdName as string, bdEngName as string, bgRate as double, srcRate as double, delta as double, pogDelta as double, isContainer as boolean)
+	dim i as integer
+	_delta = delta
+	_pogDelta = pogDelta 
+	for i=1 to 5
+		_pointBGValue.add(BgRate)
+		_pointSrcValue.add(SrcRate)
+	next i
+	_bdtype = bdName
+	_bdEngtype = bdEngName
+	_isContainer = isContainer
+	&apos;_minLimit = minLimit
+	&apos;_maxLimit = maxLimit
+end function
+
+&apos;БД ЕСТЬ С ПАРАМЕТРАМИ ПО НОВОМУ И СТАРОМУ ТУ. Блоки по старому ТУ используются для ремонтных БД, поэтому тоже нужны
+
+&apos;БДКГ-11/1 (для МРП АТ920)
+Public Sub setAsBDKG11 &apos;в новом ТУ нет
+	setBdType(&quot;БДКГ-11/1&quot;, &quot;BDKG-11/1&quot;, 330, 10000, 110.1, 22, false)
+end sub
+&apos;БДКГ-11/1 в контейнере (для портального)
+Public Sub setAsBDKG11container &apos;в новом ТУ нет
+	setBdType(&quot;БДКГ-11/1&quot;, &quot;BDKG-11/1&quot;, 160, 5200, 60.8, 12.1, true)
+end sub
+&apos;БДКГ-19 (для МРП АТ920В)
+Public Sub setAsBDKG19
+	setBdType(&quot;БДКГ-19&quot;, &quot;BDKG-19&quot;, 660, 13000, 147.8, 29.5, false)
+end sub
+&apos;БДКГ-19 в контейнере (для портального)
+Public Sub setAsBDKG19container &apos;по старому и новому ТУ совпадают
+	setBdType(&quot;БДКГ-19&quot;, &quot;BDKG-19&quot;, 300, 9000, 106.1, 21.2, true)
+end sub
+&apos;БДКГ-35 (для МРП АТ920Р)
+Public Sub setAsBDKG35
+	setBdType(&quot;БДКГ-35&quot;, &quot;BDKG-35&quot;, 400, 9000, 100, 20, false)
+end sub
+&apos;БДКГ-35 в контейнере (для портального)
+Public Sub setAsBDKG35container &apos;по старому и новому ТУ совпадают
+	setBdType(&quot;БДКГ-35&quot;, &quot;BDKG-35&quot;, 200, 5000, 55, 11, true)
+end sub
+
+Public Sub setAsBDRM05
+	setBdType(&quot;БДРМ-05&quot;, &quot;BDRM-05&quot;, 1700, 13000, 150, 30, false)
+end sub
+
+Public Sub setAsBDRM05_2000 &apos;для старого ТУ
+	setBdType(&quot;БДРМ-05&quot;, &quot;BDRM-05&quot;, 1700, 13000, 125, 25, false)
+end sub
+
+public function setBGList(measuredBGValue as Collection)
+	_pointBGValue = measuredBGValue
+end function
+
+public function getBGList as Collection rem 300, 299, ...
+	getBGList = _pointBGValue
+end function
+
+public function setSrcList(measuredSrcValue as Collection)
+	_pointSrcValue = measuredSrcValue
+end function
+
+public function getSrcList as Collection rem 9800, 10050, ...
+	getSrcList = _pointSrcValue
+end function
+
+public function getBgAverage
+	dim i as integer
+	dim avr as double
+	avr = 0
+	for i=1 to _pointBGValue.count
+		avr = avr + _pointBGValue.item(i)
+	next i
+	getBgAverage = avr/_pointBGValue.count
+end function
+
+public function getSrcAverage
+	dim i as integer
+	dim avr as double
+	avr = 0
+	for i=1 to _pointSrcValue.count
+		avr = avr + _pointSrcValue.item(i)
+	next i
+	getSrcAverage = avr/_pointSrcValue.count
+end function
+
+public function getSensitivity(activity as double) as double
+	getSensitivity = (getSrcAverage - getBgAverage)/activity
+end function
+
+public function isContainer as boolean
+	isContainer = _isContainer
+end function
+
+</script:module>

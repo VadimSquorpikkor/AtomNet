@@ -1,0 +1,67 @@
+'-------------------------------------------------------------
+public const BETA_0660 as double  = 96
+public const BETA_6905 as double  = 228
+public const BETA_0661 as double  = 5591
+public const BETA_0662 as double  = 51010
+public const BETA_15014 as double = 370348
+public const BETA_0663 as double  = 13.1
+public const BETA_0664 as double  = 68.8
+public const BETA_0665 as double  = 474
+public const BETA_0666 as double  = 5801
+public const BETA_0667 as double  = 52373
+public const BETA_16437 as double = 149288
+public const BETA_BG as double    = 11.9
+'-------------------------------------------------------------
+public const BETA_0660_BQ as double  = 4.23
+public const BETA_6905_BQ as double  = 10.1
+public const BETA_0661_BQ as double  = 247
+public const BETA_0662_BQ as double  = 2253.5
+'-------------------------------------------------------------
+function get_activity_Sr(src as string, mdate)
+	dim activity_0 as double
+	dim daysLeft as double
+	
+	select case src
+	case "0660"
+		activity_0 = BETA_0660
+	case "6905"
+		activity_0 = BETA_6905
+	case "0661"
+		activity_0 = BETA_0661
+	case "0662"
+		activity_0 = BETA_0662
+	case "15014"
+		activity_0 = BETA_15014
+	case "0663"
+		activity_0 = BETA_0663
+	case "0664"
+		activity_0 = BETA_0664
+	case "0665"
+		activity_0 = BETA_0665
+	case "0666"
+		activity_0 = BETA_0666
+	case "0667"
+		activity_0 = BETA_0667
+	case "0663/S"
+		activity_0 = BETA_0663 / 2.83
+	case "0664/S"
+		activity_0 = BETA_0664 / 2.83
+	case "0665/S"
+		activity_0 = BETA_0665 / 2.83
+	case "0666/S"
+		activity_0 = BETA_0666 / 2.83
+	case "0667/S"
+		activity_0 = BETA_0667 / 2.83
+	case "0660Bq"
+		activity_0 = BETA_0660_BQ
+	case "6905Bq"
+		activity_0 = BETA_6905_BQ
+	case "0661Bq"
+		activity_0 = BETA_0661_BQ		
+	case "0662Bq"
+		activity_0 = BETA_0662_BQ	
+	end select
+
+	daysLeft = cdatefromiso(mdate.date) - DateSerial(2019,12,1) rem 1 декабря
+	get_activity_Sr = activity_0 * exp(-0.693147/SR_90_HALF_LIFE * daysLeft)
+end function

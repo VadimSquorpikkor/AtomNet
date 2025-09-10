@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="_TODO" script:language="StarBasic">REM  *****  BASIC  *****
+
+&apos;- УПН - БДКН-01, 02 -- 5%
+&apos;        БДКН-03, 04 -- 7%
+&apos;- все бдкг 22, 23, 23.1 сделать чтобы оди БД помещался на одну страницу
+&apos;- В метод comboChanged (изменение даты) добавить метод пересчета активности Cs-137 
+&apos;- Сделать расчет активностей для гаммы и беты как отдельный класс, при смене даты будет пересчитываться активность в ОБЪЕКТЕ ЭТОГО КЛАССА,
+&apos;		а другие  классы будут просто вытягивать эту новую активность, для них активность будет просто данными метода getActivity(дата), 
+&apos;		они ничего не будут знать о том, что изменилась дата
+&apos;- Диапазон измерений для БД сделать из кода в протокол, как в 1117 (а не просто прописать в протоколе)
+
+
+&apos; setButtonEnabled -- не нужный метод, если при старте формы какой-то из блоков уже выбран (см. БДКГ-22 например) и тогда кнопка &quot;Добавить&quot; активна. Нужна если: при открытии формы тип блока не выбран и тогда нельзя нажимать кнопку &quot;добавить&quot; 
+
+&apos;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+&apos; Если есть методы dialogShowInitialize или dialogShowInitializeWithoutValueField или dialogSimpleInitialize, 
+&apos; то НЕ НУЖНО инициализировать поля выбора сертификатов (oOptionButtonPr = oDialogG23N.Model.getByName(&quot;isProtocol&quot;) и остальные) 
+&apos; и НЕ НУЖНО инициализировать комбоБоксы сертификатов (Overall.initializeSertificateCombo(oComboBox1, oComboBox2)). 
+&apos; В этих методах всё уже инициализировано
+
+&apos;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+&apos;СДЕЛАНО управление видимостью ValueField и Label теперь добавлена в Overall.setButtonVisibility, во всех приборах надо удалить соответствующие команды, они теперь не нужны
+
+&apos;!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+&apos; СДЕЛАНО TODO сделать везде как здесь: layoutPosition + 1 (а не = 1), и только после этого makeLayoutFromBD(), так при добавлении 
+&apos; нового БД лэйаут будет переключаться на этот новый БД, а раньше всегда переключался на первый (см. 2140):
+&apos; layoutPosition = layoutPosition + 1
+&apos; Overall.makeLayoutFromBD(BDList.item(layoutPosition)
+
+
+&apos;	if _oDialog.Model.hasByName(&quot;insertButton&quot;) then
+&apos;		_oDialog.model.getByName(&quot;insertButton&quot;).ImageURL = sertPath &amp; &quot;imgs/down_arr.png&quot;
+&apos;		insertButton = _oDialog.getControl(&quot;insertButton&quot;)
+&apos;		insertButton.visible = false
+&apos;	end if
+</script:module>

@@ -1,0 +1,80 @@
+'-------------------------------------------------------------
+'Функция возвращает расчитанную на выбранную дата величину в зависимости от формата src переменной:
+'	строка вида "0660" 		возвращает ПЛОТНОСТЬ ПОТОКА
+'	строка вида "0660Bq" 	возвращает ПОВЕРХНОСТНУЮ АКТИВНОСТЬ (Бк/см2)
+'	строка вида "0660Act" 	возвращает Активность (Бк)
+'	строка вида "0660/S" 	возвращает плотность потока для БДПБ-03
+'	строка вида "0660BqCps" возвращает поверхностную активность для 6130cps
+function get_activity_Sr(src as string, nowDate)
+	'msgbox "get_activity_Sr - "+src
+	select case src
+	'—————————————————————————————————————————————————————————————————
+	'плотность потока
+		case "0660": get_activity_Sr = Sr90_pp("2025.07.22", 58.2,    40,  nowDate)
+		case "0661": get_activity_Sr = Sr90_pp("2025.07.22", 3420,    40,  nowDate)
+		case "0662": get_activity_Sr = Sr90_pp("2025.07.22", 32300,   40,  nowDate)
+		case "0663": get_activity_Sr = Sr90_pp("2021.06.01", 21.4,    100, nowDate)
+		case "0664": get_activity_Sr = Sr90_pp("2024.07.30", 101,     100, nowDate)
+		case "0665": get_activity_Sr = Sr90_pp("2023.09.06", 762,     100, nowDate)
+		case "0666": get_activity_Sr = Sr90_pp("2025.01.29", 8570,    100, nowDate)
+		case "0667": get_activity_Sr = Sr90_pp("2023.09.06", 79900,   100, nowDate)
+		case "2124": get_activity_Sr = Sr90_pp("2025.01.29", 4.26,    1,   nowDate)
+		case "2125": get_activity_Sr = Sr90_pp("2025.01.29", 401,     1,   nowDate)
+		case "2126": get_activity_Sr = Sr90_pp("2025.01.29", 21.9,    10,  nowDate)
+		case "2127": get_activity_Sr = Sr90_pp("2025.01.29", 222,     10,  nowDate)
+		case "2128": get_activity_Sr = Sr90_pp("2025.01.29", 2520,    10,  nowDate)				
+		case "2129": get_activity_Sr = Sr90_pp("2025.01.29", 25,      100, nowDate)
+		case "0578": get_activity_Sr = Sr90_pp("2025.01.29", 191,     40,  nowDate)	
+		case "0579": get_activity_Sr = Sr90_pp("2025.01.29", 113000,  40,  nowDate)	
+		case "0580": get_activity_Sr = Sr90_pp("2025.01.29", 277000,  40,  nowDate)	
+		case "0581": get_activity_Sr = Sr90_pp("2025.01.29", 1130000, 40,  nowDate)				
+	'—————————————————————————————————————————————————————————————————
+	'поверхностная активность
+		case "0660Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 154,    40,  nowDate)
+		case "0661Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 9070,   40,  nowDate)
+		case "0662Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 85500,  40,  nowDate)
+		case "0664Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 272,    100, nowDate)
+		case "0665Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 2020,   100, nowDate)
+		case "0666Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 22800,  100, nowDate)
+		case "0667Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 211000, 100, nowDate)
+		case "2129Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 66.33,  100, nowDate)
+		case "0578Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 504,    40,  nowDate)	
+		case "0579Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 302000, 40,  nowDate)	
+		case "0580Bq": get_activity_Sr = Sr90_s_act("2025.01.29", 736000, 40,  nowDate)	
+	'—————————————————————————————————————————————————————————————————
+	'активность (нигде не используется, так, на всякий)
+		case "0660Act": get_activity_Sr = Sr90_pp("2025.07.22", 154,     nowDate)
+		case "0661Act": get_activity_Sr = Sr90_pp("2025.07.22", 9070,    nowDate)
+		case "0662Act": get_activity_Sr = Sr90_pp("2025.07.22", 85500,   nowDate)
+		case "0663Act": get_activity_Sr = Sr90_pp("2021.06.01", 73.3,    nowDate)
+		case "0664Act": get_activity_Sr = Sr90_pp("2024.07.30", 272,     nowDate)
+		case "0665Act": get_activity_Sr = Sr90_pp("2023.09.06", 2020,    nowDate)
+		case "0666Act": get_activity_Sr = Sr90_pp("2025.01.29", 22800,   nowDate)
+		case "0667Act": get_activity_Sr = Sr90_pp("2023.09.06", 211000,  nowDate)
+		case "2124Act": get_activity_Sr = Sr90_pp("2025.01.29", 11.3,    nowDate)
+		case "2125Act": get_activity_Sr = Sr90_pp("2025.01.29", 1070,    nowDate)
+		case "2126Act": get_activity_Sr = Sr90_pp("2025.01.29", 58.4,    nowDate)
+		case "2127Act": get_activity_Sr = Sr90_pp("2025.01.29", 589,     nowDate)
+		case "2128Act": get_activity_Sr = Sr90_pp("2025.01.29", 6680,    nowDate)				
+		case "2129Act": get_activity_Sr = Sr90_pp("2025.01.29", 66.3,    nowDate)
+		case "0578Act": get_activity_Sr = Sr90_pp("2025.01.29", 504,     nowDate)	
+		case "0579Act": get_activity_Sr = Sr90_pp("2025.01.29", 302000,  nowDate)	
+		case "0580Act": get_activity_Sr = Sr90_pp("2025.01.29", 736000,  nowDate)	
+		case "0581Act": get_activity_Sr = Sr90_pp("2025.01.29", 3010000, nowDate)
+	'—————————————————————————————————————————————————————————————————
+	'плотность потока для БДПБ-03. источник меньше чем бета, поэтому при расчете делится на 2.83
+		case "2129/S": get_activity_Sr = Sr90_pp("2025.01.29", 25,    100, nowDate) / 2.83 'get_activity_Sr = get_activity_Sr("2129") / 2.83 ' ХЗ почему не работает рекурсия. затыкается на 	get_activity_Sr = Sr90_pp("2025.01.29", 25, 100, nowDate) в кейсе "2129"
+		case "0664/S": get_activity_Sr = Sr90_pp("2024.07.30", 101,   100, nowDate) / 2.83
+		case "0665/S": get_activity_Sr = Sr90_pp("2023.09.06", 762,   100, nowDate) / 2.83
+		case "0666/S": get_activity_Sr = Sr90_pp("2025.01.29", 8570,  100, nowDate) / 2.83
+		case "0667/S": get_activity_Sr = Sr90_pp("2023.09.06", 79900, 100, nowDate) / 2.83
+	'—————————————————————————————————————————————————————————————————	
+	'Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426
+		case "0660BqCps": get_activity_Sr = Sr90_s_act("2025.01.29", 154,   40, nowDate)*1.426
+		case "0661BqCps": get_activity_Sr = Sr90_s_act("2025.01.29", 9070,  40, nowDate)*1.426
+		case "0662BqCps": get_activity_Sr = Sr90_s_act("2025.01.29", 85500, 40, nowDate)*1.426
+		case "0578BqCps": get_activity_Sr = Sr90_s_act("2025.01.29", 504,   40, nowDate)*1.426	
+	'—————————————————————————————————————————————————————————————————		
+		case else: get_activity_Sr = 0.0
+	end select
+end function

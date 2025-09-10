@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="BaseC" script:language="StarBasic">
+REM  *****  BASIC  *****
+
+Option Compatible
+Option ClassModule
+Option Explicit
+
+
+dim _oDialog as object
+dim _maxBDCount as integer
+dim _versionName as String
+dim _logoName as String
+dim _oListBox as object
+dim _oComboProv as object
+dim _oComboTech as object
+dim _oDateFieldModel as object
+
+public function setNewDialog(dialogName)
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	_oDialog = CreateUnoDialog( dialogName )
+end function
+
+public function dialogStart
+    oDialogMain.endexecute()
+    _oDialog.Execute()
+end function
+
+public function setVersion(versionName as String)
+	_versionName = versionName
+end function
+
+public function setMaxBDCount(maxBDCount as integer)
+	_maxBDCount = maxBDCount
+end function
+
+public function setLogo(logoName as String)
+	_logoName = logoName
+end function	
+
+public function initializeListBox(listBoxName as String)
+	    _oListBox = _oDialog.getControl(listBoxName)
+end function
+
+
+&apos;   Overall.dialogShowInitialize(maxBDCount, oDialog1121, oDateFieldModel, &quot;Версия 2.15 &quot;, oListBox, 9)
+&apos;   Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+&apos;   oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+&apos;   oDialog1121.Model.getByName(&quot;1121Logo&quot;).ImageURL = sertPath &amp; &quot;1121\1121_bg.png&quot;
+
+rem---------------------------------------------------------------------------------------------------------
+&apos;   maxBDCount - максимально возможное кол-во БД в протоколе
+&apos;   version - версия диалога
+&apos;   pointCount - кол-во полей для ввода значений измереных точек (ValueField), оно же -- кол-во самих точек
+sub initializeValueFields(fieldName as String, pointCount as integer, visibility as boolean, availability as boolean)
+	dim i as integer
+	for i=1 to pointCount
+		_oDialog.getControl(fieldName + i).visible = visibility
+		_oDialog.getControl(fieldName + i).setEnable(availability)
+		_oDialog.getControl(fieldName + i).value = 0
+	next i
+end sub
+
+public function initializeDateField
+	_oDateFieldModel = _oDialog.Model.getByName(&quot;DateField1&quot;)
+	_oDateFieldModel.dateFormat = 7 &apos;// в виде dd.mm.yyyy
+	_oDateFieldModel.Date = cDateToIso(Now)
+end function
+
+rem---------------------------------------------------------------------------------------------------------
+public function initializeComboBox(provComboName as String, techComboName as String)
+    _oComboProv = _oDialog.getControl(provComboName)
+    _oComboTech = _oDialog.getControl(techComboName)
+    &apos;first remove all old items from the list
+    _oComboProv.removeItems( 0, _oComboProv.getItemCount() )
+    _oComboTech.removeItems( 0, _oComboTech.getItemCount() )
+    &apos;add new items to the list
+    rusItems1 = Array( &quot;В. Писаренко&quot;, &quot;С. Кульчинский&quot;, &quot;Д. Кульчинский&quot; )
+    engItems1 = Array( &quot;V. Pisarenko&quot;, &quot;S. Kulchinsky&quot;, &quot;D. Kulchinsky&quot; )
+    _oComboProv.addItems( rusItems1, 0 )
+    _oComboProv.text = rusItems1(0)
+    rusItems2 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;В. Тарасенко&quot; )
+    engItems2 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;V. Tarasenko&quot; )
+    _oComboTech.addItems( rusItems2, 0 )
+    _oComboTech.text = rusItems2(0)
+end function
+rem---------------------------------------------------------------------------------------------------------
+
+rem Для 2503 и 3509 -- в этих диалогах нет полей ValueField(i), там поля имеют вид ValueField(i)-1, ValueField(i)-2, ValueField(i)-3
+sub dialogInitializeWithoutValueField(maxBDCount as integer, version as string, oListBox as object, pointCount as integer)
+	_maxBDCount = maxBDCount
+	_oListBox = oListBox
+	initializeDateField(oDateFieldModel)	
+	_oDialog.getControl(&quot;versionLabel&quot;).text = version	
+	
+	oComboBox1 = _oDialog.getControl(&quot;provCombo&quot;)
+	oComboBox2 = _oDialog.getControl(&quot;techCombo&quot;)
+
+	initializeSertificateCombo(oComboBox1, oComboBox2)
+
+	_oDialog.getControl(&quot;addButton&quot;).setEnable(false)	
+	_oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	_oDialog.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
+	_oDialog.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
+	
+	_oOptionButtonPr = _oDialog.Model.getByName(&quot;isProtocol&quot;)
+	_oOptionButtonSr = _oDialog.Model.getByName(&quot;isSertificateRus&quot;)
+	_oOptionButtonSe = _oDialog.Model.getByName(&quot;isSertificateEng&quot;)
+	_oOptionButtonPr.State = 1
+		
+	_oListBox.setEnable(false)
+end sub
+	
+</script:module>

@@ -1,0 +1,86 @@
+
+'Функция возвращает расчитанную на выбранную дата величину в зависимости от формата src переменной:
+'	строка вида "0660" 		возвращает ПЛОТНОСТЬ ПОТОКА
+'	строка вида "0660Bq" 	возвращает ПОВЕРХНОСТНУЮ АКТИВНОСТЬ (Бк/см2)
+'	строка вида "0660Act" 	возвращает Активность (Бк)
+'	строка вида "0660/S" 	возвращает плотность потока для БДПБ-03
+'	строка вида "0660BqCps" возвращает поверхностную активность для 6130cps
+function get_activity_Sr_old(src as string, nowDate)
+	'msgbox "get_activity_Sr - "+src
+	select case src
+	'плотность потока
+		case "0660": get_activity_Sr = BETA_0660.getFDensity(nowDate)
+		case "0661": get_activity_Sr = BETA_0661.getFDensity(nowDate)
+		case "0662": get_activity_Sr = BETA_0662.getFDensity(nowDate)
+		case "0663": get_activity_Sr = BETA_0663.getFDensity(nowDate)
+		case "0664": get_activity_Sr = BETA_0664.getFDensity(nowDate)
+		case "0665": get_activity_Sr = BETA_0665.getFDensity(nowDate)
+		case "0666": get_activity_Sr = BETA_0666.getFDensity(nowDate)
+		case "0667": get_activity_Sr = BETA_0667.getFDensity(nowDate)
+		case "2124": get_activity_Sr = BETA_2124.getFDensity(nowDate)
+		case "2125": get_activity_Sr = BETA_2125.getFDensity(nowDate)
+		case "2126": get_activity_Sr = BETA_2126.getFDensity(nowDate)
+		case "2127": get_activity_Sr = BETA_2127.getFDensity(nowDate)
+		case "2128": get_activity_Sr = BETA_2128.getFDensity(nowDate)				
+		case "2129": get_activity_Sr = BETA_2129.getFDensity(nowDate)
+		case "0578": get_activity_Sr = BETA_0578.getFDensity(nowDate)	
+		case "0579": get_activity_Sr = BETA_0579.getFDensity(nowDate)	
+		case "0580": get_activity_Sr = BETA_0580.getFDensity(nowDate)	
+		case "0581": get_activity_Sr = BETA_0581.getFDensity(nowDate)				
+	'—————————————————————————————————————————————————————————————————
+	'поверхностная активность
+		case "0660Bq": get_activity_Sr = BETA_0660.getSurActivity(nowDate)
+        case "0661Bq": get_activity_Sr = BETA_0661.getSurActivity(nowDate)
+        case "0662Bq": get_activity_Sr = BETA_0662.getSurActivity(nowDate)
+        case "0663Bq": get_activity_Sr = BETA_0663.getSurActivity(nowDate)
+        case "0664Bq": get_activity_Sr = BETA_0664.getSurActivity(nowDate)
+        case "0665Bq": get_activity_Sr = BETA_0665.getSurActivity(nowDate)
+        case "0666Bq": get_activity_Sr = BETA_0666.getSurActivity(nowDate)
+        case "0667Bq": get_activity_Sr = BETA_0667.getSurActivity(nowDate)
+        case "2124Bq": get_activity_Sr = BETA_2124.getSurActivity(nowDate)
+        case "2125Bq": get_activity_Sr = BETA_2125.getSurActivity(nowDate)
+        case "2126Bq": get_activity_Sr = BETA_2126.getSurActivity(nowDate)
+        case "2127Bq": get_activity_Sr = BETA_2127.getSurActivity(nowDate)
+        case "2128Bq": get_activity_Sr = BETA_2128.getSurActivity(nowDate)				
+        case "2129Bq": get_activity_Sr = BETA_2129.getSurActivity(nowDate)
+        case "0578Bq": get_activity_Sr = BETA_0578.getSurActivity(nowDate)	
+        case "0579Bq": get_activity_Sr = BETA_0579.getSurActivity(nowDate)	
+        case "0580Bq": get_activity_Sr = BETA_0580.getSurActivity(nowDate)	
+        case "0581Bq": get_activity_Sr = BETA_0581.getSurActivity(nowDate)
+	'—————————————————————————————————————————————————————————————————
+	'активность (нигде не используется, так, на всякий)
+		case "0660Act": get_activity_Sr = BETA_0660.getActivity(nowDate)
+        case "0661Act": get_activity_Sr = BETA_0661.getActivity(nowDate)
+        case "0662Act": get_activity_Sr = BETA_0662.getActivity(nowDate)
+        case "0663Act": get_activity_Sr = BETA_0663.getActivity(nowDate)
+        case "0664Act": get_activity_Sr = BETA_0664.getActivity(nowDate)
+        case "0665Act": get_activity_Sr = BETA_0665.getActivity(nowDate)
+        case "0666Act": get_activity_Sr = BETA_0666.getActivity(nowDate)
+        case "0667Act": get_activity_Sr = BETA_0667.getActivity(nowDate)
+        case "2124Act": get_activity_Sr = BETA_2124.getActivity(nowDate)
+        case "2125Act": get_activity_Sr = BETA_2125.getActivity(nowDate)
+        case "2126Act": get_activity_Sr = BETA_2126.getActivity(nowDate)
+        case "2127Act": get_activity_Sr = BETA_2127.getActivity(nowDate)
+        case "2128Act": get_activity_Sr = BETA_2128.getActivity(nowDate)				
+        case "2129Act": get_activity_Sr = BETA_2129.getActivity(nowDate)
+        case "0578Act": get_activity_Sr = BETA_0578.getActivity(nowDate)	
+        case "0579Act": get_activity_Sr = BETA_0579.getActivity(nowDate)	
+        case "0580Act": get_activity_Sr = BETA_0580.getActivity(nowDate)	
+        case "0581Act": get_activity_Sr = BETA_0581.getActivity(nowDate)
+	'—————————————————————————————————————————————————————————————————
+	'плотность потока для БДПБ-03. источник меньше чем бета, поэтому при расчете делится на 2.83
+		case "2129/S": get_activity_Sr = BETA_2129.getFDensityB3(nowDate)
+		case "0664/S": get_activity_Sr = BETA_0664.getFDensityB3(nowDate)
+		case "0665/S": get_activity_Sr = BETA_0665.getFDensityB3(nowDate)
+		case "0666/S": get_activity_Sr = BETA_0666.getFDensityB3(nowDate)
+		case "0667/S": get_activity_Sr = BETA_0667.getFDensityB3(nowDate)
+	'—————————————————————————————————————————————————————————————————	
+	'Если 6130cps, то для беты считаем активность с учетом чувствительности 6130: поверхностную активность (Бк/см2) * 1.426: А(6130) = Ап * 1.426
+		case "0660BqCps": get_activity_Sr = BETA_0660.getCpsActivity(nowDate)
+		case "0661BqCps": get_activity_Sr = BETA_0661.getCpsActivity(nowDate)
+		case "0662BqCps": get_activity_Sr = BETA_0662.getCpsActivity(nowDate)
+		case "0578BqCps": get_activity_Sr = BETA_0578.getCpsActivity(nowDate)
+	'—————————————————————————————————————————————————————————————————		
+		case else: get_activity_Sr = 0.0
+	end select
+end function

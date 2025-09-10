@@ -1,0 +1,1369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Overall" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem 	╔═══════════════════════════════════════════════════════════════╗
+rem		║	Глобальный класс для работы с протоколами и БД				║█
+rem		║	Собранны основные методы, все остальные классы работают		║█
+rem		║ 	с использованием методов этого класса						║█
+rem		║ 	В перспективе -- основной класс для работы 					║█
+rem		║ 	с любыми типами протоколов/устройствами 					║█
+rem		╚═══════════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+Option Compatible
+Option ClassModule
+Option Explicit
+dim atomMath as new AtomMath
+
+dim rusItems1, engItems1, rusItems2, engItems2 as variant
+
+dim _oDialog as object
+dim _oListBox as object
+dim _BDList as Collection
+dim _isComboCollection as Collection
+dim _maxBDCount as integer
+dim _isComboCollection as Collection
+dim _layoutPosition as integer
+dim _oOptionButtonPr as object
+dim _oOptionButtonSe as object
+dim _oOptionButtonSr as object
+
+dim _oOptionButtonPrNew as object
+dim _oOptionButtonSeNew as object
+dim _oOptionButtonSrNew as object
+
+dim _calibName, _techName as string
+dim _maxPointsCount as integer 	&apos;сколько максимально может отображаться точек (полей) в форме. Отличается от количества точек в БД -- в форме могут отображаться 
+								&apos;несколько типов БД на выбор (БДКГ-22 и БДКГ-23), у которых кол-во точек различается, кол-во точек на форме одинаково для каждого
+								&apos;для типа БД(по сути равно максимальному кол-ву точек из доступных в форме типов БД), просто некоторые могут быть неактивный для какого-то из БД
+dim _separateBGround as boolean
+dim _stringTypeForCertificate as String &apos;поверка проверка сертификат&apos;
+&apos;------------------------------------------------------------------------------------------------------------------------
+dim m_point, cont_point as double 
+dim prefix, MyFormat as string
+dim threePointArray(2) as double
+
+dim strokeForSaving as String
+dim deviceNameForSavingStroke as String
+dim divider as String
+
+dim percentOtk as double rem отклонение от значения точки для рандомайзера трех точек измерения при расчете среднего значения м.д.  
+dim bg007 as double
+dim additionalBGValue as double 	rem к каждому последующему значению фона в таблице добавляется рандомно небольшое значение, так, чем больше значение точки, тем боьше будет (немного) значение
+rem									фона (так как БД будет ближе к опущенному, но все-таки немного фонящему источнику) В идеале, это не совсем так, источники могут быть разными от точки к точке, 
+rem									соответственно, расстояние может и увеличиваться. Поэтому нужно, чтобы метод добавлял надбавку к фону в зависимости от расстояния от источника (брать в классе Activity)
+
+dim _oDateFieldModel as object
+dim NULL as object
+&apos;------------------------------------------------------------------------------------------------------------------------
+public function getPercentOtk as double
+	getPercentOtk = percentOtk
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub setSeparateBG(state as boolean)
+	_separateBGround = state
+end sub
+&apos;-------------------------------------------------------------------------
+sub comboChanged(Combo as object, NumericField as object, DateField as object)
+	NumericField.value = Activity.get_activity_cs(Combo.text, _oDateFieldModel)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub increment(TField as object) as string
+	dim value as integer
+	value = TField.text
+	TField.text = integerTo3String(value + 1)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub integerTo3String(value as integer) as string
+	dim inc as string
+	if 	   value &lt;= 9  then
+		inc = &quot;00&quot; &amp; value
+	elseif value &lt;= 99 then
+		inc = &quot;0&quot;  &amp; value
+	else
+		inc = &quot;&quot;   &amp; value
+	end if
+	integerTo3String = inc
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub initializeActivityCombo(oActivityCombo as object)
+	REM first remove all old items from the list
+	dim nCount as integer
+	dim sItems As Variant
+	nCount = oActivityCombo.getItemCount()
+	oActivityCombo.removeItems( 0, nCount )
+	REM add new items to the list
+	sItems = Array( &quot;№595&quot;, &quot;№516&quot;, &quot;№517&quot;, &quot;№518&quot;, &quot;№519&quot;, &quot;№520&quot;, &quot;№521&quot;, &quot;№2910&quot;)
+	oActivityCombo.addItems( sItems, 0 )
+	oActivityCombo.text = &quot;№595&quot;
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub initializeSertificateCombo(oComboBox1 as object, oComboBox2 as object)
+	&apos;msgbox &quot;initializeSertificateCombo&quot;
+	if NOT isNull(oComboBox1) then
+  		oComboBox1.removeItems( 0, oComboBox1.getItemCount() )
+  		rusItems1 = Array( &quot;В. Писаренко&quot;, &quot;С. Кульчинский&quot;, &quot;Д. Кульчинский&quot;, &quot;И. Германенко&quot;, &quot;П. Фекленкова&quot; )
+  		engItems1 = Array( &quot;V. Pisarenko&quot;, &quot;S. Kulchinsky&quot;, &quot;D. Kulchinsky&quot;, &quot;I. Germanenko&quot;, &quot;P. Feklenkova&quot; )
+  		oComboBox1.addItems( rusItems1, 0 )
+		oComboBox1.text = rusItems1(0)
+	end if	
+	if NOT isNull(oComboBox2) then
+		oComboBox2.removeItems( 0, oComboBox2.getItemCount() )  	
+  		rusItems2 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;П. Фекленкова&quot; )
+  		engItems2 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;P. Feklenkova&quot; )
+  		oComboBox2.addItems( rusItems2, 0 )
+		oComboBox2.text = rusItems2(0)
+	end if	
+	&apos;if NOT isNull(oComboBox3) then
+	&apos;	oComboBox3.removeItems( 0, oComboBox3.getItemCount() )  	
+  	&apos;	rusItems3 = Array( &quot;Н. Курбатова&quot;, &quot;А. Русакевич&quot;, &quot;П. Фекленкова&quot; )
+  	&apos;	engItems3 = Array( &quot;N. Kurbatova&quot;, &quot;A. Rusakevich&quot;, &quot;P. Feklenkova&quot; )
+  	&apos;	oComboBox3.addItems( rusItems2, 0 )
+	&apos;	oComboBox3.text = rusItems2(0)
+	&apos;end if	
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub initializeDateField(oDateFieldModel as object, oDialog as object)
+	oDateFieldModel = oDialog.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel.Date = cDateToIso(Now)
+	
+	_oDateFieldModel = oDateFieldModel
+end sub
+
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub initializeParameters(layoutPosition as integer, BDList as Collection, isComboCollection as Collection)
+	_layoutPosition = layoutPosition
+	_BDList = BDList
+	_isComboCollection = isComboCollection
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub dialogShowInitialize(maxBDCount as integer, oDialog as object, oDateFieldModel as object, version as string, oListBox as object, pointCount as integer)
+	_oDialog = oDialog
+	
+	&apos;если в диалоге ксть поля &quot;ValueField&quot;, то они будут проинициализированы. 
+	&apos;В 2503 и 3509 нет полей ValueField(i), там поля имеют вид ValueField(i)-1, ValueField(i)-2, ValueField(i)-3 , в этих диалогах инициализация пропускается
+	if _oDialog.Model.hasByName(&quot;ValueField1&quot;) then
+		dim i as integer
+		for i=1 to pointCount
+			&apos;_oDialog.getControl(&quot;ValueField&quot; + i).setEnable(false)
+			_oDialog.getControl(&quot;ValueField&quot; + i).visible = false
+			_oDialog.getControl(&quot;ValueField&quot; + i).value = 0
+		next i
+	end if
+	
+
+	
+	_maxBDCount = maxBDCount
+	_oListBox = oListBox
+	_maxPointsCount = pointCount
+	initializeDateField(oDateFieldModel, _oDialog)	
+	_oDialog.getControl(&quot;versionLabel&quot;).text = version	
+	
+	oComboBox1 = _oDialog.getControl(&quot;provCombo&quot;)
+	oComboBox2 = _oDialog.getControl(&quot;techCombo&quot;)
+
+	initializeSertificateCombo(oComboBox1, oComboBox2)
+
+	if _oDialog.Model.hasByName(&quot;addButton&quot;) 	then _oDialog.getControl(&quot;addButton&quot;).setEnable(false)	
+	if _oDialog.Model.hasByName(&quot;removeButton&quot;) then _oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+	if _oDialog.Model.hasByName(&quot;nextButton&quot;) 	then _oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	if _oDialog.Model.hasByName(&quot;prevButton&quot;) 	then _oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	if _oDialog.Model.hasByName(&quot;doneButton&quot;) 	then _oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	if _oDialog.Model.hasByName(&quot;serialLabel&quot;) 	then _oDialog.getControl(&quot;serialLabel&quot;).text = &quot;S/N&quot;
+	if _oDialog.Model.hasByName(&quot;typeLabel&quot;) 	then _oDialog.getControl(&quot;typeLabel&quot;).text = &quot;тип блока&quot;
+	
+	if _oDialog.Model.hasByName(&quot;isProtocol&quot;) 			then _oOptionButtonPr = _oDialog.Model.getByName(&quot;isProtocol&quot;)
+	if _oDialog.Model.hasByName(&quot;isProtocol&quot;) 			then _oOptionButtonPr.State = 1
+	if _oDialog.Model.hasByName(&quot;isSertificateRus&quot;) 	then _oOptionButtonSr = _oDialog.Model.getByName(&quot;isSertificateRus&quot;)
+	if _oDialog.Model.hasByName(&quot;isSertificateEng&quot;) 	then _oOptionButtonSe = _oDialog.Model.getByName(&quot;isSertificateEng&quot;)
+	if _oDialog.Model.hasByName(&quot;isProtocolNew&quot;) 		then _oOptionButtonPrNew = _oDialog.Model.getByName(&quot;isProtocolNew&quot;)
+	if _oDialog.Model.hasByName(&quot;isSertificateRusNew&quot;) 	then _oOptionButtonSrNew = _oDialog.Model.getByName(&quot;isSertificateRusNew&quot;)
+	if _oDialog.Model.hasByName(&quot;isSertificateEngNew&quot;) 	then _oOptionButtonSeNew = _oDialog.Model.getByName(&quot;isSertificateEngNew&quot;)
+		
+	dim insertButton as object
+	if _oDialog.Model.hasByName(&quot;insertButton&quot;) then
+		_oDialog.model.getByName(&quot;insertButton&quot;).ImageURL = sertPath &amp; &quot;imgs/down_arr.png&quot;
+		insertButton = _oDialog.getControl(&quot;insertButton&quot;)
+		insertButton.visible = false
+	end if	
+		
+	if NOT isNull(oListBox) then _oListBox.setEnable(false)
+end sub
+&apos;-------метод из 1117_N--------------------------------------------------------------------------------------------------
+function rightStep(d as double) rem расчет правильного Step-а 
+	if              d&gt;10000 then rightStep = 10
+	if d&lt;=10000 and d&gt;10	then rightStep = 1
+	if d&lt;=10    and d&gt;1     then rightStep = 0.1
+	if d&lt;=1     and d&gt;0.1   then rightStep = 0.01
+	if d&lt;=0.1   and d&gt;0.01  then rightStep = 0.001
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function rightStep2503(d as double) rem расчет правильного Step-а 
+	if 				d&gt;100	then rightStep2503 = 1
+	if d&lt;=100	and d&gt;10	then rightStep2503 = 0.1
+	if d&lt;=10    and d&gt;0.1   then rightStep2503 = 0.01
+	if d&lt;=0.1				then rightStep2503 = 0.001
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function rightStep2140(d as double) rem расчет правильного Step-а 
+	if              d&gt;=100 	then rightStep2140 = 1
+	if d&lt;100	and d&gt;=10	then rightStep2140 = 0.1
+	if d&lt;10    				then rightStep2140 = 0.01	
+end function
+&apos;-------метод из 1117_N--------------------------------------------------------------------------------------------------
+function rightDecimalAccuracy_old(nStep as double) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от шага при изменении значения
+	if nStep = 0.001 then rightDecimalAccuracy_old = 3
+	if nStep = 0.01  then rightDecimalAccuracy_old = 2
+	if nStep = 0.1 	 then rightDecimalAccuracy_old = 1
+	if nStep &gt;= 1 	 then rightDecimalAccuracy_old = 0
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function rightDecimalAccuracy(f as string) rem сколько знаков после запятой при выборе значения точки в форме -- зависит от формата
+	if f = &quot;0.0000&quot; then rightDecimalAccuracy = 4
+	if f = &quot;0.000&quot;  then rightDecimalAccuracy = 3
+	if f = &quot;0.00&quot;   then rightDecimalAccuracy = 2
+	if f = &quot;0.0&quot; 	 then rightDecimalAccuracy = 1
+	if f = &quot;0&quot; 	 then rightDecimalAccuracy = 0
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;   TODO Изменены границы для Overall.getRightFormat — по аналогии с 2503 (как-то логичнее) теперь: &quot;6.90&quot;, было &quot;6.9&quot;. 
+&apos;   Если такой формат понравится Наташе и Антохе, надо будет удалить Overall.getRightFormat2503 (сейчас методы идентичны)
+&apos;   и переделать метод rightStep по образу rightStep2140
+function getRightFormat(point as double)
+&apos;	if point &lt; 0.1 and point &gt;  0	then getRightFormat = &quot;0.000&quot;
+&apos;	if point &lt; 1   and point &gt;= 0.1 then getRightFormat = &quot;0.00&quot;
+&apos;	if point &lt; 100 and point &gt;= 1	then getRightFormat = &quot;0.0&quot;
+&apos;	if point &gt;= 100               	then getRightFormat = &quot;0&quot;
+
+	&apos;ТОЛЬКО С ТОЧКОЙ!!! С ЗАПЯТОЙ НЕПРАВИЛЬНО БУДЕТ ФОРМАТИРОВАТЬ ПРИ ВЫБОРЕ ЛОКАЛИ ЯЗЫКА ОФИСА РУССКОГО!!!
+
+	if point &lt; 0.1 and point &gt;  0	then getRightFormat = &quot;0.000&quot;
+	if point &lt; 10  and point &gt;= 0.1 then getRightFormat = &quot;0.00&quot;
+	if point &lt; 100 and point &gt;= 10	then getRightFormat = &quot;0.0&quot;
+	if point &gt;= 100               	then getRightFormat = &quot;0&quot;
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;не используется
+function getRightFormat_din_length(point as double)
+	dim epsilon as double
+	dim mformat as string
+	dim formatted as double 
+	epsilon = 0.00001  &apos; Допустимая погрешность
+
+	if point &lt; 0.1 and point &gt;  0	then mformat = &quot;0.000&quot;
+	if point &lt; 10  and point &gt;= 0.1 then mformat = &quot;0.00&quot;
+	if point &lt; 100 and point &gt;= 10	then mformat = &quot;0.0&quot;
+	if point &gt;= 100               	then mformat = &quot;0&quot;
+	
+	formatted = Format(point, mformat)
+		
+	if Abs(formatted-point)&gt;epsilon then
+		mformat = mformat+&quot;0&quot;
+	end if
+	
+	getRightFormat = mformat
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;не используется
+function getRightFormat2140(point as double)
+	if point &lt; 10  and point &gt; 	0 	then getRightFormat2140 = &quot;0.00&quot;&apos;7 
+	if point &lt; 100 and point &gt;= 10	then getRightFormat2140 = &quot;0.0&quot; &apos;70
+	if point &gt;= 100               	then getRightFormat2140 = &quot;0&quot;   &apos;700
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;не используется
+function getRightFormat2503(point as double)
+	if point &lt; 0.1 and point &gt;  0	then getRightFormat2503 = &quot;0.000&quot;
+	if point &lt; 10   and point &gt;= 0.1 then getRightFormat2503 = &quot;0.00&quot;
+	if point &lt; 100 and point &gt;= 10	then getRightFormat2503 = &quot;0.0&quot;
+	if point &gt;= 100               	then getRightFormat2503 = &quot;0&quot;
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub makeLayoutFromBD(bd as new DUnit)
+	_oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName rem &quot;БДКГ-22&quot;
+	_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
+	makeSimpleLayoutFromBD(bd, &quot;ValueField&quot;, &quot;Label&quot;)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub makeLayoutFromMultiBD(bd as new DUnit)
+	_oDialog.getControl(&quot;typeLabel&quot;).text = bd.getName
+	_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;№ &quot; + bd.getSerial
+	dim i as integer
+	dim j as integer
+	dim point, nStep, value as double
+	dim MyFormat as string
+	dim mValues as new Collection
+	for i=1 to bd.getMultiValueList.count rem СДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
+
+		point = bd.pointList.item(i)
+		
+		nStep = rightStep2503(point)
+		
+		for j=1 to bd.getMultiValueList.item(i).count
+			value = bd.getMultiValueList.item(i).item(j)
+	
+			if point &lt; 0.1 and point &gt; 0	then MyFormat = &quot;0.000&quot;
+			if point &lt; 10  and point &gt;= 0.1 then MyFormat = &quot;0.00&quot;
+			if point &lt; 100 and point &gt;= 10	then MyFormat = &quot;0.0&quot;
+			if point &gt;= 100               	then MyFormat = &quot;0&quot;
+			
+			_oDialog.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).setEnable(true)
+			_oDialog.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).visible = true
+			_oDialog.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).value = value
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-&quot; + j).valueStep = nStep
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-&quot; + j).DecimalAccuracy = rightDecimalAccuracy(MyFormat)
+			_oDialog.getControl(&quot;labelField&quot; + i).Text = Format(point, MyFormat) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+		next j
+	next i
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub makeSimpleLayoutFromBD(bd as new DUnit, valueField as string, labelField as string)
+	dim i as integer
+	dim point, nStep, value as double
+	dim MyFormat as string
+	for i=1 to bd.valueList.count rem ЗДЕСЬ ИМЕННО VALUE А НЕ POINT -- ТАК НЕ НАДО БУДЕТ ДУМАТЬ КАК СОХРАНИТЬ ЗНАЧЕНИЯ ИЛИ КАК ПРОВЕРЯТЬ -1 ИЛИ НОВОЕ ЗНАЧЕНИЕ 
+		point = bd.pointList.item(i)
+		nStep = rightStep(point)
+		value = bd.valueList.item(i)
+		MyFormat = getRightFormat(value)
+	
+		_oDialog.Model.getByName(valueField + i).textColor = RGB(0, 0, 0)
+		_oDialog.Model.getByName(valueField + i).backgroundColor = RGB(255, 255, 255)
+		_oDialog.getControl(valueField + i).Text = Format(value, MyFormat)
+		_oDialog.Model.getByName(valueField + i).valueStep = nStep
+		_oDialog.Model.getByName(valueField + i).DecimalAccuracy = rightDecimalAccuracy(MyFormat)
+		_oDialog.getControl(labelField + i).Text = &quot; &quot; + Format(point, getRightFormat(point)) + &quot; &quot; + bd.pointTextList.item(i) + bd.measUnit(i)
+	next i
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function PathForProtocol(bdName as string)
+	if _oOptionButtonPr.State then
+		_stringTypeForCertificate = &quot;поверка&quot;
+		PathForProtocol = bdName &amp; &quot;.odt&quot;
+	end if
+	if _oOptionButtonSr.State then
+		_stringTypeForCertificate = &quot;проверка&quot;
+		calibName = rusItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+		techName  = rusItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+		PathForProtocol = bdName &amp; &quot;_sr.odt&quot;
+	end if
+	if _oOptionButtonSe.State then
+		_stringTypeForCertificate = &quot;сертификат&quot;
+		calibName = engItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+		techName  = engItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+		PathForProtocol = bdName &amp; &quot;_se.odt&quot;
+	end if
+	
+	if NOT isNull(_oOptionButtonPrNew) then
+		if _oOptionButtonPrNew.State then
+			_stringTypeForCertificate = &quot;поверка&quot;
+			calibName = rusItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+			techName  = rusItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+			PathForProtocol = bdName &amp; &quot;_n.odt&quot;
+		end if	
+	end if
+	if NOT isNull(_oOptionButtonSrNew) then
+		if _oOptionButtonSrNew.State then
+			_stringTypeForCertificate = &quot;проверка&quot;
+			calibName = rusItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+			techName  = rusItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+			PathForProtocol = bdName &amp; &quot;_sr_n.odt&quot;
+		end if	
+	end if
+	if NOT isNull(_oOptionButtonSeNew) then
+		if _oOptionButtonSeNew.State then
+			_stringTypeForCertificate = &quot;сертификат&quot;
+			calibName = engItems1(ComboItemPosition(_oDialog.getControl(&quot;provCombo&quot;)))
+			techName  = engItems2(ComboItemPosition(_oDialog.getControl(&quot;techCombo&quot;)))
+			PathForProtocol = bdName &amp; &quot;_se_n.odt&quot;
+		end if	
+	end if
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertParametersToTemplate&apos;(bdName as string)
+	percentOtk = 3 rem %
+	
+	findAndRename(&quot;$bground&quot;, Format(bgValue, &quot;0.0&quot;))
+	findAndRename(&quot;$rem_bground&quot;, Format(bgValue/10, &quot;0.0&quot;))&apos;фон для ремов: значение делю на 10 (а не умножаю на 100), так как меняю в протоколе ещё и единицы с нано на микро (100nSv = 10urem)
+	findAndRename(&quot;$temp&quot;, Format(tempValue, &quot;0.0&quot;))
+	findAndRename(&quot;$vlag&quot;, Format(vlaghValue, &quot;0.0&quot;))
+	findAndRename(&quot;$date&quot;, getDate(_oDialog.Model.getByName(&quot;DateField1&quot;)))
+	findAndRename(&quot;$calibratedBy&quot;, calibName)
+	findAndRename(&quot;$controlledBy&quot;, techName)
+	bg007 = Format(Math.randValue(11, 0.5), &quot;0.0&quot;) &apos;ФОН ДЛЯ НАПРАВЛЕННОГО ЭКВИВАЛЕНТА
+	
+	
+end sub	
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub templateStep(i as integer, strokeEnd as string)
+		&apos;&apos;&apos;&apos;if i = 1 then additionalBGValue = 0
+		dim src_name as string
+		dim bd as new DUnit
+		dim BDtype as string 
+		bd = _BDList.item(i)
+		BDtype = bd.BDType
+		dim j, k as integer
+				
+		for j=0 to bd.getPointList.count-1
+			src_name = bd.getPointTextList.item(j+1)
+			m_point = bd.valueList.item(j+1)
+
+			cont_point = bd.pointList.item(j+1)
+			prefix =  bd.pointTextList.item(j+1)
+			threePointArray = Math.avaragePointsRndArray(m_point, percentOtk)
+			
+			&apos;msgbox (cdatefromiso(_oDateFieldModel.date) - DateSerial(2021,1,23))
+			&apos;msgbox cdatefromiso(_oDateFieldModel.date)
+			
+			findAndRename((&quot;$&quot; + i + &quot;-3&quot; + j + strokeEnd), sourceDistanceArray(cont_point, prefix, bd.bdType, _oDateFieldModel)(0)) rem название источника
+			findAndRename((&quot;$&quot; + i + &quot;-4&quot; + j + strokeEnd), sourceDistanceArray(cont_point, prefix, bd.bdType, _oDateFieldModel)(1)) rem расстояние до источника
+
+			findAndRename((&quot;$&quot; + i + &quot;-6&quot; + j + strokeEnd), Format(threePointArray(0), getRightFormat(m_point))) rem измерение 1
+			findAndRename((&quot;$&quot; + i + &quot;-7&quot; + j + strokeEnd), Format(threePointArray(1), getRightFormat(m_point))) rem измерение 2
+			findAndRename((&quot;$&quot; + i + &quot;-8&quot; + j + strokeEnd), Format(threePointArray(2), getRightFormat(m_point))) rem измерение 3
+			
+			dim valueOfBg as double
+			if _separateBGround = true then &apos; Если стоит флаг &quot;раздельный фон для каждого БД&quot;, то беру фон от каждого БД, если флаг не стоит -- для каждого БД заново генерю фон (типа каждый БД заново его измеряет) &apos;раньше было так: для всех блоков ставлю фон, который общий для всех приборов (bgValue)
+				valueOfBg = bd.getBdBackground
+			else
+				valueOfBg = Math.randValue(95, 4)&apos;раньше было bgValue
+			end if		
+			
+			if bd.getType = &quot;gamma-rem&quot; then
+				if AbsoluteValue(cont_point, prefix)&lt;0.1 then 
+					findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + strokeEnd), Format(valueOfBg, &quot;0.0&quot;)
+				else	
+					findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + strokeEnd), &quot;—&quot;) 
+				end if
+			else
+				if AbsoluteValue(cont_point, prefix)&lt;0.001 then 
+					if bd.getType = &quot;gamma007&quot; then
+						findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + strokeEnd), bg007&apos;&apos;&apos;&apos; + )&apos;&apos;&apos; + rnd()*0.3) rem фон
+					else
+						&apos;msgbox bground
+						findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + strokeEnd), Format(valueOfBg, &quot;0.0&quot;)
+					end if		
+				else	
+					findAndRename((&quot;$&quot; + i + &quot;-5&quot; + j + strokeEnd), &quot;—&quot;) 
+				end if
+			end if
+				
+			findAndRename((&quot;$&quot; + i + &quot;-0&quot; + j + strokeEnd), Format(m_point, getRightFormat(m_point))) rem среднее по трем измерениям
+		
+			findAndRename((&quot;$&quot; + i + &quot;-9&quot; + j + strokeEnd), Format(cont_point, getRightFormat(cont_point))) rem активность источника
+			findAndRename((&quot;$&quot; + i + &quot;-A&quot; + j + strokeEnd), src_name) rem название источника
+			
+			dim percent as double
+			percent = FacilityError(m_point, BDType, prefix)
+				
+			dim pogr_point as double
+			pogr_point = Math.RelativeError(m_point, cont_point)
+			MyFormat = &quot;0.00&quot;
+			findAndRename((&quot;$&quot; + i + &quot;-1&quot; + j + strokeEnd), Format(pogr_point, MyFormat))
+			findAndRename((&quot;$&quot; + i + &quot;-2&quot; + j + strokeEnd), Format(Math.ConfidenceLimit(percent, pogr_point), MyFormat))
+		next j
+		findAndRename(&quot;$bd_num&quot; + i + &quot;$&quot;, bd.getSerial)
+		strokeForSaving = strokeForSaving &amp; divider &amp; bd.getSerial
+		divider = &quot;; &quot;
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertToTemplateStep(i)
+	templateStep(i, &quot;&quot;)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;sub insertToTemplateStepRem(i)
+&apos;	bgValue = bgValue/100
+&apos;	templateStep(i, &quot;&quot;)
+&apos;end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertToTemplateStepDoted(i)
+	templateStep(i, &quot;.&quot;)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertToTemplateStepVariation(i)&apos; todo для отклика и вариаций надо будет сделать отдельный tempStep
+	&apos;templateStep(i, &quot;.&quot;)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertAlphaToTemplateStep(i, alphaSourcesList as Collection, alphaPointsList as Collection, alphaValueList as Collection, sign as String)
+	dim bd as new DUnit 
+	bd = _BDList.item(i)
+	dim j as integer
+	for j=0 to alphaValueList.count-1
+		m_point = alphaValueList.item(j+1)
+		
+		&apos;if bd.isAlternativePoints then
+		&apos;	cont_point = bd.getAltList.item(j+1)
+		&apos;else
+			cont_point = alphaPointsList.item(j+1)
+		&apos;end if	
+			
+		
+		threePointArray = Math.avaragePointsRndArray(m_point, percentOtk)&apos;TODO процент
+		
+		&apos;findAndRename((sign + i + &quot;-3&quot; + j), betaSourcesList.item(j+1)) rem название источника
+	
+		if cont_point&lt;500  then findAndRename((sign + i + &quot;-0&quot; + j), Format(cont_point, &quot;0.0&quot;)) rem активность источника
+		if cont_point&gt;=500 then findAndRename((sign + i + &quot;-0&quot; + j), Format(cont_point, &quot;0&quot;))   rem активность источника
+				
+		rem TODO сделать через select case
+		if m_point &lt; 200 and m_point &gt; 0  then MyFormat = &quot;0.0&quot;
+		if m_point &gt;= 200 				  then MyFormat = &quot;0&quot;
+				
+		findAndRename((sign + i + &quot;-1&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+		findAndRename((sign + i + &quot;-2&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+		findAndRename((sign + i + &quot;-3&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
+				
+		findAndRename((sign + i + &quot;-4&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
+				
+		dim percent as double
+		percent = 6
+			
+
+		dim epsilon  as double
+		epsilon = m_point/cont_point
+			
+		MyFormat = &quot;0.00&quot;
+		findAndRename((sign + i + &quot;-5&quot; + j), Format(epsilon, MyFormat))
+	next j
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+const THREE_POINTS as integer = 3
+const FIVE_POINTS as integer = 5
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertBetaToTemplateStep(i, betaSourcesList as Collection, betaPointsList as Collection, betaValueList as Collection, sign as String, point_count as integer)
+	dim bd as new DUnit 
+	bd = _BDList.item(i)
+	dim j as integer
+	for j=0 to betaValueList.count-1
+		m_point = betaValueList.item(j+1)
+		
+		if bd.isAlternativePoints then
+			cont_point = bd.getAltList.item(j+1)
+		else
+			cont_point = betaPointsList.item(j+1)
+		end if	
+			
+		
+		threePointArray = Math.avaragePointsRndArray(m_point, percentOtk)
+		
+		dim srcName as string
+		srcName = betaSourcesList.item(j+1)
+		srcName = Replace (srcName,&quot;Bq&quot;,&quot;&quot;)
+		findAndRename((sign + i + &quot;-3&quot; + j), srcName) rem название источника
+	
+		if cont_point&lt;500  then findAndRename((sign + i + &quot;-9&quot; + j), Format(cont_point, &quot;0.0&quot;)) rem активность источника
+		if cont_point&gt;=500 then findAndRename((sign + i + &quot;-9&quot; + j), Format(cont_point, &quot;0&quot;))   rem активность источника
+				
+		rem TODO сделать через select case
+		if m_point &lt; 200 and m_point &gt; 0  then MyFormat = &quot;0.0&quot;
+		if m_point &gt;= 200 				  then MyFormat = &quot;0&quot;
+				
+		findAndRename((sign + i + &quot;-6&quot; + j), Format(threePointArray(0), MyFormat)) rem измерение 1
+		findAndRename((sign + i + &quot;-7&quot; + j), Format(threePointArray(1), MyFormat)) rem измерение 2
+		findAndRename((sign + i + &quot;-8&quot; + j), Format(threePointArray(2), MyFormat)) rem измерение 3
+				
+		if cont_point&lt;150 then 
+			findAndRename((sign + i + &quot;-5&quot; + j), Activity.BETA_BG) rem фон
+		else	
+			findAndRename((sign + i + &quot;-5&quot; + j), &quot;---&quot;) 
+		end if
+				
+		findAndRename((sign + i + &quot;-0&quot; + j), Format(m_point, MyFormat)) rem среднее по трем измерениям
+				
+		dim percent as double
+		percent = 6
+			
+		dim pogr_point as double
+		pogr_point = Math.RelativeError(m_point, cont_point)
+		MyFormat = &quot;0.00&quot;
+		findAndRename((sign + i + &quot;-1&quot; + j), Format(pogr_point, MyFormat))
+		findAndRename((sign + i + &quot;-2&quot; + j), Format(Math.ConfidenceLimit(percent, pogr_point), MyFormat))
+	next j
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function FacilityError(point as double, BDType as string, prefix as string)
+	&apos;msgbox &quot;&quot; + point + &quot; &quot; + BDType + &quot; &quot; + prefix
+	select case BDType
+	&apos;амбиентный эквивалент ————————————————————————————————
+	case &quot;gamma&quot;
+		&apos;раньше для удг-110 и удг-130 были разные погрешности
+		if AbsoluteValue(point, prefix)&lt;1 then
+			FacilityError = 2.9 &apos;(5) удг-110
+		else
+			FacilityError = 2.9 &apos;(4) удг-130
+		end if
+	&apos;направленный эквивалент ——————————————————————————————
+	case &quot;gamma007&quot;
+		if AbsoluteValue(point, prefix)&lt;1 then
+			FacilityError = 5 &apos;удг-110
+		else
+			FacilityError = 5 &apos;удг-130
+		end if		
+	&apos;Керма ————————————————————————————————————————————————
+	case &quot;gamma-Gy&quot;
+		if AbsoluteValue(point, prefix)&lt;1 then
+			FacilityError = 2 &apos;удг-110
+		else
+			FacilityError = 2 &apos;удг-130
+		end if
+	&apos;140 плотность потока —————————————————————————————————
+	case &quot;n-PP&quot;
+			FacilityError = 4
+	&apos;140 мощность дозы ————————————————————————————————————
+	case &quot;n-MD&quot;
+			FacilityError = 4
+	&apos;альфа ————————————————————————————————————————————————
+	case &quot;alpha&quot;
+			FacilityError = 6
+	&apos;бета —————————————————————————————————————————————————
+	case &quot;beta&quot;
+			FacilityError = 6
+	&apos;для уд.активности для 1125 ———————————————————————————
+	case &quot;gamma-Src&quot;
+			FacilityError = 10 
+	end select
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function setButtonVisibility(layoutPosition as integer)  &apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	_oListBox.selectItemPos( layoutPosition-1, True )
+	dim i,j as integer
+	if _BDList.count = 0 then
+		_oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+		_oDialog.getControl(&quot;serialLabel&quot;).Text = &quot;S/N&quot;
+		_oListBox.setEnable(false)
+		for i=1 to _isComboCollection.count
+			_isComboCollection.item(i).setEnable(true)	
+		next i
+		_oDialog.getControl(&quot;typeLabel&quot;).text = &quot;type&quot;
+		if _oDialog.Model.hasByName(&quot;insertButton&quot;) then _oDialog.getControl(&quot;insertButton&quot;).visible = false
+	end if
+	if _BDList.count &lt;&gt; 0 then
+		
+		&apos;altCheckBox.setEnable(true)
+		for j=1 to _BDList.item(layoutPosition).valueList.count
+			if _oDialog.Model.hasByName(&quot;ValueField&quot; + j) then
+				 _oDialog.getControl(&quot;ValueField&quot; + j).visible = true
+				 _oDialog.getControl(&quot;ValueField&quot; + j).setEnable(true)
+			end if	 
+			if _oDialog.Model.hasByName(&quot;Label&quot; + j) then
+			 _oDialog.getControl(&quot;Label&quot; + j).visible = true
+			 _oDialog.getControl(&quot;Label&quot; + j).setEnable(true)
+			end if
+		next j
+		for j=_BDList.item(layoutPosition).valueList.count+1 to _maxPointsCount
+			if _oDialog.Model.hasByName(&quot;ValueField&quot; + j) then _oDialog.getControl(&quot;ValueField&quot; + j).visible = false
+			if _oDialog.Model.hasByName(&quot;Label&quot; + j) then _oDialog.getControl(&quot;Label&quot; + j).visible = false
+		next j
+		
+		_oListBox.setEnable(true)
+		_oDialog.getControl(&quot;doneButton&quot;).setEnable(true)
+		_oDialog.getControl(&quot;removeButton&quot;).setEnable(true)
+		for i=1 to _isComboCollection.count
+			_isComboCollection.item(i).setEnable(false)	
+		next i
+		if _oDialog.Model.hasByName(&quot;insertButton&quot;) then _oDialog.getControl(&quot;insertButton&quot;).visible = true
+	end if
+	if _BDList.count &gt; layoutPosition then _oDialog.getControl(&quot;doneButton&quot;).setEnable(false)
+	if layoutPosition = _BDList.count then _oDialog.getControl(&quot;nextButton&quot;).setEnable(false)
+	if layoutPosition &lt; _BDList.count AND _BDList.count &lt;&gt; 0 then	_oDialog.getControl(&quot;nextButton&quot;).setEnable(true)
+	if _BDList.count &gt; 1 then _oDialog.getControl(&quot;prevButton&quot;).setEnable(true)
+	if layoutPosition = 1 then _oDialog.getControl(&quot;prevButton&quot;).setEnable(false)
+	if _BDList.count = _maxBDCount then _oDialog.getControl(&quot;addButton&quot;).setEnable(false)
+	if _BDList.count = 0 then _oDialog.getControl(&quot;addButton&quot;).setEnable(true)
+	if _BDList.count = _maxBDCount-1 then _oDialog.getControl(&quot;addButton&quot;).setEnable(true)
+	
+	
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub saveCurentBDValue(num as integer)
+	&apos;msgbox &quot;saving: &quot; + num + &quot; &quot; + _BDList.count
+	dim newValues as new Collection
+	dim i as integer
+	for i=1 to _BDList.item(num).valueList.count
+		newValues.add(_oDialog.getControl(&quot;ValueField&quot; + i).Value)
+	next i
+	_BDList.item(num).setValueList(newValues)
+	if _BDList.item(num).isAlternativePoints then
+		dim altValues as new Collection
+		for i=1 to _BDList.item(num).getAltList.count
+			altValues.add(_oDialog.getControl(&quot;altField&quot; + i).Value)
+			&apos;if i=1 then msgbox _oDialog.getControl(&quot;altField&quot; + i).Value
+			_BDList.item(num).setAltList(altValues)
+		next i
+	end if
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub saveCurentMultiBDValue(num as integer)
+	&apos;msgbox &quot;saving: &quot; + num + &quot; &quot; + _BDList.count
+	dim pointList as new Collection &apos;pointList = ((measList),(measList),(measList))
+	dim i as integer
+	dim j as integer
+	for i=1 to _BDList.item(num).getMultiValueList.count &apos;valueList.count&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;
+		dim measList as new Collection
+		for j=1 to _BDList.item(num).getMultiValueList.item(i).count
+			measList.add(_oDialog.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).Value)
+		next j
+		pointList.add(measList)
+	next i
+	_BDList.item(num).setMultiValueList(pointList)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub saveCurentBDBetaValues(num as integer)
+	dim newValues as new Collection
+	dim i as integer
+	for i=1 to _BDList.item(num).getBetaValues.count
+		newValues.add(_oDialog.getControl(&quot;betaField&quot; + i).Value)
+	next i
+	_BDList.item(num).setBetaValues(newValues)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub saveCurentBDAlphaValues(num as integer)
+	dim newValues as new Collection
+	dim i as integer
+	for i=1 to _BDList.item(num).getAlphaValues.count
+		newValues.add(_oDialog.getControl(&quot;alphaField&quot; + i).Value)
+	next i
+	_BDList.item(num).setAlphaValues(newValues)
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub removeLastBD(layoutPosition as integer)
+	if layoutPosition = _BDList.count then layoutPosition = layoutPosition - 1
+	_oListBox.removeItems(_oListBox.getItemCount()-1, 1 )
+	_BDList.remove(_BDList.count)
+	if _oListBox.getItemCount()=0 then
+		_oDialog.getControl(&quot;removeButton&quot;).setEnable(false)
+		dim i as integer
+		for i=1 to _maxPointsCount &apos;_BDList.item(layoutPosition).valueList.count
+			&apos;_oDialog.getControl(&quot;ValueField&quot; + i).setEnable(false)
+			&apos;_oDialog.getControl(&quot;Label&quot; + i).setVisible(false)
+			_oDialog.getControl(&quot;ValueField&quot; + i).visible = false
+			_oDialog.getControl(&quot;Label&quot; + i).visible = false
+		next i
+	else 
+		makeLayoutFromBD(_BDList.item(_BDList.count))
+	end if
+	setButtonVisibility(layoutPosition)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)
+end Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub showNextBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility(layoutPosition)&apos;&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)	
+	makeLayoutFromBD(_BDList.item(layoutPosition))
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub showPrevBD(layoutPosition as integer)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;(oDialog as object, oListBox as object, layoutPosition as integer, BDList as Collection, isComboCollection as Collection, maxBDCount as integer)
+	saveCurentBDValue(layoutPosition)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility(layoutPosition)&apos;&apos;(_oDialog, _oListBox, layoutPosition, _BDList, _isComboCollection, _maxBDCount)
+	makeLayoutFromBD(_BDList.item(layoutPosition))
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertFacilitiesText
+	dim Facility as new Facility
+	findAndRename(&quot;$facility_110&quot;, Facility.getFacilityText(&quot;110&quot;))
+	findAndRename(&quot;$facility_130&quot;, Facility.getFacilityText(&quot;130&quot;))
+	findAndRename(&quot;$facility_140&quot;, Facility.getFacilityText(&quot;140&quot;))
+	findAndRename(&quot;$facility_alpha&quot;, Facility.getFacilityText(&quot;alpha&quot;))
+	findAndRename(&quot;$facility_beta&quot;, Facility.getFacilityText(&quot;beta&quot;))
+	findAndRename(&quot;$facility_13+11rus&quot;, Facility.getFacilityText(&quot;130+110&quot;))
+	findAndRename(&quot;$facility_13+11eng&quot;, Facility.getFacilityText(&quot;130+110eng&quot;))
+	findAndRename(&quot;$facility_src_cs_rus&quot;, Facility.getFacilityText(&quot;sourse_cs_rus&quot;))
+	findAndRename(&quot;$facility_src_cs_eng&quot;, Facility.getFacilityText(&quot;sourse_cs_eng&quot;))
+	
+	findAndRename(&quot;$eng_facility_110&quot;, Facility.getFacilityText(&quot;110_eng&quot;))
+	findAndRename(&quot;$eng_facility_130&quot;, Facility.getFacilityText(&quot;130_eng&quot;))
+	findAndRename(&quot;$eng_facility_140&quot;, Facility.getFacilityText(&quot;140_eng&quot;))
+	findAndRename(&quot;$eng_facility_alpha&quot;, Facility.getFacilityText(&quot;alpha_eng&quot;))
+	findAndRename(&quot;$eng_facility_beta&quot;, Facility.getFacilityText(&quot;beta_eng&quot;))
+
+end sub	
+&apos;------------------------------------------------------------------------------------------------------------------------
+function makeSRKNumber(value as long)
+	dim first, second as integer
+	dim stroke as string
+	first = value \ 1000
+	second = value mod 1000
+	if second &lt; 10 then stroke = &quot;&quot; + first + &quot;.00&quot; + second 
+	if second &lt; 100 AND second &gt; 9 then stroke = &quot;&quot; + first + &quot;.0&quot; + second
+	if second &gt; 99 then stroke = &quot;&quot; + first + &quot;.&quot; + second
+	makeSRKNumber = stroke
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Инициализация (сброс) строки вывода номеров приборов &quot;452.002; 452.003; 452.004; 452.005; 452.006&quot;
+&apos;запускается до вызова templateStep, уже при запуске templateStep в каждом шаге цикла добавляет в строку серийный номер выбранного в цикле БД
+function setStrokeForSaving(stroke as String)
+	strokeForSaving = &quot;&quot; &apos;сброс
+	divider = &quot;&quot; &apos;сброс
+	deviceNameForSavingStroke = stroke
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function setClipboardWithType(label as String)
+	&apos;заменяет в протоколе метку строкой: &quot;452.002; 452.003; 452.004; 452.005; 452.006&quot;
+	findAndRename(label, strokeForSaving)
+	&apos;добавление к строке названия прибора и добавляет тип документа (поверка, проверка, сертификат)
+	strokeForSaving = deviceNameForSavingStroke &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot; ) &quot; &amp; _stringTypeForCertificate &amp; &quot; - &quot; &amp; getCurrentDateString()
+	&apos;и сохранение полученой строки в буфер обмена: &quot;БДКГ-02 ( 452.002; 452.003; 452.004; 452.005; 452.006 )&quot;
+	CopyVariableToClipboard(strokeForSaving)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;в первой строке заменяет в протоколе метку строкой: &quot;452.002; 452.003; 452.004; 452.005; 452.006&quot;
+&apos;во второй и третей - добавление к строке названия прибора и сохранение полученой строки в буфер обмена: &quot;БДКГ-02 ( 452.002; 452.003; 452.004; 452.005; 452.006 )&quot;
+function setClipboard(label as String)
+	findAndRename(label, strokeForSaving)
+	strokeForSaving = deviceNameForSavingStroke &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot; )&quot; &amp; &quot; - &quot; &amp; getCurrentDateString()
+	CopyVariableToClipboard(strokeForSaving)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;в первой строке заменяет в протоколе метку строкой: &quot;452.002; 452.003; 452.004; 452.005; 452.006&quot;
+&apos;во второй и третей - добавление к строке названия прибора и сохранение полученой строки в буфер обмена: &quot;БДКГ-02 ( 452.002; 452.003; 452.004; 452.005; 452.006 )&quot;
+&apos;@DEPRECATED но без неё будет ошибка при вызове Overall.createCertificate
+function setSerial(label as String)
+	findAndRename(label, strokeForSaving)
+	strokeForSaving = deviceNameForSavingStroke &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot; ) &quot; &amp; _stringTypeForCertificate &amp; &quot; - &quot; &amp; getCurrentDateString()
+	CopyVariableToClipboard(strokeForSaving)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;это затыска для нейтрона потом переделаю
+function setSerialWithStroke(label as String, stroke as string)
+	findAndRename(label, strokeForSaving)
+	strokeForSaving = deviceNameForSavingStroke &amp; &quot; ( &quot; &amp; stroke &amp; &quot;) &quot; &amp; _stringTypeForCertificate &amp; &quot; - &quot; &amp; getCurrentDateString()
+	CopyVariableToClipboard(strokeForSaving)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Объединение методов setStrokeForSaving и PathForProtocol
+function getPathAndSetName(sert_path as String, device_name as String)
+	setStrokeForSaving(device_name)
+	getPathAndSetName = PathForProtocol(sert_path)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;метод берет данные из буфера обмена и преобразует их в строку (не мой метод)
+Function getClipboardText() As String
+    &apos;&apos;&apos;Returns a string of the current clipboard text&apos;&apos;&apos;
+
+    Dim oClip As Object &apos; com.sun.star.datatransfer.clipboard.SystemClipboard
+    Dim oConverter As Object &apos; com.sun.star.script.Converter
+    Dim oClipContents As Object
+    Dim oTypes As Object
+    Dim i%
+
+    oClip = createUnoService(&quot;com.sun.star.datatransfer.clipboard.SystemClipboard&quot;)
+    oConverter = createUnoService(&quot;com.sun.star.script.Converter&quot;)
+    On Error Resume Next
+    oClipContents = oClip.getContents
+    oTypes = oClipContents.getTransferDataFlavors
+
+    For i = LBound(oTypes) To UBound(oTypes)
+        If oTypes(i).MimeType = &quot;text/plain;charset=utf-16&quot; Then
+            Exit For
+        End If
+    Next
+
+    If (i &gt;= 0) Then
+        On Error Resume Next
+        getClipboardText = oConverter.convertToSimpleType _
+	        (oClipContents.getTransferData(oTypes(i)), com.sun.star.uno.TypeClass.STRING)
+	        &apos;(oClipContents.getTransferData(oTypes(i)), com.sun.star.uno.TypeClass.DOUBLE)
+    End If
+
+End Function &apos; getClipboardText
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub checkValueForRelativeErrorLimits_old(meas_list as new Collection, point_list as new Collection, percent as double)
+	if _oDialog.Model.hasByName(&quot;RelLimit1&quot;) then
+		dim i as integer
+		for i=1 to point_list.count
+			dim isIn as boolean
+			isIn = AtomMath.isInLimits(point_list.item(i), _oDialog.Model.getByName(&quot;ValueField&quot; + i).value, percent)
+			if isIn then
+				&apos;_oDialog.getControl(&quot;RelLimit&quot; + i).visible = false
+			&apos;else _oDialog.getControl(&quot;RelLimit&quot; + i).visible = true
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).backgroundColor = RGB(255, 255, 255)
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(0, 0, 0)
+			else
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).backgroundColor = RGB(200, 0, 0)
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(255, 255, 255)
+			end if
+		next i
+	end if
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub checkValueForRelativeErrorLimits(point_list as new Collection, percent as double)
+	&apos;if _oDialog.Model.hasByName(&quot;RelLimit1&quot;) then
+		dim i as integer
+		for i=1 to point_list.count
+			dim isIn as boolean
+			isIn = AtomMath.isInLimits(point_list.item(i), _oDialog.Model.getByName(&quot;ValueField&quot; + i).value, percent)
+			if isIn then
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).backgroundColor = RGB(255, 255, 255)
+				if _oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(255, 255, 255) then
+					_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(0, 0, 0)
+				end if	
+			else
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).backgroundColor = RGB(200, 0, 0)
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(255, 255, 255)
+			end if
+		next i
+	&apos;end if
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub checkValueForRelativeErrorLimits2503(point_list as new Collection, percent as double)
+	&apos;if _oDialog.Model.hasByName(&quot;RelLimit1&quot;) then
+		dim i as integer
+		for i=1 to point_list.count
+			dim isIn as boolean
+			isIn = AtomMath.isInLimits(point_list.item(i), _oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).value, percent)
+			if isIn then
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).backgroundColor = RGB(255, 255, 255)
+				if _oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).textColor = RGB(255, 255, 255) then
+					_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).textColor = RGB(0, 0, 0)
+				end if	
+			else
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).backgroundColor = RGB(200, 0, 0)
+				_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).textColor = RGB(255, 255, 255)
+			end if
+		next i
+	&apos;end if
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;метод берет коллекцию из буфера обмена, полученнцю в getCollectionFromClipBoard и вставляет значения в поля формы
+&apos;Если в коллекции попадаются 0, то вместо нуля вставляется значение по умолчанию для текущей ячейки и отмечается красным — так пользователь видит, что значение НЕ ИЗ СКОПИРОВАННОЙ ЯЧЕЙКИ из журнала градуировки
+&apos;С помощью этого метода можно копировать ячейки из EXCEL/Calc (CTRL+C) и вставлять в форму нажатием кнопки на форме
+function insertClipBoardToBDValueList(value_list as Collection)
+	dim i as integer
+	dim list as new Collection
+	list = get_2nd_ListSizeAs_1st_ListSize(value_list, getCollectionFromClipBoard)
+	
+	list = formatList(list)
+
+	&apos;msgbox &quot;&quot;+list.item(1)+&quot; &quot;+list.item(2)+&quot; &quot;+list.item(3)+&quot; &quot;+list.item(4)+&quot; &quot;+list.item(5)+&quot; &quot;+list.item(6)+&quot; &quot;+list.item(7)+&quot; &quot;+list.item(8)+&quot; &quot;+list.item(9)
+		
+	for i=1 to value_list.count
+		_oDialog.Model.getByName(&quot;ValueField&quot; + i).backgroundColor = RGB(255, 255, 255)
+		if list.item(i) = 0 then
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(200, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i).value = value_list.item(i)
+		else
+			&apos;msgbox 
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i).textColor = RGB(0, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = rightDecimalAccuracy(getRightFormat(list.item(i)))
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i).value = list.item(i)
+		end if	
+	next i
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getDbFromStringByLocale(s as string)
+	dim d as double
+	if CDbl(&quot;3,3&quot;) = 3.3 then
+   		s = Replace (s,&quot;.&quot;,&quot;,&quot;)
+ 	else
+   		s = Replace (s,&quot;,&quot;,&quot;.&quot;)
+    end if
+	d = cdbl(s)
+	getDbFromStringByLocale = d
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;приведение значений списка к правильному виду, числа округляются до заданного форматом кол-ва цифр после запятой
+function formatList(list as Collection)
+	dim i as integer
+	dim MyFormat as string
+	dim preformatted as string
+	dim value as double
+	dim list_result as new Collection
+	
+	for i=1 to list.count
+		MyFormat = getRightFormat(list.item(i))
+		preformatted = Format(list.item(i), MyFormat)
+		list_result.add(CDbl(preformatted))
+	next i
+	formatList = list_result
+end function 
+&apos;------------------------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList2503(value_list as Collection)
+	dim i as integer
+	dim list as new Collection
+	list = get_2nd_ListSizeAs_1st_ListSize(value_list, getCollectionFromClipBoard)
+	
+	list = formatList(list)
+	
+	for i=1 to value_list.count
+		_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).backgroundColor = RGB(255, 255, 255)
+		if list.item(i) = 0 then
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).textColor = RGB(200, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).value = value_list.item(i)
+		else
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).textColor = RGB(0, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + i + &quot;-1&quot;).value = list.item(i)
+		end if	
+	next i
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Тупо скопипастил. Этот вариант для диалога &quot;БДКГ-02&quot;, там нужен ещё вторая &quot;волшебная&quot; ввода для БДМГ
+function insertClipBoardToBDValueListBDMG(value_list as Collection)
+	dim i as integer
+	dim list as new Collection
+	list = get_2nd_ListSizeAs_1st_ListSize(value_list, getCollectionFromClipBoard)
+	
+	list = formatList(list)
+	
+	for i=1 to value_list.count
+	_oDialog.Model.getByName(&quot;ValueBDMG&quot; + i).backgroundColor = RGB(255, 255, 255)
+		if list.item(i) = 0 then
+			_oDialog.Model.getByName(&quot;ValueBDMG&quot; + i).textColor = RGB(200, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueBDMG&quot; + i).value = value_list.item(i)
+		else
+			_oDialog.Model.getByName(&quot;ValueBDMG&quot; + i).textColor = RGB(0, 0, 0)
+			_oDialog.Model.getByName(&quot;ValueBDMG&quot; + i).value = list.item(i)
+		end if	
+	next i
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Этот вариант для 1117-&gt;БДПС-02. Из Excel копируется таблица с данными (альфа точки + показания) + (бета точки + показания) одним столбиком. Итого 4 типа данных. 
+&apos;Если тип 0 — значит это альфа и, значит, вставляются данные для альфа. Для беты — аналогично, тип 1.
+&apos;Вставляются сразу и контрольные точки, и измеренные значения
+&apos;Итого по работе: копируем в Excel таблицу (со всеми значениями), открываем 1117-&gt;БДПС-&gt;вкладка альфа-&gt;жмём кнопку, вкладка бета-&gt;опять жмём кнопку (ЗАНОВО КОПИРОВАТЬ ТАБЛИЦУ НЕ НУЖНО!)
+function insertClipBoardToBDValueListAlphaBeta(point_list as Collection, value_list as Collection, bd_type as integer)
+	dim i as integer
+	dim list as new Collection
+	&apos;list = get_2nd_ListSizeAs_1st_ListSize(value_list, getCollectionFromClipBoard)
+	list = getCollectionFromClipBoard
+	
+	list = formatList(list)
+	
+	if list.count=21 then
+		if bd_type=0 then
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 1).value = list.item(2)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 2).value = list.item(4)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 3).value = list.item(6)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 4).value = list.item(8)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 5).value = list.item(10)
+			_oDialog.Model.getByName(&quot;altField&quot; + 1).value = list.item(1)
+			_oDialog.Model.getByName(&quot;altField&quot; + 2).value = list.item(3)
+			_oDialog.Model.getByName(&quot;altField&quot; + 3).value = list.item(5)
+			_oDialog.Model.getByName(&quot;altField&quot; + 4).value = list.item(7)
+			_oDialog.Model.getByName(&quot;altField&quot; + 5).value = list.item(9)
+		else
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 1).value = list.item(13)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 2).value = list.item(15)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 3).value = list.item(17)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 4).value = list.item(19)
+			_oDialog.Model.getByName(&quot;ValueField&quot; + 5).value = list.item(21)
+			_oDialog.Model.getByName(&quot;altField&quot; + 1).value = list.item(12)
+			_oDialog.Model.getByName(&quot;altField&quot; + 2).value = list.item(14)
+			_oDialog.Model.getByName(&quot;altField&quot; + 3).value = list.item(16)
+			_oDialog.Model.getByName(&quot;altField&quot; + 4).value = list.item(18)
+			_oDialog.Model.getByName(&quot;altField&quot; + 5).value = list.item(20)			
+		endif	
+	else
+		dim oDialog as object	
+		DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+		oDialog = CreateUnoDialog( DialogLibraries.AtomtexLibrary.DError )
+		oDialog.model.getByName(&quot;img&quot;).ImageURL = sertPath &amp; &quot;imgs/alphaerror.jpg&quot;
+		oDialog.Execute()	
+	endif
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;методу insertClipBoardToBDValueList нужна коллекция значений для формы ПО РАЗМЕРУ СОВПАДАЮЩАЯ С РАЗМЕРОМ КОЛЛЕКЦИИ valueList (значения точек, которые пользователь вводит как измеренные)
+&apos;Другими словами, кол-во элементов в скопированном массиве должен совпадать с количеством полей в форме для записи значений
+&apos;метод get_2nd_ListSizeAs_1st_ListSize приводит размер скопированной коллекции (list_2) к размеру коллекции valueList (list_2)
+&apos;если размеры совпадает, метод (по сути) возвращает коллекцию list_2
+&apos;если list_2 больше, удаляются лишние элементы С НАЧАЛА коллекции list_2
+&apos;если размер list_2 меньше, недостающие элементы будут добавлены В НАЧАЛО коллекции со значением 0
+&apos;если в строке были буквы или ещё по какой причине не удалось преобразовать строку в double, будет показано соответствующее сообщение, а макрос продолжит работать (можно попробовать скопировать еще раз не перезапуская макрос)
+function get_2nd_ListSizeAs_1st_ListSize(list_1 as Collection, list_2 as Collection)
+	On Error Goto ErrorHandler
+	dim list_result as new Collection
+	dim k as integer
+	dim a as integer	
+	a = list_2.count - list_1.count 	
+
+	for k=1 to list_1.count
+		if (k+a) &lt;= 0 then
+			list_result.add(0)
+		else
+			
+			list_result.add(CDbl(list_2.item(k+a)))
+		end if	
+	next k	
+		
+	get_2nd_ListSizeAs_1st_ListSize = list_result	
+	Exit function
+	ErrorHandler:
+	msgbox &quot;Неправильные данные.&quot; + Chr(10) + &quot;Возможно вместе с цифрами были скопированы буквы.&quot; + Chr(10) + &quot;Попробуйте ещё раз&quot;
+	dim er_list as new Collection
+	dim m as integer
+	for m=1 to list_1.count
+		er_list.add(0)	
+	next m
+	get_2nd_ListSizeAs_1st_ListSize = er_list
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Метод возвращает коллекцию значений из буфера обмена
+&apos;удаляет символы перевода на другую строку, если есть запятые, заменяет их точками
+function getCollectionFromClipBoard()
+	Dim sText As String
+    sText= (getClipboardText)
+    sText = Replace (sText,Chr(10),&quot; &quot;) &apos; Replace line breaks with white spaces
+    sText = Replace (sText,Chr(13),&quot;&quot;) &apos; Replace paragraph breaks with white spaces
+    
+    if CDbl(&quot;3,3&quot;) = 3.3 then
+    	sText = Replace (sText,&quot;.&quot;,&quot;,&quot;)
+    else
+    	sText = Replace (sText,&quot;,&quot;,&quot;.&quot;)
+    end if
+
+    sText = Trim (sText)
+    
+    dim list as new Collection
+    dim s_arr(0) as String
+    s_arr = split(sText, &quot; &quot;)
+    dim i as integer
+    for i=0 to uBound(s_arr)
+    	list.add(s_arr(i))
+    next i
+    getCollectionFromClipBoard = list
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Если скопировать в Calc ячейки размером x на y, то метод вернет содержимое всех ячеек (как стринги) в виде 2-мерного массива (коллекции)
+function getTwoDimensionalArrayFromClipBoard as Collection
+	dim list as new Collection
+	dim list3 as new Collection
+	list = getCollectionFromClipBoard()
+
+	dim i as integer
+	for i=1 to list.count
+		dim list2 as new Collection
+    	dim s_arr(0) as String
+    	dim sText As String
+	    sText=list.item(i)
+    	s_arr = split(sText, &quot;	&quot;)
+    	dim j as integer
+    	for j=0 to uBound(s_arr)
+    		list2.add(s_arr(j))
+    		list2.item(j+1)
+    	next j
+		list3.add(list2)
+	next i
+	&apos;msgbox list3.count
+	&apos;msgbox list3.item(1).count
+	&apos;msgbox list3.item(1).item(1)
+	getTwoDimensionalArrayFromClipBoard = list3
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Супер метод. Пока его не было, протокол формировался так:
+&apos;В протоколе было изначально десять (иногда 12) таблиц, после нажатии кнопки &quot;Готово&quot; выбранное кол-во таблиц (до 10-ти, по количеству добавленых в диалоге БД)
+&apos;заполняются данными, остальные (не нужные) — удаляются.
+&apos;Плюс — простота реализации
+&apos;Минус — при изменениях в таблице (добавить точку, изменить процент, дизайн и т.д.) приходилось менять ВСЕ таблицы, с учетом и протоколов сертификатов — это 30 таблиц (и более). То же — при создании нового типа протоколов
+
+&apos;Используя метод, в шаблоне протокола нужно хранить только одну таблицу
+&apos;Метод копипастит таблицу, при копировании переименовывая метки в новой таблице получая на выходе аналогичный комплект таблиц с метками для последующего заполнения данными, 
+&apos;по сути — не пришлось менять ничего в последующих методах заполнения и расчета, метод является промежуточным между новым типом протоколов и всеми последующими методами, работавшими со старыми типами протоколов
+&apos;Из отличий — в таблицах теперь нет номеров (id таблиц), но они теперь и не нужны, так как id использовался только для нахождения, чтобы удалить таблицу
+&apos;Плюсы — кроме того, что теперь редактировать/создавать нужно только одну таблицу (а не 10 — это самый главны плюс), 
+&apos;так ещё теперь кол-во БД в протоколе уже не ограничено 10-ю, а может уже быть каким угодно большим (ограничено только ресурсами компа, времени и integer)
+&apos;Ещё плюс — для переделывания протокола под новый способ нужно просто удалить из протокола все таблицы, кроме первой и всё. В коде — добавить Overall.CreateTablesFromTemplate(BDList.count) и удалить метод удаления таблиц
+&apos;
+&apos;Метод находит таблицу по имени sName, выделяет и копирует. После этого переименовывает метки (&quot;$...&quot;) и только потом вставляет ранее скопированную таблицу — так получаются две таблицы с РАЗНЫМ набором меток
+&apos;Так как копируется всегда первая (базовая) таблица, а вставляется всегда тоже после первой, то получается таблицы вставляются с КОНЦА в НАЧАЛО.
+&apos;Поэтому перед вызовом метода сначала в базовой таблице нужно переименовать метки в последнюю, а после переименовывать из конца в начало, в результате получится таблицы с метками по порядку.
+&apos;Пример для 4-х БД:
+&apos;	findAndRename(&quot;$1-&quot;, &quot;$4-&quot;)
+&apos;	findAndRename(&quot;$bd_num1$&quot;, &quot;$bd_num4$&quot;)
+&apos;	CopyTableAndPasteAfter(&quot;t1&quot;, &quot;$4-&quot;, &quot;$3-&quot;, &quot;$bd_num4$&quot;, &quot;$bd_num3$&quot;)
+&apos;	CopyTableAndPasteAfter(&quot;t1&quot;, &quot;$3-&quot;, &quot;$2-&quot;, &quot;$bd_num3$&quot;, &quot;$bd_num2$&quot;)
+&apos;	CopyTableAndPasteAfter(&quot;t1&quot;, &quot;$2-&quot;, &quot;$1-&quot;, &quot;$bd_num2$&quot;, &quot;$bd_num1$&quot;)
+&apos;Метод будет приватным, напрямую работать с ним не очень удобно, для этого сделан метод обертка CreateTablesFromTemplate, теперь для формирования таблиц достаточно вызвать Overall.CreateTablesFromTemplate(BDList.count)
+Sub CopyTableAndPasteAfter(sName As String, oldName as String, newName as String, oldName2 as String, newName2 as String)
+	Dim oTable        &apos;Table to copy
+	Dim oText         &apos;Document&apos;s text object
+	Dim oFrame        &apos;Current frame to use with the dispatcher
+	Dim oVCursor      &apos;Current view cursor
+	Dim oDispatcher   &apos;Dispatcher for clipboard commands
+	oVCursor = ThisComponent.CurrentController.getViewCursor()
+	oText = ThisComponent.getText()
+	oFrame = ThisComponent.CurrentController.Frame
+	oDispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	If NOT ThisComponent.getTextTables().hasByName(sName) Then
+		&apos;MsgBox &quot;Sorry, the document does not contain table &quot; &amp; sName
+		Exit Sub
+	End If
+	oTable = ThisComponent.getTextTables().getByName(sName)
+	REM Place the cursor in the start of the first cell.
+	REM This is very easy!
+	ThisComponent.CurrentController.select(oTable)
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+	REM Copy the table to the clipboard.
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+	
+	findAndRename(oldName, newName) 	&apos;&quot;$2-&quot; -&gt; &quot;$1-&quot;
+	findAndRename(oldName2, newName2) 	&apos;&quot;$bd_num2$&quot; -&gt; &quot;$bd_num1$&quot;
+
+	&apos;Поставить курсор после таблицы
+	oVCursor.godown(1,false)
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Метод обертка для метода CopyTableAndPasteAfter, так гораздо удобнее работать, достаточно подать на вход метода только размер BDList (т.е. кол-во БД)
+Sub CreateTablesFromTemplate(count as integer)
+	dim i as integer
+	findAndRename(&quot;$1-&quot;, &quot;$&quot; + count + &quot;-&quot;)
+	findAndRename(&quot;$bd_num1$&quot;, &quot;$bd_num&quot; + count + &quot;$&quot;)
+	for i=count to 2 step -1
+		CopyTableAndPasteAfter(&quot;t1&quot;, &quot;$&quot; + i + &quot;-&quot;, &quot;$&quot; + (i-1) + &quot;-&quot;, &quot;$bd_num&quot; + i + &quot;$&quot;, &quot;$bd_num&quot; + (i-1) + &quot;$&quot;)
+	next i
+End Sub	
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;count -  размер BDList
+&apos;tname - название таблицы
+&apos;bdName - как в файле изначально называется метка для номера БД (отличается от метки в основных таблицах, так как при переименновании метод CopyTableAndPasteAfter заодно переименует и метки основных таблиц, что недопустимо)
+&apos;bdNameRight - как будет называться метка для номера БД, когда все таблицы сформированы (но ещё не заполнены данными), теперь эти метки будут совпадать с метками в основных таблицах
+&apos;start - начальный символ в метках дополнительных таблицах (в основных — это &quot;$&quot;, в таблицах для, например, беты — это &quot;β&quot;)
+Sub CreateTablesFromTemplateCustom(count as integer, tname as String, bdName as String, bdNameRight as String, start as String)
+	dim i as integer
+	findAndRename(start + &quot;1-&quot;, start + count + &quot;-&quot;)
+	findAndRename(&quot;$&quot; + bdName + &quot;1$&quot;, &quot;$&quot; + bdName + count + &quot;$&quot;)
+	for i=count to 2 step -1
+		CopyTableAndPasteAfter(tname, start + i + &quot;-&quot;, start + (i-1) + &quot;-&quot;, &quot;$&quot; + bdName + i + &quot;$&quot;, &quot;$&quot; + bdName + (i-1) + &quot;$&quot;)
+	next i
+	findAndRename(&quot;$&quot; + bdName, &quot;$&quot; + bdNameRight)
+End Sub	
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Метод похож на CopyTableAndPasteAfter, только копипастит пару таблиц, которые идут попарно друг за другом (например в 2503 и 3509), 
+&apos;в отличии от, например, БДКН, где сразу идут все основные таблицы, затем все второстепенные, здесь же идет основная, затем второстепенная, затем основная для следующего БД, затем второстепенная и т.д.
+Sub CopyTwoTablesAndPasteAfter(firstName As String, secondName As String, oldName as String, newName as String, oldName2 as String, newName2 as String, oldName3 as String, newName3 as String, oldName4 as String, newName4 as String)
+	Dim oTable1        &apos;Table to copy
+	Dim oTable2        &apos;Table to copy
+	Dim oText         &apos;Document&apos;s text object
+	Dim oFrame        &apos;Current frame to use with the dispatcher
+	Dim oVCursor      &apos;Current view cursor
+	Dim oDispatcher   &apos;Dispatcher for clipboard commands
+	oVCursor = ThisComponent.CurrentController.getViewCursor()
+	oText = ThisComponent.getText()
+	oFrame = ThisComponent.CurrentController.Frame
+	oDispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	If NOT ThisComponent.getTextTables().hasByName(firstName) Then
+		&apos;MsgBox &quot;Sorry, the document does not contain table &quot; &amp; sName
+		Exit Sub
+	End If
+	oTable1 = ThisComponent.getTextTables().getByName(firstName)
+	oTable2 = ThisComponent.getTextTables().getByName(secondName)
+	&apos;Выбрал вторую таблицу
+	ThisComponent.CurrentController.select(oTable2)
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+	&apos;Поставить курсор после второй таблицы и вставил скопированную вторую таблицу
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+
+	&apos;Перименовал
+	findAndRename(oldName3, newName3) 	&apos;&quot;##2-&quot; -&gt; &quot;##1-&quot;
+	findAndRename(oldName4, newName4) 	&apos;&quot;##bd_num2##&quot; -&gt; &quot;##bd_num1##&quot;
+	
+	&apos;вниз после второй таблицы и вставляю копию второй таблицы после оригинальной второй таблицы (оригинал уже с переименованными метками)
+	oVCursor.godown(1,false)
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+	
+	&apos;Выбрал первую таблицу
+	&apos;Поставить курсор после первой таблицы и скопировал первую таблицу
+	ThisComponent.CurrentController.select(oTable1)
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+
+	&apos;Перименовал
+	findAndRename(oldName, newName) 	&apos;&quot;$2-&quot; -&gt; &quot;$1-&quot;
+	findAndRename(oldName2, newName2) 	&apos;&quot;$bd_num2$&quot; -&gt; &quot;$bd_num1$&quot;
+
+	&apos;НЕ ВСТАВЛЯЯ копию первой таблицы иду в конец второй оригинальной таблицы (акурат перед скопипасченной копией иторой таблицы)
+	ThisComponent.CurrentController.select(oTable2)
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+
+	&apos;вставляю копию ПЕРВОЙ таблицы после оригинальной ВТОРОЙ таблицы
+	oVCursor.godown(1,false)
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Метод обертка для метода CopyTwoTablesAndPasteAfter, так гораздо удобнее работать, достаточно подать на вход метода только размер BDList (т.е. кол-во БД)
+Sub CreatePairedTablesFromTemplate(count as integer)
+	dim i as integer
+	findAndRename(&quot;$1-&quot;, &quot;$&quot; + count + &quot;-&quot;)
+	findAndRename(&quot;$bd_num1$&quot;, &quot;$bd_num&quot; + count + &quot;$&quot;)
+	findAndRename(&quot;##1-&quot;, &quot;##&quot; + count + &quot;-&quot;)
+	findAndRename(&quot;##bd_num1##&quot;, &quot;##bd_num&quot; + count + &quot;##&quot;)
+	for i=count to 2 step -1
+		CopyTwoTablesAndPasteAfter(&quot;t1&quot;, &quot;s1&quot;, &quot;$&quot; + i + &quot;-&quot;, &quot;$&quot; + (i-1) + &quot;-&quot;, &quot;$bd_num&quot; + i + &quot;$&quot;, &quot;$bd_num&quot; + (i-1) + &quot;$&quot;, &quot;##&quot; + i + &quot;-&quot;, &quot;##&quot; + (i-1) + &quot;-&quot;, &quot;##bd_num&quot; + i + &quot;##&quot;, &quot;##bd_num&quot; + (i-1) + &quot;##&quot;)
+	next i
+	findAndRename(&quot;##&quot;, &quot;$&quot;)
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub deleteTable(name as string)
+	 if ThisComponent.TextTables().hasByName(name) then
+     	ThisComponent.Text.removeTextContent(ThisComponent.TextTables().getByName(name))
+     end if
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub createCertificate(position, path)
+	saveCurentBDValue(position)
+
+	OpenTemplate(sertPath &amp; path)
+	insertFacilitiesText
+	insertParametersToTemplate
+	CreateTablesFromTemplate(_BDList.count)
+	
+	dim i as integer
+	for i=1 to _BDList.count
+		insertToTemplateStep(i)
+	next i
+	
+	findAndRename(&quot;$type&quot;, _BDList.item(1).getName)
+	setSerial(&quot;$allSerial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function listBoxListener(layoutPosition as integer)
+	Dim selectPos As Integer
+	saveCurentBDValue(layoutPosition)
+	selectPos = _oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	makeLayoutFromBD(_BDList.item(layoutPosition))
+	setButtonVisibility(layoutPosition)
+end function
+
+Sub CopyTableRowAndPasteAfter(sName As String, oldName as String, newName as String, oldName2 as String, newName2 as String)
+	Dim oTable        &apos;Table to copy
+	Dim oText         &apos;Document&apos;s text object
+	Dim oFrame        &apos;Current frame to use with the dispatcher
+	Dim oVCursor      &apos;Current view cursor
+	Dim oDispatcher   &apos;Dispatcher for clipboard commands
+	oVCursor = ThisComponent.CurrentController.getViewCursor()
+	oText = ThisComponent.getText()
+	oFrame = ThisComponent.CurrentController.Frame
+	oDispatcher = createUnoService(&quot;com.sun.star.frame.DispatchHelper&quot;)
+	If NOT ThisComponent.getTextTables().hasByName(sName) Then
+		&apos;MsgBox &quot;Sorry, the document does not contain table &quot; &amp; sName
+		Exit Sub
+	End If
+	oTable = ThisComponent.getTextTables().getByName(sName)
+	REM Place the cursor in the start of the first cell.
+	REM This is very easy!
+	ThisComponent.CurrentController.select(oTable)
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the current cell.
+	oVCursor.gotoEnd(True)  &apos;Move to the end of the table.
+	REM Copy the table to the clipboard.
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Copy&quot;, &quot;&quot; , 0, Array())
+	
+	findAndRename(oldName, newName) 	&apos;&quot;$2-&quot; -&gt; &quot;$1-&quot;
+	findAndRename(oldName2, newName2) 	&apos;&quot;$bd_num2$&quot; -&gt; &quot;$bd_num1$&quot;
+
+	&apos;Поставить курсор после таблицы
+	oVCursor.godown(1,false)
+	oDispatcher.executeDispatch(oFrame, &quot;.uno:Paste&quot;, &quot;&quot;, 0, Array())
+End Sub
+    
+</script:module>

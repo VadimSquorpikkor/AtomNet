@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="_t_note" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim Math as new AtomMath
+
+dim oDialogTNote as object
+dim oDateFieldModel_1 as object
+dim oDateFieldModel_2 as object
+&apos;------------------------------------------------------------------------------------------------------------------------
+Sub Temp_note_Dialog_Show
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogTNote = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_T_NOTE )
+	oDateFieldModel_1 = oDialogTNote.Model.getByName(&quot;DateField1&quot;)
+	oDateFieldModel_1.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel_1.Date = cDateToIso(Now)
+	
+	oDateFieldModel_2 = oDialogTNote.Model.getByName(&quot;DateField2&quot;)
+	oDateFieldModel_2.dateformat = 7 &apos;в виде dd.mm.yyyy
+	oDateFieldModel_2.Date = cDateToIso(Now)
+		
+	oDialogTNote.getControl(&quot;Label_version&quot;).text = &quot;Версия 1.00 &quot;	
+	
+	oDialogTNote.Model.getByName(&quot;ImageControl1&quot;).ImageURL = sertPath &amp; &quot;imgs\psi.png&quot;
+	
+	oDialogTNote.getControl(&quot;NumericField1&quot;).value = 20
+	oDialogTNote.getControl(&quot;NumericField2&quot;).value = 25
+	oDialogTNote.getControl(&quot;NumericField3&quot;).value = 50
+	oDialogTNote.getControl(&quot;NumericField4&quot;).value = 90
+	
+	oDialogTNote.getControl(&quot;NumericField1&quot;).min = 15
+	oDialogTNote.getControl(&quot;NumericField1&quot;).max = 25
+	oDialogTNote.getControl(&quot;NumericField2&quot;).min = 15
+	oDialogTNote.getControl(&quot;NumericField2&quot;).max = 25
+	oDialogTNote.getControl(&quot;NumericField3&quot;).min = 40
+	oDialogTNote.getControl(&quot;NumericField3&quot;).max = 100
+	oDialogTNote.getControl(&quot;NumericField4&quot;).min = 40
+	oDialogTNote.getControl(&quot;NumericField4&quot;).max = 100
+	
+	oDialogMain.endexecute()   
+	oDialogTNote.Execute()
+End Sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+
+	dim minTemp as integer
+	dim maxTemp as integer
+	dim minHum as integer
+	dim maxHum as integer
+
+	minTemp = oDialogTNote.getControl(&quot;NumericField1&quot;).value
+	maxTemp = oDialogTNote.getControl(&quot;NumericField2&quot;).value
+	minHum = oDialogTNote.getControl(&quot;NumericField3&quot;).value
+	maxHum = oDialogTNote.getControl(&quot;NumericField4&quot;).value
+	dim i as integer
+	dim temp as integer
+	dim hum  as integer
+	dim right_hum as double
+	dim temp_vlg as integer
+	dim ar(0) as integer
+	Dim MyDate As Date
+	Dim LastDate As Date
+	MyDate = cdatefromiso(oDateFieldModel_1.date)-1
+	LastDate = cdatefromiso(oDateFieldModel_2.date)
+	
+	OpenTemplate(sertPath &amp; &quot;temperature_note.odt&quot;) 
+	i=1
+	while MyDate&lt;cdatefromiso(oDateFieldModel_2.date) AND i&lt;368
+  		do
+  			MyDate = MyDate + 1
+  		loop while NOT isWorkingDay(MyDate)
+  	
+  		findAndRename(&quot;$date&quot;+i+&quot;$&quot;, &quot;&quot; + Day(MyDate) + &quot;/&quot; + Month(MyDate) + &quot;/&quot; + Year(MyDate)
+		temp = Math.randValueFromTo(minTemp, maxTemp)
+		hum = Math.randValueFromTo(minHum, maxHum)
+		ar = getTempdifference(temp, hum)
+		temp_vlg = temp - (ar(1)+1)*0.5
+		right_hum = ar(0)
+
+		findAndRename(&quot;$temp&quot;+i+&quot;$&quot;, &quot;&quot;+temp+&quot; / &quot;+temp_vlg)
+		findAndRename(&quot;$hum&quot;+i+&quot;$&quot;, right_hum)
+		i = i+1
+	wend
+	dim j as integer
+	for j=i to 368
+		findAndRename(&quot;$date&quot;+j+&quot;$&quot;, &quot;&quot;)
+		findAndRename(&quot;$temp&quot;+j+&quot;$&quot;, &quot;&quot;)
+		findAndRename(&quot;$hum&quot;+j+&quot;$&quot;, &quot;&quot;)
+	next j
+	oDialogTNote.endexecute()
+	msgbox &quot;Готово!&quot;
+end sub
+&apos;------------------------------------------------------------------------------------------------------------------------
+function isWorkingDay(myDate as Date)
+	&apos;Рабочие выходные--------------------------
+	dim workingWeekend as new Collection
+	workingWeekend.add(DateSerial (2020, 1, 4))
+	workingWeekend.add(DateSerial (2020, 1, 11))
+	workingWeekend.add(DateSerial (2020, 4, 4))
+
+	workingWeekend.add(DateSerial (2021, 1, 16))
+	workingWeekend.add(DateSerial (2021, 5, 15))
+	
+	workingWeekend.add(DateSerial (2022, 3, 12))
+	workingWeekend.add(DateSerial (2022, 5, 14))
+	
+	workingWeekend.add(DateSerial (2023, 4, 29))
+	workingWeekend.add(DateSerial (2023, 5, 13))
+	workingWeekend.add(DateSerial (2023, 11, 11))
+	&apos;Нерабочие будни---------------------------
+	dim nonWorkingDays as new Collection
+	nonWorkingDays.add(DateSerial (2020, 1, 1))
+	nonWorkingDays.add(DateSerial (2020, 1, 2))
+	nonWorkingDays.add(DateSerial (2020, 1, 6))
+	nonWorkingDays.add(DateSerial (2020, 1, 7))
+	nonWorkingDays.add(DateSerial (2020, 5, 1))
+	nonWorkingDays.add(DateSerial (2020, 7, 3))
+	nonWorkingDays.add(DateSerial (2020, 12, 25))
+	
+	nonWorkingDays.add(DateSerial (2021, 1, 1))
+	nonWorkingDays.add(DateSerial (2021, 1, 7))
+	nonWorkingDays.add(DateSerial (2021, 1, 8))
+	nonWorkingDays.add(DateSerial (2021, 3, 8))
+	nonWorkingDays.add(DateSerial (2021, 5, 10))
+	nonWorkingDays.add(DateSerial (2021, 5, 11))
+	
+	nonWorkingDays.add(DateSerial (2022, 1, 7))
+	nonWorkingDays.add(DateSerial (2022, 3, 7))
+	nonWorkingDays.add(DateSerial (2022, 3, 8))
+	nonWorkingDays.add(DateSerial (2022, 5, 2))
+	nonWorkingDays.add(DateSerial (2022, 5, 3))
+	nonWorkingDays.add(DateSerial (2022, 5, 9))
+	nonWorkingDays.add(DateSerial (2022, 11, 7))
+	
+	nonWorkingDays.add(DateSerial (2023, 1, 2))
+	nonWorkingDays.add(DateSerial (2023, 3, 8))
+	nonWorkingDays.add(DateSerial (2023, 4, 24))
+	nonWorkingDays.add(DateSerial (2023, 4, 25))
+	nonWorkingDays.add(DateSerial (2023, 5, 1))
+	nonWorkingDays.add(DateSerial (2023, 5, 8))
+	nonWorkingDays.add(DateSerial (2023, 5, 9))
+	nonWorkingDays.add(DateSerial (2023, 7, 3))
+	nonWorkingDays.add(DateSerial (2023, 11, 6))
+	nonWorkingDays.add(DateSerial (2023, 11, 7))
+	nonWorkingDays.add(DateSerial (2023, 12, 25))
+	
+	
+	nonWorkingDays.add(DateSerial (2024, 1, 1))
+	nonWorkingDays.add(DateSerial (2024, 1, 2))
+	nonWorkingDays.add(DateSerial (2024, 3, 8))
+	nonWorkingDays.add(DateSerial (2024, 5, 1))
+	nonWorkingDays.add(DateSerial (2024, 5, 9))
+	nonWorkingDays.add(DateSerial (2024, 5, 10))
+	nonWorkingDays.add(DateSerial (2024, 5, 13))
+    workingWeekend.add(DateSerial (2024, 3, 18))
+	workingWeekend.add(DateSerial (2024, 3, 25))
+	nonWorkingDays.add(DateSerial (2024, 5, 14))
+	nonWorkingDays.add(DateSerial (2024, 7, 3))
+	nonWorkingDays.add(DateSerial (2024, 8, 3))
+	nonWorkingDays.add(DateSerial (2024, 11, 7))
+	nonWorkingDays.add(DateSerial (2024, 11, 8))
+	workingWeekend.add(DateSerial (2024, 11, 16))
+	nonWorkingDays.add(DateSerial (2024, 12, 25))
+	
+	
+	nonWorkingDays.add(DateSerial (2025, 1, 1))
+	nonWorkingDays.add(DateSerial (2025, 1, 2))
+	nonWorkingDays.add(DateSerial (2025, 1, 6))
+	nonWorkingDays.add(DateSerial (2025, 1, 7))
+	workingWeekend.add(DateSerial (2025, 1, 11))
+	workingWeekend.add(DateSerial (2025, 4, 12))
+	&apos;workingWeekend.add(DateSerial (2025, 4, 26))
+	nonWorkingDays.add(DateSerial (2025, 4, 28))
+	nonWorkingDays.add(DateSerial (2025, 4, 29))
+	nonWorkingDays.add(DateSerial (2025, 5, 1))
+	nonWorkingDays.add(DateSerial (2025, 5, 9))
+	nonWorkingDays.add(DateSerial (2025, 7, 3))
+	nonWorkingDays.add(DateSerial (2025, 7, 4))
+	workingWeekend.add(DateSerial (2025, 7, 12))
+	nonWorkingDays.add(DateSerial (2025, 11, 7))
+	workingWeekend.add(DateSerial (2025, 12, 20))
+	nonWorkingDays.add(DateSerial (2025, 12, 25))
+	nonWorkingDays.add(DateSerial (2025, 12, 26))
+	
+	&apos;------------------------------------------
+	dim i as integer
+	dim state as boolean
+	if WeekDay(myDate)=1 OR WeekDay(myDate)=7 then
+		state = false
+		for i=1 to workingWeekend.count
+			if myDate = workingWeekend.item(i) then state = true
+		next i
+		isWorkingDay = state
+	else
+		state = true
+		for i=1 to nonWorkingDays.count
+			if myDate = nonWorkingDays.item(i) then state = false
+		next i
+		isWorkingDay = state
+	end if	
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getTempdifference(temp as integer, hum as integer)
+	dim ar(0) as integer
+	select case temp
+	case 25
+		ar = getRightHum(hum, Array(100,91,87,83,79,75,71,67,63,60,56))
+	case 24
+		ar = getRightHum(hum, Array(100,91,87,83,78,74,70,66,62,59,55))
+	case 23
+		ar = getRightHum(hum, Array(100,91,86,82,78,74,70,65,62,58,54))
+	case 22
+		ar = getRightHum(hum, Array(100,91,85,82,77,73,69,64,61,56,52))
+	case 21
+		ar = getRightHum(hum, Array(100,90,85,81,77,72,68,64,59,55,51))
+	case 20
+		ar = getRightHum(hum, Array(100,90,85,81,76,71,67,63,58,54,50))
+	case 19
+		ar = getRightHum(hum, Array(100,90,85,80,75,70,66,61,57,52,48))
+	case 18
+		ar = getRightHum(hum, Array(100,90,84,79,74,70,65,60,55,51,47))
+	case 17
+		ar = getRightHum(hum, Array(95,89,84,79,74,69,64,59,54,49,45))
+	case 16
+		ar = getRightHum(hum, Array(94,89,83,78,73,68,63,57,52,48,43))
+	case 15
+		ar = getRightHum(hum, Array(94,88,83,77,72,66,61,56,51,46,41))					
+	end select
+	getTempdifference = ar
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getRightHum(hum as integer, humArray as variant)  as variant
+	dim min_difference as integer
+	dim min_value as integer
+	dim temporaly as integer
+	dim ar(1) as integer
+	
+	min_difference=100
+	min_value=0
+	
+	&apos;Для 0.5 шкалы
+	&apos;for i=0 to uBound(humArray)
+	&apos;	temporaly = hum-humArray(i)
+	&apos;	if temporaly &lt;0 then temporaly = temporaly*(-1)
+	&apos;	if temporaly &lt; min_difference then
+	&apos;		min_difference = temporaly
+	&apos;		min_value = i
+	&apos;	end if	
+	&apos;	
+	&apos;next i
+	
+	&apos;Для шкалы с целыми значениями температуры
+	for i=1 to uBound(humArray) step 2
+		temporaly = hum-humArray(i)
+		if temporaly &lt;0 then temporaly = temporaly*(-1)
+		if temporaly &lt; min_difference then
+			min_difference = temporaly
+			min_value = i
+		end if	
+		
+	next i
+	
+	ar(0) = humArray(min_value)
+	ar(1) = min_value
+	&apos;msgbox &quot;ar(0)-&quot;+ar(0)+&quot;, ar(1)-&quot;+ar(1)
+	getRightHum = ar
+	
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+</script:module>

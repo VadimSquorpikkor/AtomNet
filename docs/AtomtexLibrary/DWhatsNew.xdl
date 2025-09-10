@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="DWhatsNew" dlg:left="40" dlg:top="32" dlg:width="308" dlg:height="293" dlg:closeable="true" dlg:moveable="true">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-height="8"/>
+  <dlg:style dlg:style-id="1" dlg:text-color="0x66cc" dlg:font-height="18" dlg:font-underline="single"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:menulist dlg:style-id="0" dlg:id="ListBox1" dlg:tab-index="0" dlg:left="2" dlg:top="25" dlg:width="304" dlg:height="256"/>
+  <dlg:text dlg:style-id="1" dlg:id="Label1" dlg:tab-index="1" dlg:left="2" dlg:top="3" dlg:width="302" dlg:height="18" dlg:value="Список версий" dlg:align="center"/>
+ </dlg:bulletinboard>
+</dlg:window>

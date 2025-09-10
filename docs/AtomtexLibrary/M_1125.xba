@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1125" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔═══════════════════════════════════════════════════════════════════════╗
+rem		║	Класс для МКС-АТ1125/МКС-АТ1125А		         					║█
+rem		║	В отличии от большинства других классов, в протоколе выводится 	    ║█	
+rem		║	всегда только один прибор. В самом классе при старте загружаются    ║█	
+rem	    ║   6 БД -- 1125, 1125A, три для БДПС (α, β, γ) и один для удельной 	║█	
+rem		║	активности. При выводе протокола будут выбираться нужные БД 		║█	
+rem     ║	для конкретного протокола											║█	
+rem		╚═══════════════════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem
+rem
+rem
+rem
+rem
+rem
+&apos;---------------------------------------------------------------------------------------------------------
+&apos; -- Обновить активности для УД: 
+&apos; на вкладке Activity поменять значения констант например &quot;public const CS_483 as double = 86.8&quot;
+&apos; заменить источник -&gt; get_activity_Cs137
+
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialog1125 as object
+dim oDateFieldModel as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOption1125 as object
+dim oOption1125A as object
+dim path, calibName, techName as string
+dim oComboBox1, oComboBox2 as object
+dim oCheckBoxBZ, oCheckBoxBDPS, oCheckBoxSM as object 
+dim mainImage as object
+dim	isComboCollection as new Collection
+dim alphaCount, betaCount, gammaCount, gammaCount1125a as integer
+
+dim BDList as new collection
+
+dim betaAltCheckBox as object 
+dim alphaAltCheckBox as object
+dim oComboBox as object
+rem---------------------------------------------------------------------------------------------------------
+Sub AT1125_Dialog_Show
+	alphaCount = 5 rem ДЛЯ БДПС
+	betaCount = 5  rem ДЛЯ БДПС
+	gammaCount = 6 rem ДЛЯ БДПС
+
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog1125 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1125 )
+	mainImage = oDialog1125.Model.getByName(&quot;1125Logo&quot;)
+	mainImage.ImageURL = sertPath &amp; &quot;1125/1125_wide.png&quot;
+
+	&apos;dim NULL as object
+	&apos;Overall.dialogSimpleInitialize(oDialog1125, oDateFieldModel, &quot;Версия 1.06 &quot;, isComboCollection, BDList)
+	 Overall.dialogShowInitialize(0, oDialog1125, oDateFieldModel, &quot;Версия 1.15 &quot;, Overall.NULL, 0)
+	 Overall.initializeParameters(0, BDList, isComboCollection)
+	 oDialog1125.getControl(&quot;doneButton&quot;).setEnable(true)
+
+	oOption1125 = oDialog1125.getControl(&quot;is1125&quot;)
+	oOption1125A = oDialog1125.getControl(&quot;is1125A&quot;)
+	oOption1125A.State = 1
+	isComboCollection.add(oOption1125)
+	isComboCollection.add(oOption1125A)
+
+	oCheckBoxBZ = oDialog1125.getControl(&quot;isUA&quot;)
+	oCheckBoxBDPS = oDialog1125.getControl(&quot;isBDPS&quot;)
+	oCheckBoxSM = oDialog1125.getControl(&quot;isMarin&quot;)
+	
+	alphaAltCheckBox = oDialog1125.getControl(&quot;altAlphaCheckBox&quot;)
+	betaAltCheckBox = oDialog1125.getControl(&quot;altBetaCheckBox&quot;)
+	
+	alphaAltCheckBox.setEnable(false)
+	betaAltCheckBox.setEnable(false)
+	
+	for i=1 to 5
+		oDialog1125.getControl(&quot;altalphaField&quot; + i).visible = false
+		oDialog1125.getControl(&quot;altbetaField&quot; + i).visible = false
+	next i
+	
+	enableBDPS(false)
+	enableUA(false)
+	
+	oComboBox = oDialog1125.getControl(&quot;ActivityCombo&quot;)
+	Overall.initializeActivityCombo(oComboBox)
+	
+	initializeBD rem ЗАГРУЗКА БД
+	makeLayout1125
+	oDialogMain.endexecute()   
+	oDialog1125.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub activityComboChanged
+	&apos;TODO ДУБЛИРОВАНИЕ МЕТОДА, следующий делает то же самое
+	makeBetaLayout(BDList.item(4))
+	calculateUA(BDList.item(6))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub comboChanged
+	makeBetaLayout(BDList.item(4))
+	calculateUA(BDList.item(6))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub altAlphaCheckBoxListener()
+    oCheckbox = alphaAltCheckBox
+    altLayoutVisibility(&quot;alpha&quot;, 3, oCheckbox)
+    
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub altBetaCheckBoxListener()
+    oCheckbox = betaAltCheckBox
+    altLayoutVisibility(&quot;beta&quot;, 4, oCheckbox)
+    &apos;makeAltBetaLayout(BDList.item(4))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub altLayoutVisibility(fieldName as String, position as integer, checkBox as object)
+	BDList.item(position).setAlternative(checkbox.state)
+   	for i=1 to BDList.item(position).getPointTextList.count
+   		oDialog1125.getControl(&quot;alt&quot; + fieldName + &quot;Field&quot; + i).Visible = BDList.item(position).isAlternativePoints	
+   		oDialog1125.getControl(fieldName + &quot;Label&quot; + i).Visible = not BDList.item(position).isAlternativePoints
+   	next i
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub makeBetaLayout(bd as new DUnit)
+	dim pointList as new collection
+	dim myFormat as string
+	dim point as double
+	for i=1 to bd.getPointTextList.count
+		point = Activity.get_activity_Sr(bd.getPointTextList.item(i), oDateFieldModel)
+		if point &lt; 500 then
+			myFormat = &quot;0.0&quot;
+			oDialog1125.Model.getByName(&quot;betaField&quot; + i).valueStep = 0.1
+			oDialog1125.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 1
+			oDialog1125.Model.getByName(&quot;altbetaField&quot; + i).valueStep = 0.1
+			oDialog1125.Model.getByName(&quot;altbetaField&quot; + i).DecimalAccuracy = 1
+		else
+			myFormat = &quot;0&quot;
+			oDialog1125.Model.getByName(&quot;betaField&quot; + i).valueStep = 1
+			oDialog1125.Model.getByName(&quot;betaField&quot; + i).DecimalAccuracy = 0
+			oDialog1125.Model.getByName(&quot;altbetaField&quot; + i).valueStep = 1
+			oDialog1125.Model.getByName(&quot;altbetaField&quot; + i).DecimalAccuracy = 0
+		end if
+		oDialog1125.getControl(&quot;betaLabel&quot; + i).Text = Format(point, myFormat) &amp; &quot; &quot;
+		oDialog1125.getControl(&quot;betaField&quot; + i).value = Format(point, myFormat) rem ЕСЛИ ЕСЛИ БЫ НУЖНО БЫЛО СОХРАНЕНИЕ, ТОГДА getValueList.item(i)
+		oDialog1125.getControl(&quot;altbetaField&quot; + i).value = Format(point, myFormat)
+		pointList.add(point)
+	next i
+	bd.setPointList(pointList)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub calculateUA(bd as new DUnit)
+	dim stroke as string
+	dim pointList as new collection
+	dim myFormat as string
+	dim point as double
+	for i=1 to bd.getPointTextList.count-1
+		point = Activity.get_activity_Cs(bd.getPointTextList.item(i), oDateFieldModel)
+		if point &lt; 500 then
+			myFormat = &quot;0.0&quot;
+			oDialog1125.Model.getByName(&quot;uaField&quot; + i).valueStep = 0.1
+			oDialog1125.Model.getByName(&quot;uaField&quot; + i).DecimalAccuracy = 1
+			oDialog1125.Model.getByName(&quot;uaLabel&quot; + i).valueStep = 0.1
+			oDialog1125.Model.getByName(&quot;uaLabel&quot; + i).DecimalAccuracy = 1
+		else
+			myFormat = &quot;0&quot;
+			oDialog1125.Model.getByName(&quot;uaField&quot; + i).valueStep = 1
+			oDialog1125.Model.getByName(&quot;uaField&quot; + i).DecimalAccuracy = 0
+			oDialog1125.Model.getByName(&quot;uaLabel&quot; + i).valueStep = 1
+			oDialog1125.Model.getByName(&quot;uaLabel&quot; + i).DecimalAccuracy = 0
+		end if
+		&apos;oDialog1125.getControl(&quot;uaLabel&quot; + i).Text = Format(point, myFormat)&amp; &quot; &quot; &apos; &amp; &quot; (№&quot; &amp; BDList.item(6).getPointTextList.item(i) &amp; &quot;) &quot;
+		oDialog1125.getControl(&quot;uaLabel&quot; + i).Value = Format(point, myFormat)&amp; &quot; &quot; &apos; &amp; &quot; (№&quot; &amp; BDList.item(6).getPointTextList.item(i) &amp; &quot;) &quot;
+		oDialog1125.getControl(&quot;uaField&quot; + i).value = Format(point, myFormat) rem ЕСЛИ ЕСЛИ БЫ НУЖНО БЫЛО СОХРАНЕНИЕ, ТОГДА getValueList.item(i)
+		pointList.add(point)
+		stroke = stroke + &quot;№&quot; &amp; BDList.item(6).getPointTextList.item(i) &amp; &quot; &quot;
+	next i
+	
+	&apos;Внимание! 4-я точка удельной активности считается отдельно! (в предыдущем цикле только 3 точки) Эта точка меняется комбобоксом: 516-521 источник, соответственно точка зависит от значения кБокса
+	&apos;Умножение на 1000 так как метод get_activity_Cs возвращает активность в кБк, а надо в Бк
+	point = Activity.get_activity_Cs(oComboBox.text, oDateFieldModel)*1000
+		myFormat = &quot;0&quot;
+		oDialog1125.Model.getByName(&quot;uaField&quot; + i).valueStep = 1
+		oDialog1125.Model.getByName(&quot;uaField&quot; + i).DecimalAccuracy = 0
+		&apos;oDialog1125.getControl(&quot;uaLabel&quot; + i).Text = Format(point, myFormat)&amp; &quot; &quot;
+		oDialog1125.getControl(&quot;uaLabel&quot; + i).Value = Format(point, myFormat)&amp; &quot; &quot;
+		oDialog1125.getControl(&quot;uaField&quot; + i).value = Format(point, myFormat)
+		pointList.add(point)
+		stroke = stroke + oComboBox.text
+		
+	&apos;переписываю 4-ю точку, не знаю как сделать, поэтому просто беру три точки из старого массива, добавляю новую 4-ую и перезаписываю массив
+	dim newValues as new Collection
+	newValues.add(bd.getPointTextList.item(1))
+	newValues.add(bd.getPointTextList.item(2))
+	newValues.add(bd.getPointTextList.item(3))
+	dim s as string
+	s = Replace (oComboBox.text,&quot;№&quot;,&quot;&quot;)
+	newValues.add(s)
+	bd.setPointTextList(newValues)
+		
+	bd.setPointList(pointList)
+	oDialog1125.getControl(&quot;SourseText&quot;).text = stroke
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub makeLayout1125
+	Overall.makeSimpleLayoutFromBD(BDList.item(2), &quot;ValueField&quot;, &quot;Label&quot;)
+	Overall.makeSimpleLayoutFromBD(BDList.item(3), &quot;alphaField&quot;, &quot;alphaLabel&quot;)
+	Overall.makeSimpleLayoutFromBD(BDList.item(3), &quot;altalphaField&quot;, &quot;alphaLabel&quot;)
+	makeBetaLayout(BDList.item(4))
+	Overall.makeSimpleLayoutFromBD(BDList.item(5), &quot;gammaField&quot;, &quot;gammaLabel&quot;)
+	calculateUA(BDList.item(6))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub initializeBD_short rem НЕ РАБОТАЕТ
+	dim bd as new DUnit
+	BDList.add(bd.addData(&quot;AT1125&quot;,	&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 			 &quot;gamma&quot;,	Array(0.3,0.3)))
+	BDList.add(bd.addData(&quot;AT1125A&quot;,&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240,0.7,7,70),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;,	Array(0.3,100)))
+	BDList.add(bd.addData(&quot;БДПС-02 α&quot;,	&quot;&quot;,		Array(62.7,681,8655,61800,201000),	emptyArray,									 &quot;alpha&quot;,	Array(2.4,100)))
+	BDList.add(bd.addData(&quot;БДПС-02 β&quot;,	&quot;&quot;,		Array(97,232,5700,52000,377100),	Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;0580&quot;),	 &quot;beta&quot;,	Array(6,100)))
+	BDList.add(bd.addData(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),			 &quot;gamma&quot;,	Array(0.1,30)))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub initializeBD
+	addBDtoCollection(&quot;AT1125&quot;,		&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 			 &quot;gamma&quot;,		Array(0.3,0.3))
+	addBDtoCollection(&quot;AT1125A&quot;,	&quot;Зв/ч&quot;,		Array(0.24,0.7,7,70,240,0.7,7,70),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;), &quot;gamma&quot;,		Array(0.3,100))
+	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;&quot;,			Array(62.7,681,8655,61800,201000),	emptyArray,									 &quot;alpha&quot;,		Array(2.4,100))
+	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;&quot;,			Array(97,232,5700,52000,377100),	Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;0580&quot;),	 &quot;beta&quot;,		Array(6,100))
+	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;Зв/ч&quot;,		Array(0.7,7,70,0.7,7,20),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),			 &quot;gamma&quot;,		Array(0.1,30))
+	&apos;addBDtoCollection(&quot;УА&quot;,			&quot;&quot;,			Array(100,1000,10000,100000),		Array(&quot;483&quot;,&quot;93&quot;,&quot;3668&quot;,&quot;595&quot;),			 	 &quot;gamma-Src&quot;,	Array(0,0))
+	addBDtoCollection(&quot;УА&quot;,			&quot;&quot;,			Array(100,1000,10000,100000),		Array(&quot;483&quot;,&quot;93&quot;,&quot;832&quot;,&quot;595&quot;),			 	 &quot;gamma-Src&quot;,	Array(0,0))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub addBDtoCollection(ByVal bname as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant)
+	dim bd as new DUnit
+	bd.addData(bname, measUnit, pointValue, pointText, BDType, measLimit)
+	BDList.add(bd)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enableBDPS(visibility as boolean)
+	for i=1 to alphaCount
+		oDialog1125.getControl(&quot;alphaField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;alphaLabel&quot; + i).setEnable(visibility)
+	next i
+	for i=1 to betaCount
+		oDialog1125.getControl(&quot;betaField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;betaLabel&quot; + i).setEnable(visibility)
+	next i
+	for i=1 to gammaCount
+		oDialog1125.getControl(&quot;gammaField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;gammaLabel&quot; + i).setEnable(visibility)
+	next i
+	oDialog1125.getControl(&quot;bdpsLabel&quot;).setEnable(visibility)
+	alphaAltCheckBox.setEnable(visibility)
+	betaAltCheckBox.setEnable(visibility)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enable1125A(visibility as boolean)
+	for i=6 to 8 
+		oDialog1125.getControl(&quot;ValueField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;Label&quot; + i).setEnable(visibility)		
+	next i
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub enableUA(visibility as boolean)
+	for i=1 to 4 
+		oDialog1125.getControl(&quot;uaField&quot; + i).setEnable(visibility)
+		oDialog1125.getControl(&quot;uaLabel&quot; + i).setEnable(visibility)		
+	next i
+	oDialog1125.getControl(&quot;uaLabel&quot;).setEnable(visibility)
+	oDialog1125.getControl(&quot;SourseText&quot;).setEnable(visibility)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;Зачем я заморачивался с созданием метода setBZ и setSM, а не подвязал все три чекбокса к одному методу setVisibility?
+&apos;Дело в режиме работы чекБоксов -- SM и BZ это такие чекБоксы, которые могут быть либо включены либо выключены, но 
+&apos;не могут быть включены ОДНОВРЕМЕННО. RadioButton не подходит (есть вариант, когда не выбран не один из чекбоксов)
+sub setBZ
+	if oCheckBoxSM.state = 1 then oCheckBoxSM.state = 0
+	setVisibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setSM
+	if oCheckBoxBZ.state = 1 then oCheckBoxBZ.state = 0
+	setVisibility
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setVisibility
+	rem ТОЛЬКО 1125
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_wide.png&quot;
+		enableBDPS(false)
+		enableUA(false)
+	end if
+	rem 1125 + БДПС
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bdps_wide.png&quot;
+		enableBDPS(true)
+		enableUA(false)
+	end if
+	rem 1125 + УА БЗ
+	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_bz_wide.png&quot;
+		enableBDPS(false)
+		enableUA(true)
+	end if
+	rem 1125 + УА СМ
+	if oCheckBoxSM.state = 1 AND oCheckBoxBDPS.state = 0 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_sm_wide.png&quot;
+		enableBDPS(false)
+		enableUA(true)
+	end if	
+	rem 1125 + БДПС + УА БЗ
+	if oCheckBoxBZ.state = 1 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_b_bz.png&quot;
+		enableBDPS(true)
+		enableUA(true)
+	end if
+	rem 1125 + БДПС + УА СМ
+	if oCheckBoxSM.state = 1 AND oCheckBoxBDPS.state = 1 then
+		mainImage.ImageURL = sertPath &amp; &quot;1125/1125_b_sm.png&quot;
+		enableBDPS(true)
+		enableUA(true)
+	end if
+	rem Если выбран вариант с Маринелли, то в таблице &quot;Удельной активности&quot; только три строки (нет самой маленькой точки)
+	if oCheckBoxSM.state = 1 then
+		oDialog1125.getControl(&quot;uaField1&quot;).setEnable(false)
+		oDialog1125.getControl(&quot;uaLabel1&quot;).setEnable(false)
+	end if
+	if oDialog1125.getControl(&quot;is1125&quot;).state then enable1125A(false)
+	if oDialog1125.getControl(&quot;is1125A&quot;).state then enable1125A(true)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveAllBD
+	saveCurentBD(1, &quot;ValueField&quot;)
+	saveCurentBD(2, &quot;ValueField&quot;)
+	saveCurentBD(3, &quot;alphaField&quot;)
+	saveCurentBD(4, &quot;betaField&quot;)
+	saveCurentBD(5, &quot;gammaField&quot;)
+	saveCurentBD(6, &quot;uaField&quot;)
+	
+	
+	&apos;отдельно сделал типа saveCurentBD только для своих значений активности источников удельной активности. сложность в том, что там это не valueList, как для остальных точек, а pointList. Потом сделаю нормально
+	dim newValues as new Collection
+	dim altValues as new Collection
+	dim i as integer
+	dim ALT as string
+	for i=1 to BDList.item(6).valueList.count
+		newValues.add(oDialog1125.getControl(&quot;uaLabel&quot; + i).Value)
+	next i
+	BDList.item(6).setPointList(newValues)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub saveCurentBD(num as integer, VALUE_FIELD as string)
+	dim newValues as new Collection
+	dim altValues as new Collection
+	dim i as integer
+	dim ALT as string
+	for i=1 to BDList.item(num).valueList.count
+		if NOT isNull(oDialog1125.getControl(&quot;alt&quot; + VALUE_FIELD + i)) then altValues.add(oDialog1125.getControl(&quot;alt&quot; + VALUE_FIELD + i).Value)
+		newValues.add(oDialog1125.getControl(VALUE_FIELD + i).Value)
+	next i
+	if BDList.item(num).isAlternativePoints then BDList.item(num).setPointList(altValues)
+	BDList.item(num).setValueList(newValues)
+	
+end sub
+rem---------------------------------------------------------------------------------------------------------
+&apos;sub replacePointValueWithAltValue(int i, VALUE_FIELD as String, ALT_VALUE_FIELD as String)
+&apos;Если стоит чекБокс &quot;свои значения для а, б&quot;, то значения в полях формы (&quot;betaField&quot;) заменяются значениями из (&quot;altbetaField&quot;), т.е. теми, что ввел пользователь
+&apos;	oDialog1125.getControl(VALUE_FIELD + i).Value = oDialog1125.getControl(&quot;alt&quot; + VALUE_FIELD + i).Value
+&apos;end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	saveAllBD rem ПЕРЕД ТЕМ, КАК ФОРМИРОВАТЬ ПРОТОКОЛ ПОВЕРКИ, НЕОБХОДИМО СОХРАНИТЬ В DUnit ИЗМЕНЕННЫЕ ЗНАЧЕНИЯ В ЯЧЕЙКАХ ФОРМЫ ПРОГРАММЫ (МЕТОД Overall.insertToTemplateStep ФОРМИРУЕТ ТАБЛИЦУ ИЗ ДАННЫХ ОБЪЕКТА DUnit)
+	dim strokeForSaving, serial as string
+	
+	path = Overall.PathForProtocol(&quot;1125/1125&quot;)
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	
+	dim bd as new DUnit
+	dim min, max as double
+	
+	if oCheckBoxSM.state = 1 then findAndRename(&quot;$ua_min&quot;, 100)
+	if oCheckBoxBZ.state = 1 then findAndRename(&quot;$ua_min&quot;, 50)
+		
+	if oOption1125.state then
+		Overall.deleteTable(&quot;1125A&quot;)
+		Overall.deleteTable(&quot;lim_1125a&quot;)
+		Overall.deleteTable(&quot;perc_1125a&quot;)
+	end if
+	if oOption1125.state AND oCheckBoxBDPS.state = 0 then
+		Overall.deleteTable(&quot;1125A&quot;)
+		Overall.deleteTable(&quot;f_130&quot;)
+	end if	
+	if oOption1125A.state then
+		Overall.deleteTable(&quot;1125&quot;)
+		Overall.deleteTable(&quot;lim_1125&quot;)
+		Overall.deleteTable(&quot;perc_1125&quot;)
+	end if	
+	if oCheckBoxBZ.state = 0 AND oCheckBoxSM.state = 0 then
+		Overall.deleteTable(&quot;BZ&quot;)
+		Overall.deleteTable(&quot;lim_ua&quot;)
+		Overall.deleteTable(&quot;perc_ua&quot;)
+	end if	
+	if oCheckBoxBDPS.state = 0 then
+		Overall.deleteTable(&quot;BDPS_a&quot;)
+		Overall.deleteTable(&quot;BDPS_b&quot;)
+		Overall.deleteTable(&quot;BDPS_g&quot;)
+		Overall.deleteTable(&quot;f_alpha&quot;)
+		Overall.deleteTable(&quot;f_beta&quot;)
+		Overall.deleteTable(&quot;lim_bdps&quot;)
+		Overall.deleteTable(&quot;perc_bdps&quot;)
+	end if
+	
+	
+	if oCheckBoxSM.state = 0 then
+		Overall.deleteTable(&quot;BZsmall&quot;)
+	end if
+	if oCheckBoxSM.state = 1 then
+		Overall.deleteTable(&quot;BZ&quot;)
+	end if
+	
+	
+	Overall.insertToTemplateStep(1)
+	Overall.insertToTemplateStep(2)
+	Overall.insertToTemplateStep(3)
+	Overall.insertToTemplateStep(4)
+	Overall.insertToTemplateStep(5)
+	Overall.insertToTemplateStep(6)
+		
+	serial = oDialog1125.getControl(&quot;bdSerial&quot;).text
+		
+	findAndRename(&quot;$serial&quot;, serial)
+	if oOption1125.state then
+		strokeForSaving = &quot;1125 №&quot; &amp; serial
+		findAndRename(&quot;$type&quot;, &quot;AT1125&quot;)
+	end if	
+	if oOption1125A.state then
+		strokeForSaving = &quot;1125A №&quot; &amp; serial
+		findAndRename(&quot;$type&quot;, &quot;AT1125A&quot;)
+	end if	
+	CopyVariableToClipboard(strokeForSaving+&quot; - &quot;+getCurrentDateString())
+	msgbox &quot;Готово!&quot;
+end sub
+
+
+</script:module>

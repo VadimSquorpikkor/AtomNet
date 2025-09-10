@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Sensor" script:language="StarBasic">REM  *****  BASIC  *****
+
+
+rem 	╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
+rem		║	Класс для генерации/загрузки/записи значений фона, температуры и влажности									║█
+rem		║	Алгоритм хранения рандомных значений фона, температуры и влажности во внешнем файле (на FileServer).		║█
+rem		║	Теперь при открытии макроса проверяется дата, записанная в файле: если она совпадает с сегодняшней,			║█
+rem		║	то данные из файла записываются в макрос и используются для вывода в протоколе. 							║█
+rem		║	Если дата не совпадает (вчерашняя, например), то данные генерируются и записываются в макрос И В ФАЙЛ.		║█
+rem		║	Таким образом у всех пользователей в течении дня будут одни и те же значения фона, температуры и влажности	║█
+rem		╚═══════════════════════════════════════════════════════════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+Option Compatible
+Option ClassModule
+Option Explicit
+&apos;------------------------------------------------------------------------------------------------------------------------
+
+dim background as double
+dim temperature as double
+dim humidity as double
+dim avalableVersion as double
+
+dim sensors as new collection
+dim dataDate as String
+
+const BG_AVG as double = 95
+const BG_SHIFT as double = 5
+
+const TEMP_AVG as double = 21
+const TEMP_SHIFT as double = 2
+
+const HUM_AVG as double = 70
+const HUM_SHIFT as double = 5
+
+const DATA_FILE as string = &quot;\\Fileserver\Manufacture\Uchastok.RIR\База настроек\Instruction\_Макрос для протоколов\data.txt&quot;
+const SETTINGS_FILE as string = &quot;\\Fileserver\Manufacture\Uchastok.RIR\База настроек\Instruction\_Макрос для протоколов\settings.cfg&quot;
+
+&apos;TODO переделать через ООП, сделать bg, temp и hum как объекты класса, тогда проще добавлять/переделывать и меньше кода будет
+&apos;------------------------------------------------------------------------------------------------------------------------
+function dateIsToday as boolean
+	dateIsToday = (dataDate = cDateToIso(Now))
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Сравнивает параметр с его заданным значением. Фон, например, должен быть от 90 до 100 (95+-5)
+function getRightValue(value as double, param as double, shift as double) as double
+	&apos;msgbox Math.randValue(10, 3)
+	if value &gt;= param - shift AND value &lt;= param + shift then
+		getRightValue = value
+	else
+		msgbox &quot;Параметр задан неверно и будет сгенерирован&quot;
+		getRightValue = Math.randValue(param, shift)
+	end if		
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Из строки version=2.91 получает массив из двух элементов: &quot;version&quot; и &quot;2.91&quot;
+function splitParameters(stroke as String)
+	dim arr(1) as String
+	dim position as integer
+	position = InStr(1, stroke, &quot;=&quot;)&apos;позиция &quot;=&quot; в строке (8)
+	arr(0) = Left(stroke, position-1)&apos;часть строки от начала (т.е. слева) до позиции &quot;=&quot; (8-1)
+	arr(1) = Right(stroke, Len(stroke)-position)&apos;часть строки с конца (т.е. справа) до длина строки - позиция (12-8)
+	splitParameters = arr
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getVersionFromFile
+	dim list as new Collection
+	dim names as new Collection
+	dim values as new Collection
+	
+	if FileExists(SETTINGS_FILE) then list = DataFromFile(SETTINGS_FILE)
+	
+	dim i as integer
+	for i=1 to list.count
+		if splitParameters(list.item(i))(0) = &quot;version&quot; then avalableVersion = splitParameters(list.item(i))(1)
+	next i	
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Функция загружает данные из файла и проверяет дату в файле, если дата не совпадает, рандомит данные и закидывает их во внешшний файл
+function setValues
+	&apos;Если файл настройки найден, работаем с файлом, если не найден, рандомим значения
+	if FileExists(DATA_FILE) then
+		setSensors(DataFromFile(DATA_FILE))
+		if NOT dateIsToday then
+			setSensorsRandomly
+			sensorsToFile
+		end if
+	else
+		msgbox &quot;Файл не найден, значения будут сгенерированы&quot;
+		setSensorsRandomly
+	end if		
+	&apos;msgbox &quot;&quot; &amp; dataDate &amp; Chr(13) &amp; background &amp; Chr(13) &amp; temperature &amp; Chr(13) &amp; humidity
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function setSensorsRandomly 
+	background  = Math.randValue(BG_AVG, BG_SHIFT) 
+	temperature = Math.randValue(TEMP_AVG, TEMP_SHIFT)
+	humidity    = Math.randValue(HUM_AVG, HUM_SHIFT)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function sensorsToFile
+	Dim FileNo As Integer
+	Dim CurrentLine As String
+	Dim Filename As String
+	Filename = DATA_FILE
+	FileNo = FreeFile &apos; Establish free file handle
+	Open Filename For Output As #FileNo &apos; Open file (writing mode)
+	Print #FileNo, cDateToIso(Now)      &apos; Save line 
+	Print #FileNo, background   &apos; Save line 
+	Print #FileNo, temperature   &apos; Save line 
+	Print #FileNo, humidity   &apos; Save line 
+	Close #FileNo                  &apos; Close file
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+&apos;Присваивает переменным из макроса значения из коллекции
+function setSensors(data as Collection)
+	dataDate 	= data.item(1)
+	background 	= getRightValue(data.item(2), BG_AVG, 	BG_SHIFT)
+	temperature = getRightValue(data.item(3), TEMP_AVG, TEMP_SHIFT)
+	humidity 	= getRightValue(data.item(4), HUM_AVG, 	HUM_SHIFT)
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function DataFromFile(data_file as String) as Collection
+	Dim FileNo As Integer
+	Dim CurrentLine As String
+	Dim File As String
+	Dim Msg as String
+	Dim Filename as string
+	Dim coll as new Collection
+	Filename = data_file &apos; Define filename
+	FileNo = Freefile &apos; Establish free file handle
+	&apos; Open file (reading mode)
+	Open Filename For Input As FileNo
+	&apos; Check whether file end has been reached
+	Do While not eof(FileNo)  
+		Line Input #FileNo, CurrentLine &apos; Read line    
+		If CurrentLine &lt;&gt;&quot;&quot; then
+			coll.add(CurrentLine)
+		end if
+	Loop
+	Close #FileNo   
+	DataFromFile = coll
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getBackground
+	getBackground = background
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getTemperature
+	getTemperature = temperature
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getHumidity
+	getHumidity = humidity
+end function
+&apos;------------------------------------------------------------------------------------------------------------------------
+function getAvalableVersion
+	getAvalableVersion = avalableVersion
+end function	
+
+
+
+</script:module>

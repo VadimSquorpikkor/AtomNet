@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="D_T_NOTE" dlg:left="38" dlg:top="57" dlg:width="160" dlg:height="109" dlg:closeable="true" dlg:moveable="true" dlg:title="Журнал учета условий окружающей среды 2020-2021">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:font-height="8"/>
+  <dlg:style dlg:style-id="1" dlg:border="none"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:text dlg:style-id="0" dlg:id="Label_version" dlg:tab-index="0" dlg:left="4" dlg:top="97" dlg:width="48" dlg:height="10"/>
+  <dlg:datefield dlg:id="DateField1" dlg:tab-index="1" dlg:left="42" dlg:top="14" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true"/>
+  <dlg:numericfield dlg:id="NumericField1" dlg:tab-index="2" dlg:left="83" dlg:top="42" dlg:width="26" dlg:height="12" dlg:decimal-accuracy="0" dlg:value="20" dlg:value-min="20" dlg:value-max="24" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField2" dlg:tab-index="3" dlg:left="115" dlg:top="42" dlg:width="25" dlg:height="12" dlg:decimal-accuracy="0" dlg:value="25" dlg:value-min="21" dlg:value-max="25" dlg:spin="true"/>
+  <dlg:datefield dlg:id="DateField2" dlg:tab-index="4" dlg:left="96" dlg:top="14" dlg:width="48" dlg:height="12" dlg:hide-inactive-selection="false" dlg:dropdown="true"/>
+  <dlg:numericfield dlg:id="NumericField3" dlg:tab-index="5" dlg:left="83" dlg:top="60" dlg:width="26" dlg:height="12" dlg:decimal-accuracy="0" dlg:value="50" dlg:value-min="50" dlg:value-max="100" dlg:spin="true"/>
+  <dlg:numericfield dlg:id="NumericField4" dlg:tab-index="6" dlg:left="115" dlg:top="60" dlg:width="25" dlg:height="12" dlg:decimal-accuracy="0" dlg:value="90" dlg:value-min="50" dlg:value-max="100" dlg:spin="true"/>
+  <dlg:text dlg:id="Label1" dlg:tab-index="7" dlg:left="40" dlg:top="43" dlg:width="40" dlg:height="10" dlg:value="Температура" dlg:align="right"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="8" dlg:left="40" dlg:top="60" dlg:width="40" dlg:height="10" dlg:value="Влажность" dlg:align="right"/>
+  <dlg:text dlg:id="min" dlg:tab-index="9" dlg:left="83" dlg:top="32" dlg:width="26" dlg:height="10" dlg:value="min" dlg:align="center"/>
+  <dlg:text dlg:id="max" dlg:tab-index="10" dlg:left="115" dlg:top="32" dlg:width="25" dlg:height="10" dlg:value="max" dlg:align="center"/>
+  <dlg:text dlg:id="Label3" dlg:tab-index="11" dlg:left="57" dlg:top="3" dlg:width="18" dlg:height="10" dlg:value="от" dlg:align="center"/>
+  <dlg:text dlg:id="Label4" dlg:tab-index="12" dlg:left="112" dlg:top="3" dlg:width="18" dlg:height="10" dlg:value="до" dlg:align="center"/>
+  <dlg:button dlg:id="CommandButton1" dlg:tab-index="13" dlg:left="65" dlg:top="83" dlg:width="55" dlg:height="14" dlg:value="Вывести">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:AtomtexLibrary._t_note.insertRecordsToTemplate?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:img dlg:style-id="1" dlg:id="ImageControl1" dlg:tab-index="14" dlg:left="4" dlg:top="2" dlg:width="32" dlg:height="91"/>
+ </dlg:bulletinboard>
+</dlg:window>

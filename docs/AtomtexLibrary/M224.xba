@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M224" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔══════════════════════════════════════════╗
+rem		║	Класс для БДКГ-224		               ║█
+rem		║	Пример класса для всех БД		       ║█
+rem		║	Максимально сокращенный класс	       ║█
+rem		║	Здесь буду обкатывать все новые идеи   ║█ 
+rem		╚══════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogG224 as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOptionBDKG224 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+rem---------------------------------------------------------------------------------------------------------
+Sub G224_Dialog_Show
+	maxBDCount = 100 &apos;В принципе ограничено только ресурсами компа, времени и integer. Поставил 100 просто для красоты
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG224 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D224 )
+	oListBox = oDialogG224.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialogG224, oDateFieldModel, &quot;Версия 1.19 &quot;, oListBox, 8)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	
+	oOptionBDKG224 = oDialogG224.getControl(&quot;isBDKG224&quot;)
+	oOptionBDKG224.State = 1
+	isComboCollection.add(oOptionBDKG224)
+	oDialogG224.getControl(&quot;addButton&quot;).setEnable(true)
+
+	oDialogG224.Model.getByName(&quot;Image&quot;).ImageURL = sertPath &amp; &quot;imgs\224.jpg&quot;
+		
+	oDialogMain.endexecute()   
+	oDialogG224.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogG224.getControl(&quot;addButton&quot;).setEnable(true)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogG224.getControl(&quot;bdSerial&quot;))
+end sub	
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+	
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	&apos;if BDList.count &lt;&gt; 0 then saveCurentBDValue(BDList.count)
+	if oOptionBDKG224.state then bd.addData2(&quot;БДКГ-224&quot; , 	&quot;BDKG-224&quot;,	&quot;Зв/ч&quot;, Array(0.06,0.7,7,70,0.7,7,70,0.7),	  	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), &quot;gamma&quot;, 		Array(0.1,10000),	15) rem TODO уточнить границы
+	
+	oDialogG224.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialogG224.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialogG224.getControl(&quot;bdSerial&quot;))
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Overall.listBoxListener(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.showNextBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.showPrevBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	path = Overall.getPathAndSetName(&quot;bdkg224\bdkg224&quot;, &quot;БДКГ-224&quot;)
+	Overall.createCertificate(layoutPosition, path)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+
+</script:module>

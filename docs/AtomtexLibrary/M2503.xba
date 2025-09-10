@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M2503" script:language="StarBasic">REM  *****  BASIC  *****
+
+rem 	╔═══════════════════════════════════════════════════════════╗
+rem		║	Класс для 2503					 		              	║█
+rem		║	В таблице показания прибора и среднее записывается		║█
+rem		║	БЕЗ вычета фона, а уже следующие расчеты погрешностей	║█
+rem		║	расчитываются с учетом вычета фона						║█
+rem		╚═══════════════════════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim Math as new AtomMath
+dim oDialog2503 as object
+dim oDateFieldModel as object
+dim oListBox as object
+
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+
+dim is2503 as object
+dim is2503A as object
+dim is2503B as object
+dim is2503B_1 as object
+dim is2503B_2 as object
+dim is2503B_ru as object
+dim is2503B_1_ru as object
+
+dim BDList as new Collection
+dim layoutPosition as integer
+
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+
+dim pointCount as integer
+dim measurementPerPoint as integer &apos;кол-во измерений для каждой точки которое будет в форме (а не в таблице)
+
+dim from1 as object
+dim to1 as object
+dim from2 as object
+dim to2 as object
+dim from3 as object
+dim to3 as object
+
+dim bgList(7)  as double &apos;сгенерированные значения фона
+dim devList(7) as double &apos;показания прибора (с фоном)
+dim resList(7) as double &apos;результаты измерения с учетом вычета фона
+dim sum1, sum2, sum3 as double
+
+dim fromNum1, fromNum2, fromNum3, toNum1, toNum2, toNum3 as double
+
+dim macroWindow as object
+
+dim isSinglePoint as boolean
+
+dim doseField1 as object
+dim doseField2 as object
+
+dim is4mkPoint as boolean
+
+public const BG_VALUE_FROM 		as double  = 0.05&apos;фон нижняя граница
+public const BG_VALUE_TO 		as double  = 0.18&apos;фон верхняя граница
+public const MEAS_VALUE_FROM 	as double  = 0.5&apos;измерение в точке 0.8 мк нижняя граница
+public const MEAS_VALUE_TO 		as double  = 1.1&apos;измерение в точке 0.8 мк верхняя граница
+public const VALUE_SUB_BG_FROM 	as double  = 0.8&apos;измерение в точке 0.8 мк с вычетом фона нижняя граница
+public const VALUE_SUB_BG_TO 	as double  = 0.9&apos;измерение в точке 0.8 мк с вычетом фона верхняя граница
+public const MEAS_VALUE_NEW_FROM 	as double  = 3.8&apos;3.7&apos;измерение в точке 4 мк нижняя граница
+public const MEAS_VALUE_NEW_TO 		as double  = 4.4&apos;4.2&apos;измерение в точке 4 мк верхняя граница
+public const VALUE_SUB_BG_NEW_FROM 	as double  = 3.7&apos;4.0&apos;измерение в точке 4 мк с вычетом фона нижняя граница
+public const VALUE_SUB_BG_NEW_TO 	as double  = 4.3&apos;4.1&apos;измерение в точке 4 мк с вычетом фона верхняя граница
+public const POINT_VALUE	 	as double  = 0.8
+public const POINT_VALUE_NEW 	as double  = 4
+&apos;---------------------------------------------------------------------------------------------------------
+&apos;═══════════════════════════════════════════════════════════════════╗
+&apos;	Расчет предела основной относительной погрешности МД, %:		║█
+&apos;																	║█
+&apos; 	±(15+k1/H+k2*H)%, (для ДКГ-АТ2503В, ДКГ-АТ2503В1),				║█
+&apos; 	±(15+k1/H+k3*H)%, (для ДКГ-АТ2503В/2),							║█
+&apos; 	где H — значение мощности дозы в мЗв-1*ч;						║█
+&apos; 	k1=0.015 мЗв-1*ч; k2=0.005 мЗв-1*ч; k3=0.001 мЗв-1*ч.			║█
+&apos;																	║█
+&apos;	Расчет предела основной относительной погрешности дозы, %:		║█
+&apos; 	±(15+k1*H)%, (для ДКГ-АТ2503В, ДКГ-АТ2503В1),					║█
+&apos; 	±(15+k2*H)%, (для ДКГ-АТ2503В/2),								║█
+&apos; 	где H — значение мощности дозы в мЗв-1*ч;						║█
+&apos; 	k1=0.005 мЗв-1*ч; k2=0.001 мЗв-1*ч.								║█
+&apos;	точка 1 — 40мкЗв/ч, точка 2 — 80мЗв/ч							║█	
+&apos;																	║█
+&apos;═══════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+&apos;---------------------------------------------------------------------------------------------------------
+Sub G2503_Dialog_Show
+	maxBDCount = 25
+	pointCount = 7
+	maxPointCount = 7
+	measurementPerPoint = 3
+	
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog2503 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D2503 )
+	oListBox = oDialog2503.getControl(&quot;bdListBox&quot;)
+	
+	oDialog2503.Model.getByName(&quot;Image&quot;).ImageURL = sertPath &amp; &quot;2503\2503.png&quot;
+	oDialog2503.Model.getByName(&quot;flag_by&quot;).ImageURL = sertPath &amp; &quot;2503\flag_by.jpg&quot;
+	oDialog2503.Model.getByName(&quot;flag_ru&quot;).ImageURL = sertPath &amp; &quot;2503\flag_ru.jpg&quot;
+
+	Overall.dialogShowInitialize(maxBDCount, oDialog2503, oDateFieldModel, &quot;Версия 1.21 &quot;, oListBox, maxPointCount)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+
+	dim i as integer
+	for i=1 to pointCount
+		for j=1 to measurementPerPoint
+			oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).setEnable(false)
+			oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).visible = false
+			oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).value = 0
+		next j
+	next i
+
+	oDialog2503.getControl(&quot;PasteButton&quot;).visible = false
+
+	&apos;doseField = oDialog2503.getControl(&quot;devCountZero&quot;)
+	doseField1 = oDialog2503.getControl(&quot;devCountZero1&quot;)
+	doseField2 = oDialog2503.getControl(&quot;devCountZero2&quot;)
+	oDialog2503.Model.getByName(&quot;devCountZero1&quot;).valueStep = 0.1
+	oDialog2503.Model.getByName(&quot;devCountZero2&quot;).valueStep = 0.1
+
+	is2503  = oDialog2503.Model.getByName(&quot;is2503&quot;)
+	is2503A = oDialog2503.Model.getByName(&quot;is2503A&quot;)
+	is2503B = oDialog2503.Model.getByName(&quot;is2503B&quot;)
+	is2503B_1 = oDialog2503.Model.getByName(&quot;is2503B_1&quot;)
+	is2503B_2 = oDialog2503.Model.getByName(&quot;is2503B_2&quot;)
+	is2503B_ru = oDialog2503.Model.getByName(&quot;is2503B_r&quot;)&apos;на россию, потом на ремонтные
+	is2503B_1_ru = oDialog2503.Model.getByName(&quot;is2503B_1_r&quot;)&apos;на россию, потом на ремонтные
+	is2503.state = 1
+
+	oDialog2503.getControl(&quot;addButton&quot;).setEnable(true)
+	
+	is4mkPoint = false
+	
+	from1 = oDialog2503.Model.getByName(&quot;from1&quot;)
+	to1 = oDialog2503.Model.getByName(&quot;to1&quot;)
+	from2 = oDialog2503.Model.getByName(&quot;from2&quot;)
+	to2 = oDialog2503.Model.getByName(&quot;to2&quot;)
+	from3 = oDialog2503.Model.getByName(&quot;from3&quot;)
+	to3 = oDialog2503.Model.getByName(&quot;to3&quot;)
+
+	from1.valueStep = 0.01
+	to1.valueStep   = 0.01
+	from2.valueStep = 0.01
+	to2.valueStep   = 0.01
+	from3.valueStep = 0.01
+	to3.valueStep   = 0.01
+	
+&apos;ВАРИАНТ ГЕНЕРИРУЕМОЙ ПЕРВОЙ ТОЧКИ (0.8 мк) ДЛЯ ПОСТАВОК НА РОССИЮ ИЛИ (В БУДУЩЕМ) ДЛЯ РЕМОНТНЫХ
+&apos;═══════════════════════════════════════════════════════════════════╗
+&apos;		ПАРАМЕТРЫ ГЕНЕРАЦИИ ФОНА И ПЕРВОЙ ТОЧКИ -- 0.80 мкЗв/ч		║█
+&apos;							ДЛЯ ДКГ-АТ2503							║█
+&apos;																	║█
+&apos;				ФОН:											&apos;	║█
+			from1.value = 0.05									&apos;	║█
+			to1.value   = 0.18									&apos;	║█		
+&apos;				ПОКАЗАНИЯ ПРИБОРА:								&apos;	║█
+			from2.value = 0.5									&apos;	║█
+			to2.value   = 1.1									&apos;	║█
+&apos;				ИЗМЕРЕНИЕ С УЧЕТОМ ВЫЧЕТА ФОНА:					&apos;	║█
+			from3.value = 0.8									&apos;	║█
+			to3.value   = 0.9									&apos;	║█
+&apos;				ИСПОЛЬЗУЕТСЯ ТОЛЬКО ОДНО ЗНАЧЕНИЕ ТОЧКИ				║█
+			isSinglePoint = true								&apos;	║█
+&apos;																	║█
+&apos;═══════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+
+&apos;ВАРИАНТ ГЕНЕРИРУЕМОЙ ПЕРВОЙ ТОЧКИ (4 мк) ДЛЯ ПОСТАВОК В БЕЛАРУСЬ ДЛЯ 2503В И 2503В/1
+&apos;ВНИМАНИЕ! ЭТИ ЗНАЧЕНИЯ ОБЯЗАТЕЛЬНО СДЕЛАТЬ В СООТВЕТСТВИИ С РЕАЛЬНЫМИ ИЗМЕРЕНИЯМИ, ПОКА ВЗЯТЫ ОТ БАЛДЫ
+&apos;═══════════════════════════════════════════════════════════════════╗
+&apos;		ПАРАМЕТРЫ ГЕНЕРАЦИИ ФОНА И ПЕРВОЙ ТОЧКИ -- 4 мкЗв/ч		    ║█
+&apos;							ДЛЯ ДКГ-АТ2503							║█
+&apos;																	║█
+&apos;				ФОН:											&apos;	║█
+&apos;			from1.value = 0.05									&apos;	║█
+&apos;			to1.value   = 0.18									&apos;	║█		
+&apos;				ПОКАЗАНИЯ ПРИБОРА:								&apos;	║█
+&apos;			from2.value = 3.7									&apos;	║█
+&apos;			to2.value   = 4.2									&apos;	║█
+&apos;				ИЗМЕРЕНИЕ С УЧЕТОМ ВЫЧЕТА ФОНА:					&apos;	║█
+&apos;			from3.value = 4.0									&apos;	║█
+&apos;			to3.value   = 4.1									&apos;	║█
+&apos;				ИСПОЛЬЗУЕТСЯ ТОЛЬКО ОДНО ЗНАЧЕНИЕ ТОЧКИ				║█
+&apos;			isSinglePoint = true								&apos;	║█			
+&apos;																	║█
+&apos;═══════════════════════════════════════════════════════════════════╝█
+&apos;▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+	if isSinglePoint then oDialog2503.getControl(&quot;isSinglePoint&quot;).state = 1
+	if NOT isSinglePoint then oDialog3509.getControl(&quot;isSinglePoint&quot;).state = 0
+	
+	oDialogMain.endexecute()   
+	oDialog2503.Execute()
+End Sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialog2503.getControl(&quot;addButton&quot;).setEnable(true)
+	setPoint
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList2503(BDList.item(layoutPosition).getMultiValueList)
+	&apos;Overall.checkValueForRelativeErrorLimits2503(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+	Overall.checkValueForRelativeErrorLimits2503(BDList.item(layoutPosition).getPointList, 10)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+	
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	
+	&apos;Во всех приборах первая точка (40 мк) используется только для расчета третей строки дозы (4 мк Нр(10)) и не выводится в протоколе.
+	&apos;Механизм пропуска этой точки при выводе простой: на самом деле она не пропускается, а так же рассчитывается, просто в протоколе,
+	&apos;например для 2503А есть место для вывода только двух точек -- 4 и 80 (0.8 и фон генерятся и не присутствуют в коллекции точек БД),
+	&apos;а при выводе 3-ей точки (40) алгоритм не находит в таблице соответствующей метки (таблица уже закончилась) и пропускает её
+	&apos;В диалоге точка идет последней
+	&apos;Диапазон: мк-м
+	if oDialog2503.getControl(&quot;isSinglePoint&quot;).state = 1 then
+		&apos;if is2503B_2.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/2&quot;, 	Array(1,1,1,1,1,1,1,1),	&quot;Зв/ч&quot;, Array(4,80,400,800,4,8,40),	Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;мк&quot;),	&quot;gamma&quot;, Array(1,10000))&apos;старый вариант
+		if is2503.state  		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503&quot;, 	Array(1,1,1,1), 	 	&quot;Зв/ч&quot;, Array(4,80,400,40),			Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 			&quot;gamma&quot;, Array(0.1,500))
+		if is2503A.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503A&quot;, 	Array(1,1,1),  		 	&quot;Зв/ч&quot;, Array(4,80,40),	  			Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(0.1,100))
+		if is2503B.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B&quot;, 	Array(1,1,1,1,1,1),  	&quot;Зв/ч&quot;, Array(4,80,800,40),			Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 			&quot;gamma&quot;, Array(0.1,1000))
+		if is2503B_1.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/1&quot;, 	Array(1,1,1),  		 	&quot;Зв/ч&quot;, Array(4,80,40),				Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(0.1,200))
+		if is2503B_2.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/2&quot;, 	Array(1,1,1,1,1,1),		&quot;Зв/ч&quot;, Array(8,4,80,800,8, 40),	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;мк&quot;),	&quot;gamma&quot;, Array(1,10000))&apos;уточнить границы
+		if is2503B_ru.state 	then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B&quot;, 	Array(1,1,1,1,1,1),  	&quot;Зв/ч&quot;, Array(4,80,400,800,40),		Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 		&quot;gamma&quot;, Array(1,1000))&apos;уточнить границы
+		if is2503B_1_ru.state 	then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/1&quot;, 	Array(1,1,1),  		 	&quot;Зв/ч&quot;, Array(4,80,40),				Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(1,200))&apos;уточнить границы
+	else
+		if is2503.state  		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503&quot;, 	Array(3,3,3,3), 	 	&quot;Зв/ч&quot;, Array(4,80,400,40),			Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 			&quot;gamma&quot;, Array(0.1,500))
+		if is2503A.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503A&quot;, 	Array(3,3,3),  		 	&quot;Зв/ч&quot;, Array(4,80,40),	  			Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(0.1,100))
+		if is2503B.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B&quot;, 	Array(3,3,3,3,3,3),  	&quot;Зв/ч&quot;, Array(4,80,400,800,40),		Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 		&quot;gamma&quot;, Array(0.1,1000))
+		if is2503B_1.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/1&quot;, 	Array(3,3,3),  		 	&quot;Зв/ч&quot;, Array(4,80,40),				Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(0.1,200))
+		if is2503B_2.state 		then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/2&quot;, 	Array(3,3,3,3,3,3),		&quot;Зв/ч&quot;, Array(8,4,80,800,8, 40),	Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;мк&quot;),	&quot;gamma&quot;, Array(1,10000))&apos;уточнить границы
+		if is2503B_ru.state 	then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B&quot;, 	Array(3,3,3,3,3,3),  	&quot;Зв/ч&quot;, Array(4,80,400,800,40),		Array(&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 		&quot;gamma&quot;, Array(1,1000))&apos;уточнить границы
+		if is2503B_1_ru.state 	then bd.addDataWithMultiPoint(&quot;ДКГ-АТ2503B/1&quot;, 	Array(3,3,3),  		 	&quot;Зв/ч&quot;, Array(4,80,40),				Array(&quot;м&quot;,&quot;м&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, Array(1,200))&apos;уточнить границы
+	end if	
+	
+	oDialog2503.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(oDialog2503.getControl(&quot;bdSerial&quot;).text)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( bd.getSerial, nCount )
+	BDList.add(bd)
+	oDialog2503.getControl(&quot;bdSerial&quot;).value = oDialog2503.getControl(&quot;bdSerial&quot;).value + 1
+
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromMultiBD(BDList.item(layoutPosition))
+	
+	setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonVisibility(layoutPosition as integer)
+	Overall.setButtonVisibility(layoutPosition)
+	if BDList.count = 0 then
+	
+		oDialog2503.getControl(&quot;PasteButton&quot;).visible = false
+		oDialog2503.getControl(&quot;is2503&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503A&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503B&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503B_1&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503B_2&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503B_r&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;is2503B_1_r&quot;).setEnable(true)
+		oDialog2503.getControl(&quot;isSinglePoint&quot;).setEnable(true)
+		for i=1 to pointCount
+			oDialog2503.getControl(&quot;labelField&quot; + i).text = &quot;&quot;
+			oDialog2503.Model.getByName(&quot;labelField&quot; + i).textColor = RGB(0, 0, 0)&apos;сброс на черный цвет, если до этого был выбран синий
+		next i
+		for i=1 to pointCount
+			for j=1 to measurementPerPoint
+				oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).visible = false
+			next j 
+		next i	
+	end if
+	if BDList.count &lt;&gt; 0 then
+		oDialog2503.getControl(&quot;PasteButton&quot;).visible = true
+		oDialog2503.getControl(&quot;is2503&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503A&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503B&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503B_1&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503B_2&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503B_r&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;is2503B_1_r&quot;).setEnable(false)
+		oDialog2503.getControl(&quot;isSinglePoint&quot;).setEnable(false)
+		oDialog2503.Model.getByName(&quot;labelField&quot; + BDList.item(1).getMultiValueList.count).textColor = RGB(0, 0, 200)
+	end if
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	if layoutPosition = BDList.count then layoutPosition = layoutPosition - 1
+	oListBox.removeItems(oListBox.getItemCount()-1, 1 )
+	BDList.remove(BDList.count)
+	if oListBox.getItemCount()=0 then
+		oDialog2503.getControl(&quot;removeButton&quot;).setEnable(false)
+		dim i as integer
+		for i=1 to pointCount
+			for j=1 to measurementPerPoint
+				oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).setEnable(false)
+				oDialog2503.getControl(&quot;ValueField&quot; + i + &quot;-&quot; + j).value = 0
+			next j
+		next i
+	else
+		Overall.makeLayoutFromMultiBD(BDList.item(BDList.count))
+		doseField1.value = BDList.item(layoutPosition).getDoseArray()(0)
+		doseField2.value = BDList.item(layoutPosition).getDoseArray()(1)
+	end if
+	setButtonVisibility(layoutPosition)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	Overall.saveCurentMultiBDValue(layoutPosition)
+	BDList.item(layoutPosition).setDoseArray(doseField1.value, doseField2.value, 0)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	Overall.makeLayoutFromMultiBD(BDList.item(layoutPosition))
+	doseField1.value = BDList.item(layoutPosition).getDoseArray()(0)
+	doseField2.value = BDList.item(layoutPosition).getDoseArray()(1)
+	setButtonVisibility(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.saveCurentMultiBDValue(layoutPosition)
+	BDList.item(layoutPosition).setDoseArray(doseField1.value, doseField2.value, 0)
+	layoutPosition = layoutPosition + 1
+	setButtonVisibility(layoutPosition)
+	doseField1.value = BDList.item(layoutPosition).getDoseArray()(0)
+	doseField2.value = BDList.item(layoutPosition).getDoseArray()(1)
+	Overall.makeLayoutFromMultiBD(BDList.item(layoutPosition))
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.saveCurentMultiBDValue(layoutPosition)
+	BDList.item(layoutPosition).setDoseArray(doseField1.value, doseField2.value, 0)
+	layoutPosition = layoutPosition - 1
+	setButtonVisibility(layoutPosition)
+	Overall.makeLayoutFromMultiBD(BDList.item(layoutPosition))
+	doseField1.value = BDList.item(layoutPosition).getDoseArray()(0)
+	doseField2.value = BDList.item(layoutPosition).getDoseArray()(1)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	fromNum1 = from1.value
+	fromNum2 = from2.value
+	fromNum3 = from3.value
+	toNum1   = to1.value 
+	toNum2   = to2.value
+	toNum3   = to3.value
+
+	Overall.saveCurentMultiBDValue(layoutPosition)
+	BDList.item(layoutPosition).setDoseArray(doseField1.value, doseField2.value, 0)
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;
+	dim divider as String
+	divider = &quot;&quot;
+	if is2503.state  	then path = Overall.PathForProtocol(&quot;2503\2503&quot;)
+	if is2503A.state 	then path = Overall.PathForProtocol(&quot;2503\2503a&quot;)
+	if is2503B.state 	then path = Overall.PathForProtocol(&quot;2503\2503b_new&quot;)
+	if is2503B_1.state 	then path = Overall.PathForProtocol(&quot;2503\2503b1_new&quot;)
+	if is2503B_2.state 	then path = Overall.PathForProtocol(&quot;2503\2503b2&quot;)
+	if is2503B_ru.state 	then path = Overall.PathForProtocol(&quot;2503\2503b&quot;)
+	if is2503B_1_ru.state 	then path = Overall.PathForProtocol(&quot;2503\2503b1&quot;)
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	Overall.CreatePairedTablesFromTemplate(BDList.count)
+	
+	for i=1 to BDList.count
+		strokeForSaving = strokeForSaving &amp; divider &amp; BDList.item(i).getSerial
+		templateMultiStep(i, &quot;&quot;)
+		divider = &quot;; &quot;
+	next i
+	
+	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
+	if is2503.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503&quot;
+	if is2503A.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503A&quot;
+	if is2503B.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503B&quot;
+	if is2503B_1.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503B/1&quot;
+	if is2503B_2.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503B/2&quot;
+	if is2503B_ru.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503B&quot;
+	if is2503B_1_ru.state 	then strokeForSaving = strokeForSaving &amp; &quot; - 2503B/1&quot;
+	CopyVariableToClipboard(strokeForSaving +&quot; - &quot;+getCurrentDateString())
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub startGenerator()
+	dim k as integer
+	k = 0
+	dim isDone as boolean
+	isDone = false
+	dim result(8) as double
+	
+	do 
+		sum1 = 0
+		sum2 = 0
+		sum3 = 0
+		dim value1, value2, value3 as double
+		
+		for i=0 to 7
+			value1 = randValueFromTo(fromNum1, toNum1)
+			bgList(i) = value1
+			sum1 = sum1 + value1
+		
+			value2 = randValueFromTo(fromNum2, toNum2)
+			devList(i) = value2
+			sum2 = sum2 + value2
+			result(i) = value2
+		next i
+
+		for i=0 to 7
+			value3 = result(i) - sum1/8
+			resList(i) = value3
+			sum3 = sum3 + value3
+		next i
+	
+		k = k + 1
+		if sum3/8 &gt;= fromNum3 AND sum3/8 &lt;= toNum3 then isDone = true
+	loop while NOT isDone
+	
+	oDialog2503.getControl(&quot;count&quot;).text = k
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub setPoint
+	if is2503.state 	then is4mkPoint = false
+	if is2503A.state 	then is4mkPoint = false
+	if is2503B.state 	then is4mkPoint = true
+	if is2503B_1.state 	then is4mkPoint = true
+	if is2503B_2.state 	then is4mkPoint = false
+	if is2503B_ru.state 	then is4mkPoint = false
+	if is2503B_1_ru.state 	then is4mkPoint = false
+	
+	if is4mkPoint then
+		from2.value = MEAS_VALUE_NEW_FROM
+		to2.value   = MEAS_VALUE_NEW_TO
+		from3.value = VALUE_SUB_BG_NEW_FROM
+		to3.value   = VALUE_SUB_BG_NEW_TO
+	else
+		from2.value = MEAS_VALUE_FROM
+		to2.value   = MEAS_VALUE_TO
+		from3.value = VALUE_SUB_BG_FROM
+		to3.value   = VALUE_SUB_BG_TO
+	end if			
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub templateMultiStep(i as integer, strokeEnd as string)
+	dim src_name as string
+	dim relativeErr, avgSqrtRes, sSigmaRes, dovGranica as double
+	dim bd as new DUnit
+	dim BDtype as string 
+	bd = BDList.item(i)
+	BDtype = bd.getType
+	dim j as integer
+	dim facilityPercent as integer
+	
+	dim firstPoint as double
+	
+	if is4mkPoint then
+		firstPoint = 4
+	else
+		firstPoint = 0.8
+	endif
+
+	&apos;-----------------ГЕНЕРАЦИЯ ФОНА И ТОЧКИ 0.8 ЗВ/Ч И ЗАПОЛНЕНИЕ ТАБЛИЦЫ--------------------------------- 
+	startGenerator
+	findAndRename((&quot;$&quot; + i + &quot;-av-bg&quot; + strokeEnd), Format(Math.round(sum1/8, 2), &quot;0.00&quot;))
+	findAndRename((&quot;$&quot; + i + &quot;-av0&quot; + strokeEnd), Format(Math.round(sum2/8, 2), &quot;0.00&quot;))
+	
+	for k = 0 to 7
+		findAndRename((&quot;$&quot; + i + &quot;-bg&quot; + k + strokeEnd), Format(Math.round(bgList(k), 2), &quot;0.00&quot;))
+		findAndRename((&quot;$&quot; + i + &quot;-m0&quot; + k + strokeEnd), Format(Math.round(devList(k), 2), &quot;0.00&quot;))
+	next k	
+		
+		
+		
+	&apos;этих точек нет в загруженном БД (они генерируются), а значит нет и источников для них -- поэтому добавляю их не через цикл (в цикле только точки, которые есть в объекте БД класса)	
+	findAndRename((&quot;$&quot; + i + &quot;-n&quot; + 0 + strokeEnd), sourceDistanceArray(firstPoint, &quot;мк&quot;, bd.bdType, oDateFieldModel)(0)) rem название источника
+	findAndRename((&quot;$&quot; + i + &quot;-d&quot; + 0 + strokeEnd), sourceDistanceArray(firstPoint, &quot;мк&quot;, bd.bdType, oDateFieldModel)(1)) rem расстояние до источника	
+	
+	&apos;ТОЧКА (40 мкЗв/ч)
+	findAndRename((&quot;$&quot; + i + &quot;-dn_1&quot; + strokeEnd), sourceDistanceArray(40, &quot;мк&quot;, &quot;gamma&quot;, oDateFieldModel)(0)) rem название источника
+	findAndRename((&quot;$&quot; + i + &quot;-dd_1&quot; + strokeEnd), sourceDistanceArray(40, &quot;мк&quot;, &quot;gamma&quot;, oDateFieldModel)(1)) rem расстояние до источника
+
+	&apos;ТОЧКА (40 мЗв/ч) (которая была изначально)
+	findAndRename((&quot;$&quot; + i + &quot;-dn_2&quot; + strokeEnd), sourceDistanceArray(80, &quot;м&quot;, &quot;gamma&quot;, oDateFieldModel)(0)) rem название источника
+	findAndRename((&quot;$&quot; + i + &quot;-dd_2&quot; + strokeEnd), sourceDistanceArray(80, &quot;м&quot;, &quot;gamma&quot;, oDateFieldModel)(1)) rem расстояние до источника
+
+		&apos;resList — это сгенерированные 8 точек С ВЫЧЕТОМ ФОНА
+
+		&apos;ОТНОСИТЕЛЬНАЯ ПОГРЕШНОСТЬ ИЗМЕРЕНИЯ
+		&apos;msgbox &quot;avrg = &quot; + sum3/8
+		relativeErr = Math.RelativeError(sum3/8, firstPoint)
+		findAndRename((&quot;$&quot; + i + &quot;-o&quot; + 0 + strokeEnd), Format(Math.round(relativeErr, 2), &quot;0.00&quot;))
+		
+		&apos;msgbox &quot;0-&quot; + resList(0) + &quot;1-&quot; + resList(1) + &quot;2-&quot; + resList(2) + &quot;3-&quot; + resList(3) 
+		&apos;--------------------------------------------------
+		
+		&apos;МАССИВ ОТКЛИКОВ ДЛЯ ТЕКУЩЕЙ КОНТРОЛЬНОЙ ТОЧКИ Riw
+		&apos;Чтобы получить массив значений отклика я беру массив измеренных значений и каждое значение перевожу в отклик (Rw = G / Hp(10))
+		otclikArray = Math.getOtclickArrayFromPointArray(resList, sum3/8)
+		
+		&apos;СРЕДНИЙ ОТКЛИК Ṝw
+		dim averageOtk as double
+		averageOtk = Math.getAverageOtk(otclikArray)
+		
+		&apos;КОЭФФИЦИЕНТ ВАРИАЦИИ Vw, %
+		dim koefVar as double
+		koefVar = Math.VariationsCoefficient(otclikArray, averageOtk)
+		if oDialog2503.Model.getByName(&quot;isSertificateEng&quot;).state then
+			findAndRename((&quot;$&quot; + i + &quot;-q&quot; + 0 + strokeEnd), Format(Math.round(koefVar, 2), &quot;0.00&quot;))
+		end if	
+		
+		&apos;-------------------------------------------------	
+		
+		
+		
+		&apos;ОТНОСИТЕЛЬНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ S
+		avgSqrtRes = Math.avgSqrt(resList, sum3/8)
+		findAndRename((&quot;$&quot; + i + &quot;-q&quot; + 0 + strokeEnd), Format(avgSqrtRes, &quot;0.00&quot;))
+
+		&apos;ПО ЗНАЧЕНИЮ ТОЧКИ И ТИПУ ИЗЛУЧЕНИЯ СМОТРИМ, НА КАКОЙ УСТАНОВКЕ КАЛИБРУЕТСЯ ТОЧКА (НА 110, 130, 140 И Т.Д.), А ЗНАЧИТ, КАКОЙ ПРОЦЕНТ ПОГРЕШНОСТИ УСТАНОВКИ		
+		facilityPercent = Overall.FacilityError(firstPoint, BDType, &quot;мк&quot;)
+		
+		&apos;СУММАРНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ SΣ
+		sSigmaRes = Math.sSigma(avgSqrtRes, facilityPercent, relativeErr)
+		
+		&apos;ДОВЕРИТЕЛЬНАЯ ГРАНИЦА ОСНОВНОЙ ОТНОСИТЕЛЬНОЙ ПОГРЕШНОСТИ ДОЗИМЕТРА δ (δ = K * SΣ)
+		dovGranica = Math.ConfLimit(2, sSigmaRes)
+		findAndRename((&quot;$&quot; + i + &quot;-do&quot; + 0 + strokeEnd), Format(dovGranica, &quot;0.00&quot;))
+	
+	&apos;ПЕРЕБОР СТРОК ТАБЛИЦЫ. Начинаю с 1 (со второго), так как первую строку заполняю не из цикла -- в ней даные сгенерированны и их 8 шт
+	for j=1 to bd.getPointList.count 
+
+		&apos;-----------------ЗАПОЛНЕНИЕ ТАБЛИЦЫ НАКОПЛЕННОЙ ДОЗЫ--------------------------------------------
+		
+		&apos;insertDose(дозиметр, номер_в_списке, постфикс_для_таблицы, номер_в_списке_значения_в_контрольной_точке, на_что_делим_чтобы_перевести_из_МД_в_дозу, начальная_доза)
+		&apos;Первая строка дозы  4 мкЗв Нр(10) СЧИТАЕТСЯ ОТ ТОЧКИ 40 мкЗв/ч, которая не выводится в протоколе
+		insertDose(bd, i, &quot;_1&quot;, bd.getPointList.count, 10, bd.getDoseArray()(0)) &apos;bd.getPointList.count - выбираю последнюю точку, это точка 40мкЗв, она ВСЕГДА идет последней
+		if is2503B_2.state 	then
+			insertDose(bd, i, &quot;_2&quot;, 3, 20, bd.getDoseArray()(1))&apos; 20 -- это 1 / (180/3600) -- перевод из мэд в дозу за 180 сек	
+		else
+			insertDose(bd, i, &quot;_2&quot;, 2, 20, bd.getDoseArray()(1))&apos; 20 -- это 1 / (180/3600) -- перевод из мэд в дозу за 180 сек	
+		endif
+		
+		&apos;-----------------ЗАПОЛНЕНИЕ ГЛАВНОЙ (БОЛЬШОЙ) ТАБЛИЦЫ-------------------------------------
+		dim MyFormat as string
+		
+		cont_point = bd.pointList.item(j)
+		prefix =  bd.pointTextList.item(j)
+	
+		findAndRename((&quot;$&quot; + i + &quot;-n&quot; + j + strokeEnd), sourceDistanceArray(cont_point, prefix, bd.bdType, oDateFieldModel)(0)) rem название источника
+		findAndRename((&quot;$&quot; + i + &quot;-d&quot; + j + strokeEnd), sourceDistanceArray(cont_point, prefix, bd.bdType, oDateFieldModel)(1)) rem расстояние до источника	
+		
+		&apos;ТЕПЕРЬ ЭТО ПЯТЬ ЗНАЧЕНИЙ ИЗМЕРЕНИЙ ПО КОТОРЫМ БУДУТ СЧИТАТЬСЯ ПОГРЕШНОСТИ
+		fivePointArray = Math.avarageFivePointsRndArray(bd.getMultiValueList.item(j), Overall.percentOTK)
+				
+		for m=0 to 4
+			m_point = fivePointArray(m)
+			MyFormat = Overall.getRightFormat(fivePointArray(m))	
+			findAndRename((&quot;$&quot; + i + &quot;-m&quot; + j + m + strokeEnd), Format(fivePointArray(m), MyFormat))
+		next m
+
+		&apos;СРЕДНЕЕ БЕЗ УЧЕТА ФОНА
+		dim avg as double
+		avg = 0
+		for p=0 to 4
+			avg = avg + fivePointArray(p)
+		next p
+		avg = avg/5
+		MyFormat = Overall.getRightFormat(avg)
+		findAndRename((&quot;$&quot; + i + &quot;-av&quot; + j + strokeEnd), Format(avg, MyFormat))
+
+		&apos;ОТКЛИК (Rw%)
+		&apos;Это ТО ЖЕ САМОЕ, что и RelativeError:
+		&apos;RelativeEr = (p-t)/t*100%, отклик% = (p/t-1)*100% , где p это измеренное значение, t это контр. точка. Видно, что это одно и то же,
+		&apos;поэтому я заполняю в таблице и процент отклика и относительную погрешность результатом рассчета относительной погрешности
+		
+		&apos;ОТНОСИТЕЛЬНАЯ ПОГРЕШНОСТЬ ИЗМЕРЕНИЯ
+		relativeErr = Math.RelativeError(avg, cont_point)
+		findAndRename((&quot;$&quot; + i + &quot;-o&quot; + j + strokeEnd), Format(relativeErr, &quot;0.00&quot;))
+		
+		&apos;--------------------------------------------------------------------
+		
+		&apos;ОТКЛИК (Rw)
+		&apos;К слову: по тех. условиям отклик считается: для каждой точки сначала отклик для каждого измерения, затем считается средний отклик
+		&apos;Можно проще: брать среднее измеренное в точке, и от этого значения считать отклик.
+		
+		&apos;Чтобы получить массив значений отклика я беру массив измеренных значений и каждое значение перевожу в отклик (Rw = G / Hp(10))
+		
+		&apos;МАССИВ ОТКЛИКОВ ДЛЯ ТЕКУЩЕЙ КОНТРОЛЬНОЙ ТОЧКИ Riw
+		otclikArray = Math.getOtclickArrayFromPointArray(fivePointArray, cont_point)
+		
+		&apos;СРЕДНИЙ ОТКЛИК Ṝw
+		averageOtk = Math.getAverageOtk(otclikArray)
+		
+		&apos;КОЭФФИЦИЕНТ ВАРИАЦИИ Vw, %
+		koefVar = Math.VariationsCoefficient(otclikArray, averageOtk)
+		&apos;Если выбран английский сертифика, то вместо среднеквадратического отклонения записываем в таблицу значения коэффициента вариации
+		&apos;Ничего, что далее идет вывод отклонения: если был выбран англ. сертификат, то после ввода в таблицу значений к. вариации уже не будет меток для вывода отклонения (будут заменены значениями), поэтому не заморачивался с ELSE...
+		if oDialog2503.Model.getByName(&quot;isSertificateEng&quot;).state then
+			findAndRename((&quot;$&quot; + i + &quot;-q&quot; + j + strokeEnd), Format(koefVar, &quot;0.00&quot;))
+		end if	
+		
+		&apos;--------------------------------------------------------------------
+					
+		&apos;ОТНОСИТЕЛЬНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ S
+		avgSqrtRes = Math.avgSqrt(fivePointArray, avg)
+		findAndRename((&quot;$&quot; + i + &quot;-q&quot; + j + strokeEnd), Format(avgSqrtRes, &quot;0.00&quot;))
+
+		&apos;ПО ЗНАЧЕНИЮ ТОЧКИ И ТИПУ ИЗЛУЧЕНИЯ СМОТРИМ, НА КАКОЙ УСТАНОВКЕ КАЛИБРУЕТСЯ ТОЧКА (НА 110, 130, 140 И Т.Д.), А ЗНАЧИТ, КАКОЙ ПРОЦЕНТ ПОГРЕШНОСТИ УСТАНОВКИ		
+		facilityPercent = Overall.FacilityError(cont_point, BDType, prefix)
+		
+		&apos;СУММАРНОЕ СРЕДНЕ КВАДРАТИЧЕСКОЕ ОТКЛОНЕНИЕ SΣ
+		sSigmaRes = Math.sSigma(avgSqrtRes, facilityPercent, relativeErr)
+		
+		&apos;ДОВЕРИТЕЛЬНАЯ ГРАНИЦА ОСНОВНОЙ ОТНОСИТЕЛЬНОЙ ПОГРЕШНОСТИ ДОЗИМЕТРА δ (δ = K * SΣ)
+		dovGranica = Math.ConfLimit(2, sSigmaRes)
+		findAndRename((&quot;$&quot; + i + &quot;-do&quot; + j + strokeEnd), Format(dovGranica, &quot;0.00&quot;))
+		
+	next j
+	findAndRename(&quot;$bd_num&quot; + i + &quot;$&quot;, bd.getSerial)	
+		
+end sub
+&apos;-----------------ЗАПОЛНЕНИЕ ТАБЛИЦЫ НАКОПЛЕННОЙ ДОЗЫ--------------------------------------------
+sub insertDose(bd as new DUnit, i as integer, strokeEnd as string, point_number as integer, time as double, doseValue as double)
+
+		dim deviceCountZero as double
+		dim deviceCountDone as double
+		dim deviceCountRes  as double
+	
+		deviceCountZero = doseValue
+		findAndRename((&quot;$&quot; + i + &quot;-d_dev&quot; + strokeEnd), Format(deviceCountZero, &quot;0.00&quot;))
+		
+		if oDialog2503.getControl(&quot;isSinglePoint&quot;).state = 1 then
+			deviceCountDone = (bd.getMultiValueList.item(point_number).item(1)) / time + deviceCountZero
+		else	
+			deviceCountDone = (bd.getMultiValueList.item(point_number).item(1) + bd.getMultiValueList.item(point_number).item(2) + bd.getMultiValueList.item(point_number).item(3)) / 3 / time + deviceCountZero 
+		end if	
+		
+		&apos;deviceCountDone = roundOneDigitAfterDot(deviceCountDone)
+		deviceCountDone = Math.round(deviceCountDone,1)
+		
+		findAndRename((&quot;$&quot; + i + &quot;-dose&quot; + strokeEnd), Format(deviceCountDone, &quot;0.00&quot;))
+		deviceCountRes = deviceCountDone - deviceCountZero
+		&apos;msgbox deviceCountRes
+		findAndRename((&quot;$&quot; + i + &quot;-d_res&quot; + strokeEnd), Format(deviceCountRes, &quot;0.00&quot;))
+	
+		&apos;относительная погрешность измерения
+		dim otnosit as double
+		otnosit = Math.RelativeError(deviceCountRes, 4)
+		findAndRename((&quot;$&quot; + i + &quot;-o_pog&quot; + strokeEnd), Format(otnosit, &quot;0.00&quot;))
+	
+		
+		&apos;--------------------------------------------------
+		
+		&apos;МАССИВ ОТКЛИКОВ ДЛЯ ТЕКУЩЕЙ КОНТРОЛЬНОЙ ТОЧКИ Riw
+		&apos;По техническим условиям дозу нужно мерить 4 раза.
+		&apos;С одним значением нельзя считать коэф. вариации — получается бесконесность (деление на 0)
+		&apos;Использовать 4 одинаковых значения дозы тоже нельзя — будет всегда 0% (R - Rсреднее = 0)
+		&apos;Чтобы не &quot;мерить&quot; 4 раза я беру дозу и с помощью getRandomizedDoseArray получаю массив из четырех значений, полученных из значения дозы рандомом в диапазоне +- 5%
+		otclikArray = Math.getOtclickArrayFromPointArray(Math.getRandomizedDoseArray(deviceCountRes), 4)&apos;почему 4? если это контрольная точка, то хардкодить значение не правильно, что если точка поменяется? 
+		
+		&apos;СРЕДНИЙ ОТКЛИК Ṝw
+		dim averageOtk as double
+		averageOtk = Math.getAverageOtk(otclikArray)
+		
+		&apos;msgbox averageOtk
+		&apos;msgbox &quot;&quot; + otclikArray(0) + &quot; &quot; + otclikArray(1) + &quot; &quot; + otclikArray(2) + &quot; &quot; + otclikArray(3)
+		
+		&apos;КОЭФФИЦИЕНТ ВАРИАЦИИ Vw, %
+		dim koefVar as double
+		koefVar = Math.VariationsCoefficient(otclikArray, averageOtk)
+		&apos;msgbox koefVar
+		if oDialog2503.Model.getByName(&quot;isSertificateEng&quot;).state then findAndRename((&quot;$&quot; + i + &quot;-d_gran&quot; + strokeEnd), Format(koefVar, &quot;0.00&quot;))
+		
+		&apos;-------------------------------------------------
+	
+		&apos;доверительная граница
+		dim dov_gr as double
+		dov_gr = Math.ConfidenceLimit(otnosit, 4)
+		findAndRename((&quot;$&quot; + i + &quot;-d_gran&quot; + strokeEnd), Format(dov_gr, &quot;0.00&quot;))
+end sub
+
+</script:module>

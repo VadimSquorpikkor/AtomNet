@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_G25" script:language="StarBasic">REM  *****  BASIC  *****
+rem 	╔══════════════════════════════════════════╗
+rem		║	Класс для БДКГ-25		               ║█
+rem		╚══════════════════════════════════════════╝█
+rem		  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀	
+rem---------------------------------------------------------------------------------------------------------
+dim Overall as new Overall
+dim oDialogG25 as object
+dim oDateFieldModel as object
+dim oListBox as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+dim oOptionG25 as object
+dim BDList as new Collection
+dim layoutPosition as integer
+dim maxBDCount as integer
+dim isComboCollection as new Collection
+dim path, calibName, techName as string
+
+rem---------------------------------------------------------------------------------------------------------
+Sub G25_Dialog_Show
+	maxBDCount = 50
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialogG25 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D25 )
+	oListBox = oDialogG25.getControl(&quot;bdListBox&quot;)
+
+	Overall.dialogShowInitialize(maxBDCount, oDialogG25, oDateFieldModel, &quot;Версия 1.08 &quot;, oListBox, 7)
+	Overall.initializeParameters(layoutPosition, BDList, isComboCollection)
+	oDialogG25.Model.getByName(&quot;Image&quot;).ImageURL = sertPath &amp; &quot;bdkg25\bdkg25.png&quot;
+	&apos;В этом классе как бы радиобаттон и коллекция радио не нужны (ведь oOptionG25 только один)
+	&apos;сделано дя того: а)не нужно переделывать код (интерфейс требует наличие этого параметра -- Overall.initializeParameters(layoutPosition, BDList, isComboCollection))
+	&apos;б) если в будущем придется добавлять в этот класс ещё какой БД, вся &quot;инфраструктура&quot; уже будет готова, просто надо будет добавить isComboCollection.add(НОВЫЙ БД) 	
+	oOptionG25 = oDialogG25.getControl(&quot;isBDKG25&quot;)
+	oOptionG25.State = 1
+	isComboCollection.add(oOptionG25)
+		
+	oDialogG25.getControl(&quot;addButton&quot;).setEnable(true)
+
+
+	
+	oDialogMain.endexecute()   
+	oDialogG25.Execute()
+End Sub
+
+rem---------------------------------------------------------------------------------------------------------
+sub setButtonEnabled
+	oDialogG25.getControl(&quot;addButton&quot;).setEnable(true)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub incValue
+	Overall.increment(oDialogG25.getControl(&quot;TextFieldNUM&quot;))
+end sub	
+rem---------------------------------------------------------------------------------------------------------
+sub addNewBD
+	dim bdName as string
+	dim nCount as integer
+	dim bd as new DUnit
+	dim serial as string
+	
+	serial = oDialogG25.getControl(&quot;TextFieldSRK&quot;).text &amp; &quot;.&quot; &amp; oDialogG25.getControl(&quot;TextFieldNUM&quot;).text
+	oDialogG25.getControl(&quot;FULL_NUM&quot;).text = oDialogG25.getControl(&quot;TextFieldSRK&quot;).text + &quot;.&quot; + Left(oDialogG25.getControl(&quot;TextFieldNUM&quot;).text, 1) + &quot;00&quot;
+	
+	if layoutPosition&lt;&gt;0 then Overall.saveCurentBDValue(layoutPosition) rem когда выбран layout, изменить значения, и нажать добавить БД, БЕЗ этой строчки значения не сохраняться (перезапишуться дефолтными)
+	bd.addData2(&quot;БДКГ-25&quot; , 	&quot;BDKG-25&quot;,	&quot;Гр/ч&quot;, Array(0.7,7,70,0.7,7,70,0.7),	  	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;), &quot;gamma&quot;, 		Array(0,0),	30) rem TODO уточнить границы
+	
+	oDialogG25.getControl(&quot;removeButton&quot;).setEnable(true)
+	bd.setSerial(serial)
+	
+	nCount = oListBox.getItemCount()
+	oListBox.addItem( serial, nCount )
+	BDList.add(bd)
+	Overall.increment(oDialogG25.getControl(&quot;TextFieldNUM&quot;))
+	layoutPosition = layoutPosition + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub removeLastBD
+	Overall.removeLastBD(layoutPosition, BDList, oDialogG25, oListBox, isComboCollection, maxBDCount)
+end Sub
+rem---------------------------------------------------------------------------------------------------------
+function listBoxListener
+	Dim selectPos As Integer
+	Overall.saveCurentBDValue(layoutPosition)
+	selectPos = oListBox.getSelectedItemPos()
+	layoutPosition = selectPos + 1
+	Overall.makeLayoutFromBD(BDList.item(layoutPosition))
+	Overall.setButtonVisibility(layoutPosition)
+end function
+rem---------------------------------------------------------------------------------------------------------
+sub showNextBD
+	Overall.showNextBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub showPrevBD
+	Overall.showPrevBD(layoutPosition)
+end sub
+rem---------------------------------------------------------------------------------------------------------
+sub insertRecordsToTemplate
+	Overall.saveCurentBDValue(layoutPosition)  &apos;(oDialogG25, layoutPosition, BDList)
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;
+	path = Overall.PathForProtocol(&quot;bdkg25\bdkg25&quot;)
+
+	OpenTemplate(sertPath &amp; path)
+	Overall.insertFacilitiesText
+	Overall.insertParametersToTemplate
+	Overall.CreateTablesFromTemplate(BDList.count)
+
+	for i=1 to BDList.count
+		strokeForSaving = strokeForSaving &amp; BDList.item(i).getSerial &amp; &quot; &quot;
+		Overall.insertToTemplateStep(i)
+	next i
+	
+	findAndRename(&quot;$allSerial&quot;, strokeForSaving)
+	findAndRename(&quot;$serial&quot;, oDialogG25.getControl(&quot;FULL_NUM&quot;).text)
+	&apos;if oOptionG25.state then strokeForSaving = &quot;БДКГ-25 &quot; &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	&apos;CopyVariableToClipboard(strokeForSaving)
+	Overall.setClipboardWithType(&quot;$serial&quot;)
+	msgbox &quot;Готово!&quot;
+end sub
+rem---------------------------------------------------------------------------------------------------------
+function insertClipBoardToBDValueList()
+	Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+</script:module>

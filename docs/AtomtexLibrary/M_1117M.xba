@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="M_1117M" script:language="StarBasic">
+REM  *****  BASIC  *****
+
+dim oDialog1117 as object
+
+dim typeText as object						&apos;название типа БД
+dim BDList as new Collection 				&apos;коллекция блоков детектирования
+dim emptyArray(6) as string &apos;сделать общим, есть другие БД, которые ссылаются на этот массив
+dim measLimitsArray(13) as double &apos;7 типов, каждого по два (min, max) = 14
+
+dim Overall as new Overall
+dim Facility as new Facility
+
+dim oDateFieldModel as object
+dim oOptionButtonPr as object
+dim oOptionButtonSr as object
+dim oOptionButtonSe as object
+
+dim bgValue2 as double
+
+dim checkedCount as integer
+
+dim layoutPosition as integer &apos;в отличии от других классов, здесь layoutPosition -- это фиксированная позиция каждого блока, совпадает с номером соответствующего чекбокса (т.е. при выборе только бдкг-11 layoutPosition будет равен 5 (только один номер позиции))
+
+&apos; Пользовательские значения для контрольных точек (для альфа и бета) -- при сохранении лэйаута БЕТА метод Overall.saveCurentBDValue проверяет, если стоит флаг isAlternative, 
+&apos; то считывает данные из altField и сохраняет в коллекцию контрольных точек БД (.setAltList)
+&apos; При постройке лэйаута (при переходе между БД и возврате к бета БД с альтернативными контрю точками), проверяется флаг isAlternative, если true, данные из altList записываются в Label
+&apos; При формировании протокола опять проверяется флаг isAlternative, если true, данные из altList используются, как контрольные точки, если false, перерасчитывается активность на дату поверки для каждой точки.
+&apos; Проверка перед самим формированием протокола нужна для того, чтобы всем бета БД (не альтернативным) была присвоена одинаковая активность (иначе если дата проверки была изменена после сохранения первого БД, 
+&apos; а затем был выбран лругой бета БД, то у них будет разная активность источников)
+&apos;  
+&apos;---------------------------------------------------------------------------------------------------------
+Sub at1117m_Dialog_Show
+	DialogLibraries.LoadLibrary( &quot;AtomtexLibrary&quot; )
+	oDialog1117 = CreateUnoDialog( DialogLibraries.AtomtexLibrary.D_1117M )
+	oDialog1117.Model.getByName(&quot;1117Logo&quot;).ImageURL = sertPath &amp; &quot;1117\1117.png&quot;
+	oDialog1117.Model.getByName(&quot;elka&quot;).ImageURL = sertPath &amp; &quot;elkaHalf.png&quot;
+	
+	&apos;Overall.dialogSimpleInitialize(oDialog1117, oDateFieldModel, &quot;Версия 3.15 &quot;, isComboCollection, BDList)
+	 Overall.dialogShowInitialize(0, oDialog1117, oDateFieldModel, &quot;Версия 3.27 &quot;, Overall.NULL, 0)
+	 Overall.initializeParameters(0, BDList, isComboCollection)
+	 	
+	initialize1117 &apos;ЗАГРУЗКА БД
+	
+	checkedCount = 0
+	layoutPosition = 0
+
+	for i=1 to 9
+		oDialog1117.getControl(&quot;ValueField&quot; + i).Visible = false &apos;скрыть все ненужные
+		oDialog1117.getControl(&quot;altField&quot; + i).Visible = false
+	next i
+
+	oDialog1117.Model.getByName(&quot;bgField&quot;).valueStep = 0.1	
+	oDialog1117.Model.getByName(&quot;bgField&quot;).DecimalAccuracy = 1
+	oDialog1117.Model.getByName(&quot;tempField&quot;).valueStep = 0.1	
+	oDialog1117.Model.getByName(&quot;tempField&quot;).DecimalAccuracy = 1
+	oDialog1117.Model.getByName(&quot;vlaghField&quot;).valueStep = 0.1	
+	oDialog1117.Model.getByName(&quot;vlaghField&quot;).DecimalAccuracy = 1
+	
+	oDialog1117.getControl(&quot;bgField&quot;).value = bgValue
+	oDialog1117.getControl(&quot;tempField&quot;).value = tempValue
+	oDialog1117.getControl(&quot;vlaghField&quot;).value = vlaghValue
+	
+	oDialog1117.getControl(&quot;altCheckBox&quot;).setEnable(false)
+	
+	bgValue2 = bgValue
+		
+	oDialogMain.endexecute()
+	oDialog1117.Execute()
+End Sub
+&apos;---------------------------------------------------------------------------------------------------------
+&apos;Все виды БД, используемых в 1117. 
+&apos;БДПС-02 состоит из трех БД.
+&apos;Если нужно добавить ещё БД, нужно следить за его именем в диалоге D_1117M (БДПБ-03 был &quot;CheckBox26&quot;, брать следующий номер), 
+&apos;так как позиция блока парсируется из его названия (см. метод &quot;checkBoxListener&quot;)
+&apos;В методе &quot;initialize1117&quot; новые методы добавляются после всех остальных
+&apos;так как: номер в названии чекбокса(&quot;CheckBox26&quot;) равен порядковому номеру соответствующего БД в коллекции BDList, оно же - порядковый номер в методе initialize1117
+sub initialize1117							&apos; 	gamma мк-м / alpha 1-10^4 / beta 1-10^4 / md neutron / pp neutron
+	addBDtoCollection(&quot;БДКГ-01&quot;,	&quot;BDKG-01&quot;,	&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,70,0.7,7),			Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 		&quot;gamma&quot;,	Array(0.1,10000),	20)
+	addBDtoCollection(&quot;БДКГ-03&quot;,	&quot;BDKG-03&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, 	Array(0.03,0.3),	20)
+	addBDtoCollection(&quot;БДКГ-04&quot;,	&quot;BDKG-04&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7,7),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;), 	&quot;gamma&quot;, 	Array(0.05,10000),	20)
+	addBDtoCollection(&quot;БДКГ-05&quot;,	&quot;BDKG-05&quot;,	&quot;Зв/ч&quot;, Array(0.07,0.7,7,70,240), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 				&quot;gamma&quot;, 	Array(0.03,0.3),	20)
+	addBDtoCollection(&quot;БДКГ-11&quot;,	&quot;BDKG-11&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;), 					&quot;gamma&quot;, 	Array(0.01,0.1),	20)
+	addBDtoCollection(&quot;БДКГ-17&quot;,	&quot;BDKG-17&quot;, 	&quot;Зв/ч&quot;,	Array(7,70,0.7,7,40), 					Array(&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;gamma&quot;,	Array(1000,100000),	20)
+	addBDtoCollection(&quot;БДКГ-24&quot;,	&quot;BDKG-24&quot;, 	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma&quot;,	Array(0.02,1000),	20)
+	addBDtoCollection(&quot;БДКГ-30&quot;,	&quot;BDKG-30&quot;, 	&quot;Гр/ч&quot;,	Array(0.03,0.7,7,70,0.7,7,70,0.7), 		Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;),		&quot;gamma-Gy&quot;,	Array(0.02,1),		20)
+	addBDtoCollection(&quot;БДКГ-32&quot;,	&quot;BDKG-32&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70,0.7,7,70,0.35,0.5),	Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;,&quot;&quot;,&quot;&quot;),	&quot;gamma&quot;,	Array(0.02,500),	20)
+	&apos;-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БДКН-01&quot;,	&quot;BDKN-01&quot;,	&quot;&quot;,		Array(2.35,11.5,88,250,1040),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-PP&quot;,		Array(0.1,10000),	20)
+	addBDtoCollection(&quot;БДКН-03&quot;,	&quot;BDKN-03&quot;,	&quot;&quot;,		Array(0.45,9.5, 88, 330, 1350),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-MD&quot;,		Array(0.1,10),		20)
+	&apos;-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БДПА-01&quot;,	&quot;BDPA-01&quot;,	&quot;&quot;,		Array(62.7, 681, 8655, 61800),			emptyArray,										&quot;alpha&quot;,	Array(0.1,10),		20)	&apos;№12
+	addBDtoCollection(&quot;БДПА-02&quot;,	&quot;BDPA-02&quot;,	&quot;&quot;,		Array(73.2, 624, 5136, 36120),			emptyArray,										&quot;alpha&quot;,	Array(0.05,5),		20)
+	addBDtoCollection(&quot;БДПБ-01&quot;,	&quot;BDPB-01&quot;,	&quot;&quot;,		Array(96,228,5591,51010,370350),		Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;0580&quot;),		&quot;beta&quot;,		Array(1,50),		20)  &apos; для беты 	Array(96,228,5591,51010,370350) -- НЕ ИСПОЛЬЗУЕТСЯ
+	addBDtoCollection(&quot;БДПБ-02&quot;,	&quot;BDPB-02&quot;,	&quot;&quot;,		Array(14.2,74.4,514,6290,56800),		Array(&quot;2129&quot;,&quot;0664&quot;,&quot;0665&quot;,&quot;0666&quot;,&quot;0667&quot;),		&quot;beta&quot;,		Array(0.5,15),		20)
+	&apos;-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БОИ-1 си-19&quot;,&quot;PU detector&quot;,	&quot;Зв/ч&quot;,	Array(20,70,0.7,7),					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10),		20)	&apos;№16  	&apos;раньше были для серии, теперь для си-19
+	addBDtoCollection(&quot;БОИ-2 си-19&quot;,&quot;PU-2 detector&quot;,&quot;Зв/ч&quot;,	Array(20,70,0.7,7), 				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(1,10),		20)			&apos;раньше были для серии, теперь для си-19
+	addBDtoCollection(&quot;БОИ-4&quot;,		&quot;PU-4 detector&quot;,&quot;Зв/ч&quot;,	Array(70,0.7,7,70), 				Array(&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),						&quot;gamma&quot;,	Array(0.3,100),		20)
+	&apos;-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БДКР-01&quot;,	&quot;BDKR-01&quot;,	&quot;Зв/ч&quot;,	Array(0.07,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;),						&quot;gamma007&quot;,	Array(0.05,0.1),	20) &apos;ТИП БД -- НАПРАВЛЕННЫЙ ЭКВИВАЛЕНТ
+	&apos;-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БДПС-02 α&quot;,	&quot;BDPS-02 α&quot;,&quot;&quot;,		Array(62.7, 681, 8655, 61800, 201000),	emptyArray,										&quot;alpha&quot;,	Array(2.4,100),		20)
+	addBDtoCollection(&quot;БДПС-02 β&quot;,	&quot;BDPS-02 β&quot;,&quot;&quot;,		Array(97,232,5700,52000,377100),		Array(&quot;0660&quot;,&quot;0578&quot;,&quot;0661&quot;,&quot;0662&quot;,&quot;0580&quot;),		&quot;beta&quot;,		Array(6,100),		20)
+	addBDtoCollection(&quot;БДПС-02 γ&quot;,	&quot;BDPS-02 γ&quot;,&quot;Зв/ч&quot;,	Array(0.7,7,70,0.7,7,20),				Array(&quot;мк&quot;,&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),				&quot;gamma&quot;,	Array(0.1,30),		20)
+	&apos;-------старые БОИ с сбм--------------------------------------------------------------------------------------------------------------------------------------
+	addBDtoCollection(&quot;БОИ-1&quot;,	&quot;PU detector&quot;,	&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100),		20) &apos;раньше были для сбм, теперь и для сбм и для серии
+	addBDtoCollection(&quot;БОИ-2&quot;,	&quot;PU detector&quot;,	&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100),		20) &apos;раньше были для сбм, теперь и для сбм и для серии
+	
+	addBDtoCollection(&quot;БДПА-03&quot;,	&quot;BDPA-03&quot;,	&quot;&quot;,		Array(26.3,222.6,1816,12579),			emptyArray,										&quot;alpha&quot;,	Array(0.05,2),		20)
+	addBDtoCollection(&quot;БДПБ-03&quot;,	&quot;BDPB-03&quot;,	&quot;&quot;,		Array(4.6,24,165,2022,18259),			Array(&quot;2129/S&quot;,&quot;0664/S&quot;,&quot;0665/S&quot;,&quot;0666/S&quot;,&quot;0667/S&quot;),		&quot;beta&quot;,		Array(0.5,5),	20)
+	&apos;addBDtoCollection(&quot;БДКН-05&quot;,	&quot;&quot;,					Array(0.16, 250, 3090),					Array(&quot; с/сч фон&quot;,&quot; п/п фон&quot;,&quot; п/п&quot;),			&quot;n-PP&quot;,		Array(0.1,0.2))
+	addBDtoCollection(&quot;БДКН-05&quot;,	&quot;BDKN-05&quot;,	&quot;&quot;,		Array(2.1, 11.60, 91.0, 261, 913),		Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-PP&quot;,		Array(0.1,0.2),		20)
+	&apos;addBDtoCollection(&quot;БДКН-06&quot;,	&quot;BDKN-06&quot;,	&quot;&quot;,		Array(0.45,9.5, 88, 330, 1350),			Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-MD&quot;,		Array(0.1,10),		20) &apos;ТОЧКИ НЕПРАВИЛЬНЫЕ, ТОЛЬКО ДЛЯ ПРОВЕРКИ!!
+	addBDtoCollection(&quot;БДКН-06&quot;,	&quot;BDKN-06&quot;,	&quot;&quot;,		Array(0.647,9.92, 86.7, 321, 1296),		Array(&quot;(фон)&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;),						&quot;n-MD&quot;,		Array(0.1,30),		20) &apos;ТОЧКИ НЕПРАВИЛЬНЫЕ, ТОЛЬКО ДЛЯ ПРОВЕРКИ!!
+	addBDtoCollection(&quot;БОИ-5&quot;,	&quot;PU-5 detector&quot;,&quot;Зв/ч&quot;,	Array(20,70,0.7,7,70), 					Array(&quot;мк&quot;,&quot;мк&quot;,&quot;м&quot;,&quot;м&quot;,&quot;м&quot;),					&quot;gamma&quot;,	Array(1,100),		20)
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub addBDtoCollection(ByVal bname as string, ByVal bnameEn as string, ByVal measUnit as string, ByVal pointValue as variant, ByVal pointText as variant, ByVal BDType as string, ByVal measLimit as variant, ByVal relLimit as double)
+	&apos;обертка для добавления БД в коллекцию, чтобы не плодить лишних (больше 20) объектов BDUnit (точнее их инициализации и добавления в коллекцию -- уже 60 строк)
+	dim bd as new DUnit
+	bd.addData2(bname, bnameEn, measUnit, pointValue, pointText, BDType, measLimit, relLimit)
+	BDList.add(bd)
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub makeBetaLayout(bd as new DUnit)
+	dim pointList as new collection
+	dim valueList as new collection
+	dim myFormat as string
+	dim point as double
+	dim value as double
+	
+	
+	for i=1 to bd.getPointTextList.count
+		if bd.isAlternativePoints then
+			point = bd.getAltList.item(i)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;bd.getPointList.item(i)
+			&apos;oDialog1117.Model.getByName(&quot;Label&quot; + i).textColor = RGB(0, 0, 200)
+		else
+			point = Activity.get_activity_Sr(bd.getPointTextList.item(i), oDateFieldModel)
+			&apos;oDialog1117.Model.getByName(&quot;Label&quot; + i).Color = RGB(0, 0, 0)
+		end if	
+		value = bd.getValueList.item(i)
+		if point &lt; 500 then
+			myFormat = &quot;0.0&quot;
+			oDialog1117.Model.getByName(&quot;ValueField&quot; + i).valueStep = 0.1
+			oDialog1117.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = 1
+		else
+			myFormat = &quot;0&quot;
+			oDialog1117.Model.getByName(&quot;ValueField&quot; + i).valueStep = 1
+			oDialog1117.Model.getByName(&quot;ValueField&quot; + i).DecimalAccuracy = 0
+		end if
+		oDialog1117.getControl(&quot;Label&quot; + i).Text = Format(point, myFormat) &amp; &quot; &quot;
+		&apos;oDialog1117.getControl(&quot;ValueField&quot; + i).value = Format(point, myFormat) &apos;ЕСЛИ ЕСЛИ БЫ НУЖНО БЫЛО СОХРАНЕНИЕ, ТОГДА getValueList.item(i)
+		oDialog1117.getControl(&quot;ValueField&quot; + i).value = Format(value, myFormat)
+		pointList.add(point)
+	next i
+	bd.setPointList(pointList)&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;&apos;
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub altCheckBoxListener(oEvent As Object)
+	Dim oCheckbox As Object
+    oCheckbox = oEvent.source.model
+    BDList.item(layoutPosition).setAlternative(oCheckbox.state)
+    if BDList.item(layoutPosition).isAlternativePoints = true then
+    	for i=1 to BDList.item(layoutPosition).getPointTextList.count
+    		oDialog1117.getControl(&quot;altField&quot; + i).Visible = true	
+    		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+    	next i
+    else
+    	for i=1 to BDList.item(layoutPosition).getPointTextList.count
+    		oDialog1117.getControl(&quot;altField&quot; + i).Visible = false	
+    		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+    	next i
+    	Overall.saveCurentBDValue(layoutPosition)
+    	makeLayout(BDList.item(layoutPosition))
+    end if
+end sub    
+&apos;---------------------------------------------------------------------------------------------------------
+sub dataChanged
+	&apos;ЕСЛИ ТЕКУЩИЙ ВЫБРАННЫЙ БД (ЕСЛИ ВООБЩЕ ЕСТЬ КАКОЙ-НИБУДЬ БД) ЭТО БЕТА, ТОГДА ПРИ СМЕНЕ ДАТЫ ПЕРЕСЧИТЫВАЕТСЯ АКТИВНОСТЬ ДЛЯ БЕТЫ И ПЕРЕРИСОВЫВАЕТСЯ ЛЭЙАУТ
+	if layoutPosition&lt;&gt;0 then 
+		if BDList.item(layoutPosition).getType = &quot;beta&quot; then makeBetaLayout(BDList.item(layoutPosition))
+	end if	
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+function makeLayout(bd as new DUnit)
+	dim altPoint as double
+ 	oDialog1117.getControl(&quot;typeLabel&quot;).text =  bd.getName
+ 	&apos;msgbox (&quot;&quot; + BDList.item(12).getName + &quot; &quot; + BDList.item(12).getPointList.item(1) + BDList.item(14).getName + &quot; &quot; + BDList.item(14).getPointList.item(1))
+ 	
+	if bd.isAlternativePoints then
+		oDialog1117.getControl(&quot;altCheckBox&quot;).state = 1
+	else
+		oDialog1117.getControl(&quot;altCheckBox&quot;).state = 0
+	end if	
+ 	if bd.getType = &quot;beta&quot; then
+ 		makeBetaLayout(bd)
+ 	else
+ 		Overall.makeSimpleLayoutFromBD(bd, &quot;ValueField&quot;, &quot;Label&quot;)
+		oDialog1117.getControl(&quot;typeLabel&quot;).text = bd.getName
+ 	end if
+
+	if bd.isAlternativePoints then
+		for i=1 to 9
+			oDialog1117.Model.getByName(&quot;Label&quot; + i).textColor = RGB(0, 0, 200)
+		next i
+	else
+		for i=1 to 9
+			oDialog1117.Model.getByName(&quot;Label&quot; + i).textColor = RGB(0, 0, 0)
+		next i	
+	end if	
+			
+	for i=1 to bd.getPointTextList.count
+		&apos;point = bd.getPointList.item(i)
+		altPoint = bd.getAltList.item(i)
+		if altPoint &lt; 500 then
+			myFormat = &quot;0.0&quot;
+		else
+			myFormat = &quot;0&quot;
+		end if
+		oDialog1117.getControl(&quot;altField&quot; + i).value = Format(altPoint, myFormat)
+		if bd.isAlternativePoints then oDialog1117.getControl(&quot;Label&quot; + i).text = Format(bd.getAltList.item(i), myFormat)
+ 	next i
+ 	
+ 	if bd.getType = &quot;alpha&quot; OR bd.getType = &quot;beta&quot; then
+ 		oDialog1117.getControl(&quot;altCheckBox&quot;).setEnable(true)
+ 	else
+		oDialog1117.getControl(&quot;altCheckBox&quot;).setEnable(false)
+ 	end if
+ 	
+ 	for i=1 to bd.getPointList.count
+		oDialog1117.getControl(&quot;ValueField&quot; + i).Visible = true &apos;скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = true
+	next i
+	for i=bd.getPointList.count+1 to 9
+		oDialog1117.getControl(&quot;ValueField&quot; + i).Visible = false &apos;скрыть все ненужные
+		oDialog1117.getControl(&quot;Label&quot; + i).Visible = false
+	next i
+
+	&apos;if bd.isAlternativePoints = true then
+    &apos;	for i=1 to bd.getPointTextList.count
+    &apos;		oDialog1117.getControl(&quot;altField&quot; + i).Visible = true	
+    &apos;	next i
+    &apos;else
+	   	for i=1 to bd.getPointTextList.count
+    		oDialog1117.getControl(&quot;altField&quot; + i).Visible = false	
+    	next i
+    &apos;end if
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+sub clearLayout
+	if checkedCount = 0 then
+		for i=1 to 9
+			oDialog1117.getControl(&quot;ValueField&quot; + i).visible = false &apos;скрыть все ненужные
+			oDialog1117.getControl(&quot;Label&quot; + i).text = &quot;&quot;
+		next i
+		oDialog1117.getControl(&quot;typeLabel&quot;).text = &quot;Нет БД&quot; 
+	end if
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub setColorIfChecked(checkBox as object)
+	if checkBox.state then
+		checkBox.textColor = RGB(0, 0, 200)
+	else 	
+		checkBox.textColor = RGB(0, 0 , 0)
+	end if	
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+&apos;Слушатель чекбоксов БД (&quot;БДКГ-01&quot;, &quot;БДКГ-17&quot;, &quot;БДПБ-02&quot; и т.д.)
+sub checkBoxListener(oEvent As Object)
+	Dim oCheckbox As Object
+    oCheckbox = oEvent.source.model
+    dim position as integer
+    dim n as integer
+    position = MySubstitute(oCheckbox.Name, &quot;CheckBox&quot;, &quot;&quot;) &apos;функция из ModuleMain. Возвращаю номер чекбокса (парсинг из его названия)
+    if position = 20 then &apos;для БДПС-02 -- БД состоит из 3-х таблиц, поэтому при чеке работаем с тремя BDList.item&apos;ами
+    	BDList.item(position).isPrintable   = oCheckbox.State &apos;isPrintable -- т.е. ЭТИ БД БУДУТ ВЫВОДИТСЯ ПРИ ФОРМИРОВАНИИ ПРОТОКОЛА
+    	BDList.item(position+1).isPrintable = oCheckbox.State
+    	BDList.item(position+2).isPrintable = oCheckbox.State
+    	n = 3
+    else
+    	BDList.item(position).isPrintable = oCheckbox.State &apos;при клике на чекбокс устанавливаю в переменную объекта БД значение из чБокса -- true или false
+    	n = 1
+    end if
+    setColorIfChecked(oCheckbox)
+    
+    if checkedCount = 0 then
+    	makeLayout(BDList.item(position)) &apos;ЕСЛИ ПЕРЕД ТЕМ, КАК СЧИТАТЬ СКОЛЬКО БД ОТМЕЧЕНО КОЛ-ВО БЫЛО РАВНО 0, ЭТО ЗНАЧИТ ДОБАВЛЯЕТСЯ САМЫЙ ПЕРВЫЙ БД -- РИСУЕМ ЕГО ЛЭЙАУТ
+    	layoutPosition = position
+    end if	
+    if oCheckbox.State = 1 then
+    	checkedCount = checkedCount + n &apos;checkedCount -- ЭТО КОЛИЧЕСТВО БД, ОТМЕЧЕННЫХ ЧЕКБОКСАМИ
+    else 	
+    	checkedCount = checkedCount - n
+    end if
+    if checkedCount = 0 then
+    	clearLayout &apos;ЕСЛИ ПОСЛЕ ТОГО, КАК ПОСЧИТАЛИ, СКОЛЬКО БД ОТМЕЧЕНО КОЛ-ВО = 0, ЭТО ЗНАЧИТ БЫЛ УДАЛЕН САМЫЙ ПОСЛЕДНИЙ БД -- ОБНУЛЯЕМ ЛЭЙАУТ
+    	oDialog1117.getControl(&quot;altCheckBox&quot;).setEnable(false)
+    	oDialog1117.getControl(&quot;altCheckBox&quot;).state = 0
+    	oDialog1117.getControl(&quot;insertButton&quot;).visible = false
+    else
+    	oDialog1117.getControl(&quot;insertButton&quot;).visible = true	
+    end if	
+    if position &lt; layoutPosition then
+    	Overall.saveCurentBDValue(layoutPosition)
+    	makeLayout(BDList.item(position)) &apos;
+    	layoutPosition = position 
+    end if	
+    setButtonVisibility
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+function limitComparator(min as double, max as double, position as integer)
+	&apos;msgbox &quot;LC&quot; + min + &quot;, &quot; + max 
+	if measLimitsArray(position)=0   OR measLimitsArray(position) &gt; min   then measLimitsArray(position) = min
+	if measLimitsArray(position+1)=0 OR measLimitsArray(position+1) &lt; max then measLimitsArray(position+1) = max	
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+sub calculateMeasLimitsArray(min as double, max as double, bdType as string) &apos;TODO вообще-то можно в параметре передавать не свойства, а сразу объект класса DUnit
+	&apos;msgbox &quot;&quot;+min+&quot; &quot;+max+&quot; &quot;+bdType
+	select case bdType
+	case &quot;gamma&quot; 	&apos;АМБИЕНТНЫЙ ЭКВИВАЛЕНТ
+		limitComparator(min, max, 0)
+	case &quot;alpha&quot;	&apos;АЛЬФА
+		limitComparator(min, max, 2)
+	case &quot;beta&quot;		&apos;БЕТА
+		limitComparator(min, max, 4)
+	case &quot;n-PP&quot;		&apos;НЕЙТРОН ПО ПЛОТНОСТИ ПОТОКА
+		limitComparator(min, max, 6)
+	case &quot;n-MD&quot;		&apos;НЕЙТРОН ПО МОЩНОСТИ ДОЗЫ
+		limitComparator(min, max, 8)
+	case &quot;gamma-Gy&quot;	&apos;КЕРМА В ВОЗДУХЕ
+		limitComparator(min, max, 10)
+	case &quot;gamma007&quot;	&apos;НАПРАВЛЕННЫЙ ЭКВИВАЛЕНТ
+		limitComparator(min, max, 12)	
+	end select	
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub insertMeasLimits
+	findAndRename(&quot;$g_min&quot;,   	rightPrefixAndNumber(0))
+	findAndRename(&quot;$g_max&quot;,   	rightPrefixAndNumber(1))
+	findAndRename(&quot;$a_min&quot;,   	rightPrefixAndNumber(2))
+	findAndRename(&quot;$a_max&quot;,   	rightPrefixAndNumber(3))
+	findAndRename(&quot;$b_min&quot;,   	rightPrefixAndNumber(4))
+	findAndRename(&quot;$b_max&quot;,   	rightPrefixAndNumber(5))
+	findAndRename(&quot;$ppn_min&quot;, 	rightPrefixAndNumber(6))
+	findAndRename(&quot;$ppn_max&quot;, 	rightPrefixAndNumber(7))
+	findAndRename(&quot;$mdn_min&quot;, 	rightPrefixAndNumber(8))
+	findAndRename(&quot;$mdn_max&quot;, 	rightPrefixAndNumber(9))
+	findAndRename(&quot;$k_min&quot;,   	rightPrefixAndNumber(10))
+	findAndRename(&quot;$k_max&quot;,		rightPrefixAndNumber(11))
+	findAndRename(&quot;$g007_min&quot;,  rightPrefixAndNumber(12))
+	findAndRename(&quot;$g007_max&quot;,  rightPrefixAndNumber(13))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+function rightPrefixAndNumber(n as integer) as string
+	dim p as double
+	p = measLimitsArray(n)
+	&apos;msgbox &quot;n-&quot;+n+&quot;:&quot;+&quot; = &quot;+p
+	select case n
+	case 0 &apos;------------ gamma min -------------
+		if p &lt; 0.6  then rightPrefixAndNumber = &quot;&quot; + p*1000 + &quot; н&quot;
+		if p &lt; 1000 AND p &gt;= 0.6 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;
+	case 1 &apos;------------ gamma max -------------
+		if p &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + p + &quot; м&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; &quot;
+	case 2 &apos;------------ alpha min -------------
+		rightPrefixAndNumber = Format(p, MyFormat)
+	case 3 &apos;------------ alpha max -------------
+		if p = 10 then
+			findAndRename(&quot;$a_max_E&quot;, 5)
+			rightPrefixAndNumber = &quot;&quot;
+		end if	
+		if p = 100 then
+			findAndRename(&quot;$a_max_E&quot;, 6)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$a_max_E&quot;, 4)
+			rightPrefixAndNumber = p
+		end if	
+	case 4 &apos;------------ beta min -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 5 &apos;------------ beta max -------------
+		if p = 100 then
+			findAndRename(&quot;$b_max_E&quot;, 6)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$b_max_E&quot;, 5)
+			rightPrefixAndNumber = p/10
+		end if
+	case 6 &apos;------------ n-pp min -------------
+		&apos;msgbox &quot;6pp: &quot;+p
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 7 &apos;------------ n-pp max -------------
+		if p = 10000 then
+			findAndRename(&quot;$n_max_E&quot;, 4)
+			rightPrefixAndNumber = &quot;&quot;
+		else
+			findAndRename(&quot;$n_max_E&quot;, 4)
+			rightPrefixAndNumber = p
+		end if
+	case 8 &apos;------------ n-md min -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 9 &apos;------------ n-md max -------------
+		rightPrefixAndNumber = &quot;&quot; + p
+	case 10 &apos;------------ gamma-Gy min -------------
+		if p &lt; 0.6  then rightPrefixAndNumber = &quot;&quot; + p*1000 + &quot; н&quot;
+		if p &lt; 1000 AND p &gt;= 0.6 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;
+	case 11 &apos;------------ gamma-Gy max -------------
+		if p &lt; 1000 then rightPrefixAndNumber = &quot;&quot; + p + &quot; м&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; &quot;
+	case 12 &apos;------------ gamma007 min -------------
+		if p &lt; 0.6  then rightPrefixAndNumber = &quot;&quot; + p*1000 + &quot; н&quot;
+		if p &lt; 1000 AND p &gt;= 0.6 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;
+	case 13 &apos;------------ gamma007 max -------------
+		if p &lt; 0.6  then rightPrefixAndNumber = &quot;&quot; + p*1000 + &quot; н&quot;
+		if p &lt; 1000 AND p &gt;= 0.6 then rightPrefixAndNumber = &quot;&quot; + p + &quot; мк&quot;
+		if p &gt;= 1000 then rightPrefixAndNumber = &quot;&quot; + p/1000 + &quot; м&quot;		
+	end select
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+function setButtonVisibility
+	dim hasNext as boolean
+	dim hasPrev as boolean
+	hasNext = false
+	hasPrev = false
+	for i=layoutPosition+1 to BDList.count
+		&apos;msgbox &quot;&quot; + (layoutPosition+1) + &quot;, &quot; + BDList.count
+		if BDList.item(i).isPrintable then hasNext = true
+		oDialog1117.getControl(&quot;nextButton&quot;).setEnable(hasNext)
+		oDialog1117.getControl(&quot;doneButton&quot;).setEnable(NOT hasNext)
+	next i
+	for i=1 to layoutPosition-1
+		if BDList.item(i).isPrintable then hasPrev = true
+		oDialog1117.getControl(&quot;prevButton&quot;).setEnable(hasPrev)
+	next i
+	if layoutPosition = 1 then oDialog1117.getControl(&quot;prevButton&quot;).setEnable(hasPrev)
+	if layoutPosition = BDList.count then &apos;если текущий лэйаут является последним
+		oDialog1117.getControl(&quot;nextButton&quot;).setEnable(false)
+		oDialog1117.getControl(&quot;doneButton&quot;).setEnable(true)
+	end if
+	if checkedCount = 0 then oDialog1117.getControl(&quot;doneButton&quot;).setEnable(false)
+end function 
+&apos;---------------------------------------------------------------------------------------------------------
+dim inProcess &apos;В начале выполнения функции проверяется, если inProcess=false, то ставится в true и начинается выполнение функции, после завершения ставится в false, таким образом нельзя начать выполнять функцию, не завершив её. В ф-ии nextChecked и prevChecked быстрое нажатие на кнопку приводило к тому,что ф-я начинала опять выполняться, не окончив выполнение себя, что приводило к ошибке 
+private function nextChecked
+	if inProcess = false then
+		inProcess = true
+		Overall.saveCurentBDValue(layoutPosition)
+		count = layoutPosition+1
+		while BDList.item(count).isPrintable=false &apos;count&lt;BDList.count
+			count = count + 1
+		wend
+		layoutPosition = count
+		makeLayout(BDList.item(layoutPosition))
+		setButtonVisibility
+		inProcess = false
+	end if	
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+function prevChecked
+	if inProcess = false then
+		inProcess = true
+		Overall.saveCurentBDValue(layoutPosition)
+		count = layoutPosition-1
+		while BDList.item(count).isPrintable=false &apos;count&lt;BDList.count
+			count = count - 1
+		wend
+		layoutPosition = count
+		makeLayout(BDList.item(layoutPosition))
+		setButtonVisibility
+		inProcess = false
+	end if	
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+sub insertDataToTemplate
+	Overall.saveCurentBDValue(layoutPosition)
+	dim strokeForSaving as string
+	strokeForSaving = &quot;&quot;	
+	dim path as string
+	path = Overall.PathForProtocol(&quot;1117\1117&quot;)
+	dim point as double
+
+	dim facilities as new Facility &apos;ссылка локальная, так при создании нового протокола не нужно будет обнулять лимиты и списки установок
+	MyFormat = &quot;0.0&quot;
+	OpenTemplate(sertPath &amp; path)
+
+	findAndRename(&quot;$bground&quot;, Format(oDialog1117.getControl(&quot;bgField&quot;).value, &quot;0.0&quot;))
+	findAndRename(&quot;$temp&quot;, Format(oDialog1117.getControl(&quot;tempField&quot;).value, &quot;0.0&quot;))
+	findAndRename(&quot;$vlag&quot;, Format(oDialog1117.getControl(&quot;vlaghField&quot;).value, &quot;0.0&quot;))
+		
+	Overall.insertParametersToTemplate
+	Overall.insertFacilitiesText
+
+	serial = oDialog1117.getControl(&quot;bdSerial&quot;).Text
+	findAndRename(&quot;$serial&quot;, serial)
+	findAndRename(&quot;$b_bg&quot;, Format(Math.randValue(13, 2), &quot;0.0&quot;))
+	findAndRename(&quot;$s_bg&quot;, Format(Math.randValue(0.005, 0.005), &quot;0.00&quot;))
+	findAndRename(&quot;$b2_bg&quot;, Format(Math.randValue(17, 2), &quot;0.0&quot;))
+	
+	for i=1 to BDList.count
+		if BDList.item(i).isPrintable then
+			bd = BDList.item(i)
+			
+			&apos;Если альтернативные, то контрольные точеи приравниваем альтернативным (! bd.pointList.item(i) = bd.getAltList.item(i) НЕ работает в этом тупом языке !)
+			if bd.isAlternativePoints then 
+				dim newValues as new Collection
+				dim k as integer
+				for k=1 to bd.getAltList.count
+					newValues.add(bd.getAltList.item(k))
+				next k
+				bd.setPointList(newValues)
+			end if	
+			
+			calculateMeasLimitsArray(bd.minLimit, bd.maxLimit, bd.getType)
+			strokeForSaving = strokeForSaving &amp; bd.BDName &amp; &quot; &quot;
+			facilities.addTypeAndLimits(bd.BDType, bd.minLimit, bd.maxLimit)		
+			
+			if bd.BdName=&quot;БДКН-01&quot; then	neutron_01(i, bd)
+			if bd.BdName=&quot;БДКН-03&quot; then	neutron_03(i, bd)
+			if bd.BdName=&quot;БДКН-05&quot; then	neutron_05(i, bd)
+			if bd.BdName=&quot;БДКН-06&quot; then	neutron_06(i, bd)
+			
+			if BDList.item(i).getType = &quot;beta&quot; then				
+				&apos;Overall.insertBetaToTemplateStep(i, oDateFieldModel, bd.getPointTextList, bd.getValueList, &quot;$&quot;)
+				Overall.insertBetaToTemplateStep(i, bd.getPointTextList, bd.getPointList, bd.getValueList, &quot;$&quot;, THREE_POINTS)
+			else
+				Overall.insertToTemplateStep(i)
+			end if	
+		else
+			Overall.deleteTable(&quot;tlim&quot; + (i-1))
+			Overall.deleteTable(&quot;tp&quot; + (i))
+			Overall.deleteTable(&quot;t&quot; + i)	
+		end if
+	next i	
+
+	&apos;удалить ненужные поверочные установки-----------------------
+	dim f2() as boolean
+	f2 = facilities.FacTypeArray
+	for i=0 to 5
+		if f2(i) = false then Overall.deleteTable(&quot;tf&quot; + i)	
+	next i
+	&apos;удалить ненужные пределы измерений--------------------------
+	for i=0 to 6 &apos;нет смысла проверять обе точки, не может одна из точек равняться 0, а другая числу
+		if measLimitsArray(i*2)=0 then Overall.deleteTable(&quot;tml&quot; + i)
+	next i
+	&apos;------------------------------------------------------------
+	insertMeasLimits
+	strokeForSaving = &quot;1117 M &quot; &amp; serial &amp; &quot; ( &quot; &amp; strokeForSaving &amp; &quot;)&quot;
+	CopyVariableToClipboard(strokeForSaving+&quot; - &quot;+getCurrentDateString())
+	&apos;сброс массива пределов измерений для возможного следующего протокола иначе с каждым последующим выводом протокола пределы будут накапливаться
+	for i=0 to uBound(measLimitsArray)
+		measLimitsArray(i) = 0
+	next i
+	msgbox &quot;Готово!&quot;
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub neutron_01(i as integer, bd as BUnit)
+	&apos;neutron(i,bd,Array(0.6, 0.6, 0.863, 0.965),Array(6, 57, 235, 986))
+	neutron(i,bd,Array(0.6, 0.6, 0.863, 0.965),Array(6, 53, 220, 924))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub neutron_03(i as integer, bd as BUnit)
+	&apos;(0.45,9.5, 88, 330, 1350),	
+	&apos;neutron(i,bd,Array(0.922, 0.866, 0.980, 0.995),Array(9, 80, 330, 1460))
+	&apos;neutron(i,bd,Array(0.922, 0.922, 0.980, 0.995),Array(9, 75, 309, 1301))
+	neutron(i,bd,Array(0.922, 0.922, 0.980, 0.995),Array(8, 75.8, 313, 1320))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub neutron_05(i as integer, bd as BUnit)
+	&apos;neutron(i,bd,Array(0.607, 0.607, 0.866, 0.966),Array(6, 57, 235, 986))
+	neutron(i,bd,Array(0.607, 0.607, 0.866, 0.966),Array(6, 53, 220, 924))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub neutron_06(i as integer, bd as BUnit)
+	neutron(i,bd,Array(0.886, 0.866, 0.970, 0.993),Array(9, 75, 309, 1301))
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+sub neutron(i as integer, bd as BUnit, br as variant, fio as variant)
+	dim point_br_array(3) as double
+	dim point_fio_array(3) as double
+	point_br_array = br
+	point_fio_array = fio
+	dim fon, p1, p2, p3 as double
+	fon = bd.valueList.item(1)	&apos;фон
+	dim point as double
+	
+	for n = 1 to 4
+		point = bd.valueList.item(n+1)
+		p1 = (point-fon)*point_br_array(n-1)
+		findAndRename((&quot;$&quot; + i + &quot;-n2&quot; + &quot;&quot; + n), Format(p1, MyFormat))
+		p2 = (p1 - point_fio_array(n-1))/point_fio_array(n-1)*100
+		findAndRename((&quot;$&quot; + i + &quot;-n3&quot; + &quot;&quot; + n), Format(p2, MyFormat))
+		p3 = 1.1 * sqr(p2 * p2 + 5*5)
+		findAndRename((&quot;$&quot; + i + &quot;-n4&quot; + &quot;&quot; + n), Format(p3, MyFormat))
+		
+		&apos;значения коэффициентов в шапку таблицы
+		findAndRename((&quot;$&quot; + i + &quot;-br&quot; + &quot;&quot; + n), point_br_array(n-1))
+		findAndRename((&quot;$&quot; + i + &quot;-fi&quot; + &quot;&quot; + n), point_fio_array(n-1))
+		
+		&apos;обнуляем фон. для НЕ первой точки вычитать фон НЕ НУЖНО, это Гуринович объяснял, там в других точках толи другой уже будет фон, то ли что, короче по методике — не нужно
+		fon = 0
+	next n
+end sub
+&apos;---------------------------------------------------------------------------------------------------------
+&apos;для БДПС-02 альфа и бета вставка из буфера работает по другому, нежели для остальных БД. В Excel сразу копируются все данные (альфа точки + показания) + (бета точки + показания)
+&apos;одним столбиком. Один раз вставить для альфы, один для беты (второй раз копировать УЖЕ НЕ НУЖНО!)
+function insertClipBoardToBDValueList()
+	if BDList.item(layoutPosition).BdName=&quot;БДПС-02 α&quot; then
+		Overall.insertClipBoardToBDValueListAlphaBeta(BDList.item(layoutPosition).getValueList, BDList.item(layoutPosition).getValueList, 0)
+	elseif BDList.item(layoutPosition).BdName=&quot;БДПС-02 β&quot; then
+		Overall.insertClipBoardToBDValueListAlphaBeta(BDList.item(layoutPosition).getValueList, BDList.item(layoutPosition).getValueList, 1)
+	else
+		Overall.insertClipBoardToBDValueList(BDList.item(layoutPosition).getValueList)	
+	endif	
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+&apos;---------------------------------------------------------------------------------------------------------
+&apos;не используется
+function insertClipBoardToAlphaBeta()
+	dim bd_type as integer
+	if BDList.item(layoutPosition).BdName=&quot;БДПС-02 α&quot; then	bd_type=0
+	if BDList.item(layoutPosition).BdName=&quot;БДПС-02 β&quot; then	bd_type=1
+	Overall.insertClipBoardToBDValueListAlphaBeta(BDList.item(layoutPosition).getValueList, BDList.item(layoutPosition).getValueList, bd_type)
+	Overall.checkValueForRelativeErrorLimits(BDList.item(layoutPosition).getPointList, BDList.item(layoutPosition).getRelLimit)
+end function
+
+
+
+</script:module>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="m_herm" script:language="StarBasic">REM  *****  BASIC  *****
+
+dim Overall as new Overall
+Sub calcherm
+	dim list as new Collection
+	dim measList as new Collection
+	list = Overall.getTwoDimensionalArrayFromClipBoard()
+	
+	
+	OpenTemplate(sertPath &amp; &quot;hermet.odt&quot;) 
+	
+	for i=1 to list.count
+		dim mList as new Collection
+		mList = list.item(i)
+		dim mea as new Meas
+		&apos;mea.newMeasurement(mList.item(1),mList.item(2),mList.item(3),mList.item(4),mList.item(5),mList.item(6))
+		&apos;measList.add(mea)
+		
+		findAndRename(&quot;$nam&quot;+i+&quot;$&quot;, check(mList, 1))
+		findAndRename(&quot;$ser&quot;+i+&quot;$&quot;, check(mList, 2))
+		findAndRename(&quot;$res&quot;+i+&quot;$&quot;, check(mList, 3))
+		findAndRename(&quot;$con&quot;+i+&quot;$&quot;, check(mList, 4))
+		findAndRename(&quot;$mea&quot;+i+&quot;$&quot;, check(mList, 5))
+		findAndRename(&quot;$dat&quot;+i+&quot;$&quot;, check(mList, 6))
+		
+	next i
+	&apos;msgbox measList.item(1).getSerial
+
+	
+	dim j as integer
+	if list.count&lt;=27 then
+		for j=list.count to 27
+			findAndRename(&quot;$nam&quot;+j+&quot;$&quot;, &quot;&quot;)
+			findAndRename(&quot;$ser&quot;+j+&quot;$&quot;, &quot;&quot;)
+			findAndRename(&quot;$res&quot;+j+&quot;$&quot;, &quot;&quot;)
+			findAndRename(&quot;$con&quot;+j+&quot;$&quot;, &quot;&quot;)
+			findAndRename(&quot;$mea&quot;+j+&quot;$&quot;, &quot;&quot;)
+			findAndRename(&quot;$dat&quot;+j+&quot;$&quot;, &quot;&quot;)
+		next j
+	end if	
+	msgbox &quot;Готово!&quot;
+End Sub
+function check(list as collection, i as integer)
+	if list.count&gt;=i then
+		check = list.item(i)
+	else
+		check = &quot;&quot;
+	end if
+end function
+</script:module>
