@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>БДКГ-27. Как рассчитать протокол поверки</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../poverka27.js"></script>
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+        input[type="text"] {
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a class="home_button" href="../menu/index.html"></a>
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">БДКГ-27. Как рассчитать протокол поверки</a>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, CLOSE);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+        <span id="girlanda"><script> insertGirlanda(); </script></span>
+
+    <h1>БДКГ-27. Как рассчитать протокол поверки</h1>
+
+    <a href="../docs/bdkg27/bdkg-27.ods">Открыть расчет в excel</a><br>
+    <a href="../docs/protocol_sertificate/27_pov_rus.odt">Протокол поверки</a>
+
+    <ul>
+        <li>Собрать по схеме</li>
+
+        <img src="../imgs/bdkg27/schema2.jpg" width="800" style="text-indent: 0" alt="изображение не найдено">
+        <li>Вот так это будет выглядеть:</li>
+        <img src="../imgs/bdkg27/03.jpg" width="600" alt="изображение не найдено">
+        <li>Со стороны проводов:</li>
+        <img src="../imgs/bdkg27/05.jpg" width="600" alt="изображение не найдено">
+
+        <li><span class="attention">ПОКАЗАНИЯ БРАТЬ НЕ С БУ, А С МУЛЬТИМЕТРА, ТОЧНЕЕ БУДЕТ</span></li>
+        <li>Расчет вести можно прямо на странице, а можно воспользоваться
+            <a href="../docs/bdkg27/bdkg-27.ods">расчетом в excel</a>, как удобнее
+        </li>
+        <li>Подключиться к блоку обмена БДКГ-27 с помощью SARKtech</li>
+        <li>Выставить на магазине сопротивлений 10<sup>9</sup> Ом:</li>
+        <img src="../imgs/bdkg27/r1.jpg" width="400" alt="изображение не найдено">
+        <li>На блоке питания выставить такое напряжение, при котором показания мощности дозы (в SARKtech) будут равны 7
+            Зв/ч (примерно 4В).
+            Для расчета значений напряжений вписать полученное напряжение в поле ввода и нажать "Рассчитать"
+        </li>
+    </ul>
+
+    <form class="green_back">
+        <input id="u_7sv" type="text" value="4" title="" onchange="calc_bdkg27()">
+        <input type="button" value="Рассчитать" onclick="calc_bdkg27()">
+    </form>
+
+    <ul>
+        <li>Дальше идет расчет четырех точек</li>
+    </ul>
+
+    <hr>
+
+    <h3>Точка 1</h3>
+    <ul>
+        <li>Выставить сопротивление 10<sup>9</sup></li>
+        <img src="../imgs/bdkg27/r1.jpg" width="400" alt="изображение не найдено">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+
+    <form class="green_back">
+        <input id="u_10" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
+        <li>Записать данные в таблицу</li>
+    </ul>
+
+    <form class="green_back"><br>
+        <input id="a1" type="text" value="10" title=""><br>
+        <input id="a2" type="text" value="10" title=""><br>
+        <input id="a3" type="text" value="10" title="">
+    </form>
+
+    <hr>
+
+    <h3>Точка 2</h3>
+
+    <ul>
+        <li>Выставить сопротивление 10<sup>8</sup></li>
+        <img src="../imgs/bdkg27/r2.jpg" width="370" alt="изображение не найдено">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+
+    <form class="green_back">
+        <input id="u_70" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
+            Записать данные в таблицу:
+        </li>
+    </ul>
+    <form class="green_back">
+        <input id="b1" type="text" value="70" title=""><br>
+        <input id="b2" type="text" value="70" title=""><br>
+        <input id="b3" type="text" value="70" title="">
+    </form>
+
+    <hr>
+
+    <div class="attention_block">
+        Перед 3-ей точкой выставить коэффициент 2-ого диапазона равный коэффициенту первого диапазона умноженному на 10.
+        При переходе во-2ой диапазон (точка перехода равна 500 Зв/ч) обратить внимание на скорость счёта (она должна
+        упасть примерно в 10 раз)!
+    </div>
+
+    <h3>Точка 3</h3>
+    <ul>
+        <li>Выставить сопротивление 10<sup>7</sup></li>
+        <img src="../imgs/bdkg27/r3.jpg" width="370" alt="изображение не найдено">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+    <form class="green_back">
+        <input id="u_700" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Подкорректировать показания коэффициентом второго диапазона (+/-10%).</li>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс".
+            Записать данные в таблицу
+        </li>
+    </ul>
+    <form class="green_back">
+        <input id="c1" type="text" value="700" title=""><br>
+        <input id="c2" type="text" value="700" title=""><br>
+        <input id="c3" type="text" value="700" title="">
+    </form>
+
+    <hr>
+
+    <h3>Точка 4</h3>
+
+    <ul>
+        <li>Выставить сопротивление 10<sup>7</sup></li>
+        <img src="../imgs/bdkg27/r3.jpg" width="400" alt="изображение не найдено">
+        <li>Выставить на блоке питание следующее напряжение:</li>
+    </ul>
+    <form class="green_back">
+        <input id="u_3000" type="text" value="0" title="">
+    </form>
+
+    <ul>
+        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
+        <li>Записать данные в таблицу^</li>
+    </ul>
+    <form class="green_back">
+        <input id="d1" type="text" value="3000" title=""><br>
+        <input id="d2" type="text" value="3000" title=""><br>
+        <input id="d3" type="text" value="3000" title=""><br>
+    </form>
+
+    <hr>
+
+    <ul>
+        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму:
+    </ul>
+    <form class="green_back">
+        <input id="g1" type="text" value="0.07" title=""><br>
+        <input id="g2" type="text" value="0.7" title=""><br>
+        <input id="g3" type="text" value="7" title=""><br>
+        <input id="g4" type="text" value="10" title=""><br>
+    </form>
+
+    <ul>
+        <li>Все данные по точкам получены, нажать <input type="button" value="Рассчитать" onclick="calcAndSetTransferData()">. При расчете данные заодно копируются в буфер обмена. Для
+            вывода протокола поверки проще всего воспользоваться макросом. Открываем OpenOffice, запускаем макрос и вставляем данные из буфера обмена. Нет ничего проще!</li>
+    </ul>
+
+    <table id="table1" style="max-width: 600px; margin: 5px auto">
+        <tr>
+            <th>H0</th>
+            <th>R</th>
+            <th>H</th>
+            <th>U</th>
+            <th>%</th>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>10<sup>9</sup></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>70</td>
+            <td>10<sup>8</sup></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>700</td>
+            <td>10<sup>7</sup></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>3000</td>
+            <td>10<sup>7</sup></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    </table>
+
+    <table id="table2" style="max-width: 500px; margin: 5px auto">
+        <tr>
+            <th>Hпр</th>
+            <th>Hпр-Hф</th>
+            <th>отн</th>
+            <th>дов</th>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </table>
+
+    <div id="toast" class="toast"></div>
+
+<!--    <ul>-->
+<!--        <li>Для вывода протокола поверки проще всего воспользоваться макросом. Копируем данные и открываем OpenOffice</li>-->
+<!--    </ul>-->
+<!--    <div style="margin: 10px auto; max-width: max-content"><input type="button" value="Скопировать данные для вставки в макрос" onclick="copyTransferDataToClipBoard()"></div>-->
+
+<!--    <div class="tips_and_tricks">Чтобы вставить скопированную таблицу, нужно в свободном месте документа OpenOffice Writer нажать Ctrl+Shift+V, а в появившемся-->
+<!--        меню выбрать "Формат HTML без комментариев".-->
+
+<!--        <img src="../imgs/bdkg27/04.jpg" width="632" alt="изображение не найдено">-->
+
+<!--        Вставленную таким образом таблицу скопипастить куда надо</div>-->
+
+    <ul class="attention">
+        <li>В протоколе номером является номер ионизационной камеры, на неё же клеится поверочная наклейка!!!</li>
+        <!--<li>Данные для другой таблицы протокола поверки берутся из журнала градуировки.
+            Рассчитать погрешности через файл Excel
+        </li>-->
+    </ul>
+
+</div>
+</div>
+</body>
+</html>

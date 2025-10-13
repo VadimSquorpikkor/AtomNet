@@ -50,9 +50,6 @@
 
     <h1>БДКГ-27. Как рассчитать протокол поверки</h1>
 
-    <a href="../docs/bdkg27/bdkg-27.ods">Открыть расчет в excel</a><br>
-    <a href="../docs/protocol_sertificate/27_pov_rus.odt">Протокол поверки</a>
-
     <ul>
         <li>Собрать по схеме</li>
 
@@ -63,9 +60,6 @@
         <img src="../imgs/bdkg27/05.jpg" width="600" alt="изображение не найдено">
 
         <li><span class="attention">ПОКАЗАНИЯ БРАТЬ НЕ С БУ, А С МУЛЬТИМЕТРА, ТОЧНЕЕ БУДЕТ</span></li>
-        <li>Расчет вести можно прямо на странице, а можно воспользоваться
-            <a href="../docs/bdkg27/bdkg-27.ods">расчетом в excel</a>, как удобнее
-        </li>
         <li>Подключиться к блоку обмена БДКГ-27 с помощью SARKtech</li>
         <li>Выставить на магазине сопротивлений 10<sup>9</sup> Ом:</li>
         <img src="../imgs/bdkg27/r1.jpg" width="400" alt="изображение не найдено">
@@ -81,36 +75,14 @@
     </form>
 
     <ul>
-        <li>Дальше идет расчет четырех точек</li>
+        <li>Дальше идет расчет трёх точек</li>
     </ul>
+
+    <div class="tips_and_tricks">Раньше снимались показания с 4-х точек, теперь только с 3-х</div>
 
     <hr>
 
     <h3>Точка 1</h3>
-    <ul>
-        <li>Выставить сопротивление 10<sup>9</sup></li>
-        <img src="../imgs/bdkg27/r1.jpg" width="400" alt="изображение не найдено">
-        <li>Выставить на блоке питание следующее напряжение:</li>
-    </ul>
-
-    <form class="green_back">
-        <input id="u_10" type="text" value="0" title="">
-    </form>
-
-    <ul>
-        <li>Снять показания мощности дозы 3 раза (SARKtech), каждый раз нажимая "Сброс"</li>
-        <li>Записать данные в таблицу</li>
-    </ul>
-
-    <form class="green_back"><br>
-        <input id="a1" type="text" value="10" title=""><br>
-        <input id="a2" type="text" value="10" title=""><br>
-        <input id="a3" type="text" value="10" title="">
-    </form>
-
-    <hr>
-
-    <h3>Точка 2</h3>
 
     <ul>
         <li>Выставить сопротивление 10<sup>8</sup></li>
@@ -128,20 +100,20 @@
         </li>
     </ul>
     <form class="green_back">
-        <input id="b1" type="text" value="70" title=""><br>
-        <input id="b2" type="text" value="70" title=""><br>
-        <input id="b3" type="text" value="70" title="">
+        <input id="a1" type="text" value="70" title=""><br>
+        <input id="a2" type="text" value="70" title=""><br>
+        <input id="a3" type="text" value="70" title="">
     </form>
 
     <hr>
 
     <div class="attention_block">
-        Перед 3-ей точкой выставить коэффициент 2-ого диапазона равный коэффициенту первого диапазона умноженному на 10.
+        Перед 2-й точкой выставить коэффициент 2-ого диапазона равный коэффициенту первого диапазона умноженному на 10.
         При переходе во-2ой диапазон (точка перехода равна 500 Зв/ч) обратить внимание на скорость счёта (она должна
         упасть примерно в 10 раз)!
     </div>
 
-    <h3>Точка 3</h3>
+    <h3>Точка 2</h3>
     <ul>
         <li>Выставить сопротивление 10<sup>7</sup></li>
         <img src="../imgs/bdkg27/r3.jpg" width="370" alt="изображение не найдено">
@@ -158,14 +130,14 @@
         </li>
     </ul>
     <form class="green_back">
-        <input id="c1" type="text" value="700" title=""><br>
-        <input id="c2" type="text" value="700" title=""><br>
-        <input id="c3" type="text" value="700" title="">
+        <input id="b1" type="text" value="700" title=""><br>
+        <input id="b2" type="text" value="700" title=""><br>
+        <input id="b3" type="text" value="700" title="">
     </form>
 
     <hr>
 
-    <h3>Точка 4</h3>
+    <h3>Точка 3</h3>
 
     <ul>
         <li>Выставить сопротивление 10<sup>7</sup></li>
@@ -181,36 +153,34 @@
         <li>Записать данные в таблицу^</li>
     </ul>
     <form class="green_back">
-        <input id="d1" type="text" value="3000" title=""><br>
-        <input id="d2" type="text" value="3000" title=""><br>
-        <input id="d3" type="text" value="3000" title=""><br>
+        <input id="c1" type="text" value="3000" title=""><br>
+        <input id="c2" type="text" value="3000" title=""><br>
+        <input id="c3" type="text" value="3000" title=""><br>
     </form>
 
     <hr>
 
     <ul>
-        <li>Все данные по точкам получены, нажать <input type="button" value="Рассчитать" onclick="calc_bdkg27()"></li>
+        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму:
     </ul>
+    <form class="green_back">
+        <input id="g1" type="text" value="0.07" title=""><br>
+        <input id="g2" type="text" value="0.7" title=""><br>
+        <input id="g3" type="text" value="7" title=""><br>
+    </form>
 
-<!--    <form class="green_back">
-        <input type="button" value="Рассчитать" onclick="calc_bdkg27()">
-    </form>-->
-
+    <ul>
+        <li>Все данные по точкам получены, нажать <input type="button" value="Рассчитать" onclick="calcAndSetTransferData()">. При расчете данные заодно копируются в буфер обмена. Для
+            вывода протокола поверки проще всего воспользоваться макросом. Открываем OpenOffice, запускаем макрос и вставляем данные из буфера обмена. Нет ничего проще!</li>
+    </ul>
 
     <table id="table1" style="max-width: 600px; margin: 5px auto">
         <tr>
             <th>H0</th>
             <th>R</th>
-            <th>H</th>
             <th>U</th>
+            <th>H</th>
             <th>%</th>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>10<sup>9</sup></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr>
             <td>70</td>
@@ -235,21 +205,6 @@
         </tr>
 
     </table>
-    <ul>
-        <li>Рассчитанную таблицу скопипастить в протокол поверки</li>
-        <li>Открыть журнал градуировок БДКГ-27, данные ввести в следующую форму. Нажать "Рассчитать".
-    </ul>
-    <form class="green_back">
-        <input id="g1" type="text" value="0.07" title=""><br>
-        <input id="g2" type="text" value="0.7" title=""><br>
-        <input id="g3" type="text" value="7" title=""><br>
-        <input id="g4" type="text" value="10" title=""><br>
-        <input type="button" value="Рассчитать" onclick="calc_bdkg27_pogr()">
-    </form>
-
-    <ul>
-        <li>Рассчитанную таблицу тоже скопипастить в протокол поверки (в протоколе поверки 2-е таблицы для расчета)</li>
-    </ul>
 
     <table id="table2" style="max-width: 500px; margin: 5px auto">
         <tr>
@@ -276,27 +231,18 @@
             <td>0</td>
             <td>0</td>
         </tr>
-        <tr>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-        </tr>
     </table>
 
-    <div class="tips_and_tricks">Чтобы вставить скопированную таблицу, нужно в свободном месте документа OpenOffice Writer нажать Ctrl+Shift+V, а в появившемся
-        меню выбрать "Формат HTML без комментариев".
-
-        <img src="../imgs/bdkg27/04.jpg" width="632" alt="изображение не найдено">
-
-        Вставленную таким образом таблицу скопипастить куда надо</div>
+    <div id="toast" class="toast"></div>
 
     <ul class="attention">
         <li>В протоколе номером является номер ионизационной камеры, на неё же клеится поверочная наклейка!!!</li>
-        <!--<li>Данные для другой таблицы протокола поверки берутся из журнала градуировки.
-            Рассчитать погрешности через файл Excel
-        </li>-->
     </ul>
+
+    <div class="tips_and_tricks">В макросе необязательно нажимать кнопку "вставить", при открытии макрос автоматом
+        забирает данные из буфера и, если данные корректные, выводит соответствующее сообщение, кнопка "Вывести протокол" при этом становится активной</div>
+
+    <img src="../imgs/bdkg27/06.jpg" width="429" alt="изображение не найдено">
 
 </div>
 </div>
