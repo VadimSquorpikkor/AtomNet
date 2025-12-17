@@ -313,7 +313,7 @@ function getRegMenu(mode, id) {
         '        <li><a href="../doc_macro/macro.html">Макрос для протоколов и сертификатов</a>' +
         '            <div>' +
         '                <ul>' +
-        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 4.26</a></li>' +
+        '                   <li><a href="../docs/AtomtexLibrary.zip">Скачать макрос - 4.33</a></li>' +
         '                </ul>' +
         '            </div>' +
         '        </li>' +
@@ -423,7 +423,7 @@ function includeMenu(menu_id, menu_type, menu_state) {
 
 /**Включение гирлянды. Чтобы включить: isOn = true*/
 function insertGirlanda() {
-    let isOn = false;
+    let isOn = true;
     if (isOn) {
         document.getElementById("girlanda").innerHTML = '<img style="position: fixed; pointer-events: none; margin-top: -80px; margin-left: 0px" src="../imgs/girlanda_crop2.png"/>';
     }

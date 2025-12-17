@@ -1,12 +1,12 @@
 
-/*todo box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.33), inset 0 0 6px 3px rgba(0, 0, 0, 0.25); /*смещение по X, смещение по Y, размытие, размер (0 - как у самого объекта)*/
+/* box-shadow: 3px 3px 4px 0px rgba(0, 0, 0, 0.33), inset 0 0 6px 3px rgba(0, 0, 0, 0.25); /*смещение по X, смещение по Y, размытие, размер (0 - как у самого объекта)*/
 
-/*todo чтобы закрыть все region: Ctrl+Shift+Num-*/
-/*todo чтобы открыть все region: Ctrl+Shift+Num+*/
+/* чтобы закрыть все region: Ctrl+Shift+Num-*/
+/* чтобы открыть все region: Ctrl+Shift+Num+*/
 
-/*todo для НОВОГО ГОДА и ДР см. .main_div и .logo_div и body*/
+/* для НОВОГО ГОДА и ДР см. .main_div и .logo_div и body*/
 
-/*todo для НОВОГО ГОДА (гирлянда): в include в методе insertGirlanda установить isOn в true
+/* для НОВОГО ГОДА (гирлянда): в include в методе insertGirlanda установить isOn в true*/
 
 /*region ------- Таблицы --------------------------------------------------------------------------------------------------------*/
 .table_two_colors {
@@ -103,10 +103,10 @@ th {
     background: #333333 url("logo2.png") no-repeat center;/*стандарт*/
 
     /*ДЛЯ НОВОГО ГОДА — снежинки на фоне логотипа на главной странице*/
-    /*background: #333333;*/
-    /*background-image: url("logo2.png"), url("sneg.jpg");*/
-    /*background-position: center, right top;*/
-    /*background-repeat: no-repeat, repeat;*/
+    background: #333333;
+    background-image: url("logo2.png"), url("sneg.jpg");
+    background-position: center, right top;
+    background-repeat: no-repeat, repeat;
 
 
     box-shadow: 4px 1px 21px 1px rgba(0, 0, 0, 0.53);
@@ -128,8 +128,8 @@ th {
     /*margin-top: 25px;*/
 
     /*ДЛЯ НОВОГО ГОДА — (шарик в углу)*/
-    /*background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;*/
-    /*background-size: 250px;*/
+    background: #ffffff url("imgs/novyy-god.jpg") no-repeat right top;
+    background-size: 250px;
 
     /*ДР*/
     /*background: #ffffff url("imgs/cake.png") no-repeat right top;*/
@@ -444,7 +444,7 @@ body {
     margin: 0;
     background: #888 url("bg_main_transp.png");
     /*ДЛЯ НОВОГО ГОДА — ёлочки на сером бэкграунде*/
-    /*background: #888 url("bg_main_transp_ng_2.png");*/
+    background: #888 url("bg_main_transp_ng_2.png");
 }
 
 pre {
