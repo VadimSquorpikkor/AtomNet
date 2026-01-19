@@ -119,10 +119,10 @@ function set_main_activities() {
         getMenuBlock("../11xx/1103_new.html", "../imgs/main_menu/1103.png", BLUE,"ДКР-1103", "Инструкция по настройке")+
         getMenuBlock("../11xx/1121.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1121", "Инструкция по настройке")+
         getMenuBlock("../11xx/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
-        getMenuBlock("../sertif_prosh/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
-        getMenuBlock("../sertif_prosh/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
-        getMenuBlock("../other/plotter.html", "../imgs/plot/p16.jpg", VIOLET,"Наклейки", "Изготовление наклеек")+
-        getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
+        getMenuBlock("../doc_macro/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
+        getMenuBlock("../doc_macro/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
+        getMenuBlock("../doc_macro/plotter.html", "../imgs/plot/p16.jpg", VIOLET,"Наклейки", "Изготовление наклеек")+
+        // getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
 
     /**Вывод Div с рассчитанными расстояниями от источников*/
     insertDistanceCalculator();
