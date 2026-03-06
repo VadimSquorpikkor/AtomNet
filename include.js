@@ -423,7 +423,7 @@ function includeMenu(menu_id, menu_type, menu_state) {
 
 /**Включение гирлянды. Чтобы включить: isOn = true*/
 function insertGirlanda() {
-    let isOn = true;
+    let isOn = false;
     if (isOn) {
         document.getElementById("girlanda").innerHTML = '<img style="position: fixed; pointer-events: none; margin-top: -80px; margin-left: 0px" src="../imgs/girlanda_crop2.png"/>';
     }
