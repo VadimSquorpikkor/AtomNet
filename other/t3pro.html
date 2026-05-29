@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8" charset="utf8">
+    <title>Прошивка iData T3Pro</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+    <script type="text/javascript" src="../include.js"></script>
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+<div id="left_side_panel" class="left_side_panel">
+    <a class="home_button" href="../menu/index.html"></a>
+    <a href="javascript:void(0)" class="close_btn" onclick="closeNav()">&times;</a>
+    <div class="spoiler_menu" id="menu"></div>
+</div>
+
+<a class="to_page_top" title="Наверх">&uparrow;</a>
+
+<div class="menu_and_main_div">
+
+<div class="header_div_2">
+    <input title="" name="menu_btn" type="button" value="Меню" onclick="openNav()" class="menu_button"
+           id="menu_button">
+
+    <a href="../menu/index.html">Главная</a>
+    <a href="">Прошивка iData T3Pro</a>
+</div>
+
+<div class="left_side_menu">
+    <div id="menu_left" class="spoiler_menu"></div>
+</div>
+
+<script>
+    includeMenu("menu_left", REG_MENU, CLOSE);
+    includeMenu("menu", REG_MENU, CLOSE);
+</script>
+
+
+<div class="main_div">
+    <span id="girlanda"><script> insertGirlanda(); </script></span>
+
+    <h1>Прошивка iData T3Pro</h1>
+
+    <div class="tips_and_tricks">
+        (прошивка в которой всё работает: T3-2_13.00.030_G)
+        <br>
+        Драйвер, FlashTool и прошивку потом выложу на облако, пока есть только у меня
+    </div>
+
+
+
+    <ul>
+        <li>Выключить смартфон (зарядка >50%). Не подключать к проводу, просто положить рядом
+        <li>Запустить приложение Agenev_FlashTool
+        <img src="../imgs/t3pro/1.png" width="800" alt="изображение не найдено">
+        <div class="tips_and_tricks">
+        Если файл Agenew下载工具.exe запускается с ошибкой, при выборе файла flash также ошибка и
+        запуск от администратора не решает:
+        <br>1. Скопировать папку Agenew (кстати раньше она называлась Agenew研发下载工具6.3.1 — так вообще не работало) в корень С:
+        <br>2. Запустить. Никаких ошибок. Прошивается успешно
+        </div>
+        <li>Выбрать FlashTool
+        <img src="../imgs/t3pro/2.png" width="300" alt="изображение не найдено">
+        <li>Выбрать: прошивка/DOWNLOAD/download_agent/flash.xml
+        <img src="../imgs/t3pro/3.png" width="800" alt="изображение не найдено">
+        <li>Из выпадающего списка выбрать 固件升级
+        <img src="../imgs/t3pro/52.png" width="800" alt="изображение не найдено">
+        <li>Нажать кнопку 下载 (зелёная стрелка)
+        <img src="../imgs/t3pro/53.png" width="800" alt="изображение не найдено">
+        <li>Подключить смартфон. Ничего нажимать не нужно, процесс запустится автоматом
+        <img src="../imgs/t3pro/6.png" width="800" alt="изображение не найдено">
+        <li>Ждать окончания
+        <img src="../imgs/t3pro/7.png" width="800" alt="изображение не найдено">
+
+    </ul>
+    Готово. Смартфон можно отключать от провода, включать и пользоваться.
+    Есть <a href="../docs/IDataSerialPortCheck.apk">утилита</a> от разработчика прошивки, ей можно проверить работу
+
+</div>
+</div>
+</body>
+</html>

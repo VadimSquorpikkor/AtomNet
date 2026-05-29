@@ -304,7 +304,8 @@ function getRegMenu(mode, id) {
         '        <li><a href="../other/ed2_prosh.html">Прошивка ED2 (ChipProg)</a></li>' +
         '        <li><a href="../other/odu_to7.html">Переходник ODU на ТО-7</a></li>' +
         '        <li><a href="../other/5351_plis.html">Прошивка ПЛИС в ДКС-АТ5351</a></li>' +
-        '        <li><a href="../other/bdkg_m_prosh.html">Программирование плат для М-блоков</a></ul>' +
+        '        <li><a href="../other/bdkg_m_prosh.html">Программирование плат для М-блоков</a></li>' +
+        '        <li><a href="../other/t3pro.html">Прошивка iData T3Pro</a></ul>' +
         '    </ul>' +
         '</details>' +
         '' +
