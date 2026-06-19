@@ -593,6 +593,18 @@ div.yellow_back_small_clickable {
     margin: 20px auto;
 }
 
+.formula {
+    background: #eeddff;
+    font-style: italic;
+    border-radius: 5px;
+    box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
+    text-indent: 0;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
 .attention_block{
     background: #fed53f url("imgs/attention.png") no-repeat 20px;
     background-size: 60px 50px;
