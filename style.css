@@ -594,7 +594,8 @@ div.yellow_back_small_clickable {
 }
 
 .formula {
-    background: #eeddff;
+    width: fit-content;
+    background: #c0d2ff;
     font-style: italic;
     border-radius: 5px;
     box-shadow: 4px 4px 3px 0 rgba(0, 0, 0, 0.23);
@@ -1069,6 +1070,32 @@ summary div ul {
     content: "";
     clear: both;
     display: table;
+}
+
+/*Контейнер для двух горизонтальных картинок. На телефонах отображение будет переключаться на вертикальное*/
+.image-grid {
+    max-width: 800px;
+    margin: auto;
+    display: grid;
+    /* Создаем две равные колонки (1fr = 1 доля пространства) */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; /* Отступ между картинками */
+}
+.image-grid img {
+    width: 100%; /* Картинка растягивается на всю ширину своей ячейки */
+    height: auto;
+    object-fit: cover; /* Опционально: если нужно обрезать пропорции */
+}
+/* Для экранов уже 600 пикселей */
+@media (max-width: 600px) {
+    .image-row, .image-grid {
+        flex-direction: column; /* Для Flexbox */
+        grid-template-columns: 1fr; /* Для Grid (оставляем одну колонку) */
+    }
+
+    .image-row img, .image-grid img {
+        max-width: 300px; /* На мобильных картинки занимают всю ширину */
+    }
 }
 /*endregion -----------------------------------------------------------------------------------------------------------*/
 

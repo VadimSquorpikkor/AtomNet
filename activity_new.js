@@ -332,8 +332,8 @@ const KOEF_CS_BDKG_204 = 0.3655;    //22.079
 const KOEF_CD_BDKG_204 = 0.1363;   //24.528
 
 function set_activities_204() {
-    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204);
-    setDropDownActivitiesCadmium(2, KOEF_CD_BDKG_204);
+    setDropDownActivitiesCesium(1, KOEF_CS_BDKG_204, '<sup>137</sup>Cs: ');
+    setDropDownActivitiesCadmium(2, KOEF_CD_BDKG_204, '<sup>137</sup>Cs: ');
 }
 //----------------------------------------------------------------------------------------------------------------------
 const KOEF_CS_BDKG_35 = 102;

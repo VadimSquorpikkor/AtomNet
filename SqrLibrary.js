@@ -118,16 +118,20 @@ function setValue(id, source, koef) {
     else document.getElementById(id).value = (value).toFixed(1);
 }
 
+function setText(id, text) {
+    document.getElementById(id).value = text;
+}
+
 /**Добавление кода меню в страницу HTML. title можно задать свой или не задавать вообще, тогда будет присвоена
  * фраза по умолчанию*/
-function loadDropDownCesium(menu_id, output_id, fName, title) {
+function loadDropDownCesium(menu_id, output_id, fName, title1, title2) {
     let id = 'div_' + menu_id;
 
-    if (title=== 'undefined') title='Значение мощности дозы для <sup>137</sup>Cs: ';
+    if (title1=== undefined) title1='Значение мощности дозы для <sup>137</sup>Cs: ';
+    if (title2=== undefined) title2='(мкЗв/ч)';
 
     document.getElementById(id).innerHTML = '' +
-        title+
-        // 'Значение мощности дозы для <sup>137</sup>Cs: ' +
+        '<span style="font-size: 14px">'+title1+'</span>'+
         '<select id=' + menu_id + ' onchange=' + fName + '> ' +
         '<option value="1">№2910</option>' +
         '<option value="2">№516</option>' +
@@ -139,8 +143,11 @@ function loadDropDownCesium(menu_id, output_id, fName, title) {
         '<option value="8">№831</option>' +
         '<option value="9">№832</option>' +
         '<option value="10">№833</option>' +
+        '<option value="11">№595</option>' +
         '</select> ' +
-        '<input type="text" id=' + output_id + ' size="5">';
+        '<input type="text" id="' + output_id + '" size="5"> ' +
+        '<span style="font-size: 14px">'+title2+'</span>'
+        ;
 }
 
 /**Добавление кода меню в страницу HTML
@@ -157,7 +164,7 @@ function loadDropDownCadmium(menu_id, output_id, fName) {
         '<option value="1">№1079</option>' +
         '<option value="2">№1080</option>' +
         '</select> ' +
-        '<input type="text" id=' + output_id + ' size="5">';
+        '<input type="text" id="' + output_id + '" size="5">';
 }
 
 /**Добавление кода меню в страницу HTML. title можно задать свой или не задавать вообще, тогда будет присвоена
@@ -202,6 +209,8 @@ function setDropDownActivitiesCesium(drop_id, koef, title) {
         case '8': setValue(outputId, cs_831,  koef); break;
         case '9': setValue(outputId, cs_832,  koef); break;
         case '10': setValue(outputId, cs_833,  koef); break;
+        case '11': setValue(outputId, cs_595,  koef); break;
+        default: setText(outputId, 'Ошибка!'); break;
     }
 }
 
@@ -222,6 +231,7 @@ function setDropDownActivitiesCadmium(drop_id, koef) {
     switch (document.getElementById(dropId).value) {
         case '1': setValue(outputId, cd_1079, koef); break;
         case '2': setValue(outputId, cd_1080, koef); break;
+        default: setText(outputId, 'Ошибка!'); break;
     }
 }
 
