@@ -214,7 +214,13 @@ function getRegMenu(mode, id) {
         '        <li><a href="../bdkg/bdkg-25.html">БДКГ-25</a></li>' +
         '        <li><a href="../bdkg/bdkg27.html">БДКГ-27. Как сделать протокол поверки.</a>' +
         '        <li><a href="../bdkg/bdkg35.html">БДКГ-35</a></li>' +
-        '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a></li>' +
+        '        <li><a href="../bdkg/bdkg-204.html">БДКГ-204</a>' +
+        '            <div>' +
+        '                <ul>' +
+        '                    <li><a href="../bdkg/bdkg-204_prosh.html">Прошивка БДКГ-204</a></li>' +
+        '                </ul>' +
+        '            </div>' +
+        '        </li>' +
         '        <li><a href="../bdkg/bdkg-224.html">БДКГ-224</a></li>' +
         '        <li><a href="../bdkg/bdkr-01.html">БДКР-01</a></li>' +
         '        <li><a href="../bdmg/bdmg_rem.html">БДМГ-АТ2343</a></li>' +

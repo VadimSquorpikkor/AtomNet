@@ -128,7 +128,7 @@ function loadDropDownCesium(menu_id, output_id, fName, title1, title2) {
     let id = 'div_' + menu_id;
 
     if (title1=== undefined) title1='Значение мощности дозы для <sup>137</sup>Cs: ';
-    if (title2=== undefined) title2='(мкЗв/ч)';
+    if (title2=== undefined) title2='';
 
     document.getElementById(id).innerHTML = '' +
         '<span style="font-size: 14px">'+title1+'</span>'+
@@ -172,7 +172,7 @@ function loadDropDownCadmium(menu_id, output_id, fName) {
 function loadDropDownAmericium(menu_id, output_id, fName, title) {
     let id = 'div_' + menu_id;
 
-    if (title=== 'undefined') title='Значение мощности дозы для <sup>241</sup>Am: ';
+    if (title=== undefined) title='Значение мощности дозы для <sup>241</sup>Am: ';
 
     document.getElementById(id).innerHTML = '' +
         title+
