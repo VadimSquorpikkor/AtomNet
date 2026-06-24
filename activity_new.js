@@ -121,7 +121,8 @@ function set_main_activities() {
         getMenuBlock("../11xx/1123.html", "../imgs/main_menu/1121.png", BLUE,"ДКС-1123", "Инструкция по настройке")+
         getMenuBlock("../doc_macro/sertificate.html", "../imgs/main_menu/sertificate.jpg", VIOLET,"Документы", "Инструкции, схемы")+
         getMenuBlock("../doc_macro/prosh.html", "../imgs/main_menu/prosh.jpg", VIOLET,"Прошивки", "Список актуальных прошивок")+
-        getMenuBlock("../doc_macro/plotter.html", "../imgs/plot/p16.jpg", VIOLET,"Наклейки", "Изготовление наклеек")+
+        getMenuBlock("../doc_macro/plotter.html", "../imgs/plot/p16.jpg", VIOLET,"Наклейки", "Изготовление наклеек")
+        ;
         // getMenuBlock("../docs/protokol_poverki_i_sert_gotovie", "../imgs/main_menu/archive.jpg", VIOLET,"Архив", "Готовые протоколы и сертификаты");
 
     /**Вывод Div с рассчитанными расстояниями от источников*/
